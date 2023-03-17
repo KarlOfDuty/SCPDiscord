@@ -3,6 +3,8 @@
 There are several languages included in the plugin dll. The current languages are:
 * English (default)
 * English with emotes
+* Ukrainian
+* Ukrainian with emotes
 * Russian
 * Russian with emotes
 
