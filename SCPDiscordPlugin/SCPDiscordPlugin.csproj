@@ -412,6 +412,8 @@
     <None Include="Languages\italian.yml" />
     <None Include="Languages\polish-emote.yml" />
     <None Include="Languages\polish.yml" />
+    <None Include="Languages\ukrainian-emote.yml" />
+    <None Include="Languages\ukrainian.yml" />
     <None Include="Languages\russian-emote.yml" />
     <None Include="Languages\russian.yml" />
     <None Include="packages.config" />
