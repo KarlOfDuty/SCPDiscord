@@ -130,6 +130,12 @@
   <data name="overrides" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Languages\overrides.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ukrainian" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Languages\ukrainian.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ukrainian-emote" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Languages\ukrainian-emote.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="russian" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Languages\russian.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
