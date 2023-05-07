@@ -29,7 +29,7 @@ You can download the latest release [here](https://github.com/KarlOfDuty/SCPDisc
 
 ## Guides
 
-- [Installation](docs/Installation.md)
+- [Installation and configuration](docs/Installation.md)
 
 - [Editing messages and languages](docs/Languages.md)
 
