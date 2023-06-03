@@ -25,7 +25,7 @@ You could then add one channel for each server visible only to moderators, showi
 
 ## Download
 
-You can download the latest release [here](https://github.com/KarlOfDuty/SCPDiscord/releases) or the latest dev build [here](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity);
+You can download the latest release [here](https://github.com/KarlOfDuty/SCPDiscord/releases) or the latest dev build [here](https://jenkins.karlofduty.com/blue/organizations/jenkins/NWAPI%2FSCPDiscord/activity);
 
 ## Guides
 
