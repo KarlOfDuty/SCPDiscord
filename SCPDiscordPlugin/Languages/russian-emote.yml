@@ -1339,7 +1339,7 @@ messages:
       # steamid - string
       # class - Role
       # team - Team
-      message: "**<var:name>** | **<var:class>** | <var:steamid>"
+      message: "**<var:name>** | **<var:class>** | <var:steamid>\n"
       regex: []
     empty:
       message: "Игроков онлайн нет."
