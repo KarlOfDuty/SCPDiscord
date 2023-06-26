@@ -1193,44 +1193,108 @@ messages:
       regex: []
 
   onplayermuted:
-    intercom:
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
-      # playerclass - Role
-      # playerteam - Team
-      message: ":mute: **<var:playername> (<var:playersteamid>) більше не має права користуватися Інтеркомом.**"
-      regex: []
-    standard:
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
-      # playerclass - Role
-      # playerteam - Team
-      message: ":mute: **<var:playername> (<var:playersteamid>) був зам'ючений.**"
-      regex: []
+    player:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: ":mute: **<var:playername> (<var:playersteamid>) був зам'ючений в інтеркомі <var:issuername> (<var:issuersteamid>).**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: ":mute: **<var:playername> (<var:playersteamid>) був зам'ючений <var:issuername> (<var:issuersteamid>).**"
+        regex: []
+    server:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: ":mute: **<var:playername> (<var:playersteamid>) був зам'ючений в інтеркомі сервером.**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: ":mute: **<var:playername> (<var:playersteamid>) був зам'ючений сервером.**"
+        regex: []
 
   onplayerunmuted:
-    intercom:
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
-      # playerclass - Role
-      # playerteam - Team
-      message: ":speaker: **<var:playername> (<var:playersteamid>) дозволено користуватись Інтеркомом знову.**"
-      regex: []
-    standard:
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
-      # playerclass - Role
-      # playerteam - Team
-      message: ":speaker: **<var:playername> (<var:playersteamid>) був розм'ючений.**"
-      regex: []
+    player:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: ":speaker: **<var:playername> (<var:playersteamid>) був розм'ючений в інтеркомі <var:issuername> (<var:issuersteamid>).**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: ":speaker: **<var:playername> (<var:playersteamid>) був розм'ючений <var:issuername> (<var:issuersteamid>).**"
+        regex: []
+    server:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: ":speaker: **<var:playername> (<var:playersteamid>) був розм'ючений в інтеркомі сервером.**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: ":speaker: **<var:playername> (<var:playersteamid>) був розм'ючений сервером.**"
+        regex: []
 
   onteamrespawn:
     # players - List<Player>
