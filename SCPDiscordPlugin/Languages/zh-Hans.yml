@@ -1,0 +1,1419 @@
+#####################################################################################################################
+#                                                                                                                   #
+#                                                  翻译公告                                                          #
+#                                                                                                                   #
+#   翻译者：飞翔到云间 QQ:3012287203 Discord:FlyCloud       Lim22371 QQ:3622464138 Discord:Lim22371                   #
+#   如有翻译问题，请QQ/Discord联系上面的翻译者。我们欢迎您的反馈！                                                       #
+#                                                                                                                   #
+#####################################################################################################################
+
+
+#####################################################################################################################
+#                                                                                                                   #
+#                                                     事件                                                          #
+#                                                                                                                   #
+#   信息: 要显示的信息。变量以 <var:name> 的格式插入，例如: <var:ipaddress>.                                            #
+#   正则表达式: 正则表达式与替换字符串配对，用于查找和替换信息的某些部分。                                                 #
+#                                                                                                                   #
+#####################################################################################################################
+
+# 在插入变量之后，但在消息特定正则表达式替换之前，以及在所有消息上添加玩家名称之前执行。
+global_regex: [
+
+  # 修复格式问题
+  "::ffff:":"",
+  " \\(\\)":"",
+  "''":"",
+  "SCP_":"SCP-",
+
+  # 阵营
+  #"SCPs":"SCP",
+  "FoundationForces":"基金会阵营",
+  "ChaosInsurgency":"混沌阵营",
+  #"Scientists":"科学家",
+  "ClassD":"D级人员",
+  #"Dead":"阴间人",
+  "OtherAlive":"其他阵营",
+
+  # 身份
+  #"None":"无",
+  "Scp173":"SCP-173",
+  #"ClassD":"D级人员",
+  #"Spectator":"观察者",
+  "Scp106":"SCP-106",
+  "NtfSpecialist":"九尾狐收容专家",
+  "Scp049":"SCP-049",
+  #"Scientist":"科学家",
+  "Scp079":"SCP-079",
+  "ChaosConscript":"混沌征召兵",
+  "Scp096":"SCP-096",
+  "SCP-0492":"SCP-049-2",
+  "NtfSergeant":"九尾狐中士",
+  "NtfCaptain":"九尾狐指挥官",
+  "NtfPrivate":"九尾狐列兵",
+  #"Tutorial":"教程人员",
+  "FacilityGuard":"设施保安",
+  "Scp939":"SCP-939",
+  #"CustomRole":"自定义角色",
+  "ChaosRifleman":"混沌步枪兵",
+  "ChaosRepressor":"混沌压制者",
+  "ChaosMarauder":"混沌掠夺者",
+  #"Overwatch":"Overwatch",
+
+  # 电梯
+  "GateA":"A大门电梯",
+  "GateB":"B大门电梯",
+  "LczA01":"轻收容A1电梯",
+  "LczA02":"轻收容A2电梯",
+  "LczB01":"轻收容B1电梯",
+  "LczB02":"轻收容B2电梯",
+  "Nuke":"核弹室电梯",
+  #"Scp049":"SCP-049电梯",
+
+  # 房间名称
+  "Unnamed":"一个未命名的房间",
+  "LczClassDSpawn":"轻收容D级人员牢房",
+  "LczComputerRoom":"轻收容电脑室(PC-15)",
+  "LczCheckpointA":"轻收容检查点A",
+  "LczCheckpointB":"轻收容检查点B",
+  "LczToilets":"轻收容厕所",
+  "LczArmory":"轻收容武器库",
+  "Lcz173":"轻收容SCP-173收容室",
+  "LczGlassroom":"轻收容SCP-372收容室",
+  "Lcz330":"轻收容SCP-330收容室",
+  "Lcz914":"轻收容SCP-914收容室",
+  "LczGreenhouse":"轻收容温室",
+  "LczAirlock":"轻收容气闸门",
+  "HczCheckpointToEntranceZone":"入口区检查点",
+  "HczCheckpointA":"重收容检查点A",
+  "HczCheckpointB":"重收容检查点B",
+  "HczWarhead":"核弹头发射井",
+  "Hcz049":"SCP-049 收容室",
+  "Hcz079":"SCP-079 收容室",
+  "Hcz096":"SCP-096 收容室",
+  "Hcz106":"SCP-106 收容室",
+  "Hcz939":"SCP-939 收容室",
+  "HczMicroHID":"Micro-HID 储存室",
+  "HczArmory":"重收容军械库",
+  "HczServers":"重收容机房",
+  "HczTesla":"特斯拉电网",
+  "EzCollapsedTunnel":"办公区被堵住的隧道",
+  "EzGateA":"办公区A大门",
+  "EzGateB":"办公区B大门",
+  "EzRedroom":"办公区被锁住的大门",
+  "EzEvacShelter":"办公区疏散避难所",
+  "EzIntercom":"办公区广播室",
+  "EzOfficeStoried":"办公区办公室",
+  "EzOfficeLarge":"办公区大型办公室",
+  "EzOfficeSmall":"办公区小型办公室",
+  "Outside":"外部区域",
+  "Pocket":"SCP-106口袋维度",
+  "HczTestroom":"重收容测试房间",
+
+  # 物品
+  #"None":"无",
+  "KeycardJanitor":"清洁工钥匙卡",
+  "KeycardScientist":"科学家钥匙卡",
+  "KeycardResearchCoordinator":"研究主管钥匙卡",
+  "KeycardZoneManager":"区域经理钥匙卡",
+  "KeycardGuard":"设施警卫钥匙卡",
+  "KeycardNTFOfficer":"九尾狐列兵钥匙卡",
+  "KeycardContainmentEngineer":"九尾狐收容工程师钥匙卡",
+  "KeycardNTFLieutenant":"九尾狐中士钥匙卡",
+  "KeycardNTFCommander":"九尾狐指挥官钥匙卡",
+  "KeycardFacilityManager":"设施主管钥匙卡",
+  "KeycardChaosInsurgency":"混沌分裂者破解装置",
+  "KeycardO5":"O5钥匙卡",
+  "Radio":"对讲机",
+  "GunCOM15":"COM-15",
+  "Medkit":"急救包",
+  "Flashlight":"手电筒",
+  "MicroHID":"Micro-HID",
+  "SCP500":"SCP-500",
+  "SCP207":"SCP-207",
+  "Ammo12gauge":".12号子弹",
+  "GunE11SR":"Epsilon-11标准步枪",
+  "GunCrossvec":"Crossvec冲锋枪",
+  "Ammo556x45":"5.56mm子弹",
+  "GunFSP9":"FSP9",
+  "GunLogicer":"轻机枪",
+  "GrenadeHE":"手榴弹",
+  "GrenadeFlash":"闪光弹",
+  "Ammo44cal":"44号子弹",
+  "Ammo762x39":"7.62mm子弹",
+  "Ammo9x19":"9mm子弹",
+  "GunCOM18":"COM-18",
+  "SCP018":"SCP-018",
+  "SCP268":"SCP-268",
+  "Adrenaline":"肾上腺素",
+  "Painkillers":"止痛药",
+  "Coin":"硬币",
+  "ArmorLight":"轻型护甲",
+  "ArmorCombat":"战术护甲",
+  "ArmorHeavy":"重型护甲",
+  "GunRevolver":"左轮手枪",
+  "GunAK":"AK步枪",
+  "GunShotgun":"散弹枪",
+  "SCP330":"SCP-330",
+  "SCP2176":"SCP-2176",
+  "SCP244a":"SCP-244-A",
+  "SCP244b":"SCP-244-B",
+  "SCP1853":"SCP-1853",
+  "ParticleDisruptor":"3-X离子分裂者",
+  "GunCom45":"COM-45",
+  "SCP1576":"SCP-1576",
+  "Coal":"煤块",
+  "Scp2536_2":"SCP-2536-2",
+  "Jailbird":"囚鸟",
+
+  # SCP-914 模式
+  "Rough":"超粗加工",
+  "Coarse":"粗加工",
+  "OneToOne":"1:1",
+  "VeryFine":"精加工",
+  "Fine":"超精加工",
+
+  # 钥匙卡权限
+  #"None":"无",
+  #"Checkpoints":"检查点权限",
+  "ExitGates":"出口大门权限",
+  #"Intercom":"广播室权限",
+  "AlphaWarhead":"Alpha核弹权限",
+  "ContainmentLevelOne":"收容1级权限",
+  "ContainmentLevelTwo":"收容2级权限",
+  "ContainmentLevelThree":"收容3级权限",
+  "ArmoryLevelOne":"武器1级权限",
+  "ArmoryLevelTwo":"武器2级权限",
+  "ArmoryLevelThree":"武器3级权限",
+  "ScpOverride":"SCP-override",
+
+  # 某些门的设置
+  "PortallessBreakableDoor":"可破坏门",
+  "BreakableDoor":"不可破坏门",
+  "door\\(Clone\\)":"克隆门"
+]
+
+# 对最终版本的消息进行处理，这是唯一影响玩家名称的正则表达式。
+final_regex: ["discord\\.gg":"","http://":"","https://":"","www\\.":"", "<@":"<", "<@!":"<!"]
+
+messages:
+  onroundstart:
+    message: "**回合已经开始**"
+    regex: []
+
+  onconnect:
+    # ipaddress - 字符串(string)
+    # steamid - 字符串(string)
+    # jointype - CentralAuthPreauthFlags
+    # region - 字符串(string)
+    message: "玩家 (Steam64位ID <var:steamid> IP <var.ipaddress>)正在尝试连接..."
+    regex: []
+
+  onplayerleave:
+    # ipaddress - 字符串(string)
+    # playerid - 数字(int)
+    # steamid - 字符串(string)
+    # name - 字符串(string)
+    message: "**玩家 <var:name> (<var:steamid> <var.ipaddress>) 离开了服务器**"
+    regex: []
+
+  onroundend:
+    # 回合时长(duration) - int
+    # 胜利阵营(leadingteam) -string
+    # dclassalive - int
+    # dclassdead - int
+    # dclassescaped - int
+    # dclassstart - int
+    # mtfalive - int
+    # 基金会死亡(mtfdead) - int
+    # mtfstart - int
+    # scientistsalive - int
+    # scientistsdead - int
+    # scientistsescaped - int
+    # scientistsstart - int
+    # scpalive - int
+    # SCP死亡数(scpdead) - int
+    # SCP击杀(scpkills) - int
+    # scpstart - int
+    # warheaddetonated - bool
+    # warheadkills - int
+    # zombiesalive - int
+    # zombieschanged - int
+    message: >+
+      **回合结束！ 回合时长 <var:duration> 分钟**
+      ```
+      逃脱的D级人员数:            <var:dclassescaped>/<var:dclassstart>\n
+      获救的科学家数:         <var:scientistsescaped>/<var:scientistsstart>\n
+      剩余SCP:             <var:scpdead>/<var:scpstart>\n
+      SCP击杀数:              <var:scpkills>\n
+      Alpha核弹 <var:warheaddetonated> 引爆.
+      ```
+    regex: ["True":"被","False":"未被"]
+
+  onwaitingforplayers:
+    message: "**服务器正在等待玩家**"
+    regex: []
+
+  onroundrestart:
+    message: "**回合正在重启...**"
+    regex: []
+
+  onsetservername:
+    # 服务器名(servername) - 字符串(string)
+    message: "**服务器名: <var:servername>.**"
+    regex: []
+
+  onscp914activate:
+    # knobsetting - KnobSetting
+    # ipaddress
+    # name
+    # playerid
+    # steamid
+    # class
+    # team
+    message: "<var:name> (<var:steamid>) 使用了SCP-914，模式 <var:knobsetting>."
+    regex: []
+
+  onstartcountdown:
+    player:
+      # isAutomatic - bool
+      # timeleft - float
+      # ipaddress - string
+      # name - string
+      # playerid - int
+      # steamid - string
+      # class - Role
+      # team - Team
+      initiated:
+        message: "**Alpha引爆程序被 <var:name> (<var:steamid>) 激活, <var:timeleft> 秒后将引爆. 所有人员必须立刻撤离.**"
+        regex: [ ]
+      resumed:
+        message: "**Alpha引爆程序被 <var:name> (<var:steamid>) 再次激活, <var:timeleft> 秒后将引爆.**"
+        regex: [ ]
+    server:
+      # isAutomatic - bool
+      # timeleft - float
+      initiated:
+        message: "**Alpha核弹已根据O5议会的命令远程强制启动, 起爆程序无法终止. 所有人员必须立即撤离!**"
+        regex: []
+      resumed:
+        message: "**根据O5议会的命令，Alpha核弹已被远程强制启动, 起爆程序无法终止. 距离爆炸还剩 <var:timeleft> 秒**"
+        regex: []
+
+  onstopcountdown:
+    default:
+      # timeleft
+      # ipaddress
+      # name
+      # playerid
+      # steamid
+      # class
+      # team
+      message: "**Alpha核弹被 <var:name> (<var:steamid>) 在还剩 <var:timeleft> 秒的时候取消,系统正在重启....**"
+      regex: []
+    noplayer:
+      # timeleft
+      message: "**根据伦理道德委员会的命令，Alpha核弹的引爆程序已被远程强制取消，还剩 <var:timeleft> 秒**"
+      regex: []
+
+  ondetonate:
+    message: "**已经检测到Alpha核弹爆炸. MTF特工已进入地表清除任何剩余的威胁.**"
+    regex: []
+
+  ondecontaminate:
+    message: "**轻收容净化程序已经开始, 所有生物将被摧毁.**"
+    regex: []
+
+  onsummonvehicle:
+    chaos:
+      message: "**警告: 未经授权的车辆已到达地表周边.**"
+      regex: []
+    mtf:
+      message: "**MTF直升机在地表的可视范围内，准备降落.**"
+      regex: []
+
+  ongeneratorfinish:
+    # room
+    # ipaddress
+    # name
+    # playerid
+    # steamid
+    # class
+    # team
+    message: "在 <var:room> 的发电机已被 <var:name> (<var:steamid>) 启动"
+    regex: [ ]
+
+  onplayerhurt:
+    # damage - float
+    # damagetype - DamageType
+    # attackeripaddress - string
+    # attackername - string
+    # attackerplayerid - int
+    # attackersteamid - string
+    # attackerclass - Role
+    # attackerteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    default:
+      message: "<var:playername> (<var:playersteamid>) 被 <var:attackername> (<var:attackersteamid>) 使用 <var:damagetype> 造成伤害(伤害 <var:damage>)."
+      regex: ["使用 UNKNOWN":"使用 未知手段", "-1 damage":"巨大的伤害"]
+    friendlyfire:
+      message: "**<var:playerteam> <var:playername> (<var:playersteamid>) 被队友 <var:attackerteam> <var:attackername> (<var:attackersteamid>) 使用 <var:damagetype> 攻击(伤害 <var:damage>).**"
+      regex: ["使用 UNKNOWN":"使用 未知手段", "-1 damage":"巨大的伤害"]
+    noattacker:
+      message: "<var:playername> (<var:playersteamid>) 被造成了 <var:damage> 点伤害, 原因 <var:damagetype>."
+      regex: ["原因 UNKNOWN":"原因 未知", "-1 damage":"巨大的伤害"]
+
+  onplayerdie:
+    # damagetype - DamageType
+    # attackeripaddress - string
+    # attackername - string
+    # attackerplayerid - int
+    # attackersteamid - string
+    # attackerclass - Role
+    # attackerteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    default:
+      message: "<var:playername> (<var:playersteamid>) 被击杀,击杀者 <var:attackername> (<var:attackersteamid>) 使用武器 <var:damagetype>."
+      regex: ["使用武器 UNKNOWN":"使用 未知手段"]
+    friendlyfire:
+      message: "**<var:playerteam> <var:playername> (<var:playersteamid>) 被队友 <var:attackerteam> <var:attackername> (<var:attackersteamid>) 使用 <var:damagetype> 击杀**"
+      regex: ["使用 UNKNOWN":"使用 未知手段"]
+    nokiller:
+      message: "<var:playername> (<var:playersteamid>) 因为 <var:damagetype> 死亡"
+      regex: ["因为 UNKNOWN":"因为 不明原因"]
+
+  onplayerpickupitem:
+    # item - Item
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 拾取了 <var:item>."
+    regex: []
+
+  onplayerpickupammo:
+    # ammo - Item
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 拾取了 <var:ammo> 弹药"
+    regex: []
+
+  onplayerpickuparmor:
+    # item - Item
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 穿上了 <var:armor> 护甲"
+    regex: []
+
+  onplayerpickupscp330:
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 拿走了一块糖"
+    regex: []
+
+  onplayerdropitem:
+    # item - Item
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 丢弃了 <var:item>."
+    regex: []
+
+  onplayerdropammo:
+    # ammo - Item
+    # amount - int
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 丢弃了 <var:amount> 的 <var:ammo> 子弹"
+    regex: []
+
+  onplayerjoin:
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "**<var:name> (<var:steamid>) 进入了服务器**"
+    regex: []
+
+  onnicknameset:
+    # nickname - string
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "玩家 '<var:name> (<var:steamid>)' 被重命名为 <var:nickname>."
+    regex: []
+
+  onsetrole:
+    # oldrole - Role
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    roundstart:
+      message: "<var:name> (<var:steamid>) 已经成为 <var:class>."
+      regex: [ ]
+    latejoin:
+      message: "<var:name> (<var:steamid>) 已经成为 <var:class> (后加入)."
+      regex: [ ]
+    respawn:
+      message: "<var:name> (<var:steamid>) 已被刷新为 <var:class>."
+      regex: [ ]
+    died:
+      message: "<var:name> (<var:steamid>) 死亡, 角色 <var:class>"
+      regex: [ ]
+    escaped:
+      message: "<var:name> (<var:steamid>) 已经逃离设施并成为了 <var:class>."
+      regex: [ ]
+    revived:
+      message: "<var:name> (<var:steamid>) 重生为 <var:class>."
+      regex: [ ]
+    remoteadmin:
+      message: "<var:name> (<var:steamid>) 被管理员更改为 <var:class>"
+      regex: [ ]
+    left:
+      message: "<var:name> (<var:steamid>) 离开了服务器."
+      regex: [ ]
+    other:
+      message: "<var:name> (<var:steamid>) 已经成为 <var:class>."
+      regex: []
+
+  onspawn:
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 刷新为 <var:class>."
+    regex: []
+
+  ondooraccess:
+    # doorname - string
+    # permission - string
+    # locked - bool
+    # lockcooldown - float
+    # open - bool
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    allowed:
+      message: "<var:name> (<var:steamid>) <var:open> 了一扇门 (<var:doorname>) 要求 \"<var:permission>\" 权限."
+      regex: ["True":"关闭", "False":"开启", " 要求 \"\" 权限\\.":"."," requiring \"None\" permission\\.":"."]
+    denied:
+      message: "<var:name> (<var:steamid>) 尝试 <var:open> a locked door (<var:doorname>) requiring \"<var:permission>\" permission."
+      regex: ["尝试 True":"关闭", "尝试 False":"打开"," 要求 \"\" 权限 \\.":"."," requiring \"None\" permission\\.":"."]
+
+  onpocketdimensionexit:
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 逃脱了SCP-106的口袋空间."
+    regex: []
+
+  onpocketdimensionenter:
+    # attackeripaddress - string
+    # attackername - string
+    # attackerplayerid - int
+    # attackersteamid - string
+    # attackerclass - Role
+    # attackerteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    message: "<var:playername> (<var:playersteamid>) 被SCP-106 <var:attackername> (<var:attackersteamid>) 吸引进了口袋空间."
+    regex: []
+
+  onthrowprojectile:
+    # type - GrenadeType
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 扔出了 <var:type>."
+    regex: []
+
+  onplayerinfected:
+    # damage - int
+    # infecttime - int
+    # attackeripaddress - string
+    # attackername - string
+    # attackerplayerid - int
+    # attackersteamid - string
+    # attackerclass - Role
+    # attackerteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    message: "<var:playername> (<var:playersteamid>) 被SCP-049治愈了."
+    regex: []
+
+  onspawnragdoll:
+    # damagetype - string
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 的 <var:class> 布娃娃 已经刷新了."
+    regex: []
+
+  onitemuse:
+    # item - string
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 使用了 <var:item>."
+    regex: []
+
+  onelevatoruse:
+    # elevatorname - ElevatorType
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 呼叫了 <var:elevatorname> 电梯."
+    regex: []
+
+  onhandcuff:
+    # targetipaddress - string
+    # targetname - string
+    # targetplayerid - int
+    # targetsteamid - string
+    # targetclass - Role
+    # targetteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    default:
+      message: "<var:targetclass> <var:targetname> (<var:targetsteamid>) 被 <var:playerclass> <var:playername> (<var:playersteamid>) 捆绑了."
+      regex: []
+    nootherplayer:
+      message: "<var:targetclass> <var:targetname> (<var:targetsteamid>) 被捆绑了."
+      regex: []
+
+  onhandcuffremoved:
+    # targetipaddress - string
+    # targetname - string
+    # targetplayerid - int
+    # targetsteamid - string
+    # targetclass - Role
+    # targetteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    default:
+      message: "<var:targetclass> <var:targetname> (<var:targetsteamid>) 被 <var:playerclass> <var:playername> (<var:playersteamid>) 解绑了."
+      regex: []
+    nootherplayer:
+      message: "<var:targetclass> <var:targetname> (<var:targetsteamid>) 被解绑了."
+      regex: []
+
+  onplayertriggertesla:
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    default:
+      message: "<var:team> <var:name> (<var:steamid>) 激活了特斯拉电网."
+      regex: []
+    ignored:
+      message: "<var:team> <var:name> (<var:steamid>) 在没有激活特斯拉电网的时候经过了它"
+      regex: []
+
+  onscp914changeknob:
+    # setting - KnobSetting
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 将SCP-914的按钮设置为了 \"<var:setting>\"."
+    regex: []
+
+  onplayerradioswitch:
+    # setting - RadioStatus
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 将对讲机调至 <var:setting> 模式."
+    regex: []
+
+  onrecallzombie:
+    # allowrecall - bool
+    # targetipaddress - string
+    # targetname - string
+    # targetplayerid - int
+    # targetsteamid - string
+    # targetclass - Role
+    # targetteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    message: "<var:targetname> (<var:targetsteamid>) 成为新的SCP-049-2 <var:playername> (<var:playersteamid>)"
+    regex: []
+
+  oncallcommand:
+    remoteadmin:
+      player:
+        # command
+        # ipaddress
+        # name
+        # playerid
+        # steamid
+        # class
+        # team
+        message: "管理员 <var:name> (<var:steamid>) 使用了命令 '<var:command>'."
+        regex: [ ]
+      server:
+        # command
+        message: "服务器使用了命令 '<var:command>'."
+        regex: [ ]
+    game:
+      player:
+        # command
+        # ipaddress
+        # name
+        # playerid
+        # steamid
+        # class
+        # team
+        message: "<var:name> (<var:steamid>) 在控制台使用了命令 '<var:command>'."
+        regex: [ ]
+      server:
+        # command
+        message: "服务器使用了命令 '<var:command>'."
+        regex: [ ]
+    console:
+      player:
+        # command
+        # ipaddress
+        # name
+        # playerid
+        # steamid
+        # class
+        # team
+        message: "<var:name> (<var:steamid>) 使用了服务端后台命令 '<var:command>'."
+        regex: [ ]
+      server:
+        # command
+        message: "服务器使用了命令 '<var:command>'."
+        regex: [ ]
+
+  onexecutedcommand:
+    remoteadmin:
+      player:
+        # command
+        # result
+        # returnmessage
+        # ipaddress
+        # name
+        # playerid
+        # steamid
+        # class
+        # team
+        message: "管理员 <var:name> (<var:steamid>) 使用了命令 '<var:command>'. 返回: '<var:returnmessage>'"
+        regex: [ ]
+      server:
+        # command
+        # result
+        # returnmessage
+        message: "服务器使用了命令 '<var:command>'. 返回: '<var:returnmessage>'"
+        regex: [ ]
+    game:
+      player:
+        # command
+        # result
+        # returnmessage
+        # ipaddress
+        # name
+        # playerid
+        # steamid
+        # class
+        # team
+        message: "<var:name> (<var:steamid>) 在控制台使用了命令 '<var:command>'. 返回: '<var:returnmessage>'"
+        regex: [ ]
+      server:
+        # command
+        # result
+        # returnmessage
+        message: "服务器使用了命令 '<var:command>'. 返回: '<var:returnmessage>'"
+        regex: [ ]
+    console:
+      player:
+        # command
+        # result
+        # returnmessage
+        # ipaddress
+        # name
+        # playerid
+        # steamid
+        # class
+        # team
+        message: "<var:name> (<var:steamid>) 使用了服务端后台命令 '<var:command>'. 返回: '<var:returnmessage>'"
+        regex: [ ]
+      server:
+        # command
+        # result
+        # returnmessage
+        message: "服务器使用了命令 '<var:command>'. 返回: '<var:returnmessage>'"
+        regex: [ ]
+
+  onreload:
+    # weapon
+    # maxclipsize
+    # ipaddress
+    # name
+    # playerid
+    # steamid
+    # class
+    # team
+    message: "<var:name> (<var:steamid>) 对他们的 <var:weapon> 换弹了."
+    regex: []
+
+  ongrenadeexplosion:
+    # ipaddress
+    # name
+    # playerid
+    # steamid
+    # class
+    # team
+    message: "<var:name> (<var:steamid>)的 手榴弹爆炸了."
+    regex: []
+
+  ongrenadehitplayer:
+    # targetipaddress - string
+    # targetname - string
+    # targetplayerid - int
+    # targetsteamid - string
+    # targetclass - Role
+    # targetteam - Team
+    # playeripaddress - string
+    # playername - string
+    # playerplayerid - int
+    # playersteamid - string
+    # playerclass - Role
+    # playerteam - Team
+    message: "<var:playername> (<var:playersteamid>)的 手榴弹 对 <var:targetname> (<var:targetsteamid>) 造成了伤害"
+    regex: []
+
+  ongeneratorunlock:
+    # engaged - bool
+    # activating - bool
+    # locked - bool
+    # open - bool
+    # room - RoomType
+    # starttime - float
+    # timeleft - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 解锁了在 <var:room> 的发电机"
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"Alpha核弹室" ]
+
+  ongeneratorclose:
+    # engaged - bool
+    # activating - bool
+    # locked - bool
+    # open - bool
+    # room - RoomType
+    # starttime - float
+    # timeleft - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 关闭了在 <var:room> 的发电机"
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"Alpha核弹室" ]
+
+  ongeneratoropen:
+    # engaged - bool
+    # activating - bool
+    # locked - bool
+    # open - bool
+    # room - RoomType
+    # starttime - float
+    # timeleft - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 打开了在 <var:room> 的发电机"
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"Alpha核弹室" ]
+
+  ongeneratoractivated:
+    # engaged - bool
+    # activating - bool
+    # locked - bool
+    # open - bool
+    # room - RoomType
+    # starttime - float
+    # timeleft - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 在 <var:room> 激活了发电机"
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"Alpha核弹室" ]
+
+  ongeneratordeactivated:
+    # engaged - bool
+    # activating - bool
+    # locked - bool
+    # open - bool
+    # room - RoomType
+    # starttime - float
+    # timeleft - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 关闭了在 <var:room> 的发电机"
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"Alpha核弹室" ]
+
+  on079lockdoor:
+    # open - bool
+    # door - string
+    # apdrain - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "SCP-079 <var:name> (<var:steamid>) 锁住了一扇门."
+    regex: []
+
+  on079teslagate:
+    # apdrain - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 激活了特斯拉电网."
+    regex: []
+
+  on079addexp:
+    # xptype - ExperienceType
+    # amount - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "SCP-079 <var:name> (<var:steamid>) 得到了 <var:amount> 经验."
+    regex: []
+
+  on079levelup:
+    # level - int
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "SCP-079 <var:name> (<var:steamid>) 升级了."
+    regex: []
+
+  on079unlockdoor:
+    # doorname - string
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "SCP-079 <var:name> (<var:steamid>) 解锁了 <var:doorname> 门."
+    regex: []
+
+  on079lockdown:
+    # room - RoomType
+    # apdrain - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "SCP-079 <var:name> (<var:steamid>) 已经封锁了 <var:room> 房间."
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"核弹室" ]
+
+  on079cancellockdown:
+    # room - RoomType
+    # apdrain - float
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # class - Role
+    # team - Team
+    message: "SCP-079 <var:name> (<var:steamid>) 解锁了 <var:room> 房间."
+    regex: [
+      "Micro-HID":"Micro-HID房间",
+      "nuke":"核弹室" ]
+
+  onban:
+    player:
+      # duration - int
+      # reason - string
+      # playeripaddress - string
+      # playername - string
+      # playerplayerid - int
+      # playersteamid - string
+      # playerclass - Role
+      # playerteam - Team
+      # issueripaddress - string
+      # issuername - string
+      # issuerplayerid - int
+      # issuersteamid - string
+      # issuerclass - Role
+      # issuerteam - Team
+      message: "**玩家 <var:playername> (<var:playersteamid>) 因为 <var:issuername> (<var:issuersteamid>) 被封禁 `<var:duration>`. 原因: <var:reason>**"
+      regex: [ ]
+    server:
+      # duration - int
+      # reason - string
+      # playeripaddress - string
+      # playername - string
+      # playerplayerid - int
+      # playersteamid - string
+      # playerclass - Role
+      # playerteam - Team
+      message: "**玩家 <var:playername> (<var:playersteamid>) 被服务器封禁 `<var:duration>`. 原因: <var:reason>**"
+      regex: []
+
+  onbanissued:
+    # duration
+    # expirytime
+    # issuedtime
+    # reason
+    # playerip
+    # playername
+    # issuername
+    ip:
+      message: >+
+        **IP-封禁 公告**
+        ```
+        玩家:    <var:playername>\n
+        IP:        <var:playerip>\n
+        时间:    <var:issuedtime>\n
+        截止日期:   <var:expirytime>\n
+        持续时间:  <var:duration>\n
+        操作人:    <var:issuername>\n
+        原因:    <var:reason>
+        ```
+      regex: []
+    # duration
+    # expirytime
+    # issuedtime
+    # reason
+    # playeruserid
+    # playername
+    # issuername
+    userid:
+      message: >+
+        **用户-封禁 公告**
+        ```
+        玩家:    <var:playername>\n
+        Steam64位ID:    <var:playeruserid>\n
+        时间:    <var:issuedtime>\n
+        截止日期:   <var:expirytime>\n
+        持续时间:  <var:duration>\n
+        操作人:    <var:issuername>\n
+        原因:    <var:reason>
+        ```
+      regex: []
+
+  onbanupdated:
+    # duration
+    # expirytime
+    # issuedtime
+    # reason
+    # playerip
+    # playername
+    # issuername
+    ip:
+      message: >+
+        **IP-封禁 更新**
+        ```
+        玩家:    <var:playername>\n
+        IP:        <var:playerip>\n
+        时间:    <var:issuedtime>\n
+        截止日期:   <var:expirytime>\n
+        持续时间:  <var:duration>\n
+        操作人:    <var:issuername>\n
+        原因:    <var:reason>
+        ```
+      regex: []
+    # duration
+    # expirytime
+    # issuedtime
+    # reason
+    # playeruserid
+    # playername
+    # issuername
+    userid:
+      message: >+
+        **用户-封禁 更新**
+        ```
+        玩家:    <var:playername>\n
+        Steam64位ID:    <var:playeruserid>\n
+        时间:    <var:issuedtime>\n
+        截止日期:   <var:expirytime>\n
+        持续时间:  <var:duration>\n
+        操作人:    <var:issuername>\n
+        原因:    <var:reason>
+        ```
+      regex: []
+
+  onbanrevoked:
+    # ip
+    ip:
+      message: "**IP-封禁 '<var:ip>' 已经取消.**"
+      regex: []
+    # userid
+    userid:
+      message: "**用户-封禁 '<var:userid>' 已经取消.**"
+      regex: []
+
+  onkick:
+    player:
+      # reason - string
+      # playeripaddress - string
+      # playername - string
+      # playerplayerid - int
+      # playersteamid - string
+      # playerclass - Role
+      # playerteam - Team
+      # issueripaddress - string
+      # issuername - string
+      # issuerplayerid - int
+      # issuersteamid - string
+      # issuerclass - Role
+      # issuerteam - Team
+      message: "**玩家 <var:playername> (<var:playersteamid>) 被 <var:issuername> (<var:issuersteamid>) 踢出服务器. 原因: <var:reason>**"
+      regex: [ ]
+    server:
+      # reason - string
+      # playeripaddress - string
+      # playername - string
+      # playerplayerid - int
+      # playersteamid - string
+      # playerclass - Role
+      # playerteam - Team
+      message: "**玩家 <var:playername> (<var:playersteamid>) 被服务器踢出. 原因: <var:reason>**"
+      regex: []
+
+  onplayermuted:
+    player:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被 <var:issuername> (<var:issuersteamid>) 禁止了广播室发言.**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被 <var:issuername> (<var:issuersteamid>) 禁言了.**"
+        regex: []
+    server:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被服务器禁止了广播室发言.**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被服务器禁言了.**"
+        regex: []
+
+  onplayerunmuted:
+    player:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被 <var:issuername> (<var:issuersteamid>) 解除广播室禁言.**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        # issueripaddress - string
+        # issuername - string
+        # issuerplayerid - int
+        # issuersteamid - string
+        # issuerclass - Role
+        # issuerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被 <var:issuername> (<var:issuersteamid>) 解除禁言.**"
+        regex: []
+    server:
+      intercom:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被服务器解除广播室禁言.**"
+        regex: []
+      standard:
+        # playeripaddress - string
+        # playername - string
+        # playerplayerid - int
+        # playersteamid - string
+        # playerclass - Role
+        # playerteam - Team
+        message: "**<var:playername> (<var:playersteamid>) 被服务器解除禁言.**"
+        regex: []
+
+  onteamrespawn:
+    # players - List<Player>
+    # spawnchaos - bool
+    mtf:
+      message: "**机动特遣部队Epsilon-11已经进入该设施。**"
+      regex: []
+    ci:
+      message: "**检测到设施被入侵，入侵者被确定为敌对GOI成员 \"混沌分裂者\".**"
+      regex: []
+
+  onplayerescape:
+    # newclass - Role
+    # ipaddress - string
+    # name - string
+    # playerid - int
+    # steamid - string
+    # oldclass - Role
+    # team - Team
+    message: "<var:name> (<var:steamid>) 已经逃脱并成为了 <var:newclass>"
+    regex: []
+
+  #####################################################################################################################
+  #                                                                                                                   #
+  #                                                   DISCORD 机器人                                                  #
+  #                                                                                                                   #
+  #   信息: 要显示的信息。变量以 <var:name> 的格式插入，例如: <var:ipaddress>.                                            #
+  #   正则表达式: 正则表达式与替换字符串配对，用于查找和替换信息的某些部分。                                                #
+  #                                                                                                                   #
+  #####################################################################################################################
+
+  connectedtobot:
+    message: "**已连接 SCP:SL 服务器**"
+    regex: []
+
+  invalidsteamid:
+    # steamid - string
+    message: "无效的Steam64位ID '<var:steamid>'."
+    regex: []
+
+  invalidsteamidorip:
+    # steamidorip - string
+    message: "无效的Steam64位ID/IP '<var:steamidorip>'."
+    regex: []
+
+  invalidduration:
+    # duration - string
+    message: "无效的持续时间 '<var:duration>'."
+    regex: []
+
+  playernotfound:
+    # steamid - string
+    message: "没有找到具有Steam64位ID为 '<var:steamid>' 的玩家."
+    regex: []
+
+  playerkicked:
+    # name - string
+    # steamid - string
+    # admintag - string
+    message: "'<var:name>' (<var:steamid>) 被 <var:admintag> 踢出服务器."
+    regex: []
+
+  playerbanned:
+    # name - string
+    # steamid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    message: "'<var:name>' (<var:steamid>) 被 <var:admintag> 从服务器上封禁 原因 '<var:reason>' (<var:duration>)."
+    regex: []
+
+  playerunbanned:
+    # steamidorip - string
+    message: "所有带有该 Steam64位ID/IP '<var:steamidorip>' 的项目已经从封禁列表中删除."
+    regex: []
+
+  kickall:
+    # reason - string
+    # admintag - string
+    message: "所有玩家都被 <var:admintag> 踢出了服务器 原因 '<var:reason>'."
+    regex: []
+
+  # 控制台命令的反馈，除了上面的自定义命令。（不受最终的正则表达式以外的全局正则表达式的影响）
+  consolecommandfeedback:
+    # feedback - string
+    message: "<var:feedback>"
+    regex: []
+
+  botstatus:
+    # players - int
+    # maxplayers - int
+    message: "当前服务器玩家 <var:players> / <var:maxplayers>"
+    regex: []
+
+  listtitle:
+    # players
+    # maxplayers
+    message: "玩家数 <var:players> / <var:maxplayers>"
+    regex: []
+
+  listrow:
+    default:
+      # ipaddress - string
+      # name - string
+      # playerid - int
+      # steamid - string
+      # class - Role
+      # team - Team
+      message: "**<var:name>** | **<var:class>** | `<var:steamid>` \n"
+      regex: []
+    empty:
+      message: "没有玩家在线."
