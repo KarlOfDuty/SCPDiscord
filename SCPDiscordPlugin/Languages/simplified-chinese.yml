@@ -206,7 +206,7 @@ messages:
     # steamid - 字符串(string)
     # jointype - CentralAuthPreauthFlags
     # region - 字符串(string)
-    message: "玩家 (Steam64位ID <var:steamid> IP <var.ipaddress>)正在尝试连接..."
+    message: "玩家 <var:steamid> 正在尝试连接..."
     regex: []
 
   onplayerleave:
@@ -243,11 +243,10 @@ messages:
       **回合结束！ 回合时长 <var:duration> 分钟**
       ```
       逃脱的D级人员数:            <var:dclassescaped>/<var:dclassstart>\n
-      获救的科学家数:         <var:scientistsescaped>/<var:scientistsstart>\n
-      剩余SCP:             <var:scpdead>/<var:scpstart>\n
-      SCP击杀数:              <var:scpkills>\n
+      获救的科学家数:             <var:scientistsescaped>/<var:scientistsstart>\n
+      剩余SCP:                   <var:scpdead>/<var:scpstart>\n
+      SCP击杀数:                 <var:scpkills>\n
       Alpha核弹 <var:warheaddetonated> 引爆.
-      ```
     regex: ["True":"被","False":"未被"]
 
   onwaitingforplayers:
