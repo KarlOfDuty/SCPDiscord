@@ -9,7 +9,15 @@ bot:
 
 settings:
     # The language is the same as the name of the language file you want to use.
-    # Included language files: english (default), russian, french, polish, italian, finnish, english-emote, russian-emote, french-emote, polish-emote, finnish-emote
+
+    # Included languages:        Emote versions:
+    # english (default)          english-emote
+    # ukrainian                  ukrainian-emote
+    # russian                    russian-emote
+    # simplified-chinese
+
+    # If you want to override specific messages you can copy them to overrides.yml
+    # and they will automatically replace the corresponding messages from the language selected below
     language: "english"
     # Whether or not to show this server's player count in the bot's activity.
     # Set to false to disable.

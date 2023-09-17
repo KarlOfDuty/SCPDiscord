@@ -100,5 +100,12 @@ namespace SCPDiscord.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        internal static byte[] simplified_chinese {
+            get {
+                object obj = ResourceManager.GetObject("simplified-chinese", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

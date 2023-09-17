@@ -26,13 +26,14 @@ namespace SCPDiscord
 		// All default languages included in the .dll
 		private static readonly Dictionary<string, string> defaultLanguages = new Dictionary<string, string>
 		{
-			{ "overrides",          Encoding.UTF8.GetString(Resources.overrides)        },
-			{ "english",            Encoding.UTF8.GetString(Resources.english)          },
-			{ "ukrainian",          Encoding.UTF8.GetString(Resources.ukrainian)        },
-			{ "russian",            Encoding.UTF8.GetString(Resources.russian)          },
-			{ "english-emote",      Encoding.UTF8.GetString(Resources.english_emote)    },
-			{ "ukrainian-emote",    Encoding.UTF8.GetString(Resources.ukrainian_emote)  },
-			{ "russian-emote",      Encoding.UTF8.GetString(Resources.russian_emote)    },
+			{ "overrides",          Encoding.UTF8.GetString(Resources.overrides)          },
+			{ "english",            Encoding.UTF8.GetString(Resources.english)            },
+			{ "ukrainian",          Encoding.UTF8.GetString(Resources.ukrainian)          },
+			{ "russian",            Encoding.UTF8.GetString(Resources.russian)            },
+			{ "english-emote",      Encoding.UTF8.GetString(Resources.english_emote)      },
+			{ "ukrainian-emote",    Encoding.UTF8.GetString(Resources.ukrainian_emote)    },
+			{ "russian-emote",      Encoding.UTF8.GetString(Resources.russian_emote)      },
+			{ "simplified-chinese", Encoding.UTF8.GetString(Resources.simplified_chinese) },
 		};
 
 		public static void Reload()
