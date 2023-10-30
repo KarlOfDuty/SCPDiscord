@@ -7,12 +7,12 @@ using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {
-	[CommandHandler(typeof(GameConsoleCommandHandler))]
 	public class GrantReservedSlotCommand : ICommand
 	{
-		public string Command => "scpdiscord_grantreservedslot";
-		public string[] Aliases => new[] { "scpd_grantreservedslot", "scpd_grs" };
-		public string Description => "Adds a user to the reserved slots list and reloads it.";
+		public string Command { get; } = "grantreservedslot";
+		public string[] Aliases { get; } = new[] { "grs" };
+		public string Description { get; } = "Adds a user to the reserved slots list and reloads it.";
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			/*
@@ -25,13 +25,13 @@ namespace SCPDiscord.Commands
 			}
 			*/
 
-			if (arguments.Count < 1)
+			if (arguments.Count != 1)
 			{
 				response = "Invalid arguments.";
 				return false;
 			}
 
-			string steamID = arguments.At(0).Trim();
+			string steamID = arguments.Array[2].Trim();
 			if (!steamID.EndsWith("@steam") && long.TryParse(steamID, out _))
 			{
 				steamID += "@steam";

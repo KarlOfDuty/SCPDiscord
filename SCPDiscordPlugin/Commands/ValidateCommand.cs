@@ -4,12 +4,12 @@ using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {
-	[CommandHandler(typeof (GameConsoleCommandHandler))]
 	public class ValidateCommand : ICommand
 	{
-		public string Command => "scpdiscord_validate";
-		public string[] Aliases => new string[] { "scpd_validate" };
-		public string Description => "Creates a config validation report.";
+		public string Command { get; } = "validate";
+		public string[] Aliases { get; } = new string[] { "v" };
+		public string Description { get; } = "Creates a config validation report.";
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			/*if (sender is Player player)

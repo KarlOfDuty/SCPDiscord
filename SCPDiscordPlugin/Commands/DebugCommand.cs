@@ -3,12 +3,12 @@ using CommandSystem;
 
 namespace SCPDiscord.Commands
 {
-	[CommandHandler(typeof (GameConsoleCommandHandler))]
 	public class DebugCommand : ICommand
 	{
-		public string Command => "scpdiscord_debug";
-		public string[] Aliases => new string[] { "scpd_debug" };
-		public string Description => "Toggles debug mode for SCPDiscord.";
+		public string Command { get; } = "debug";
+		public string[] Aliases { get; } = new string[] { "d" };
+		public string Description { get; } = "Toggles debug mode for SCPDiscord.";
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			/*
