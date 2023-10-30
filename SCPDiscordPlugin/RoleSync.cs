@@ -9,6 +9,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using CentralAuth;
 using PluginAPI.Core;
 
 namespace SCPDiscord
@@ -58,7 +59,7 @@ namespace SCPDiscord
 
 		public void SendRoleQuery(Player player)
 		{
-			if (CharacterClassManager.OnlineMode)
+			if (PlayerAuthenticationManager.OnlineMode)
 			{
 				if (!syncedPlayers.ContainsKey(player.UserId))
 				{
@@ -180,7 +181,7 @@ namespace SCPDiscord
 
 		public EmbedMessage AddPlayer(SyncRoleCommand command)
 		{
-			if (CharacterClassManager.OnlineMode)
+			if (PlayerAuthenticationManager.OnlineMode)
 			{
 				if (syncedPlayers.ContainsKey(command.SteamIDOrIP + "@steam"))
 				{
