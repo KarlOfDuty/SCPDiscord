@@ -3,7 +3,6 @@ using Interactables.Interobjects.DoorUtils;
 using MapGeneration;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
-using PlayerRoles.Ragdolls;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
