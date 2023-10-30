@@ -6,12 +6,12 @@ using CommandSystem;
 
 namespace SCPDiscord.Commands
 {
-	[CommandHandler(typeof (GameConsoleCommandHandler))]
 	public class RemoveReservedSlotCommand : ICommand
 	{
-		public string Command => "scpdiscord_removereservedslot";
-		public string[] Aliases => new[] { "scpd_removereservedslot", "scpd_rrs" };
-		public string Description => "Removes a player from the reserved slots list.";
+		public string Command { get; } = "removereservedslot";
+		public string[] Aliases { get; } = new[] { "rrs" };
+		public string Description { get; } = "Removes a player from the reserved slots list.";
+
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			/*
@@ -24,14 +24,14 @@ namespace SCPDiscord.Commands
 			}
 			*/
 
-			if (arguments.Count < 1 || arguments.At(0).Length < 10)
+			if (arguments.Count != 1 || arguments.Array[2].Length < 10)
 			{
 				response = "Invalid arguments.";
 				return false;
 			}
 
 			bool found = false;
-			string steamID = arguments.At(0);
+			string steamID = arguments.Array[2];
 			List<string> reservedSlotsFileRows = File.ReadAllLines(Config.GetReservedSlotPath()).ToList();
 			for (int i = 0; i < reservedSlotsFileRows.Count; ++i)
 			{
