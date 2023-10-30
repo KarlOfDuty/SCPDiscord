@@ -4,6 +4,7 @@ namespace SCPDiscord.Commands
     using CommandSystem;
     //using PluginAPI.Core;
 
+    [CommandHandler(typeof(GameConsoleCommandHandler))]
     public class ReconnectCommand : ICommand
     {
         public string Command { get; } = "reconnect";
