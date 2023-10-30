@@ -8,7 +8,6 @@ using InventorySystem.Items.Radio;
 using InventorySystem.Items.ThrowableProjectiles;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp939;
-using PlayerRoles.Ragdolls;
 using PlayerStatsSystem;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
