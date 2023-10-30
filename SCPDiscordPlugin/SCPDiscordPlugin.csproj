@@ -39,33 +39,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\.scpsl_libs\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\CommandSystem.Core.dll</HintPath>
+      <HintPath>..\.scpsl_libs\CommandSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\Mirror.dll</HintPath>
+      <HintPath>..\.scpsl_libs\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="PluginAPI">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\PluginAPI.dll</HintPath>
+      <HintPath>..\.scpsl_libs\PluginAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\UnityEngine.dll</HintPath>
+      <HintPath>..\.scpsl_libs\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\.scpsl_libs\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="YamlDotNet">
-      <HintPath>..\..\..\..\SCPSL_REFERENCES\YamlDotNet.dll</HintPath>
+      <HintPath>..\.scpsl_libs\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\GrantVanillaRankCommand.cs" />
-    <Compile Include="Commands\SCPDiscordCommand.cs" />
     <Compile Include="Commands\SetNickname.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Commands\DebugCommand.cs" />
