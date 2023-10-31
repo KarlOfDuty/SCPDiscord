@@ -27,21 +27,16 @@ namespace SCPDiscord.Commands
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            response = $"[SCPDiscord]\nUsage: {arguments.Array[0]} [Command]\n";
+            response = "Usage: " + arguments.Array?[0] + " [COMMAND]";
             foreach (ICommand command in AllCommands)
             {
-                response = string.Concat(new string[]
-                {
-                    response,
-                    "\n",
-                    "Command name: " + command.Command,
-                    ", ",
-                    "description: " + command.Description,
-                });
+                string line = "\n" + command.Command;
                 if (command.Aliases != null && command.Aliases.Length != 0)
                 {
-                    response = response + ", " + "aliases: " + string.Join(", ", command.Aliases);
+                    line += " (" + string.Join(", ", command.Aliases) + ")";
                 }
+                line += ": ";
+                response += line.PadRight(30) + command.Description;
             }
             return false;
         }
