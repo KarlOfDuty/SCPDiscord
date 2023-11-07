@@ -154,7 +154,7 @@ namespace SCPDiscord
 
 		public void Verbose(string message)
 		{
-			if (Config.GetBool("settings.verbose"))
+			if (Config.GetBool("settings.verbose") || Config.GetBool("settings.debug"))
 			{
 				Log.Info(message);
 			}
@@ -162,7 +162,7 @@ namespace SCPDiscord
 
 		public void VerboseWarn(string message)
 		{
-			if (Config.GetBool("settings.verbose"))
+			if (Config.GetBool("settings.verbose") || Config.GetBool("settings.debug"))
 			{
 				Log.Warning(message);
 			}
@@ -170,7 +170,7 @@ namespace SCPDiscord
 
 		public void VerboseError(string message)
 		{
-			if (Config.GetBool("settings.verbose"))
+			if (Config.GetBool("settings.verbose") || Config.GetBool("settings.debug"))
 			{
 				Log.Error(message);
 			}
