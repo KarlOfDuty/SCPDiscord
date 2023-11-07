@@ -3,11 +3,12 @@ using CommandSystem;
 
 namespace SCPDiscord.Commands
 {
-	public class ReloadCommand : ICommand
+	public class ReloadCommand : SCPDiscordCommand
 	{
 		public string Command { get; } = "reload";
-		public string[] Aliases { get; } = new string[] { "rl", "r" };
+		public string[] Aliases { get; } = { };
 		public string Description { get; } = "Reloads all plugin configs and data files and then reconnects to the bot.";
+		public string[] ArgumentList { get; } = { };
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{

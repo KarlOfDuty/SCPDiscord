@@ -6,11 +6,12 @@ using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {
-	public class SetNickname : ICommand
+	public class SetNickname : SCPDiscordCommand
 	{
 		public string Command { get; } = "setnickname";
-		public string[] Aliases { get; } = new string[] { "nick", "setn", "sn" };
+		public string[] Aliases { get; } = { "nick" };
 		public string Description { get; } = "Sets a nickname for a player.";
+		public string[] ArgumentList { get; } = { "<playerid/steamid>", "<nickname>" };
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
@@ -30,7 +31,7 @@ namespace SCPDiscord.Commands
 				return false;
 			}
 
-			string steamIDOrPlayerID = arguments.Array[2].Replace("@steam", ""); // Remove steam suffix if there is one
+			string steamIDOrPlayerID = arguments.At(2).Replace("@steam", ""); // Remove steam suffix if there is one
 
 			List<Player> matchingPlayers = new List<Player>();
 			try
@@ -55,7 +56,7 @@ namespace SCPDiscord.Commands
 
 			if (!matchingPlayers.Any())
 			{
-				response = "Player \"" + arguments.Array[2] + "\"not found.";
+				response = "Player \"" + arguments.At(2) + "\"not found.";
 				return false;
 			}
 

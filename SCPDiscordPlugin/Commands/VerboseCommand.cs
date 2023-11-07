@@ -4,11 +4,12 @@ using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {
-	public class VerboseCommand : ICommand
+	public class VerboseCommand : SCPDiscordCommand
 	{
 		public string Command { get; } = "verbose";
-		public string[] Aliases { get; } = new string[] { "" };
+		public string[] Aliases { get; } = { };
 		public string Description { get; } = "Toggles verbose messages.";
+		public string[] ArgumentList { get; } = { };
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{

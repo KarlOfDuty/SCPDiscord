@@ -6,11 +6,12 @@ using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {
-	public class GrantVanillaRankCommand : ICommand
+	public class GrantVanillaRankCommand : SCPDiscordCommand
 	{
 		public string Command { get; } = "grantvanillarank";
-		public string[] Aliases { get; } = new string[] { "gvr" };
+		public string[] Aliases { get; } = { "gvr" };
 		public string Description { get; } = "Grants a player the vanilla rank provided.";
+		public string[] ArgumentList { get; } = { "<playerid/steamid>", "<rank>" };
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
@@ -28,7 +29,7 @@ namespace SCPDiscord.Commands
 				return false;
 			}
 
-			string steamIDOrPlayerID = arguments.Array[2].Replace("@steam", ""); // Remove steam suffix if there is one
+			string steamIDOrPlayerID = arguments.At(2).Replace("@steam", ""); // Remove steam suffix if there is one
 
 			List<Player> matchingPlayers = new List<Player>();
 			try
@@ -53,7 +54,7 @@ namespace SCPDiscord.Commands
 
 			if (!matchingPlayers.Any())
 			{
-				response = "Player \"" + arguments.Array[2] + "\"not found.";
+				response = "Player \"" + arguments.At(2) + "\"not found.";
 				return false;
 			}
 
@@ -61,12 +62,12 @@ namespace SCPDiscord.Commands
 			{
 				foreach (Player matchingPlayer in matchingPlayers)
 				{
-					matchingPlayer.SetRank(null, null, arguments.Array[3]);
+					matchingPlayer.SetRank(null, null, arguments.At(3));
 				}
 			}
 			catch (Exception)
 			{
-				response = "Vanilla rank \"" + arguments.Array[3] + "\" not found. Are you sure you are using the RA config role name and not the role title/badge?";
+				response = "Vanilla rank \"" + arguments.At(3) + "\" not found. Are you sure you are using the RA config role name and not the role title/badge?";
 				return false;
 			}
 

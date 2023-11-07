@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\GrantVanillaRankCommand.cs" />
-    <Compile Include="Commands\SCPDiscordCommand.cs" />
+    <Compile Include="Commands\RootCommand.cs" />
     <Compile Include="Commands\SetNickname.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Commands\DebugCommand.cs" />

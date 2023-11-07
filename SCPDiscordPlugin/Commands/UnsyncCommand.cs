@@ -4,11 +4,12 @@ using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {
-	public class UnsyncCommand : ICommand
+	public class UnsyncCommand : SCPDiscordCommand
 	{
 		public string Command { get; } = "unsync";
-		public string[] Aliases { get; } = new string[] { "us", "u" };
+		public string[] Aliases { get; } = { };
 		public string Description { get; } = "Removes a user from having their discord role synced to the server.";
+		public string[] ArgumentList { get; } = { "<discordid>" };
 
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
