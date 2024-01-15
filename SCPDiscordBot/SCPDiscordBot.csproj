@@ -5,9 +5,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <Version>3.1.5</Version>
+    <PackageVersion>3.1.5</PackageVersion>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <LangVersion>default</LangVersion>
-    <PackageVersion>3.1.5</PackageVersion>
+    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+    <Authors>KarlofDuty</Authors>
+    <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/KarlOfDuty/SCPDiscord</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIconUrl>./icon.ico</PackageIconUrl>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
