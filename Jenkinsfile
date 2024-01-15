@@ -21,14 +21,18 @@ pipeline {
                         stage('Linux') {
                             steps {
                                 dir(path: 'SCPDiscordBot') {
-                                    sh 'dotnet publish -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --no-restore --output Linux-x64/'
+                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_Standard -p:PublishSingleFile=true -p:PublishTrimmed=true -r linux-x64 -c Release --no-restore --output ../'
+                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_SelfContained -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --no-restore --output ../'
+                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --no-restore --output ../'
                                 }
                             }
                         }
                         stage('Windows') {
                             steps {
                                 dir(path: 'SCPDiscordBot') {
-                                    sh 'dotnet publish -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output Windows-x64/'
+                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_Standard -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --no-restore --output ../'
+                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_SelfContained -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ../'
+                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ../'
                                 }
                             }
                         }
