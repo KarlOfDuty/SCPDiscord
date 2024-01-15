@@ -50,8 +50,8 @@ pipeline {
                 stage('Bot') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'mv Linux-x64/SCPDiscord ../SCPDiscordBot_Linux'
-                            sh 'mv Windows-x64/SCPDiscord.exe ../SCPDiscordBot_Windows.exe'
+                            sh 'mv Linux-x64/SCPDiscordBot ../SCPDiscordBot_Linux'
+                            sh 'mv Windows-x64/SCPDiscordBot.exe ../SCPDiscordBot_Windows.exe'
                         }
                     }
                 }
