@@ -17,10 +17,20 @@ pipeline {
                     }
                 }
                 stage('Bot') {
-                    steps {
-                        dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet build --output bin/linux-x64 --configuration Release --runtime linux-x64'
-                            sh 'dotnet build --output bin/win-x64 --configuration Release --runtime win-x64'
+                    parallel {
+                        stage('Linux') {
+                            steps {
+                                dir(path: 'SCPDiscordBot') {
+                                    sh 'dotnet publish -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --no-restore --output Linux-x64/'
+                                }
+                            }
+                        }
+                        stage('Windows') {
+                            steps {
+                                dir(path: 'SCPDiscordBot') {
+                                    sh 'dotnet publish -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output Windows-x64/'
+                                }
+                            }
                         }
                     }
                 }
@@ -40,8 +50,8 @@ pipeline {
                 stage('Bot') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'warp-packer --arch linux-x64 --input_dir bin/linux-x64 --exec SCPDiscordBot --output ../SCPDiscordBot_Linux'
-                            sh 'warp-packer --arch windows-x64 --input_dir bin/win-x64 --exec SCPDiscordBot.exe --output ../SCPDiscordBot_Windows.exe'
+                            sh 'mv Linux-x64/SCPDiscord ../SCPDiscordBot_Linux'
+                            sh 'mv Windows-x64/SCPDiscord.exe ../SCPDiscordBot_Windows.exe'
                         }
                     }
                 }
