@@ -17,7 +17,7 @@ pipeline {
                     }
                 }
                 stage('Bot') {
-                    parallel {
+                    stages {
                         stage('Linux') {
                             steps {
                                 dir(path: 'SCPDiscordBot') {
