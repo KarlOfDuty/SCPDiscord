@@ -16,6 +16,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIconUrl>./icon.ico</PackageIconUrl>
     <NeutralLanguage>en</NeutralLanguage>
+    <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
   <ItemGroup>
