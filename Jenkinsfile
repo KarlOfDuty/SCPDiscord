@@ -54,11 +54,6 @@ pipeline {
                 }
             }
         }
-        stage('Dependencies (JIT)') {
-            steps {
-                sh 'cd SCPDiscordBot; dotnet restore'
-            }
-        }
         stage('Build (JIT)') {
             parallel {
                 stage('Bot - Small') {
@@ -72,7 +67,6 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
-                            --no-restore\\
                             --output ./small
                             '''
                         }
@@ -90,7 +84,6 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
-                            --no-restore\\
                             --self-contained true\\
                             --output ./sc
                             '''
@@ -108,7 +101,6 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
-                            --no-restore\\
                             --output ./small_win
                             '''
                         }
@@ -126,7 +118,6 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
-                            --no-restore\\
                             --self-contained true\\
                             --output ./sc_win
                             '''
