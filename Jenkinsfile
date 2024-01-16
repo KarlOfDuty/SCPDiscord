@@ -42,7 +42,6 @@ pipeline {
                         dir(path: 'SMALL') {
                             sh '''dotnet publish\\
                             -p:PublishSingleFile=true\\
-                            -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
                             --self-contained false\\
@@ -87,7 +86,6 @@ pipeline {
                         dir(path: 'SMALL_Win') {
                             sh '''dotnet publish\\
                             -p:PublishSingleFile=true\\
-                            -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
                             --self-contained false\\
