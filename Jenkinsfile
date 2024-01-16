@@ -33,6 +33,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
+                            --no-restore\\
                             --self-contained true\\
                             --output ./r2r
                             '''
@@ -51,6 +52,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
+                            --no-restore\\
                             --self-contained true\\
                             --output ./r2r_win
                             '''
@@ -77,6 +79,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
+                            --no-restore\\
                             --output ./small
                             '''
                         }
@@ -94,6 +97,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
+                            --no-restore\\
                             --self-contained true\\
                             --output ./sc
                             '''
@@ -103,7 +107,7 @@ pipeline {
                 stage('Bot - Small (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh '''dotnet publish
+                            sh '''dotnet publish\\
                             -p:BaseOutputPath=small-bin-win/\\
                             -p:BaseIntermediateOutputPath=small-obj-win/\\
                             -p:AssemblyName=SCPDiscordBot_Small\\
@@ -111,6 +115,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
+                            --no-restore\\
                             --output ./small_win
                             '''
                         }
@@ -119,16 +124,17 @@ pipeline {
                 stage('Bot - Self Contained (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh '''dotnet publish
+                            sh '''dotnet publish\\
                             -p:BaseOutputPath=sc-bin-win/\\
                             -p:BaseIntermediateOutputPath=sc-obj-win/\\
-                            -p:AssemblyName=SCPDiscordBot_SC
-                            -p:PublishSingleFile=true
-                            -p:IncludeAllContentForSelfExtract=true
-                            -p:PublishTrimmed=true
-                            -r win-x64
-                            -c Release
-                            --self-contained true
+                            -p:AssemblyName=SCPDiscordBot_SC\\
+                            -p:PublishSingleFile=true\\
+                            -p:IncludeAllContentForSelfExtract=true\\
+                            -p:PublishTrimmed=true\\
+                            -r win-x64\\
+                            -c Release\\
+                            --no-restore\\
+                            --self-contained true\\
                             --output ./sc_win
                             '''
                         }
