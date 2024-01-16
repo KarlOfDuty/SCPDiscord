@@ -11,7 +11,7 @@ pipeline {
                 sh 'cp -r "SCPDiscordBot" "SC"'
                 sh 'cp -r "SCPDiscordBot" "AOT_Win"'
                 sh 'cp -r "SCPDiscordBot" "SMALL_Win"'
-                sh 'cp -r "SCPDiscordBot" "SC_Win"'
+                sh 'mv    "SCPDiscordBot" "SC_Win"'
             }
         }
         stage('Build') {
@@ -25,7 +25,6 @@ pipeline {
                     steps {
                         dir(path: 'AOT') {
                             sh '''dotnet publish\\
-                            -p:AssemblyName=SCPDiscordBot_AOT\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -41,7 +40,6 @@ pipeline {
                     steps {
                         dir(path: 'SMALL') {
                             sh '''dotnet publish\\
-                            -p:AssemblyName=SCPDiscordBot_Small\\
                             -p:PublishSingleFile=true\\
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
@@ -55,7 +53,6 @@ pipeline {
                     steps {
                         dir(path: 'SC') {
                             sh '''dotnet publish\\
-                            -p:AssemblyName=SCPDiscordBot_SC\\
                             -p:PublishSingleFile=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -71,7 +68,6 @@ pipeline {
                     steps {
                         dir(path: 'AOT_Win') {
                             sh '''dotnet publish\\
-                            -p:AssemblyName=SCPDiscordBot_AOT\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -87,7 +83,6 @@ pipeline {
                     steps {
                         dir(path: 'SMALL_Win') {
                             sh '''dotnet publish\\
-                            -p:AssemblyName=SCPDiscordBot_Small\\
                             -p:PublishSingleFile=true\\
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
@@ -101,7 +96,6 @@ pipeline {
                     steps {
                         dir(path: 'SC_Win') {
                             sh '''dotnet publish\\
-                            -p:AssemblyName=SCPDiscordBot_SC\\
                             -p:PublishSingleFile=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -128,12 +122,12 @@ pipeline {
                 }
                 stage('Bot') {
                     steps {
-                       sh 'mv AOT/out/SCPDiscordBot_Small ./'
-                       sh 'mv SMALL/out/SCPDiscordBot_SC ./'
-                       sh 'mv SC/out/SCPDiscordBot_AOT ./'
-                       sh 'mv AOT_Win/out/SCPDiscordBot_Small.exe ./'
-                       sh 'mv SMALL_Win/out/SCPDiscordBot_SC.exe ./'
-                       sh 'mv SC_Win/out/SCPDiscordBot_AOT.exe ./'
+                       sh 'mv AOT/out/SCPDiscordBot ./SCPDiscordBot_Linux_AOT'
+                       sh 'mv SMALL/out/SCPDiscordBot ./SCPDiscordBot_Linux'
+                       sh 'mv SC/out/SCPDiscordBot ./SCPDiscordBot_Linux_SC'
+                       sh 'mv AOT_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_AOT'
+                       sh 'mv SMALL_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows.exe'
+                       sh 'mv SC_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_SC.exe'
                     }
                 }
             }
@@ -143,12 +137,12 @@ pipeline {
                 sh 'zip -r dependencies.zip dependencies'
                 archiveArtifacts(artifacts: 'dependencies.zip', onlyIfSuccessful: true)
                 archiveArtifacts(artifacts: 'SCPDiscord.dll', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Small', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Small.exe', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_SC', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_SC.exe', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_AOT', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_AOT.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Linux_Small', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Windows_Small.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Linux_SC', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Windows_SC.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Linux_AOT', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Windows_AOT.exe', onlyIfSuccessful: true)
             }
         }
     }
