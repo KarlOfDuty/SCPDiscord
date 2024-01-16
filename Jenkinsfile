@@ -25,6 +25,7 @@ pipeline {
                     steps {
                         dir(path: 'AOT') {
                             sh '''dotnet publish\\
+                            -p:PublishSingleFile=true\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -44,6 +45,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
+                            --self-contained false\\
                             --output ./out
                             '''
                         }
@@ -68,6 +70,7 @@ pipeline {
                     steps {
                         dir(path: 'AOT_Win') {
                             sh '''dotnet publish\\
+                            -p:PublishSingleFile=true\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -87,6 +90,7 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
+                            --self-contained false\\
                             --output ./out
                             '''
                         }
