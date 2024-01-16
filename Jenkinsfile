@@ -125,7 +125,7 @@ pipeline {
                        sh 'mv AOT/out/SCPDiscordBot ./SCPDiscordBot_Linux_AOT'
                        sh 'mv SMALL/out/SCPDiscordBot ./SCPDiscordBot_Linux'
                        sh 'mv SC/out/SCPDiscordBot ./SCPDiscordBot_Linux_SC'
-                       sh 'mv AOT_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_AOT'
+                       sh 'mv AOT_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_AOT.exe'
                        sh 'mv SMALL_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows.exe'
                        sh 'mv SC_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_SC.exe'
                     }
