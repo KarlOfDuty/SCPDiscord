@@ -22,7 +22,7 @@ pipeline {
                             sh '''dotnet publish\\
                             -p:BaseOutputPath=aot-bin/\\
                             -p:BaseIntermediateOutputPath=aot-obj/\\
-                            -p:AssemblyName=SCPDiscordBot_R2R\\
+                            -p:AssemblyName=SCPDiscordBot_AOT\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -42,7 +42,7 @@ pipeline {
                             sh '''dotnet publish\\
                             -p:BaseOutputPath=aot-bin-win/\\
                             -p:BaseIntermediateOutputPath=aot-obj-win/\\
-                            -p:AssemblyName=SCPDiscordBot_R2R\\
+                            -p:AssemblyName=SCPDiscordBot_AOT\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
                             -p:PublishTrimmed=true\\
@@ -145,10 +145,10 @@ pipeline {
                     steps {
                        sh 'mv SCPDiscordBot/small/SCPDiscordBot_Small ./'
                        sh 'mv SCPDiscordBot/sc/SCPDiscordBot_SC ./'
-                       sh 'mv SCPDiscordBot/r2r/SCPDiscordBot_R2R ./'
+                       sh 'mv SCPDiscordBot/aot/SCPDiscordBot_AOT ./'
                        sh 'mv SCPDiscordBot/small_win/SCPDiscordBot_Small.exe ./'
                        sh 'mv SCPDiscordBot/sc_win/SCPDiscordBot_SC.exe ./'
-                       sh 'mv SCPDiscordBot/r2r_win/SCPDiscordBot_R2R.exe ./'
+                       sh 'mv SCPDiscordBot/aot_win/SCPDiscordBot_AOT.exe ./'
                     }
                 }
             }
@@ -162,8 +162,8 @@ pipeline {
                 archiveArtifacts(artifacts: 'SCPDiscordBot_Small.exe', onlyIfSuccessful: true)
                 archiveArtifacts(artifacts: 'SCPDiscordBot_SC', onlyIfSuccessful: true)
                 archiveArtifacts(artifacts: 'SCPDiscordBot_SC.exe', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_R2R', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_R2R.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_AOT', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_AOT.exe', onlyIfSuccessful: true)
             }
         }
     }
