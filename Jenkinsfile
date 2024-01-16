@@ -67,8 +67,12 @@ pipeline {
                 sh 'zip -r dependencies.zip dependencies'
                 archiveArtifacts(artifacts: 'dependencies.zip', onlyIfSuccessful: true)
                 archiveArtifacts(artifacts: 'SCPDiscord.dll', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Linux', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Windows.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Small', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_Small.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_SC', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_SC.exe', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_R2R', onlyIfSuccessful: true)
+                archiveArtifacts(artifacts: 'SCPDiscordBot_R2R.exe', onlyIfSuccessful: true)
             }
         }
     }
