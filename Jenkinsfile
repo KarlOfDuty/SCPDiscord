@@ -6,22 +6,25 @@ pipeline {
             steps {
                 sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta public-beta validate +quit'
                 sh 'ln -s "\$HOME/scpsl/SCPSL_Data/Managed" ".scpsl_libs"'
-                sh 'cd SCPDiscordBot; dotnet restore -p:PublishReadyToRun=true'
+                sh 'cp -r "SCPDiscordBot" "AOT"'
+                sh 'cp -r "SCPDiscordBot" "SMALL"'
+                sh 'cp -r "SCPDiscordBot" "SC"'
+                sh 'cp -r "SCPDiscordBot" "AOT_Win"'
+                sh 'cp -r "SCPDiscordBot" "SMALL_Win"'
+                sh 'cp -r "SCPDiscordBot" "SC_Win"'
             }
         }
-        stage('Build (AOT)') {
+        stage('Build') {
             parallel {
                 stage('Plugin') {
                     steps {
                         sh 'msbuild SCPDiscordPlugin/SCPDiscordPlugin.csproj -restore -p:PostBuildEvent='
                     }
                 }
-                stage('Bot') {
+                stage('Bot - AOT') {
                     steps {
-                        dir(path: 'SCPDiscordBot') {
+                        dir(path: 'AOT') {
                             sh '''dotnet publish\\
-                            -p:BaseOutputPath=aot-bin/\\
-                            -p:BaseIntermediateOutputPath=aot-obj/\\
                             -p:AssemblyName=SCPDiscordBot_AOT\\
                             -p:PublishReadyToRun=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
@@ -29,59 +32,29 @@ pipeline {
                             -r linux-x64\\
                             -c Release\\
                             --self-contained true\\
-                            --output ./aot
-                            rm -rf aot-bin
-                            rm -rf aot-obj
+                            --output ./out
                             '''
                         }
                     }
                 }
-                stage('Bot (Windows)') {
-                    steps {
-                        dir(path: 'SCPDiscordBot') {
-                            sh '''dotnet publish\\
-                            -p:BaseOutputPath=aot-bin-win/\\
-                            -p:BaseIntermediateOutputPath=aot-obj-win/\\
-                            -p:AssemblyName=SCPDiscordBot_AOT\\
-                            -p:PublishReadyToRun=true\\
-                            -p:IncludeAllContentForSelfExtract=true\\
-                            -p:PublishTrimmed=true\\
-                            -r win-x64\\
-                            -c Release\\
-                            --self-contained true\\
-                            --output ./aot_win
-                            rm -rf aot-bin-win
-                            rm -rf aot-obj-win
-                            '''
-                        }
-                    }
-                }
-            }
-        }
-        stage('Build (JIT)') {
-            parallel {
                 stage('Bot - Small') {
                     steps {
-                        dir(path: 'SCPDiscordBot') {
+                        dir(path: 'SMALL') {
                             sh '''dotnet publish\\
-                            -p:BaseOutputPath=small-bin/\\
-                            -p:BaseIntermediateOutputPath=small-obj/\\
                             -p:AssemblyName=SCPDiscordBot_Small\\
                             -p:PublishSingleFile=true\\
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
-                            --output ./small
+                            --output ./out
                             '''
                         }
                     }
                 }
                 stage('Bot - Self Contained') {
                     steps {
-                        dir(path: 'SCPDiscordBot') {
+                        dir(path: 'SC') {
                             sh '''dotnet publish\\
-                            -p:BaseOutputPath=sc-bin/\\
-                            -p:BaseIntermediateOutputPath=sc-obj/\\
                             -p:AssemblyName=SCPDiscordBot_SC\\
                             -p:PublishSingleFile=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
@@ -89,33 +62,45 @@ pipeline {
                             -r linux-x64\\
                             -c Release\\
                             --self-contained true\\
-                            --output ./sc
+                            --output ./out
+                            '''
+                        }
+                    }
+                }
+                stage('Bot - AOT (Windows)') {
+                    steps {
+                        dir(path: 'AOT_Win') {
+                            sh '''dotnet publish\\
+                            -p:AssemblyName=SCPDiscordBot_AOT\\
+                            -p:PublishReadyToRun=true\\
+                            -p:IncludeAllContentForSelfExtract=true\\
+                            -p:PublishTrimmed=true\\
+                            -r win-x64\\
+                            -c Release\\
+                            --self-contained true\\
+                            --output ./out
                             '''
                         }
                     }
                 }
                 stage('Bot - Small (Windows)') {
                     steps {
-                        dir(path: 'SCPDiscordBot') {
+                        dir(path: 'SMALL_Win') {
                             sh '''dotnet publish\\
-                            -p:BaseOutputPath=small-bin-win/\\
-                            -p:BaseIntermediateOutputPath=small-obj-win/\\
                             -p:AssemblyName=SCPDiscordBot_Small\\
                             -p:PublishSingleFile=true\\
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
-                            --output ./small_win
+                            --output ./out
                             '''
                         }
                     }
                 }
                 stage('Bot - Self Contained (Windows)') {
                     steps {
-                        dir(path: 'SCPDiscordBot') {
+                        dir(path: 'SC_Win') {
                             sh '''dotnet publish\\
-                            -p:BaseOutputPath=sc-bin-win/\\
-                            -p:BaseIntermediateOutputPath=sc-obj-win/\\
                             -p:AssemblyName=SCPDiscordBot_SC\\
                             -p:PublishSingleFile=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
@@ -123,7 +108,7 @@ pipeline {
                             -r win-x64\\
                             -c Release\\
                             --self-contained true\\
-                            --output ./sc_win
+                            --output ./out
                             '''
                         }
                     }
@@ -143,12 +128,12 @@ pipeline {
                 }
                 stage('Bot') {
                     steps {
-                       sh 'mv SCPDiscordBot/small/SCPDiscordBot_Small ./'
-                       sh 'mv SCPDiscordBot/sc/SCPDiscordBot_SC ./'
-                       sh 'mv SCPDiscordBot/aot/SCPDiscordBot_AOT ./'
-                       sh 'mv SCPDiscordBot/small_win/SCPDiscordBot_Small.exe ./'
-                       sh 'mv SCPDiscordBot/sc_win/SCPDiscordBot_SC.exe ./'
-                       sh 'mv SCPDiscordBot/aot_win/SCPDiscordBot_AOT.exe ./'
+                       sh 'mv AOT/out/SCPDiscordBot_Small ./'
+                       sh 'mv SMALL/out/SCPDiscordBot_SC ./'
+                       sh 'mv SC/out/SCPDiscordBot_AOT ./'
+                       sh 'mv AOT_Win/out/SCPDiscordBot_Small.exe ./'
+                       sh 'mv SMALL_Win/out/SCPDiscordBot_SC.exe ./'
+                       sh 'mv SC_Win/out/SCPDiscordBot_AOT.exe ./'
                     }
                 }
             }
