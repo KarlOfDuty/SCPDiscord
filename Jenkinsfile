@@ -9,11 +9,6 @@ pipeline {
                 sh 'cd SCPDiscordBot; dotnet restore -p:PublishReadyToRun=true'
             }
         }
-        stage('Dependencies (AOT)') {
-            steps {
-                sh 'cd SCPDiscordBot; dotnet restore -p:PublishReadyToRun=true'
-            }
-        }
         stage('Build (AOT)') {
             parallel {
                 stage('Plugin') {
@@ -33,7 +28,6 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
-                            --no-restore\\
                             --self-contained true\\
                             --output ./r2r
                             '''
@@ -52,7 +46,6 @@ pipeline {
                             -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
-                            --no-restore\\
                             --self-contained true\\
                             --output ./r2r_win
                             '''
