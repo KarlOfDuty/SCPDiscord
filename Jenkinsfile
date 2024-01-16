@@ -24,7 +24,7 @@ pipeline {
                 stage('Bot') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish
+                            sh '''dotnet publish
                                   -p:BaseOutputPath=aot-bin
                                   -p:BaseIntermediateOutputPath=aot-obj
                                   -p:AssemblyName=SCPDiscordBot_R2R
@@ -34,14 +34,15 @@ pipeline {
                                   -r linux-x64
                                   -c Release
                                   --self-contained true
-                                  --output ./r2r'
+                                  --output ./r2r
+                            '''
                         }
                     }
                 }
                 stage('Bot (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish
+                            sh '''dotnet publish
                                   -p:BaseOutputPath=aot-bin-win
                                   -p:BaseIntermediateOutputPath=aot-obj-win
                                   -p:AssemblyName=SCPDiscordBot_R2R
@@ -51,7 +52,8 @@ pipeline {
                                   -r win-x64
                                   -c Release
                                   --self-contained true
-                                  --output ./r2r_win'
+                                  --output ./r2r_win
+                            '''
                         }
                     }
                 }
