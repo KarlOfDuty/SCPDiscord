@@ -15,25 +15,45 @@ pipeline {
                         sh 'msbuild SCPDiscordPlugin/SCPDiscordPlugin.csproj -restore -p:PostBuildEvent='
                     }
                 }
-                stage('Bot') {
-                    stages {
-                        stage('Linux') {
-                            steps {
-                                dir(path: 'SCPDiscordBot') {
-                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r linux-x64 -c Release --output ./small'
-                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./sc'
-                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./r2r'
-                                }
-                            }
+                stage('Bot - Small') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r linux-x64 -c Release --output ./small'
                         }
-                        stage('Windows') {
-                            steps {
-                                dir(path: 'SCPDiscordBot') {
-                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --no-restore --output ./small_win'
-                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ./sc_win'
-                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./r2r_win'
-                                }
-                            }
+                    }
+                }
+                stage('Bot - Self Contained') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./sc'
+                        }
+                    }
+                }
+                stage('Bot - AOT') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./r2r'
+                        }
+                    }
+                }
+                stage('Bot - Small (Windows)') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --no-restore --output ./small_win'
+                        }
+                    }
+                }
+                stage('Bot - Self Contained (Windows)') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ./sc_win'
+                        }
+                    }
+                }
+                stage('Bot - AOT (Windows)') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./r2r_win'
                         }
                     }
                 }
