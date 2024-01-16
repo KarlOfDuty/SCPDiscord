@@ -52,12 +52,12 @@ pipeline {
                 }
                 stage('Bot') {
                     steps {
-                       sh 'mv SCPDiscordBot/small/SCPDiscordBot_Small ../'
-                       sh 'mv SCPDiscordBot/sc/SCPDiscordBot_SC ../'
-                       sh 'mv SCPDiscordBot/r2r/SCPDiscordBot_R2R ../'
-                       sh 'mv SCPDiscordBot/small_win/SCPDiscordBot_Small.exe ../'
-                       sh 'mv SCPDiscordBot/sc_win/SCPDiscordBot_SC.exe ../'
-                       sh 'mv SCPDiscordBot/r2r_win/SCPDiscordBot_R2R.exe ../'
+                       sh 'mv SCPDiscordBot/small/SCPDiscordBot_Small ./'
+                       sh 'mv SCPDiscordBot/sc/SCPDiscordBot_SC ./'
+                       sh 'mv SCPDiscordBot/r2r/SCPDiscordBot_R2R ./'
+                       sh 'mv SCPDiscordBot/small_win/SCPDiscordBot_Small.exe ./'
+                       sh 'mv SCPDiscordBot/sc_win/SCPDiscordBot_SC.exe ./'
+                       sh 'mv SCPDiscordBot/r2r_win/SCPDiscordBot_R2R.exe ./'
                     }
                 }
             }
