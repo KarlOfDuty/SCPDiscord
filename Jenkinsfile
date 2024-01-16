@@ -56,7 +56,6 @@ pipeline {
                             sh '''dotnet publish\\
                             -p:PublishSingleFile=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
-                            -p:PublishTrimmed=true\\
                             -r linux-x64\\
                             -c Release\\
                             --self-contained true\\
@@ -100,7 +99,6 @@ pipeline {
                             sh '''dotnet publish\\
                             -p:PublishSingleFile=true\\
                             -p:IncludeAllContentForSelfExtract=true\\
-                            -p:PublishTrimmed=true\\
                             -r win-x64\\
                             -c Release\\
                             --self-contained true\\
