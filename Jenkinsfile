@@ -25,8 +25,8 @@ pipeline {
                     steps {
                         dir(path: 'SCPDiscordBot') {
                             sh '''dotnet publish\\
-                                  -p:BaseOutputPath=aot-bin\\
-                                  -p:BaseIntermediateOutputPath=aot-obj\\
+                                  -p:BaseOutputPath=aot-bin/\\
+                                  -p:BaseIntermediateOutputPath=aot-obj/\\
                                   -p:AssemblyName=SCPDiscordBot_R2R\\
                                   -p:PublishReadyToRun=true\\
                                   -p:IncludeAllContentForSelfExtract=true\\
@@ -43,8 +43,8 @@ pipeline {
                     steps {
                         dir(path: 'SCPDiscordBot') {
                             sh '''dotnet publish\\
-                                  -p:BaseOutputPath=aot-bin-win\\
-                                  -p:BaseIntermediateOutputPath=aot-obj-win\\
+                                  -p:BaseOutputPath=aot-bin-win/\\
+                                  -p:BaseIntermediateOutputPath=aot-obj-win/\\
                                   -p:AssemblyName=SCPDiscordBot_R2R\\
                                   -p:PublishReadyToRun=true\\
                                   -p:IncludeAllContentForSelfExtract=true\\
