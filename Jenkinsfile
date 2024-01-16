@@ -39,14 +39,14 @@ pipeline {
                 stage('Bot - Small (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --no-restore --output ./small_win'
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --output ./small_win'
                         }
                     }
                 }
                 stage('Bot - Self Contained (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ./sc_win'
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./sc_win'
                         }
                     }
                 }
