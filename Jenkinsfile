@@ -46,18 +46,20 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            stage('Bot - AOT') {
-                steps {
-                    dir(path: 'SCPDiscordBot') {
-                        sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./r2r'
+        stage('Build (AOT)') {
+            stages {
+                stage('Bot') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./r2r'
+                        }
                     }
                 }
-            }
-            stage('Bot - AOT (Windows)') {
-                steps {
-                    dir(path: 'SCPDiscordBot') {
-                        sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./r2r_win'
+                stage('Bot (Windows)') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./r2r_win'
+                        }
                     }
                 }
             }
