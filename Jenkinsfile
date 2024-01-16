@@ -29,7 +29,9 @@ pipeline {
                             -r linux-x64\\
                             -c Release\\
                             --self-contained true\\
-                            --output ./r2r
+                            --output ./aot
+                            rm -rf aot-bin
+                            rm -rf aot-obj
                             '''
                         }
                     }
@@ -47,7 +49,9 @@ pipeline {
                             -r win-x64\\
                             -c Release\\
                             --self-contained true\\
-                            --output ./r2r_win
+                            --output ./aot_win
+                            rm -rf aot-bin-win
+                            rm -rf aot-obj-win
                             '''
                         }
                     }
