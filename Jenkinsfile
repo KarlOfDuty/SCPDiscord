@@ -6,16 +6,64 @@ pipeline {
             steps {
                 sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta public-beta validate +quit'
                 sh 'ln -s "\$HOME/scpsl/SCPSL_Data/Managed" ".scpsl_libs"'
-                sh 'cd SCPDiscordBot; dotnet restore'
+                sh 'cd SCPDiscordBot; dotnet restore -p:PublishReadyToRun=true'
             }
         }
-        stage('Build') {
+        stage('Dependencies (AOT)') {
+            steps {
+                sh 'cd SCPDiscordBot; dotnet restore -p:PublishReadyToRun=true'
+            }
+        }
+        stage('Build (AOT)') {
             parallel {
                 stage('Plugin') {
                     steps {
                         sh 'msbuild SCPDiscordPlugin/SCPDiscordPlugin.csproj -restore -p:PostBuildEvent='
                     }
                 }
+                stage('Bot') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish\\
+                                  -p:BaseOutputPath=aot-bin\\
+                                  -p:BaseIntermediateOutputPath=aot-obj\\
+                                  -p:AssemblyName=SCPDiscordBot_R2R\\
+                                  -p:PublishReadyToRun=true\\
+                                  -p:IncludeAllContentForSelfExtract=true\\
+                                  -p:PublishTrimmed=true\\
+                                  -r linux-x64\\
+                                  -c Release\\
+                                  --self-contained true\\
+                                  --output ./r2r'
+                        }
+                    }
+                }
+                stage('Bot (Windows)') {
+                    steps {
+                        dir(path: 'SCPDiscordBot') {
+                            sh 'dotnet publish\\
+                                  -p:BaseOutputPath=aot-bin-win\\
+                                  -p:BaseIntermediateOutputPath=aot-obj-win\\
+                                  -p:AssemblyName=SCPDiscordBot_R2R\\
+                                  -p:PublishReadyToRun=true\\
+                                  -p:IncludeAllContentForSelfExtract=true\\
+                                  -p:PublishTrimmed=true\\
+                                  -r win-x64\\
+                                  -c Release\\
+                                  --self-contained true\\
+                                  --output ./r2r_win'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Dependencies (JIT)') {
+            steps {
+                sh 'cd SCPDiscordBot; dotnet restore'
+            }
+        }
+        stage('Build (JIT)') {
+            parallel {
                 stage('Bot - Small') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
@@ -41,24 +89,6 @@ pipeline {
                     steps {
                         dir(path: 'SCPDiscordBot') {
                             sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./sc_win'
-                        }
-                    }
-                }
-            }
-        }
-        stage('Build (AOT)') {
-            stages {
-                stage('Bot') {
-                    steps {
-                        dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./r2r'
-                        }
-                    }
-                }
-                stage('Bot (Windows)') {
-                    steps {
-                        dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./r2r_win'
                         }
                     }
                 }
