@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Dependencies') {
+        stage('Download SCP:SL') {
             steps {
                 sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta public-beta validate +quit'
                 sh 'ln -s "\$HOME/scpsl/SCPSL_Data/Managed" ".scpsl_libs"'
-                sh 'cd SCPDiscordBot; dotnet restore'
             }
         }
         stage('Build') {
@@ -21,18 +20,18 @@ pipeline {
                         stage('Linux') {
                             steps {
                                 dir(path: 'SCPDiscordBot') {
-                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_Standard -p:PublishSingleFile=true -p:PublishTrimmed=true -r linux-x64 -c Release --no-restore --output ../'
-                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_SelfContained -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --no-restore --output ../'
-                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --no-restore --output ../'
+                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r linux-x64 -c Release --output ./small'
+                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./sc'
+                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./r2r'
                                 }
                             }
                         }
                         stage('Windows') {
                             steps {
                                 dir(path: 'SCPDiscordBot') {
-                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_Standard -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --no-restore --output ../'
-                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_SelfContained -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ../'
-                                    sh 'dotnet publish -p:TargetName=SCPDiscordBot_Linux_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ../'
+                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --no-restore --output ./small_win'
+                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --no-restore --output ./sc_win'
+                                    sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_R2R -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./r2r_win'
                                 }
                             }
                         }
@@ -53,10 +52,12 @@ pipeline {
                 }
                 stage('Bot') {
                     steps {
-                        dir(path: 'SCPDiscordBot') {
-                            sh 'mv Linux-x64/SCPDiscordBot ../SCPDiscordBot_Linux'
-                            sh 'mv Windows-x64/SCPDiscordBot.exe ../SCPDiscordBot_Windows.exe'
-                        }
+                       sh 'mv small/SCPDiscordBot_Small ../'
+                       sh 'mv sc/SCPDiscordBot_SC ../'
+                       sh 'mv r2r/SCPDiscordBot_R2R ../'
+                       sh 'mv small_win/SCPDiscordBot_Small.exe ../'
+                       sh 'mv sc_win/SCPDiscordBot_SC.exe ../'
+                       sh 'mv r2r_win/SCPDiscordBot_R2R.exe ../'
                     }
                 }
             }
