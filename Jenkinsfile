@@ -25,16 +25,16 @@ pipeline {
                     steps {
                         dir(path: 'SCPDiscordBot') {
                             sh '''dotnet publish\\
-                                  -p:BaseOutputPath=aot-bin/\\
-                                  -p:BaseIntermediateOutputPath=aot-obj/\\
-                                  -p:AssemblyName=SCPDiscordBot_R2R\\
-                                  -p:PublishReadyToRun=true\\
-                                  -p:IncludeAllContentForSelfExtract=true\\
-                                  -p:PublishTrimmed=true\\
-                                  -r linux-x64\\
-                                  -c Release\\
-                                  --self-contained true\\
-                                  --output ./r2r
+                            -p:BaseOutputPath=aot-bin/\\
+                            -p:BaseIntermediateOutputPath=aot-obj/\\
+                            -p:AssemblyName=SCPDiscordBot_R2R\\
+                            -p:PublishReadyToRun=true\\
+                            -p:IncludeAllContentForSelfExtract=true\\
+                            -p:PublishTrimmed=true\\
+                            -r linux-x64\\
+                            -c Release\\
+                            --self-contained true\\
+                            --output ./r2r
                             '''
                         }
                     }
@@ -43,16 +43,16 @@ pipeline {
                     steps {
                         dir(path: 'SCPDiscordBot') {
                             sh '''dotnet publish\\
-                                  -p:BaseOutputPath=aot-bin-win/\\
-                                  -p:BaseIntermediateOutputPath=aot-obj-win/\\
-                                  -p:AssemblyName=SCPDiscordBot_R2R\\
-                                  -p:PublishReadyToRun=true\\
-                                  -p:IncludeAllContentForSelfExtract=true\\
-                                  -p:PublishTrimmed=true\\
-                                  -r win-x64\\
-                                  -c Release\\
-                                  --self-contained true\\
-                                  --output ./r2r_win
+                            -p:BaseOutputPath=aot-bin-win/\\
+                            -p:BaseIntermediateOutputPath=aot-obj-win/\\
+                            -p:AssemblyName=SCPDiscordBot_R2R\\
+                            -p:PublishReadyToRun=true\\
+                            -p:IncludeAllContentForSelfExtract=true\\
+                            -p:PublishTrimmed=true\\
+                            -r win-x64\\
+                            -c Release\\
+                            --self-contained true\\
+                            --output ./r2r_win
                             '''
                         }
                     }
@@ -69,28 +69,68 @@ pipeline {
                 stage('Bot - Small') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r linux-x64 -c Release --output ./small'
+                            sh '''dotnet publish\\
+                            -p:BaseOutputPath=small-bin/\\
+                            -p:BaseIntermediateOutputPath=small-obj/\\
+                            -p:AssemblyName=SCPDiscordBot_Small\\
+                            -p:PublishSingleFile=true\\
+                            -p:PublishTrimmed=true\\
+                            -r linux-x64\\
+                            -c Release\\
+                            --output ./small
+                            '''
                         }
                     }
                 }
                 stage('Bot - Self Contained') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r linux-x64 -c Release --self-contained true --output ./sc'
+                            sh '''dotnet publish\\
+                            -p:BaseOutputPath=sc-bin/\\
+                            -p:BaseIntermediateOutputPath=sc-obj/\\
+                            -p:AssemblyName=SCPDiscordBot_SC\\
+                            -p:PublishSingleFile=true\\
+                            -p:IncludeAllContentForSelfExtract=true\\
+                            -p:PublishTrimmed=true\\
+                            -r linux-x64\\
+                            -c Release\\
+                            --self-contained true\\
+                            --output ./sc
+                            '''
                         }
                     }
                 }
                 stage('Bot - Small (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_Small -p:PublishSingleFile=true -p:PublishTrimmed=true -r win-x64 -c Release --output ./small_win'
+                            sh '''dotnet publish
+                            -p:BaseOutputPath=small-bin-win/\\
+                            -p:BaseIntermediateOutputPath=small-obj-win/\\
+                            -p:AssemblyName=SCPDiscordBot_Small\\
+                            -p:PublishSingleFile=true\\
+                            -p:PublishTrimmed=true\\
+                            -r win-x64\\
+                            -c Release\\
+                            --output ./small_win
+                            '''
                         }
                     }
                 }
                 stage('Bot - Self Contained (Windows)') {
                     steps {
                         dir(path: 'SCPDiscordBot') {
-                            sh 'dotnet publish -p:AssemblyName=SCPDiscordBot_SC -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:PublishTrimmed=true -r win-x64 -c Release --self-contained true --output ./sc_win'
+                            sh '''dotnet publish
+                            -p:BaseOutputPath=sc-bin-win/\\
+                            -p:BaseIntermediateOutputPath=sc-obj-win/\\
+                            -p:AssemblyName=SCPDiscordBot_SC
+                            -p:PublishSingleFile=true
+                            -p:IncludeAllContentForSelfExtract=true
+                            -p:PublishTrimmed=true
+                            -r win-x64
+                            -c Release
+                            --self-contained true
+                            --output ./sc_win
+                            '''
                         }
                     }
                 }
