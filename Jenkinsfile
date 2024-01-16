@@ -55,7 +55,6 @@ pipeline {
                         dir(path: 'SC') {
                             sh '''dotnet publish\\
                             -p:PublishSingleFile=true\\
-                            -p:IncludeAllContentForSelfExtract=true\\
                             -r linux-x64\\
                             -c Release\\
                             --self-contained true\\
@@ -98,7 +97,6 @@ pipeline {
                         dir(path: 'SC_Win') {
                             sh '''dotnet publish\\
                             -p:PublishSingleFile=true\\
-                            -p:IncludeAllContentForSelfExtract=true\\
                             -r win-x64\\
                             -c Release\\
                             --self-contained true\\
