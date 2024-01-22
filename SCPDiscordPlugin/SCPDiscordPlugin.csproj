@@ -68,7 +68,10 @@
     <Compile Include="BotCommands\KickallCommand.cs" />
     <Compile Include="BotCommands\KickCommand.cs" />
     <Compile Include="BotCommands\ListCommand.cs" />
+    <Compile Include="BotCommands\MuteCommand.cs" />
     <Compile Include="BotCommands\UnbanCommand.cs" />
+    <Compile Include="Interface\MuteCommand.cs" />
+    <Compile Include="MuteHandler.cs" />
     <Compile Include="ServerCommands\GrantVanillaRankCommand.cs" />
     <Compile Include="ServerCommands\RootCommand.cs" />
     <Compile Include="ServerCommands\SetNickname.cs" />
@@ -146,6 +149,22 @@
   <ItemGroup>
     <Content Include="Languages\overrides.yml" />
     <Content Include="Languages\simplified-chinese.yml" />
+    <Content Include="schema\BotToPlugin\BanCommand.proto" />
+    <Content Include="schema\BotToPlugin\ConsoleCommand.proto" />
+    <Content Include="schema\BotToPlugin\KickallCommand.proto" />
+    <Content Include="schema\BotToPlugin\KickCommand.proto" />
+    <Content Include="schema\BotToPlugin\ListCommand.proto" />
+    <Content Include="schema\BotToPlugin\MuteCommand.proto" />
+    <Content Include="schema\BotToPlugin\SyncRoleCommand.proto" />
+    <Content Include="schema\BotToPlugin\UnbanCommand.proto" />
+    <Content Include="schema\BotToPlugin\UnsyncRoleCommand.proto" />
+    <Content Include="schema\BotToPlugin\UserInfo.proto" />
+    <Content Include="schema\MessageWrapper.proto" />
+    <Content Include="schema\PluginToBot\BotActivity.proto" />
+    <Content Include="schema\PluginToBot\ChatMessage.proto" />
+    <Content Include="schema\PluginToBot\EmbedMessage.proto" />
+    <Content Include="schema\PluginToBot\PaginatedMessage.proto" />
+    <Content Include="schema\PluginToBot\UserQuery.proto" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.25.1" />

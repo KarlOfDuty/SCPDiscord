@@ -9,6 +9,7 @@ import "BotToPlugin/UnbanCommand.proto";
 import "BotToPlugin/KickCommand.proto";
 import "BotToPlugin/KickallCommand.proto";
 import "BotToPlugin/ListCommand.proto";
+import "BotToPlugin/MuteCommand.proto";
 
 import "PluginToBot/BotActivity.proto";
 import "PluginToBot/ChatMessage.proto";
@@ -36,5 +37,6 @@ message MessageWrapper
 		ListCommand listCommand = 13;
 		EmbedMessage embedMessage = 14;
 		PaginatedMessage paginatedMessage = 15;
+		MuteCommand muteCommand = 16;
 	}
 }

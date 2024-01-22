@@ -27,7 +27,6 @@ namespace SCPDiscord
 						{
 							if (e is IOException)
 								plugin.Error("Connection to bot lost.");
-
 							else
 								plugin.Error("Couldn't parse incoming packet!\n" + e);
 							return;
@@ -71,6 +70,10 @@ namespace SCPDiscord
 
 							case Interface.MessageWrapper.MessageOneofCase.ListCommand:
 								ListCommand.Execute(data.ListCommand);
+								break;
+
+							case Interface.MessageWrapper.MessageOneofCase.MuteCommand:
+								MuteCommand.Execute(data.MuteCommand);
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.BotActivity:

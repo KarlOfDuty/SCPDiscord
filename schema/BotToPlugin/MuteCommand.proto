@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package SCPDiscord.Interface;
+
+message MuteCommand
+{
+    uint64 channelID = 1;
+    string steamID = 2;
+    string duration = 3;
+    string reason = 4;
+    string adminTag = 5;
+    uint64 interactionID = 6;
+}

@@ -31,34 +31,36 @@ namespace SCPDiscord.Interface {
             "Qm90VG9QbHVnaW4vQmFuQ29tbWFuZC5wcm90bxoeQm90VG9QbHVnaW4vVW5i",
             "YW5Db21tYW5kLnByb3RvGh1Cb3RUb1BsdWdpbi9LaWNrQ29tbWFuZC5wcm90",
             "bxogQm90VG9QbHVnaW4vS2lja2FsbENvbW1hbmQucHJvdG8aHUJvdFRvUGx1",
-            "Z2luL0xpc3RDb21tYW5kLnByb3RvGh1QbHVnaW5Ub0JvdC9Cb3RBY3Rpdml0",
-            "eS5wcm90bxodUGx1Z2luVG9Cb3QvQ2hhdE1lc3NhZ2UucHJvdG8aG1BsdWdp",
-            "blRvQm90L1VzZXJRdWVyeS5wcm90bxoeUGx1Z2luVG9Cb3QvRW1iZWRNZXNz",
-            "YWdlLnByb3RvGiJQbHVnaW5Ub0JvdC9QYWdpbmF0ZWRNZXNzYWdlLnByb3Rv",
-            "IukGCg5NZXNzYWdlV3JhcHBlchI4Cgtib3RBY3Rpdml0eRgBIAEoCzIhLlND",
-            "UERpc2NvcmQuSW50ZXJmYWNlLkJvdEFjdGl2aXR5SAASOAoLY2hhdE1lc3Nh",
-            "Z2UYAyABKAsyIS5TQ1BEaXNjb3JkLkludGVyZmFjZS5DaGF0TWVzc2FnZUgA",
-            "EjQKCXVzZXJRdWVyeRgEIAEoCzIfLlNDUERpc2NvcmQuSW50ZXJmYWNlLlVz",
-            "ZXJRdWVyeUgAEkAKD3N5bmNSb2xlQ29tbWFuZBgFIAEoCzIlLlNDUERpc2Nv",
-            "cmQuSW50ZXJmYWNlLlN5bmNSb2xlQ29tbWFuZEgAEkQKEXVuc3luY1JvbGVD",
-            "b21tYW5kGAYgASgLMicuU0NQRGlzY29yZC5JbnRlcmZhY2UuVW5zeW5jUm9s",
-            "ZUNvbW1hbmRIABI+Cg5jb25zb2xlQ29tbWFuZBgHIAEoCzIkLlNDUERpc2Nv",
-            "cmQuSW50ZXJmYWNlLkNvbnNvbGVDb21tYW5kSAASMgoIdXNlckluZm8YCCAB",
-            "KAsyHi5TQ1BEaXNjb3JkLkludGVyZmFjZS5Vc2VySW5mb0gAEjYKCmJhbkNv",
-            "bW1hbmQYCSABKAsyIC5TQ1BEaXNjb3JkLkludGVyZmFjZS5CYW5Db21tYW5k",
-            "SAASOgoMdW5iYW5Db21tYW5kGAogASgLMiIuU0NQRGlzY29yZC5JbnRlcmZh",
-            "Y2UuVW5iYW5Db21tYW5kSAASOAoLa2lja0NvbW1hbmQYCyABKAsyIS5TQ1BE",
-            "aXNjb3JkLkludGVyZmFjZS5LaWNrQ29tbWFuZEgAEj4KDmtpY2thbGxDb21t",
-            "YW5kGAwgASgLMiQuU0NQRGlzY29yZC5JbnRlcmZhY2UuS2lja2FsbENvbW1h",
-            "bmRIABI4CgtsaXN0Q29tbWFuZBgNIAEoCzIhLlNDUERpc2NvcmQuSW50ZXJm",
-            "YWNlLkxpc3RDb21tYW5kSAASOgoMZW1iZWRNZXNzYWdlGA4gASgLMiIuU0NQ",
-            "RGlzY29yZC5JbnRlcmZhY2UuRW1iZWRNZXNzYWdlSAASQgoQcGFnaW5hdGVk",
-            "TWVzc2FnZRgPIAEoCzImLlNDUERpc2NvcmQuSW50ZXJmYWNlLlBhZ2luYXRl",
-            "ZE1lc3NhZ2VIAEIJCgdtZXNzYWdlYgZwcm90bzM="));
+            "Z2luL0xpc3RDb21tYW5kLnByb3RvGh1Cb3RUb1BsdWdpbi9NdXRlQ29tbWFu",
+            "ZC5wcm90bxodUGx1Z2luVG9Cb3QvQm90QWN0aXZpdHkucHJvdG8aHVBsdWdp",
+            "blRvQm90L0NoYXRNZXNzYWdlLnByb3RvGhtQbHVnaW5Ub0JvdC9Vc2VyUXVl",
+            "cnkucHJvdG8aHlBsdWdpblRvQm90L0VtYmVkTWVzc2FnZS5wcm90bxoiUGx1",
+            "Z2luVG9Cb3QvUGFnaW5hdGVkTWVzc2FnZS5wcm90byKjBwoOTWVzc2FnZVdy",
+            "YXBwZXISOAoLYm90QWN0aXZpdHkYASABKAsyIS5TQ1BEaXNjb3JkLkludGVy",
+            "ZmFjZS5Cb3RBY3Rpdml0eUgAEjgKC2NoYXRNZXNzYWdlGAMgASgLMiEuU0NQ",
+            "RGlzY29yZC5JbnRlcmZhY2UuQ2hhdE1lc3NhZ2VIABI0Cgl1c2VyUXVlcnkY",
+            "BCABKAsyHy5TQ1BEaXNjb3JkLkludGVyZmFjZS5Vc2VyUXVlcnlIABJACg9z",
+            "eW5jUm9sZUNvbW1hbmQYBSABKAsyJS5TQ1BEaXNjb3JkLkludGVyZmFjZS5T",
+            "eW5jUm9sZUNvbW1hbmRIABJEChF1bnN5bmNSb2xlQ29tbWFuZBgGIAEoCzIn",
+            "LlNDUERpc2NvcmQuSW50ZXJmYWNlLlVuc3luY1JvbGVDb21tYW5kSAASPgoO",
+            "Y29uc29sZUNvbW1hbmQYByABKAsyJC5TQ1BEaXNjb3JkLkludGVyZmFjZS5D",
+            "b25zb2xlQ29tbWFuZEgAEjIKCHVzZXJJbmZvGAggASgLMh4uU0NQRGlzY29y",
+            "ZC5JbnRlcmZhY2UuVXNlckluZm9IABI2CgpiYW5Db21tYW5kGAkgASgLMiAu",
+            "U0NQRGlzY29yZC5JbnRlcmZhY2UuQmFuQ29tbWFuZEgAEjoKDHVuYmFuQ29t",
+            "bWFuZBgKIAEoCzIiLlNDUERpc2NvcmQuSW50ZXJmYWNlLlVuYmFuQ29tbWFu",
+            "ZEgAEjgKC2tpY2tDb21tYW5kGAsgASgLMiEuU0NQRGlzY29yZC5JbnRlcmZh",
+            "Y2UuS2lja0NvbW1hbmRIABI+Cg5raWNrYWxsQ29tbWFuZBgMIAEoCzIkLlND",
+            "UERpc2NvcmQuSW50ZXJmYWNlLktpY2thbGxDb21tYW5kSAASOAoLbGlzdENv",
+            "bW1hbmQYDSABKAsyIS5TQ1BEaXNjb3JkLkludGVyZmFjZS5MaXN0Q29tbWFu",
+            "ZEgAEjoKDGVtYmVkTWVzc2FnZRgOIAEoCzIiLlNDUERpc2NvcmQuSW50ZXJm",
+            "YWNlLkVtYmVkTWVzc2FnZUgAEkIKEHBhZ2luYXRlZE1lc3NhZ2UYDyABKAsy",
+            "Ji5TQ1BEaXNjb3JkLkludGVyZmFjZS5QYWdpbmF0ZWRNZXNzYWdlSAASOAoL",
+            "bXV0ZUNvbW1hbmQYECABKAsyIS5TQ1BEaXNjb3JkLkludGVyZmFjZS5NdXRl",
+            "Q29tbWFuZEgAQgkKB21lc3NhZ2ViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::SCPDiscord.Interface.ConsoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UserInfoReflection.Descriptor, global::SCPDiscord.Interface.SyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UnsyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.BanCommandReflection.Descriptor, global::SCPDiscord.Interface.UnbanCommandReflection.Descriptor, global::SCPDiscord.Interface.KickCommandReflection.Descriptor, global::SCPDiscord.Interface.KickallCommandReflection.Descriptor, global::SCPDiscord.Interface.ListCommandReflection.Descriptor, global::SCPDiscord.Interface.BotActivityReflection.Descriptor, global::SCPDiscord.Interface.ChatMessageReflection.Descriptor, global::SCPDiscord.Interface.UserQueryReflection.Descriptor, global::SCPDiscord.Interface.EmbedMessageReflection.Descriptor, global::SCPDiscord.Interface.PaginatedMessageReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::SCPDiscord.Interface.ConsoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UserInfoReflection.Descriptor, global::SCPDiscord.Interface.SyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UnsyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.BanCommandReflection.Descriptor, global::SCPDiscord.Interface.UnbanCommandReflection.Descriptor, global::SCPDiscord.Interface.KickCommandReflection.Descriptor, global::SCPDiscord.Interface.KickallCommandReflection.Descriptor, global::SCPDiscord.Interface.ListCommandReflection.Descriptor, global::SCPDiscord.Interface.MuteCommandReflection.Descriptor, global::SCPDiscord.Interface.BotActivityReflection.Descriptor, global::SCPDiscord.Interface.ChatMessageReflection.Descriptor, global::SCPDiscord.Interface.UserQueryReflection.Descriptor, global::SCPDiscord.Interface.EmbedMessageReflection.Descriptor, global::SCPDiscord.Interface.PaginatedMessageReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::SCPDiscord.Interface.MessageWrapper), global::SCPDiscord.Interface.MessageWrapper.Parser, new[]{ "BotActivity", "ChatMessage", "UserQuery", "SyncRoleCommand", "UnsyncRoleCommand", "ConsoleCommand", "UserInfo", "BanCommand", "UnbanCommand", "KickCommand", "KickallCommand", "ListCommand", "EmbedMessage", "PaginatedMessage" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SCPDiscord.Interface.MessageWrapper), global::SCPDiscord.Interface.MessageWrapper.Parser, new[]{ "BotActivity", "ChatMessage", "UserQuery", "SyncRoleCommand", "UnsyncRoleCommand", "ConsoleCommand", "UserInfo", "BanCommand", "UnbanCommand", "KickCommand", "KickallCommand", "ListCommand", "EmbedMessage", "PaginatedMessage", "MuteCommand" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -142,6 +144,9 @@ namespace SCPDiscord.Interface {
           break;
         case MessageOneofCase.PaginatedMessage:
           PaginatedMessage = other.PaginatedMessage.Clone();
+          break;
+        case MessageOneofCase.MuteCommand:
+          MuteCommand = other.MuteCommand.Clone();
           break;
       }
 
@@ -325,6 +330,18 @@ namespace SCPDiscord.Interface {
       }
     }
 
+    /// <summary>Field number for the "muteCommand" field.</summary>
+    public const int MuteCommandFieldNumber = 16;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::SCPDiscord.Interface.MuteCommand MuteCommand {
+      get { return messageCase_ == MessageOneofCase.MuteCommand ? (global::SCPDiscord.Interface.MuteCommand) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.MuteCommand;
+      }
+    }
+
     private object message_;
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
@@ -343,6 +360,7 @@ namespace SCPDiscord.Interface {
       ListCommand = 13,
       EmbedMessage = 14,
       PaginatedMessage = 15,
+      MuteCommand = 16,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -387,6 +405,7 @@ namespace SCPDiscord.Interface {
       if (!object.Equals(ListCommand, other.ListCommand)) return false;
       if (!object.Equals(EmbedMessage, other.EmbedMessage)) return false;
       if (!object.Equals(PaginatedMessage, other.PaginatedMessage)) return false;
+      if (!object.Equals(MuteCommand, other.MuteCommand)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -409,6 +428,7 @@ namespace SCPDiscord.Interface {
       if (messageCase_ == MessageOneofCase.ListCommand) hash ^= ListCommand.GetHashCode();
       if (messageCase_ == MessageOneofCase.EmbedMessage) hash ^= EmbedMessage.GetHashCode();
       if (messageCase_ == MessageOneofCase.PaginatedMessage) hash ^= PaginatedMessage.GetHashCode();
+      if (messageCase_ == MessageOneofCase.MuteCommand) hash ^= MuteCommand.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -484,6 +504,10 @@ namespace SCPDiscord.Interface {
         output.WriteRawTag(122);
         output.WriteMessage(PaginatedMessage);
       }
+      if (messageCase_ == MessageOneofCase.MuteCommand) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(MuteCommand);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -550,6 +574,10 @@ namespace SCPDiscord.Interface {
         output.WriteRawTag(122);
         output.WriteMessage(PaginatedMessage);
       }
+      if (messageCase_ == MessageOneofCase.MuteCommand) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(MuteCommand);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -601,6 +629,9 @@ namespace SCPDiscord.Interface {
       }
       if (messageCase_ == MessageOneofCase.PaginatedMessage) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PaginatedMessage);
+      }
+      if (messageCase_ == MessageOneofCase.MuteCommand) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(MuteCommand);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -698,6 +729,12 @@ namespace SCPDiscord.Interface {
             PaginatedMessage = new global::SCPDiscord.Interface.PaginatedMessage();
           }
           PaginatedMessage.MergeFrom(other.PaginatedMessage);
+          break;
+        case MessageOneofCase.MuteCommand:
+          if (MuteCommand == null) {
+            MuteCommand = new global::SCPDiscord.Interface.MuteCommand();
+          }
+          MuteCommand.MergeFrom(other.MuteCommand);
           break;
       }
 
@@ -842,6 +879,15 @@ namespace SCPDiscord.Interface {
             PaginatedMessage = subBuilder;
             break;
           }
+          case 130: {
+            global::SCPDiscord.Interface.MuteCommand subBuilder = new global::SCPDiscord.Interface.MuteCommand();
+            if (messageCase_ == MessageOneofCase.MuteCommand) {
+              subBuilder.MergeFrom(MuteCommand);
+            }
+            input.ReadMessage(subBuilder);
+            MuteCommand = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -981,6 +1027,15 @@ namespace SCPDiscord.Interface {
             }
             input.ReadMessage(subBuilder);
             PaginatedMessage = subBuilder;
+            break;
+          }
+          case 130: {
+            global::SCPDiscord.Interface.MuteCommand subBuilder = new global::SCPDiscord.Interface.MuteCommand();
+            if (messageCase_ == MessageOneofCase.MuteCommand) {
+              subBuilder.MergeFrom(MuteCommand);
+            }
+            input.ReadMessage(subBuilder);
+            MuteCommand = subBuilder;
             break;
           }
         }

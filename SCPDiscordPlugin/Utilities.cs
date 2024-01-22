@@ -71,5 +71,63 @@ namespace SCPDiscord
 
 			return messages;
 		}
+
+		public static DateTime ParseCompoundDuration(string duration, ref string humanReadableDuration, ref long durationSeconds)
+		{
+			//Check if the amount is a number
+			if (!int.TryParse(new string(duration.Where(char.IsDigit).ToArray()), out int amount))
+			{
+				return DateTime.MinValue;
+			}
+
+			char unit = duration.Where(char.IsLetter).ToArray()[0];
+			TimeSpan timeSpanDuration = new TimeSpan();
+
+			// Parse time into a TimeSpan duration and string
+			if (unit == 's')
+			{
+				humanReadableDuration = amount + " second";
+				timeSpanDuration = new TimeSpan(0, 0, 0, amount);
+			}
+			else if (unit == 'm')
+			{
+				humanReadableDuration = amount + " minute";
+				timeSpanDuration = new TimeSpan(0, 0, amount, 0);
+			}
+			else if (unit == 'h')
+			{
+				humanReadableDuration = amount + " hour";
+				timeSpanDuration = new TimeSpan(0, amount, 0, 0);
+			}
+			else if (unit == 'd')
+			{
+				humanReadableDuration = amount + " day";
+				timeSpanDuration = new TimeSpan(amount, 0, 0, 0);
+			}
+			else if (unit == 'w')
+			{
+				humanReadableDuration = amount + " week";
+				timeSpanDuration = new TimeSpan(7 * amount, 0, 0, 0);
+			}
+			else if (unit == 'M')
+			{
+				humanReadableDuration = amount + " month";
+				timeSpanDuration = new TimeSpan(30 * amount, 0, 0, 0);
+			}
+			else if (unit == 'y')
+			{
+				humanReadableDuration = amount + " year";
+				timeSpanDuration = new TimeSpan(365 * amount, 0, 0, 0);
+			}
+
+			// Pluralize string if needed
+			if (amount != 1)
+			{
+				humanReadableDuration += 's';
+			}
+
+			durationSeconds = (long)timeSpanDuration.TotalSeconds;
+			return DateTime.UtcNow.Add(timeSpanDuration);
+		}
 	}
 }

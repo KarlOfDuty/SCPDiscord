@@ -1,10 +1,9 @@
 # Building SCPDiscord
 
 ## Dependencies
-- dotnet-sdk (7.0 at time of writing, check project file)
+- dotnet-sdk (8.0)
 - mono
 - protobuf
-- warp-packer (Optional, only used for packaging the bot)
 
 ## Building the plugin
 
@@ -29,15 +28,6 @@ Enter the SCPDiscord bot directory and use the following commands:
 ```bash
 dotnet build --output bin/linux-x64 --configuration Release --runtime linux-x64
 dotnet build --output bin/win-x64 --configuration Release --runtime win-x64
-```
-
-### Packaging the bot
-Before the bot is released its library dependencies are baked into the executable in order to provide it as a single file.
-
-This is done using the following commands in the bot directory:
-```bash
-warp-packer --arch linux-x64 --input_dir bin/linux-x64 --exec SCPDiscordBot --output ../SCPDiscordBot_Linux
-warp-packer --arch windows-x64 --input_dir bin/win-x64 --exec SCPDiscordBot.exe --output ../SCPDiscordBot_Windows.exe
 ```
 
 ## Generating the network interface

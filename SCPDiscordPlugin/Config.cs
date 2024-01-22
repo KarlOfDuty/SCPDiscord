@@ -171,18 +171,21 @@ namespace SCPDiscord
 		private static readonly IReadOnlyList<string> languageOnlyNodes = new List<string>
 		{
 			"messages.botstatus",
-			"messages.invalidsteamid",
-			"messages.invalidduration",
-			"messages.playerbanned",
 			"messages.consolecommandfeedback",
+			"messages.invalidduration",
+			"messages.invalidsteamid",
 			"messages.invalidsteamidorip",
-			"messages.playerunbanned",
-			"messages.playerkicked",
-			"messages.playernotfound",
 			"messages.kickall",
-			"messages.listtitle",
 			"messages.listrow.default",
-			"messages.listrow.empty"
+			"messages.listrow.empty",
+			"messages.listtitle",
+			"messages.playerbanned",
+			"messages.playerkicked",
+			"messages.playermuted",
+			"messages.playernotfound",
+			"messages.playertempmuted",
+			"messages.playerunbanned",
+			"messages.playerunmuted"
 		};
 
 		internal static readonly IReadOnlyList<string> languageNodes = configMessageArrays.Concat(languageOnlyNodes).ToList();
