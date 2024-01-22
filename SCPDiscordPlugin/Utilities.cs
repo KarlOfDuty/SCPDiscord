@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PluginAPI.Core;
 
 namespace SCPDiscord
 {
@@ -38,6 +39,32 @@ namespace SCPDiscord
 				}
 			}
 			return null;
+		}
+
+		public static bool GetPlayerName(string steamID, ref string name)
+		{
+			foreach (Player player in Player.GetPlayers<Player>())
+			{
+				if (player.GetParsedUserID() == steamID)
+				{
+					name = player.Nickname;
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool KickPlayer(string steamID, string message = "Kicked from server")
+		{
+			foreach (Player player in Player.GetPlayers<Player>())
+			{
+				if (player.GetParsedUserID() == steamID)
+				{
+					player.Ban(message, 0);
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public static bool IsPossibleSteamID(string steamID)

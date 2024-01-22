@@ -150,7 +150,7 @@ namespace SCPDiscord
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Network error caught, if this happens a lot try using the 'scpd_rc' command." + e);
+					Logger.Error("Network error caught, if this happens a lot try using the 'scpd_rc' command." + e);
 				}
 			}
 		}
@@ -171,7 +171,7 @@ namespace SCPDiscord
 
 			if (messageQueue.Count != 0)
 			{
-				plugin.DebugWarn("Could not send all messages.");
+				Logger.DebugWarn("Could not send all messages.");
 			}
 		}
 
@@ -189,16 +189,16 @@ namespace SCPDiscord
 			}
 			catch (ObjectDisposedException e)
 			{
-				plugin.Error("TCP client was unexpectedly closed.");
-				plugin.DebugError(e.ToString());
+				Logger.Error("TCP client was unexpectedly closed.");
+				Logger.DebugError(e.ToString());
 				return false;
 			}
 		}
 
 		private static void Connect()
 		{
-			plugin.Info("Attempting Bot Connection...");
-			plugin.Debug("Your Bot IP: " + Config.GetString("bot.ip") + ". Your Bot Port: " + Config.GetInt("bot.port") + ".");
+			Logger.Info("Attempting Bot Connection...");
+			Logger.Debug("Your Bot IP: " + Config.GetString("bot.ip") + ". Your Bot Port: " + Config.GetInt("bot.port") + ".");
 
 			while (!IsConnected())
 			{
@@ -218,7 +218,7 @@ namespace SCPDiscord
 
 					networkStream = new NetworkStream(socket);
 
-					plugin.Info("Connected to Discord bot.");
+					Logger.Info("Connected to Discord bot.");
 
 					EmbedMessage embed = new EmbedMessage
 					{
@@ -229,26 +229,26 @@ namespace SCPDiscord
 				}
 				catch (SocketException e)
 				{
-					plugin.Error("Error occured while connecting to discord bot server: " + e.Message.Trim());
-					plugin.DebugError(e.ToString());
+					Logger.Error("Error occured while connecting to discord bot server: " + e.Message.Trim());
+					Logger.DebugError(e.ToString());
 					Thread.Sleep(5000);
 				}
 				catch (ObjectDisposedException e)
 				{
-					plugin.Error("TCP client was unexpectedly closed.");
-					plugin.DebugError(e.ToString());
+					Logger.Error("TCP client was unexpectedly closed.");
+					Logger.DebugError(e.ToString());
 					Thread.Sleep(5000);
 				}
 				catch (ArgumentOutOfRangeException e)
 				{
-					plugin.Error("Invalid port.");
-					plugin.DebugError(e.ToString());
+					Logger.Error("Invalid port.");
+					Logger.DebugError(e.ToString());
 					Thread.Sleep(5000);
 				}
 				catch (ArgumentNullException e)
 				{
-					plugin.Error("IP address is null.");
-					plugin.DebugError(e.ToString());
+					Logger.Error("IP address is null.");
+					Logger.DebugError(e.ToString());
 					Thread.Sleep(5000);
 				}
 			}
@@ -265,14 +265,14 @@ namespace SCPDiscord
 		{
 			if (message == null)
 			{
-				plugin.Warn("Tried to send message but it was null. " + new StackTrace());
+				Logger.Warn("Tried to send message but it was null. " + new StackTrace());
 				return true;
 			}
 
 			// Abort if client is dead
 			if (socket == null || networkStream == null || !socket.Connected)
 			{
-				plugin.DebugWarn("Error sending message '" + message.MessageCase + "' to bot: Not connected.");
+				Logger.DebugWarn("Error sending message '" + message.MessageCase + "' to bot: Not connected.");
 				return false;
 			}
 
@@ -280,13 +280,13 @@ namespace SCPDiscord
 			try
 			{
 				message.WriteDelimitedTo(networkStream);
-				plugin.Debug("Sent message '" + message.MessageCase + "' to bot.");
+				Logger.Debug("Sent message '" + message.MessageCase + "' to bot.");
 				return true;
 			}
 			catch (Exception e)
 			{
-				plugin.Error("Error sending message '" + message.MessageCase + "' to bot.");
-				plugin.Error(e.ToString());
+				Logger.Error("Error sending message '" + message.MessageCase + "' to bot.");
+				Logger.Error(e.ToString());
 				if (!(e is InvalidOperationException || e is ArgumentNullException || e is SocketException))
 				{
 					throw;
@@ -299,7 +299,7 @@ namespace SCPDiscord
 		{
 			if (message == null)
 			{
-				plugin.Warn("Message was null: \n" + new StackTrace());
+				Logger.Warn("Message was null: \n" + new StackTrace());
                 return;
 			}
 

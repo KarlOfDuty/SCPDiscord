@@ -24,7 +24,7 @@ namespace SCPDiscord
 		{
 			this.plugin = plugin;
 			Reload();
-			plugin.Info("RoleSync system loaded.");
+			Logger.Info("RoleSync system loaded.");
 		}
 
 		public void Reload()
@@ -36,12 +36,12 @@ namespace SCPDiscord
 
 			if (!File.Exists(Config.GetRolesyncPath()))
 			{
-				plugin.Info("Config file rolesync.json does not exist, creating...");
+				Logger.Info("Config file rolesync.json does not exist, creating...");
 				File.WriteAllText(Config.GetRolesyncPath(), "[]");
 			}
 
 			syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<ulong>());
-			plugin.Info("Successfully loaded rolesync '" + Config.GetRolesyncDir() + "rolesync.json'.");
+			Logger.Info("Successfully loaded rolesync '" + Config.GetRolesyncDir() + "rolesync.json'.");
 		}
 
 		private void SavePlayers()
@@ -63,7 +63,7 @@ namespace SCPDiscord
 			{
 				if (!syncedPlayers.ContainsKey(player.UserId))
 				{
-					plugin.Debug("User ID '" + player.UserId + "' is not in rolesync list.");
+					Logger.Debug("User ID '" + player.UserId + "' is not in rolesync list.");
 					return;
 				}
 
@@ -82,7 +82,7 @@ namespace SCPDiscord
 			{
 				if (!syncedPlayers.ContainsKey(player.IpAddress))
 				{
-					plugin.Debug("IP '" + player.IpAddress + "' is not in rolesync list.");
+					Logger.Debug("IP '" + player.IpAddress + "' is not in rolesync list.");
 					return;
 				}
 
@@ -108,31 +108,31 @@ namespace SCPDiscord
 				List<Player> matchingPlayers = new List<Player>();
 				try
 				{
-					plugin.Debug("Looking for player with SteamID/IP: " + userInfo.SteamIDOrIP);
+					Logger.Debug("Looking for player with SteamID/IP: " + userInfo.SteamIDOrIP);
 					foreach (Player pl in Player.GetPlayers<Player>())
 					{
-						plugin.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " IP " + pl.IpAddress);
+						Logger.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " IP " + pl.IpAddress);
 						if (pl.UserId == userInfo.SteamIDOrIP)
 						{
-							plugin.Debug("Matching SteamID found");
+							Logger.Debug("Matching SteamID found");
 							matchingPlayers.Add(pl);
 						}
 						else if (pl.IpAddress == userInfo.SteamIDOrIP)
 						{
-							plugin.Debug("Matching IP found");
+							Logger.Debug("Matching IP found");
 							matchingPlayers.Add(pl);
 						}
 					}
 				}
 				catch (NullReferenceException e)
 				{
-					plugin.Error("Error getting player for RoleSync: " + e);
+					Logger.Error("Error getting player for RoleSync: " + e);
 					return;
 				}
 
 				if (matchingPlayers.Count == 0)
 				{
-					plugin.Error("Could not get player for rolesync, did they disconnect immediately?");
+					Logger.Error("Could not get player for rolesync, did they disconnect immediately?");
 					return;
 				}
 
@@ -140,7 +140,7 @@ namespace SCPDiscord
 				{
 					foreach (KeyValuePair<ulong, string[]> keyValuePair in Config.roleDictionary)
 					{
-						plugin.Debug("User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
+						Logger.Debug("User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
 						if (userInfo.RoleIDs.Contains(keyValuePair.Key))
 						{
 							Dictionary<string, string> variables = new Dictionary<string, string>
@@ -159,11 +159,11 @@ namespace SCPDiscord
 								{
 									command = command.Replace("<var:" + variable.Key + ">", variable.Value);
 								}
-								plugin.Debug("Running rolesync command: " + command);
+								Logger.Debug("Running rolesync command: " + command);
 								plugin.sync.ScheduleRoleSyncCommand(command);
 							}
 
-							plugin.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
+							Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
 							return;
 						}
 					}
@@ -171,7 +171,7 @@ namespace SCPDiscord
 			}
 			catch (InvalidOperationException)
 			{
-				plugin.Warn("Tried to run commands on a player who is not on the server anymore.");
+				Logger.Warn("Tried to run commands on a player who is not on the server anymore.");
 			}
 		}
 
@@ -277,7 +277,7 @@ namespace SCPDiscord
 				if (foundStrings.Length == 0)
 				{
 					response = "SteamID does not seem to exist.";
-					plugin.Debug(response);
+					Logger.Debug(response);
 					return false;
 				}
 				response = "SteamID found.";
@@ -290,12 +290,12 @@ namespace SCPDiscord
 				{
 					webResponse = (HttpWebResponse)e.Response;
 					response = "Error occured connecting to steam services.";
-					plugin.Error("Steam profile connection error: " + webResponse.StatusCode);
+					Logger.Error("Steam profile connection error: " + webResponse.StatusCode);
 				}
 				else
 				{
 					response = "Error occured connecting to steam services.";
-					plugin.Error("Steam profile connection error: " + e.Status.ToString());
+					Logger.Error("Steam profile connection error: " + e.Status.ToString());
 				}
 			}
 			finally

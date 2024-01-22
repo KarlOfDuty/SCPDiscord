@@ -26,13 +26,13 @@ namespace SCPDiscord
 						catch (Exception e)
 						{
 							if (e is IOException)
-								plugin.Error("Connection to bot lost.");
+								Logger.Error("Connection to bot lost.");
 							else
-								plugin.Error("Couldn't parse incoming packet!\n" + e);
+								Logger.Error("Couldn't parse incoming packet!\n" + e);
 							return;
 						}
 
-						plugin.Debug("Incoming packet: " + Google.Protobuf.JsonFormatter.Default.Format(data));
+						Logger.Debug("Incoming packet: " + Google.Protobuf.JsonFormatter.Default.Format(data));
 
 						switch (data.MessageCase)
 						{
@@ -81,12 +81,12 @@ namespace SCPDiscord
 							case Interface.MessageWrapper.MessageOneofCase.UserQuery:
 							case Interface.MessageWrapper.MessageOneofCase.PaginatedMessage:
 							case Interface.MessageWrapper.MessageOneofCase.EmbedMessage:
-								plugin.Error("Received packet meant for bot: " + Google.Protobuf.JsonFormatter.Default.Format(data));
+								Logger.Error("Received packet meant for bot: " + Google.Protobuf.JsonFormatter.Default.Format(data));
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.None:
 							default:
-								plugin.Warn("Unknown packet received: " + Google.Protobuf.JsonFormatter.Default.Format(data));
+								Logger.Warn("Unknown packet received: " + Google.Protobuf.JsonFormatter.Default.Format(data));
 								break;
 						}
 					}
@@ -94,7 +94,7 @@ namespace SCPDiscord
 				}
 				catch (Exception ex)
 				{
-					plugin.Error("BotListener Error: " + ex);
+					Logger.Error("BotListener Error: " + ex);
 				}
 			}
 		}

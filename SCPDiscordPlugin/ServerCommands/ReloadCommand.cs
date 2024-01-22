@@ -22,7 +22,7 @@ namespace SCPDiscord.Commands
 			}
 			*/
 
-			SCPDiscord.plugin.Info("Reloading plugin...");
+			Logger.Info("Reloading plugin...");
 			if (!SCPDiscord.plugin.LoadConfig())
 			{
 				response = "Reload failed.";

@@ -63,7 +63,7 @@ namespace SCPDiscord.BotCommands
 			}
 
 			string name = "";
-			if (!SCPDiscord.plugin.GetPlayerName(command.SteamID, ref name))
+			if (!Utilities.GetPlayerName(command.SteamID, ref name))
 			{
 				name = "Offline player";
 			}

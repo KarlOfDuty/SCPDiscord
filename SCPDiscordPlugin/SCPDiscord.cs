@@ -64,14 +64,14 @@ namespace SCPDiscord
 			roleSync = new RoleSync(this);
 			if (Server.Port == Config.GetInt("bot.port"))
 			{
-				Error("ERROR: Server is running on the same port as the plugin, aborting...");
+				Logger.Error("ERROR: Server is running on the same port as the plugin, aborting...");
 				throw new Exception();
 			}
 			Language.Reload();
 
 			new Thread(() => new StartNetworkSystem(plugin)).Start();
 
-			Info("SCPDiscord " + VERSION + " enabled.");
+			Logger.Info("SCPDiscord " + VERSION + " enabled.");
 		}
 
 		private class SyncPlayerRole
@@ -97,34 +97,34 @@ namespace SCPDiscord
 			try
 			{
 				Config.Reload(plugin);
-				Info("Successfully loaded config '" + Config.GetConfigPath() + "'.");
+				Logger.Info("Successfully loaded config '" + Config.GetConfigPath() + "'.");
 				return true;
 			}
 			catch (Exception e)
 			{
 				if (e is DirectoryNotFoundException)
 				{
-					Error("Config directory not found.");
+					Logger.Error("Config directory not found.");
 				}
 				else if (e is UnauthorizedAccessException)
 				{
-					Error("Primary language file access denied.");
+					Logger.Error("Primary language file access denied.");
 				}
 				else if (e is FileNotFoundException)
 				{
-					Error("'" + Config.GetConfigPath() + "' was not found.");
+					Logger.Error("'" + Config.GetConfigPath() + "' was not found.");
 				}
 				else if (e is JsonReaderException || e is YamlException)
 				{
-					Error("'" + Config.GetConfigPath() + "' formatting error.");
+					Logger.Error("'" + Config.GetConfigPath() + "' formatting error.");
 				}
 				else if (e is Config.ConfigParseException)
 				{
-					Error("Formatting issue in config file '" + Config.GetConfigPath() + "'. Aborting startup.");
+					Logger.Error("Formatting issue in config file '" + Config.GetConfigPath() + "'. Aborting startup.");
 				}
 				else
 				{
-					Error("Error reading config file '" + Config.GetConfigPath() + "'. Aborting startup.\n" + e);
+					Logger.Error("Error reading config file '" + Config.GetConfigPath() + "'. Aborting startup.\n" + e);
 				}
 			}
 			return false;
@@ -135,45 +135,6 @@ namespace SCPDiscord
 			shutdown = true;
 			NetworkSystem.Disconnect();
 			Log.Info("SCPDiscord disabled.");
-		}
-
-		public void Info(string message)
-		{
-			Log.Info(message);
-		}
-
-		public void Warn(string message)
-		{
-			Log.Warning(message);
-		}
-
-		public void Error(string message)
-		{
-			Log.Error(message);
-		}
-
-		public void Debug(string message)
-		{
-			if (Config.GetBool("settings.debug"))
-			{
-				Log.Info(message);
-			}
-		}
-
-		public void DebugWarn(string message)
-		{
-			if (Config.GetBool("settings.debug"))
-			{
-				Log.Warning(message);
-			}
-		}
-
-		public void DebugError(string message)
-		{
-			if (Config.GetBool("settings.debug"))
-			{
-				Log.Error(message);
-			}
 		}
 
 		public void SendStringByID(ulong channelID, string message)
@@ -214,32 +175,6 @@ namespace SCPDiscord
 		public void SendEmbedWithMessageByID(EmbedMessage embed, string messagePath, Dictionary<string, string> variables = null)
 		{
 			new Thread(() => new ProcessEmbedMessageByIDAsync(embed, messagePath, variables)).Start();
-		}
-
-		public bool KickPlayer(string steamID, string message = "Kicked from server")
-		{
-			foreach (Player player in Player.GetPlayers<Player>())
-			{
-				if (player.GetParsedUserID() == steamID)
-				{
-					player.Ban(message, 0);
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public bool GetPlayerName(string steamID, ref string name)
-		{
-			foreach (Player player in Player.GetPlayers<Player>())
-			{
-				if (player.GetParsedUserID() == steamID)
-				{
-					name = player.Nickname;
-					return true;
-				}
-			}
-			return false;
 		}
 	}
 }

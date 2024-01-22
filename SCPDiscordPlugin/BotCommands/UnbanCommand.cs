@@ -36,7 +36,7 @@ namespace SCPDiscord.BotCommands
 			}
 			else
 			{
-				SCPDiscord.plugin.Warn(Config.GetIPBansFile() + " does not exist, could not check it for banned players.");
+				Logger.Warn(Config.GetIPBansFile() + " does not exist, could not check it for banned players.");
 			}
 
 			// Read steam id bans if the file exists
@@ -47,7 +47,7 @@ namespace SCPDiscord.BotCommands
 			}
 			else
 			{
-				SCPDiscord.plugin.Warn(Config.GetUserIDBansFile() + " does not exist, could not check it for banned players.");
+				Logger.Warn(Config.GetUserIDBansFile() + " does not exist, could not check it for banned players.");
 			}
 
 			// Get all ban entries to be removed. (Splits the string and only checks the steam id and ip of the banned players instead of entire strings)

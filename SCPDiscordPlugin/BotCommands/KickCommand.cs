@@ -27,10 +27,10 @@ namespace SCPDiscord.BotCommands
 
         	//Get player name for feedback message
         	string playerName = "";
-	        SCPDiscord.plugin.GetPlayerName(command.SteamID, ref playerName);
+	        Utilities.GetPlayerName(command.SteamID, ref playerName);
 
         	//Kicks the player
-        	if (SCPDiscord.plugin.KickPlayer(command.SteamID, command.Reason))
+        	if (Utilities.KickPlayer(command.SteamID, command.Reason))
         	{
         		Dictionary<string, string> variables = new Dictionary<string, string>
         		{

@@ -51,7 +51,7 @@ namespace SCPDiscord
 			SaveDefaultLanguages();
 
 			// Read primary language file
-			plugin.Info("Loading primary language file...");
+			Logger.Info("Loading primary language file...");
 			try
 			{
 				LoadLanguageFile(Config.GetString("settings.language"), "primary", out primary);
@@ -61,27 +61,27 @@ namespace SCPDiscord
 				switch (e)
 				{
 					case DirectoryNotFoundException _:
-						plugin.Error("Language directory not found.");
+						Logger.Error("Language directory not found.");
 						break;
 					case UnauthorizedAccessException _:
-						plugin.Error("Primary language file access denied.");
+						Logger.Error("Primary language file access denied.");
 						break;
 					case FileNotFoundException _:
-						plugin.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
+						Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
 						break;
 					case JsonReaderException _:
 					case YamlException _:
-						plugin.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
+						Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
 						break;
 				}
-				plugin.Error("Error reading primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml'. Attempting to initialize backup system...");
-				plugin.Debug(e.ToString());
+				Logger.Error("Error reading primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml'. Attempting to initialize backup system...");
+				Logger.Debug(e.ToString());
 			}
 
 			// Read backup language file if not the same as the primary
 			if (Config.GetString("settings.language") != "english")
 			{
-				plugin.Info("Loading backup language file...");
+				Logger.Info("Loading backup language file...");
 				try
 				{
 					LoadLanguageFile("english", "backup", out backup);
@@ -91,26 +91,26 @@ namespace SCPDiscord
 					switch (e)
 					{
 						case DirectoryNotFoundException _:
-							plugin.Error("Language directory not found.");
+							Logger.Error("Language directory not found.");
 							break;
 						case UnauthorizedAccessException _:
-							plugin.Error("Backup language file access denied.");
+							Logger.Error("Backup language file access denied.");
 							break;
 						case FileNotFoundException _:
-							plugin.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
+							Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
 							break;
 						case JsonReaderException _:
 						case YamlException _:
-							plugin.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
+							Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
 							break;
 					}
-					plugin.Error("Error reading backup language file '" + languagesPath + "english.yml'.");
-					plugin.Debug(e.ToString());
+					Logger.Error("Error reading backup language file '" + languagesPath + "english.yml'.");
+					Logger.Debug(e.ToString());
 				}
 			}
 			if (primary == null && backup == null)
 			{
-				plugin.Error("NO LANGUAGE FILE LOADED! DEACTIVATING SCPDISCORD.");
+				Logger.Error("NO LANGUAGE FILE LOADED! DEACTIVATING SCPDISCORD.");
 				throw new Exception();
 			}
 
@@ -123,21 +123,21 @@ namespace SCPDiscord
 				switch (e)
 				{
 					case DirectoryNotFoundException _:
-						plugin.Warn("Language directory not found.");
+						Logger.Warn("Language directory not found.");
 						break;
 					case UnauthorizedAccessException _:
-						plugin.Warn("Overrides language file access denied.");
+						Logger.Warn("Overrides language file access denied.");
 						break;
 					case FileNotFoundException _:
-						plugin.Warn("'" + languagesPath + "overrides.yml' was not found.");
+						Logger.Warn("'" + languagesPath + "overrides.yml' was not found.");
 						break;
 					case JsonReaderException _:
 					case YamlException _:
-						plugin.Warn("'" + languagesPath + "overrides.yml' formatting error.");
+						Logger.Warn("'" + languagesPath + "overrides.yml' formatting error.");
 						break;
 				}
-				plugin.Warn("Error reading overrides language file '" + languagesPath + "overrides.yml'.");
-				plugin.Debug(e.ToString());
+				Logger.Warn("Error reading overrides language file '" + languagesPath + "overrides.yml'.");
+				Logger.Debug(e.ToString());
 			}
 
 			if (Config.GetBool("settings.configvalidation"))
@@ -158,7 +158,7 @@ namespace SCPDiscord
 			}
 			catch (Exception e)
 			{
-				plugin.Error("Error reading base message" + e);
+				Logger.Error("Error reading base message" + e);
 				return null;
 			}
 
@@ -171,7 +171,7 @@ namespace SCPDiscord
 				case "":
 				case " ":
 				case ".":
-					plugin.Warn("Tried to send empty message " + messagePath + " to discord. Verify your language files.");
+					Logger.Warn("Tried to send empty message " + messagePath + " to discord. Verify your language files.");
 					return null;
 			}
 
@@ -202,7 +202,7 @@ namespace SCPDiscord
 			}
 			catch (Exception e)
 			{
-				plugin.Error("Error reading global regex" + e);
+				Logger.Error("Error reading global regex" + e);
 				return null;
 			}
 			// Run the global regex replacements
@@ -220,7 +220,7 @@ namespace SCPDiscord
 			}
 			catch (Exception e)
 			{
-				plugin.Error("Error reading local regex" + e);
+				Logger.Error("Error reading local regex" + e);
 				return null;
 			}
 			// Run the local regex replacements
@@ -247,7 +247,7 @@ namespace SCPDiscord
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Error reading final regex" + e);
+					Logger.Error("Error reading final regex" + e);
 					return null;
 				}
 				// Run the final regex replacements
@@ -269,16 +269,16 @@ namespace SCPDiscord
 			{
 				if (!File.Exists(languagesPath + language.Key + ".yml") || (Config.GetBool("settings.regeneratelanguagefiles") && language.Key != "overrides"))
 				{
-					plugin.Info("Creating language file " + languagesPath + language.Key + ".yml...");
+					Logger.Info("Creating language file " + languagesPath + language.Key + ".yml...");
 					try
 					{
 						File.WriteAllText((languagesPath + language.Key + ".yml"), language.Value);
 					}
 					catch (DirectoryNotFoundException)
 					{
-						plugin.Warn("Could not create language file: Language directory does not exist, attempting to create it... ");
+						Logger.Warn("Could not create language file: Language directory does not exist, attempting to create it... ");
 						Directory.CreateDirectory(languagesPath);
-						plugin.Info("Creating language file " + languagesPath + language.Key + ".yml...");
+						Logger.Info("Creating language file " + languagesPath + language.Key + ".yml...");
 						File.WriteAllText((languagesPath + language.Key + ".yml"), language.Value);
 					}
 				}
@@ -305,7 +305,7 @@ namespace SCPDiscord
 			string jsonString = serializer.Serialize(yamlObject);
 			dataObject = JObject.Parse(jsonString);
 
-			plugin.Info("Successfully loaded " + type + " language file '" + language + ".yml'.");
+			Logger.Info("Successfully loaded " + type + " language file '" + language + ".yml'.");
 		}
 
 		public static void ValidateLanguageStrings()
@@ -332,7 +332,7 @@ namespace SCPDiscord
 			}
 
 			sb.Append("||||||||||||| End of language validation ||||||||||||||");
-			plugin.Info(sb.ToString());
+			Logger.Info(sb.ToString());
 		}
 
 		/// <summary>
@@ -344,7 +344,7 @@ namespace SCPDiscord
 		{
 			if (primary == null)
 			{
-				plugin.Warn("Tried to read language string before loading languages.");
+				Logger.Warn("Tried to read language string before loading languages.");
 				return null;
 			}
 
@@ -362,7 +362,7 @@ namespace SCPDiscord
 				// This exception means the node does not exist in the language file, the plugin attempts to find it in the backup file
 				if (primaryException is NullReferenceException || primaryException is ArgumentNullException || primaryException is InvalidCastException || primaryException is JsonException)
 				{
-					plugin.Warn("Error reading string '" + path + "' from primary language file, switching to backup...");
+					Logger.Warn("Error reading string '" + path + "' from primary language file, switching to backup...");
 					try
 					{
 						return backup.SelectToken(path).Value<string>();
@@ -370,28 +370,28 @@ namespace SCPDiscord
 					// The node also does not exist in the backup file
 					catch (NullReferenceException)
 					{
-						plugin.Error("Error: Language language string '" + path + "' does not exist. Message can not be sent.");
+						Logger.Error("Error: Language language string '" + path + "' does not exist. Message can not be sent.");
 						return null;
 					}
 					catch (ArgumentNullException)
 					{
-						plugin.Error("Error: Language language string '" + path + "' does not exist. Message can not be sent.");
+						Logger.Error("Error: Language language string '" + path + "' does not exist. Message can not be sent.");
 						return null;
 					}
 					catch (InvalidCastException e)
 					{
-						plugin.Error(e.ToString());
+						Logger.Error(e.ToString());
 						throw;
 					}
 					catch (JsonException e)
 					{
-						plugin.Error(e.ToString());
+						Logger.Error(e.ToString());
 						throw;
 					}
 				}
 				else
 				{
-					plugin.Error(primaryException.ToString());
+					Logger.Error(primaryException.ToString());
 					throw;
 				}
 			}
@@ -406,7 +406,7 @@ namespace SCPDiscord
 		{
 			if (primary == null)
 			{
-				plugin.Warn("Tried to read regex dictionary '" + path + "' before loading languages.");
+				Logger.Warn("Tried to read regex dictionary '" + path + "' before loading languages.");
 				return new Dictionary<string, string>();
 			}
 
@@ -439,12 +439,12 @@ namespace SCPDiscord
 				}
 				catch (InvalidCastException e)
 				{
-					plugin.Error(e.ToString());
+					Logger.Error(e.ToString());
 					throw;
 				}
 				catch (JsonException e)
 				{
-					plugin.Error(e.ToString());
+					Logger.Error(e.ToString());
 					throw;
 				}
 			}
@@ -455,16 +455,16 @@ namespace SCPDiscord
 			}
 			catch (InvalidCastException e)
 			{
-				plugin.Error(e.ToString());
+				Logger.Error(e.ToString());
 				throw;
 			}
 			catch (JsonException e)
 			{
-				plugin.Error(e.ToString());
+				Logger.Error(e.ToString());
 				throw;
 			}
 
-			plugin.Warn("Error: Language regex dictionary '" + path + "' does not exist in language file.");
+			Logger.Warn("Error: Language regex dictionary '" + path + "' does not exist in language file.");
 			return new Dictionary<string, string>();
 		}
 	}

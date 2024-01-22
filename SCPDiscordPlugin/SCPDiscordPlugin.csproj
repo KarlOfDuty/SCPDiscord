@@ -71,6 +71,7 @@
     <Compile Include="BotCommands\MuteCommand.cs" />
     <Compile Include="BotCommands\UnbanCommand.cs" />
     <Compile Include="Interface\MuteCommand.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="MuteHandler.cs" />
     <Compile Include="ServerCommands\GrantVanillaRankCommand.cs" />
     <Compile Include="ServerCommands\RootCommand.cs" />

@@ -215,7 +215,7 @@ namespace SCPDiscord
 
 			if (!File.Exists(GetConfigPath()))
 			{
-				plugin.Info("Config file '" + Config.GetConfigPath() + "' does not exist, creating...");
+				Logger.Info("Config file '" + Config.GetConfigPath() + "' does not exist, creating...");
 				File.WriteAllText(Config.GetConfigPath(), Encoding.UTF8.GetString(Resources.config));
 			}
 
@@ -234,7 +234,7 @@ namespace SCPDiscord
 
 			JObject json = JObject.Parse(jsonString);
 
-			plugin.Debug("Reading config validation");
+			Logger.Debug("Reading config validation");
 
 			// Reads the configvalidation node first as it is used for reading the others
 			try
@@ -243,7 +243,7 @@ namespace SCPDiscord
 			}
 			catch (ArgumentNullException)
 			{
-				plugin.Warn("Config bool 'settings.configvalidation' not found, using default value: true");
+				Logger.Warn("Config bool 'settings.configvalidation' not found, using default value: true");
 			}
 
 			// Read config strings
@@ -251,16 +251,16 @@ namespace SCPDiscord
 			{
 				try
 				{
-					plugin.Debug("Reading config string '" + node.Key + "'");
+					Logger.Debug("Reading config string '" + node.Key + "'");
 					configStrings[node.Key] = json.SelectToken(node.Key).Value<string>();
 				}
 				catch (ArgumentNullException)
 				{
-					plugin.Warn("Config string '" + node.Key + "' not found, using default value: \"" + node.Value + "\"");
+					Logger.Warn("Config string '" + node.Key + "' not found, using default value: \"" + node.Value + "\"");
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Reading config string '" + node.Key + "' failed: " + e.Message);
+					Logger.Error("Reading config string '" + node.Key + "' failed: " + e.Message);
 					throw new ConfigParseException(e);
 				}
 			}
@@ -270,16 +270,16 @@ namespace SCPDiscord
 			{
 				try
 				{
-					plugin.Debug("Reading config int '" + node.Key + "'");
+					Logger.Debug("Reading config int '" + node.Key + "'");
 					configInts[node.Key] = json.SelectToken(node.Key).Value<int>();
 				}
 				catch (ArgumentNullException)
 				{
-					plugin.Warn("Config int '" + node.Key + "' not found, using default value: \"" + node.Value + "\"");
+					Logger.Warn("Config int '" + node.Key + "' not found, using default value: \"" + node.Value + "\"");
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Reading config int '" + node.Key + "' failed: " + e.Message);
+					Logger.Error("Reading config int '" + node.Key + "' failed: " + e.Message);
 					throw new ConfigParseException(e);
 				}
 			}
@@ -289,16 +289,16 @@ namespace SCPDiscord
 			{
 				try
 				{
-					plugin.Debug("Reading config bool '" + node.Key + "'");
+					Logger.Debug("Reading config bool '" + node.Key + "'");
 					configBools[node.Key] = json.SelectToken(node.Key).Value<bool>();
 				}
 				catch (ArgumentNullException)
 				{
-					plugin.Warn("Config bool '" + node.Key + "' not found, using default value: " + node.Value);
+					Logger.Warn("Config bool '" + node.Key + "' not found, using default value: " + node.Value);
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Reading config bool '" + node.Key + "' failed: " + e.Message);
+					Logger.Error("Reading config bool '" + node.Key + "' failed: " + e.Message);
 					throw new ConfigParseException(e);
 				}
 			}
@@ -309,16 +309,16 @@ namespace SCPDiscord
 			{
 				try
 				{
-					plugin.Debug("Reading config array '" + node.Key + "'");
+					Logger.Debug("Reading config array '" + node.Key + "'");
 					configArrays[node.Key] = json.SelectToken(node.Key).Value<JArray>().Values<string>().ToArray();
 				}
 				catch (ArgumentNullException)
 				{
-					plugin.Warn("Config array '" + node.Key + "' not found, using default value: []");
+					Logger.Warn("Config array '" + node.Key + "' not found, using default value: []");
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Reading config arrays '" + node.Key + "' failed: " + e.Message);
+					Logger.Error("Reading config arrays '" + node.Key + "' failed: " + e.Message);
 					throw new ConfigParseException(e);
 				}
 			}
@@ -328,16 +328,16 @@ namespace SCPDiscord
 			{
 				try
 				{
-					plugin.Debug("Reading config dict '" + node.Key + "'");
+					Logger.Debug("Reading config dict '" + node.Key + "'");
 					configDicts[node.Key] = json.SelectToken(node.Key).Value<JArray>().ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<ulong>());
 				}
 				catch (ArgumentNullException)
 				{
-					plugin.Warn("Config dictionary '" + node.Key + "' not found, using default value: []");
+					Logger.Warn("Config dictionary '" + node.Key + "' not found, using default value: []");
 				}
 				catch (Exception e)
 				{
-					plugin.Error("Reading config dict '" + node.Key + "' failed: " + e.Message);
+					Logger.Error("Reading config dict '" + node.Key + "' failed: " + e.Message);
 					throw new ConfigParseException(e);
 				}
 			}
@@ -347,17 +347,17 @@ namespace SCPDiscord
 			{
 				try
 				{
-					plugin.Debug("Reading rolesync");
+					Logger.Debug("Reading rolesync");
 					roleDictionary = json.SelectToken("rolesync").Value<JArray>().ToDictionary(k => ulong.Parse(((JObject)k).Properties().First().Name), v => v.Values().First().Value<JArray>().Values<string>().ToArray());
 				}
 				catch (Exception)
 				{
-					plugin.Warn("The rolesync config list is invalid, rolesync disabled.");
+					Logger.Warn("The rolesync config list is invalid, rolesync disabled.");
 					SetBool("settings.rolesync", false);
 				}
 			}
 
-			plugin.Debug("Finished reading config file");
+			Logger.Debug("Finished reading config file");
 
 			if (GetBool("settings.configvalidation"))
 			{
@@ -536,7 +536,7 @@ namespace SCPDiscord
 			}
 
 			sb.Append("|||||||||||| End of config validation ||||||||||||");
-			plugin.Info(sb.ToString());
+			Logger.Info(sb.ToString());
 		}
 
 		public static List<ulong> GetChannelIDs(string path)
