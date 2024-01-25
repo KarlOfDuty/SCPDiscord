@@ -30,10 +30,11 @@ namespace SCPDiscord
 			{ "english",            Encoding.UTF8.GetString(Resources.english)            },
 			{ "ukrainian",          Encoding.UTF8.GetString(Resources.ukrainian)          },
 			{ "russian",            Encoding.UTF8.GetString(Resources.russian)            },
+			{ "simplified-chinese", Encoding.UTF8.GetString(Resources.simplified_chinese) },
+			{ "italian",            Encoding.UTF8.GetString(Resources.italian)            },
 			{ "english-emote",      Encoding.UTF8.GetString(Resources.english_emote)      },
 			{ "ukrainian-emote",    Encoding.UTF8.GetString(Resources.ukrainian_emote)    },
 			{ "russian-emote",      Encoding.UTF8.GetString(Resources.russian_emote)      },
-			{ "simplified-chinese", Encoding.UTF8.GetString(Resources.simplified_chinese) },
 		};
 
 		public static void Reload()

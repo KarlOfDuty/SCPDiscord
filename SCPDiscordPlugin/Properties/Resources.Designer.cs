@@ -107,5 +107,12 @@ namespace SCPDiscord.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        internal static byte[] italian {
+            get {
+                object obj = ResourceManager.GetObject("italian", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
