@@ -134,6 +134,7 @@
     <None Include="config.yml" />
     <None Include="Languages\english-emote.yml" />
     <None Include="Languages\english.yml" />
+    <None Include="Languages\italian.yml" />
     <None Include="Languages\ukrainian-emote.yml" />
     <None Include="Languages\ukrainian.yml" />
     <None Include="Languages\russian-emote.yml" />
