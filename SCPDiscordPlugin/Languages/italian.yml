@@ -52,9 +52,9 @@ global_regex: [
   #"Overwatch":"",
   #"Filmmaker":"Regista",
   "Scp3114":"SCP-3114",
-  #"Flamingo":"Flamingo",
-  "AlphaFlamingo":"Flamingo Alpha",
-  "ZombieFlamingo":"Flamingo Zombi",
+  #"Flamingo":"Fenicottero",
+  "AlphaFlamingo":"Fenicottero Alpha",
+  "ZombieFlamingo":"Fenicottero Zombi",
 
   # Elevators
   "GateA":"gate A",
