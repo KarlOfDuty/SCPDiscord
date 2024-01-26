@@ -138,10 +138,13 @@
     <None Include="config.yml" />
     <None Include="Languages\english-emote.yml" />
     <None Include="Languages\english.yml" />
+    <None Include="Languages\italian.yml" />
     <None Include="Languages\ukrainian-emote.yml" />
     <None Include="Languages\ukrainian.yml" />
     <None Include="Languages\russian-emote.yml" />
     <None Include="Languages\russian.yml" />
+    <None Include="Languages\simplified-chinese.yml" />
+    <None Include="Languages\italian.yml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -176,20 +179,4 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!--<PropertyGroup>
-    <PostBuildEvent>dir
-      copy /y "SCPDiscord.dll" "D:\servers\scpsl\sm_plugins\"
-
-
-      mkdir "D:\servers\scpsl\sm_plugins\dependencies"
-
-
-      copy /y "YamlDotNet.dll" "D:\servers\scpsl\sm_plugins\dependencies\"
-
-
-      copy /y "Newtonsoft.Json.dll" "D:\servers\scpsl\sm_plugins\dependencies\"
-
-
-      del "D:\servers\scpsl\sm_plugins\SCPDiscord-lite.dll"</PostBuildEvent>
-  </PropertyGroup>-->
 </Project>
