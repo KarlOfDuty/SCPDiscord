@@ -14,7 +14,6 @@ namespace SCPDiscord
 {
 	internal static class Language
 	{
-		private static SCPDiscord plugin;
 		public static bool ready;
 
 		private static JObject primary;
@@ -40,7 +39,6 @@ namespace SCPDiscord
 		public static void Reload()
 		{
 			ready = false;
-			plugin = SCPDiscord.plugin;
 			languagesPath = Config.GetLanguageDir();
 
 			if (!Directory.Exists(languagesPath))
@@ -65,18 +63,20 @@ namespace SCPDiscord
 						Logger.Error("Language directory not found.");
 						break;
 					case UnauthorizedAccessException _:
-						Logger.Error("Primary language file access denied.");
+						Logger.Error("Primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml' access denied.");
 						break;
 					case FileNotFoundException _:
-						Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
+						Logger.Error("Primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
 						break;
 					case JsonReaderException _:
 					case YamlException _:
-						Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
+						Logger.Error("Primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
+						break;
+					default:
+						Logger.Error("Error reading primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml'. Attempting to initialize backup system...");
 						break;
 				}
-				Logger.Error("Error reading primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml'. Attempting to initialize backup system...");
-				Logger.Debug(e.ToString());
+				Logger.Error(e.ToString());
 			}
 
 			// Read backup language file if not the same as the primary
@@ -95,18 +95,20 @@ namespace SCPDiscord
 							Logger.Error("Language directory not found.");
 							break;
 						case UnauthorizedAccessException _:
-							Logger.Error("Backup language file access denied.");
+							Logger.Error("Backup language file '" + languagesPath + Config.GetString("settings.language") + ".yml' access denied.");
 							break;
 						case FileNotFoundException _:
-							Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
+							Logger.Error("Backup language file '" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
 							break;
 						case JsonReaderException _:
 						case YamlException _:
-							Logger.Error("'" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
+							Logger.Error("Backup language file '" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
+							break;
+						default:
+							Logger.Error("Error reading backup language file '" + languagesPath + "english.yml'.");
 							break;
 					}
-					Logger.Error("Error reading backup language file '" + languagesPath + "english.yml'.");
-					Logger.Debug(e.ToString());
+					Logger.Error(e.ToString());
 				}
 			}
 			if (primary == null && backup == null)
@@ -127,18 +129,20 @@ namespace SCPDiscord
 						Logger.Warn("Language directory not found.");
 						break;
 					case UnauthorizedAccessException _:
-						Logger.Warn("Overrides language file access denied.");
+						Logger.Warn("Overrides language file '" + languagesPath + "overrides.yml' access denied.");
 						break;
 					case FileNotFoundException _:
-						Logger.Warn("'" + languagesPath + "overrides.yml' was not found.");
+						Logger.Warn("Overrides language file '" + languagesPath + "overrides.yml' was not found.");
 						break;
 					case JsonReaderException _:
 					case YamlException _:
-						Logger.Warn("'" + languagesPath + "overrides.yml' formatting error.");
+						Logger.Warn("Overrides language file '" + languagesPath + "overrides.yml' formatting error.");
+						break;
+					default:
+						Logger.Warn("Error reading overrides language file '" + languagesPath + "overrides.yml'.");
 						break;
 				}
-				Logger.Warn("Error reading overrides language file '" + languagesPath + "overrides.yml'.");
-				Logger.Debug(e.ToString());
+				Logger.Error(e.ToString());
 			}
 
 			if (Config.GetBool("settings.configvalidation"))

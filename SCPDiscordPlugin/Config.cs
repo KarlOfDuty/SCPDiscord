@@ -37,6 +37,7 @@ namespace SCPDiscord
 			{ "settings.rolesync",                    false },
 			{ "settings.useglobaldirectory.language", true  },
 			{ "settings.useglobaldirectory.rolesync", true  },
+			{ "settings.useglobaldirectory.mutes",    true  },
 			{ "settings.regeneratelanguagefiles",     false }
 		};
 
@@ -48,7 +49,7 @@ namespace SCPDiscord
 		// The message arrays have to be entered separately as they are used in the language files as well
 		private static readonly Dictionary<string, string[]> generalConfigArrays = new Dictionary<string, string[]>
 		{
-			{ "channelsettings.filterips", new string[]{} },
+			{ "channelsettings.filterips",      new string[]{} },
 			{ "channelsettings.filtersteamids", new string[]{} }
 		};
 
@@ -352,7 +353,7 @@ namespace SCPDiscord
 				}
 				catch (Exception)
 				{
-					Logger.Warn("The rolesync config list is invalid, rolesync disabled.");
+					Logger.Error("The rolesync config list is invalid, rolesync disabled.");
 					SetBool("settings.rolesync", false);
 				}
 			}
@@ -469,6 +470,23 @@ namespace SCPDiscord
 		public static string GetRolesyncPath()
 		{
 			return GetRolesyncDir() + "rolesync.json";
+		}
+
+		public static string GetMutesDir()
+		{
+			if (GetBool("settings.useglobaldirectory.mutes"))
+			{
+				return Paths.GlobalPlugins.Plugins + "/SCPDiscord/";
+			}
+			else
+			{
+				return Paths.LocalPlugins.Plugins + "/SCPDiscord/";
+			}
+		}
+
+		public static string GetMutesPath()
+		{
+			return GetRolesyncDir() + "mutes.json";
 		}
 
 		public static string GetReservedSlotPath()

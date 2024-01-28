@@ -980,8 +980,8 @@ messages:
     regex: []
 
   invalidsteamid:
-    # steamid - string
-    message: "Invalid SteamID '<var:player-userid>'."
+    # userid - string
+    message: "Invalid SteamID '<var:userid>'."
     regex: []
 
   invalidsteamidorip:
@@ -995,29 +995,74 @@ messages:
     regex: []
 
   playernotfound:
-    # steamid - string
-    message: "Player with SteamID '<var:player-userid>' not found."
+    # userid - string
+    message: "Player with SteamID '<var:userid>' not found."
     regex: []
 
   playerkicked:
     # name - string
-    # steamid - string
+    # userid - string
     # admintag - string
-    message: "'<var:player-name>' (<var:player-userid>) was kicked from the server by <var:admintag>."
+    message: "'<var:name>' (<var:userid>) was kicked from the server by <var:admintag>."
     regex: []
 
   playerbanned:
     # name - string
-    # steamid - string
+    # userid - string
     # reason - string
     # duration - string
     # admintag - string
-    message: "'<var:player-name>' (<var:player-userid>) was banned from the server by <var:admintag> for the reason '<var:reason>' (<var:duration>)."
+    message: "'<var:name>' (<var:player-userid>) was banned from the server by <var:admintag> for the reason '<var:reason>' (<var:duration>)."
     regex: []
 
   playerunbanned:
     # steamidorip - string
     message: "All entries with SteamID/IP '<var:steamidorip>' have been cleared from the ban lists."
+    regex: []
+
+  playermuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    message: "<var:name> "
+    regex: []
+
+  playertempmuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    message: "<var:name>"
+    regex: []
+
+  mutefailed:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    message: "<var:name>"
+    regex: []
+
+  playerunmuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    message: "<var:name>"
+    regex: []
+
+  unmutefailed:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    message: "<var:name>"
     regex: []
 
   kickall:

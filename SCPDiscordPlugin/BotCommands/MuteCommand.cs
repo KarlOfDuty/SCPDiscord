@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PluginAPI.Core;
 using PluginAPI.Events;
 using SCPDiscord.Interface;
@@ -8,6 +7,7 @@ using VoiceChat;
 
 namespace SCPDiscord.BotCommands
 {
+	// This command is also used for unmuting by setting the duration to 0
     public class MuteCommand
     {
 	    public static void Execute(Interface.MuteCommand command)
@@ -33,12 +33,15 @@ namespace SCPDiscord.BotCommands
 			// Create duration timestamp.
 			string humanReadableDuration = "";
 			long durationSeconds = 0;
-			long issuanceTime = DateTime.UtcNow.Ticks;
 			DateTime endTime;
 
-			if (command.Duration.ToLower().Trim().Contains("permanent"))
+			if (command.Duration.ToLower().Trim().Contains("perm"))
 			{
 				endTime = DateTime.MaxValue;
+			}
+			else if (command.Duration.Trim() == "0")
+			{
+				endTime = DateTime.Now;
 			}
 			else
 			{
@@ -62,95 +65,161 @@ namespace SCPDiscord.BotCommands
 				}
 			}
 
-			string name = "";
-			if (!Utilities.GetPlayerName(command.SteamID, ref name))
-			{
-				name = "Offline player";
-			}
-
-			if (command.Reason == "")
-			{
-				command.Reason = "No reason provided.";
-			}
-
 			if (endTime > DateTime.Now)
 			{
-				MutePlayer(command, name, endTime, humanReadableDuration);
+				MutePlayer(command, endTime, humanReadableDuration);
 			}
 			else
 			{
-				UnmutePlayer(command, name);
+				UnmutePlayer(command);
 			}
 		}
 
-	    private static void MutePlayer(Interface.MuteCommand command, string playerName, DateTime endTime, string humanReadableDuration)
+	    private static void MutePlayer(Interface.MuteCommand command, DateTime endTime, string humanReadableDuration)
 	    {
-		    // TODO: Feedback if the request is cancelled by another plugin
-		    if (Player.TryGet(command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam", out Player player))
+		    string userID = command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam";
+		    string playerName = "";
+
+		    if (Player.TryGet(userID, out Player player))
 		    {
 			    if (!EventManager.ExecuteEvent(new PlayerMutedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, false)))
 			    {
+				    EmbedMessage embed = new EmbedMessage
+				    {
+					    Colour = EmbedMessage.Types.DiscordColour.Red,
+					    ChannelID = command.ChannelID,
+					    InteractionID = command.InteractionID
+				    };
+
+				    Dictionary<string, string> banVars = new Dictionary<string, string>
+				    {
+					    { "name",     playerName            },
+					    { "userid",   command.SteamID       },
+					    { "reason",   command.Reason        },
+					    { "duration", humanReadableDuration },
+					    { "admintag", command.AdminTag      }
+				    };
+
+				    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.mutefailed", banVars);
 				    return;
 			    }
+			    playerName = player.Nickname;
 		    }
-		    VoiceChatMutes.IssueLocalMute(command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam");
 
-		    // TODO: Add to mute file
-
-		    EmbedMessage embed = new EmbedMessage
+		    if (MuteSystem.MutePlayer(playerName, userID, command.AdminTag, command.Reason, endTime))
 		    {
-			    Colour = EmbedMessage.Types.DiscordColour.Green,
-			    ChannelID = command.ChannelID,
-			    InteractionID = command.InteractionID
-		    };
+			    EmbedMessage embed = new EmbedMessage
+			    {
+				    Colour = EmbedMessage.Types.DiscordColour.Green,
+				    ChannelID = command.ChannelID,
+				    InteractionID = command.InteractionID
+			    };
 
-		    Dictionary<string, string> banVars = new Dictionary<string, string>
-		    {
-			    { "name",       playerName            },
-			    { "steamid",    command.SteamID       },
-			    { "reason",     command.Reason        },
-			    { "duration",   humanReadableDuration },
-			    { "admintag",   command.AdminTag      }
-		    };
+			    Dictionary<string, string> banVars = new Dictionary<string, string>
+			    {
+				    { "name",     playerName            },
+				    { "userid",   command.SteamID       },
+				    { "reason",   command.Reason        },
+				    { "duration", humanReadableDuration },
+				    { "admintag", command.AdminTag      }
+			    };
 
-		    if (endTime == DateTime.MaxValue)
-		    {
-				SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playermuted", banVars);
+			    if (endTime == DateTime.MaxValue)
+			    {
+					SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playermuted", banVars);
+			    }
+			    else
+			    {
+				    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playertempmuted", banVars);
+			    }
 		    }
 		    else
 		    {
-			    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playertempmuted", banVars);
+			    EmbedMessage embed = new EmbedMessage
+			    {
+				    Colour = EmbedMessage.Types.DiscordColour.Red,
+				    ChannelID = command.ChannelID,
+				    InteractionID = command.InteractionID
+			    };
+
+			    Dictionary<string, string> banVars = new Dictionary<string, string>
+			    {
+				    { "name",     playerName            },
+				    { "userid",   command.SteamID       },
+				    { "reason",   command.Reason        },
+				    { "duration", humanReadableDuration },
+				    { "admintag", command.AdminTag      }
+			    };
+
+			    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.mutefailed", banVars);
 		    }
 	    }
 
-	    private static void UnmutePlayer(Interface.MuteCommand command, string playerName)
+	    private static void UnmutePlayer(Interface.MuteCommand command)
 	    {
-		    // TODO: Feedback if the request is cancelled by another plugin
-		    if (Player.TryGet(command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam", out Player player))
+		    string userID = command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam";
+		    string playerName = "";
+
+		    if (Player.TryGet(userID, out Player player))
 		    {
 			    if (!EventManager.ExecuteEvent(new PlayerMutedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, false)))
 			    {
+				    EmbedMessage embed = new EmbedMessage
+				    {
+					    Colour = EmbedMessage.Types.DiscordColour.Red,
+					    ChannelID = command.ChannelID,
+					    InteractionID = command.InteractionID
+				    };
+
+				    Dictionary<string, string> banVars = new Dictionary<string, string>
+				    {
+					    { "name",     playerName            },
+					    { "userid",   command.SteamID       },
+					    { "admintag", command.AdminTag      }
+				    };
+
+				    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.unmutefailed", banVars);
 				    return;
 			    }
+			    playerName = player.Nickname;
 		    }
-		    VoiceChatMutes.IssueLocalMute(command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam");
 
-		    // TODO: Modify entry in mute file
-
-		    Dictionary<string, string> banVars = new Dictionary<string, string>
+		    if (MuteSystem.UnmutePlayer(playerName, userID, command.AdminTag))
 		    {
-			    { "name",       playerName            },
-			    { "steamid",    command.SteamID       },
-			    { "reason",     command.Reason        },
-			    { "admintag",   command.AdminTag      }
-		    };
+			    EmbedMessage embed = new EmbedMessage
+			    {
+				    Colour = EmbedMessage.Types.DiscordColour.Green,
+				    ChannelID = command.ChannelID,
+				    InteractionID = command.InteractionID
+			    };
 
-		    SCPDiscord.plugin.SendEmbedWithMessageByID(new EmbedMessage
+			    Dictionary<string, string> variables = new Dictionary<string, string>
+			    {
+				    { "name",     playerName       },
+				    { "userid",   command.SteamID  },
+				    { "admintag", command.AdminTag }
+			    };
+
+			    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playerunmuted", variables);
+		    }
+		    else
 		    {
-			    Colour = EmbedMessage.Types.DiscordColour.Green,
-			    ChannelID = command.ChannelID,
-			    InteractionID = command.InteractionID
-		    }, "messages.playerunmuted", banVars);
+			    EmbedMessage embed = new EmbedMessage
+			    {
+				    Colour = EmbedMessage.Types.DiscordColour.Red,
+				    ChannelID = command.ChannelID,
+				    InteractionID = command.InteractionID
+			    };
+
+			    Dictionary<string, string> variables = new Dictionary<string, string>
+			    {
+				    { "name",     playerName       },
+				    { "userid",   command.SteamID  },
+				    { "admintag", command.AdminTag }
+			    };
+
+			    SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.unmutefailed", variables);
+		    }
 	    }
     }
 }

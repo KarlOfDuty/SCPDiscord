@@ -72,7 +72,7 @@
     <Compile Include="BotCommands\UnbanCommand.cs" />
     <Compile Include="Interface\MuteCommand.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="MuteHandler.cs" />
+    <Compile Include="MuteSystem.cs" />
     <Compile Include="ServerCommands\GrantVanillaRankCommand.cs" />
     <Compile Include="ServerCommands\RootCommand.cs" />
     <Compile Include="ServerCommands\SetNickname.cs" />
@@ -144,7 +144,6 @@
     <None Include="Languages\russian-emote.yml" />
     <None Include="Languages\russian.yml" />
     <None Include="Languages\simplified-chinese.yml" />
-    <None Include="Languages\italian.yml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

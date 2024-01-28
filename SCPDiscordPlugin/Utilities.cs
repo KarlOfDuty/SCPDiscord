@@ -41,11 +41,11 @@ namespace SCPDiscord
 			return null;
 		}
 
-		public static bool GetPlayerName(string steamID, ref string name)
+		public static bool GetPlayerName(string userID, ref string name)
 		{
 			foreach (Player player in Player.GetPlayers<Player>())
 			{
-				if (player.GetParsedUserID() == steamID)
+				if (userID.Contains(player.GetParsedUserID()))
 				{
 					name = player.Nickname;
 					return true;

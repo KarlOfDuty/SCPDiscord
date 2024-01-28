@@ -16,6 +16,9 @@
     # Sets the activity text shown in the bot's status.
     presence-text: "for server startup..."
 
+    # 
+    disable-commands: false
+
 # Sets command permissions for roles, affects the /server and /ra commands.
 # The permissions use regex matching, which you can use for more advanced configuration.
 # You can use 0 as the id for the @everyone role.

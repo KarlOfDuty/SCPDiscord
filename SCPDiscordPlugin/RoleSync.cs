@@ -36,12 +36,12 @@ namespace SCPDiscord
 
 			if (!File.Exists(Config.GetRolesyncPath()))
 			{
-				Logger.Info("Config file rolesync.json does not exist, creating...");
+				Logger.Info("Registry file " + Config.GetRolesyncPath() + " does not exist, creating...");
 				File.WriteAllText(Config.GetRolesyncPath(), "[]");
 			}
 
 			syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<ulong>());
-			Logger.Info("Successfully loaded rolesync '" + Config.GetRolesyncDir() + "rolesync.json'.");
+			Logger.Info("Successfully loaded '" + Config.GetRolesyncDir() + "rolesync.json'.");
 		}
 
 		private void SavePlayers()

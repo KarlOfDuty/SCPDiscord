@@ -19,7 +19,7 @@ namespace SCPDiscord.BotCommands
         	{
         		Dictionary<string, string> variables = new Dictionary<string, string>
         		{
-        			{ "steamid", command.SteamID }
+        			{ "userid", command.SteamID }
         		};
         		SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.invalidsteamid", variables);
         		return;
@@ -35,7 +35,7 @@ namespace SCPDiscord.BotCommands
         		Dictionary<string, string> variables = new Dictionary<string, string>
         		{
         			{ "name", playerName },
-        			{ "steamid", command.SteamID },
+        			{ "userid", command.SteamID },
         			{ "admintag", command.AdminTag }
         		};
         		embed.Colour = EmbedMessage.Types.DiscordColour.Green;
@@ -45,7 +45,7 @@ namespace SCPDiscord.BotCommands
         	{
         		Dictionary<string, string> variables = new Dictionary<string, string>
         		{
-        			{ "steamid", command.SteamID }
+        			{ "userid", command.SteamID }
         		};
 		        SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playernotfound", variables);
         	}
