@@ -19,6 +19,7 @@ namespace SCPDiscord
 			public string logLevel = "Information";
 			public string presenceType = "Watching";
 			public string presenceText = "for server startup...";
+			public bool disableCommands = false;
 		}
 		public Bot bot;
 
@@ -73,7 +74,8 @@ namespace SCPDiscord
 			Logger.Debug("bot.log-level: " + config.bot.logLevel, LogID.CONFIG);
 			Logger.Debug("bot.presence-type: " + config.bot.presenceType, LogID.CONFIG);
 			Logger.Debug("bot.presence-text: " + config.bot.presenceText, LogID.CONFIG);
-
+			Logger.Debug("bot.disable-commands: " + config.bot.disableCommands, LogID.CONFIG);
+			// TODO: Print permissions
 			Logger.Debug("plugin.address: " + config.plugin.address, LogID.CONFIG);
 			Logger.Debug("plugin.port: " + config.plugin.port, LogID.CONFIG);
 		}

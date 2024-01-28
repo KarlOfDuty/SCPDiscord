@@ -1003,7 +1003,7 @@ messages:
     # name - string
     # userid - string
     # admintag - string
-    message: "'<var:name>' (<var:userid>) was kicked from the server by <var:admintag>."
+    message: "'<var:name>' (<var:userid>) was kicked from the server."
     regex: []
 
   playerbanned:
@@ -1012,7 +1012,7 @@ messages:
     # reason - string
     # duration - string
     # admintag - string
-    message: "'<var:name>' (<var:player-userid>) was banned from the server by <var:admintag> for the reason '<var:reason>' (<var:duration>)."
+    message: "'<var:name>' (<var:userid>) was banned for the reason '<var:reason>' (<var:duration>)."
     regex: []
 
   playerunbanned:
@@ -1026,7 +1026,8 @@ messages:
     # reason - string
     # duration - string
     # admintag - string
-    message: "<var:name> "
+    # adminid - long
+    message: "<var:name> (<var:userid>) was muted for the reason '<var:reason>' (Permanently)."
     regex: []
 
   playertempmuted:
@@ -1035,7 +1036,8 @@ messages:
     # reason - string
     # duration - string
     # admintag - string
-    message: "<var:name>"
+    # adminid - long
+    message: "<var:name> (<var:userid>) was muted for the reason '<var:reason>' (<var:duration>)."
     regex: []
 
   mutefailed:
@@ -1044,7 +1046,8 @@ messages:
     # reason - string
     # duration - string
     # admintag - string
-    message: "<var:name>"
+    # adminid - long
+    message: "Error occured trying to mute player with steamid '<var:userid>', check the console for more info."
     regex: []
 
   playerunmuted:
@@ -1053,7 +1056,8 @@ messages:
     # reason - string
     # duration - string
     # admintag - string
-    message: "<var:name>"
+    # adminid - long
+    message: "<var:name> (<var:userid>) was unmuted."
     regex: []
 
   unmutefailed:
@@ -1062,13 +1066,14 @@ messages:
     # reason - string
     # duration - string
     # admintag - string
-    message: "<var:name>"
+    # adminid - long
+    message: "Error occured trying to unmute player with steamid '<var:userid>', check the console for more info."
     regex: []
 
   kickall:
     # reason - string
     # admintag - string
-    message: "All players have been kicked from the server by <var:admintag> with the reason '<var:reason>'."
+    message: "All players have been kicked from the server with the reason '<var:reason>'."
     regex: []
 
   # The feedback from a console command, except the custom ones above. (Is not affected by global regex other than final_regex)

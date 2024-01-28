@@ -9,5 +9,6 @@ message MuteCommand
     string duration = 3;
     string reason = 4;
     string adminTag = 5;
-    uint64 interactionID = 6;
+    uint64 adminID = 6;
+    uint64 interactionID = 7;
 }

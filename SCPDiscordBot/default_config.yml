@@ -1,38 +1,38 @@
 ﻿bot:
-    # The bot token from https://discord.com/developers/applications
+    # The bot token from https://discord.com/developers/applications.
     token: "add-your-token-here"
 
     # Your Discord server's ID.
     server-id: 000000000000000000
 
-    # Decides what messages are shown in console
+    # Decides what messages are shown in console.
     # Possible values are: Critical, Error, Warning, Information, Debug.
     log-level: "Information"
 
-    # Sets the type of activity for the bot to display in its presence status when the server is offline
-    # Possible values are: Playing, Streaming, ListeningTo, Watching, Competing
+    # Sets the type of activity for the bot to display in its presence status when the server is offline.
+    # Possible values are: Playing, Streaming, ListeningTo, Watching, Competing.
     presence-type: "Watching"
 
     # Sets the activity text shown in the bot's status.
     presence-text: "for server startup..."
 
-    # 
+    # Disable all bot commands.
     disable-commands: false
 
 # Sets command permissions for roles, affects the /server and /ra commands.
 # The permissions use regex matching, which you can use for more advanced configuration.
 # You can use 0 as the id for the @everyone role.
 permissions:
-    # Everyone
+    # Everyone.
     000000000000000000:
         - "hello"
         - "uptime"
         - "pbc KarlOfDuty [2-5]"
-    # Moderator
+    # Moderator.
     111111111111111111:
         - "pbc"
         - "bc"
-    # Admin
+    # Admin.
     222222222222222222:
         - "pbc"
         - "bc"

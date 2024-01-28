@@ -25,14 +25,14 @@ namespace SCPDiscord.Interface {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ch1Cb3RUb1BsdWdpbi9NdXRlQ29tbWFuZC5wcm90bxIUU0NQRGlzY29yZC5J",
-            "bnRlcmZhY2UifAoLTXV0ZUNvbW1hbmQSEQoJY2hhbm5lbElEGAEgASgEEg8K",
-            "B3N0ZWFtSUQYAiABKAkSEAoIZHVyYXRpb24YAyABKAkSDgoGcmVhc29uGAQg",
-            "ASgJEhAKCGFkbWluVGFnGAUgASgJEhUKDWludGVyYWN0aW9uSUQYBiABKARi",
-            "BnByb3RvMw=="));
+            "bnRlcmZhY2UijQEKC011dGVDb21tYW5kEhEKCWNoYW5uZWxJRBgBIAEoBBIP",
+            "CgdzdGVhbUlEGAIgASgJEhAKCGR1cmF0aW9uGAMgASgJEg4KBnJlYXNvbhgE",
+            "IAEoCRIQCghhZG1pblRhZxgFIAEoCRIPCgdhZG1pbklEGAYgASgEEhUKDWlu",
+            "dGVyYWN0aW9uSUQYByABKARiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::SCPDiscord.Interface.MuteCommand), global::SCPDiscord.Interface.MuteCommand.Parser, new[]{ "ChannelID", "SteamID", "Duration", "Reason", "AdminTag", "InteractionID" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SCPDiscord.Interface.MuteCommand), global::SCPDiscord.Interface.MuteCommand.Parser, new[]{ "ChannelID", "SteamID", "Duration", "Reason", "AdminTag", "AdminID", "InteractionID" }, null, null, null, null)
           }));
     }
     #endregion
@@ -79,6 +79,7 @@ namespace SCPDiscord.Interface {
       duration_ = other.duration_;
       reason_ = other.reason_;
       adminTag_ = other.adminTag_;
+      adminID_ = other.adminID_;
       interactionID_ = other.interactionID_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -149,8 +150,20 @@ namespace SCPDiscord.Interface {
       }
     }
 
+    /// <summary>Field number for the "adminID" field.</summary>
+    public const int AdminIDFieldNumber = 6;
+    private ulong adminID_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong AdminID {
+      get { return adminID_; }
+      set {
+        adminID_ = value;
+      }
+    }
+
     /// <summary>Field number for the "interactionID" field.</summary>
-    public const int InteractionIDFieldNumber = 6;
+    public const int InteractionIDFieldNumber = 7;
     private ulong interactionID_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -181,6 +194,7 @@ namespace SCPDiscord.Interface {
       if (Duration != other.Duration) return false;
       if (Reason != other.Reason) return false;
       if (AdminTag != other.AdminTag) return false;
+      if (AdminID != other.AdminID) return false;
       if (InteractionID != other.InteractionID) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -194,6 +208,7 @@ namespace SCPDiscord.Interface {
       if (Duration.Length != 0) hash ^= Duration.GetHashCode();
       if (Reason.Length != 0) hash ^= Reason.GetHashCode();
       if (AdminTag.Length != 0) hash ^= AdminTag.GetHashCode();
+      if (AdminID != 0UL) hash ^= AdminID.GetHashCode();
       if (InteractionID != 0UL) hash ^= InteractionID.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -233,8 +248,12 @@ namespace SCPDiscord.Interface {
         output.WriteRawTag(42);
         output.WriteString(AdminTag);
       }
-      if (InteractionID != 0UL) {
+      if (AdminID != 0UL) {
         output.WriteRawTag(48);
+        output.WriteUInt64(AdminID);
+      }
+      if (InteractionID != 0UL) {
+        output.WriteRawTag(56);
         output.WriteUInt64(InteractionID);
       }
       if (_unknownFields != null) {
@@ -267,8 +286,12 @@ namespace SCPDiscord.Interface {
         output.WriteRawTag(42);
         output.WriteString(AdminTag);
       }
-      if (InteractionID != 0UL) {
+      if (AdminID != 0UL) {
         output.WriteRawTag(48);
+        output.WriteUInt64(AdminID);
+      }
+      if (InteractionID != 0UL) {
+        output.WriteRawTag(56);
         output.WriteUInt64(InteractionID);
       }
       if (_unknownFields != null) {
@@ -295,6 +318,9 @@ namespace SCPDiscord.Interface {
       }
       if (AdminTag.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(AdminTag);
+      }
+      if (AdminID != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AdminID);
       }
       if (InteractionID != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(InteractionID);
@@ -325,6 +351,9 @@ namespace SCPDiscord.Interface {
       }
       if (other.AdminTag.Length != 0) {
         AdminTag = other.AdminTag;
+      }
+      if (other.AdminID != 0UL) {
+        AdminID = other.AdminID;
       }
       if (other.InteractionID != 0UL) {
         InteractionID = other.InteractionID;
@@ -365,6 +394,10 @@ namespace SCPDiscord.Interface {
             break;
           }
           case 48: {
+            AdminID = input.ReadUInt64();
+            break;
+          }
+          case 56: {
             InteractionID = input.ReadUInt64();
             break;
           }
@@ -404,6 +437,10 @@ namespace SCPDiscord.Interface {
             break;
           }
           case 48: {
+            AdminID = input.ReadUInt64();
+            break;
+          }
+          case 56: {
             InteractionID = input.ReadUInt64();
             break;
           }

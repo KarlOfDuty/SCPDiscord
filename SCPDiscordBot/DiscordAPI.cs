@@ -65,28 +65,33 @@ namespace SCPDiscord
 
 				ConfigParser.PrintConfig();
 
-				client.UseInteractivity(new InteractivityConfiguration
+				if (!ConfigParser.config.bot.disableCommands)
 				{
-					PaginationBehaviour = PaginationBehaviour.Ignore,
-					PaginationDeletion = PaginationDeletion.DeleteMessage,
-					Timeout = TimeSpan.FromMinutes(15)
-				});
+					client.UseInteractivity(new InteractivityConfiguration
+					{
+						PaginationBehaviour = PaginationBehaviour.Ignore,
+						PaginationDeletion = PaginationDeletion.DeleteMessage,
+						Timeout = TimeSpan.FromMinutes(15)
+					});
 
-				Logger.Log("Registering commands...", LogID.DISCORD);
-				instance.commands = client.UseSlashCommands();
+					Logger.Log("Registering commands...", LogID.DISCORD);
+					instance.commands = client.UseSlashCommands();
 
-				instance.commands.RegisterCommands<Commands.SyncSteamIDCommand>();
-				instance.commands.RegisterCommands<Commands.SyncIPCommand>();
-				instance.commands.RegisterCommands<Commands.UnsyncCommand>();
-				instance.commands.RegisterCommands<Commands.ServerCommand>();
-				instance.commands.RegisterCommands<Commands.ListCommand>();
-				instance.commands.RegisterCommands<Commands.KickAllCommand>();
-				instance.commands.RegisterCommands<Commands.KickCommand>();
-				instance.commands.RegisterCommands<Commands.BanCommand>();
-				instance.commands.RegisterCommands<Commands.UnbanCommand>();
-				instance.commands.RegisterCommands<Commands.RACommand>();
-				instance.commands.RegisterCommands<Commands.HelpCommand>();
-				instance.commands.RegisterCommands<Commands.UnsyncPlayerCommand>();
+					instance.commands.RegisterCommands<Commands.BanCommand>();
+					instance.commands.RegisterCommands<Commands.HelpCommand>();
+					instance.commands.RegisterCommands<Commands.KickAllCommand>();
+					instance.commands.RegisterCommands<Commands.KickCommand>();
+					instance.commands.RegisterCommands<Commands.ListCommand>();
+					instance.commands.RegisterCommands<Commands.MuteCommand>();
+					instance.commands.RegisterCommands<Commands.RACommand>();
+					instance.commands.RegisterCommands<Commands.ServerCommand>();
+					instance.commands.RegisterCommands<Commands.SyncIPCommand>();
+					instance.commands.RegisterCommands<Commands.SyncSteamIDCommand>();
+					instance.commands.RegisterCommands<Commands.UnbanCommand>();
+					instance.commands.RegisterCommands<Commands.UnmuteCommand>();
+					instance.commands.RegisterCommands<Commands.UnsyncCommand>();
+					instance.commands.RegisterCommands<Commands.UnsyncPlayerCommand>();
+				}
 
 				Logger.Log("Hooking events...", LogID.DISCORD);
 				client.SessionCreated += instance.OnReady;

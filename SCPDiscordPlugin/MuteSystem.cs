@@ -37,7 +37,8 @@ namespace SCPDiscord
 				return;
 			}
 
-			MuteSystem.MutePlayer(ev.Player.Nickname,
+			string name = ev.Player.Nickname;
+			MuteSystem.MutePlayer(ref name,
 				                  ev.Player.UserId,
 				                  ev.Issuer.DisplayNickname + " (" + ev.Issuer.UserId + ")",
 				                  "Muted using remote admin mute command.",
@@ -58,7 +59,8 @@ namespace SCPDiscord
 				return;
 			}
 
-			MuteSystem.UnmutePlayer(ev.Player.Nickname,
+			string name = ev.Player.Nickname;
+			MuteSystem.UnmutePlayer(ref name,
 				                    ev.Player.UserId,
 				                    ev.Issuer.DisplayNickname + " (" + ev.Issuer.UserId + ")");
 		}
@@ -93,14 +95,16 @@ namespace SCPDiscord
 	        public DateTime endTime;
         }
 
-        public static bool MutePlayer(string playerName, string userID, string muter, string reason, DateTime endTime)
+        public static bool MutePlayer(ref string playerName, string userID, string muter, string reason, DateTime endTime)
         {
 	        ReloadMutes();
 
 	        if (muteCache.TryGetFirst(x => x.userID == userID, out MuteEntry entry))
 	        {
+		        playerName = playerName.IsEmpty() ? entry.name : playerName;
+
 		        // Modify existing mute
-		        entry.name = playerName.IsEmpty() ? entry.name : playerName;
+		        entry.name = playerName;
 		        entry.muter = muter;
 		        entry.unmuter = "";
 		        entry.reason = reason.IsEmpty() ? entry.reason : reason;
@@ -114,10 +118,12 @@ namespace SCPDiscord
 	        }
 	        else
 	        {
+		        playerName = playerName.IsEmpty() ? "Offline Player" : playerName;
+
 		        // Create new mute entry
 		        MuteEntry newEntry = new MuteEntry
 		        {
-			        name = playerName.IsEmpty() ? "Offline Player" : playerName,
+			        name = playerName,
 			        userID = userID,
 			        muter = muter,
 			        unmuter = "",
@@ -134,7 +140,7 @@ namespace SCPDiscord
 	        return SaveMutes();
         }
 
-        public static bool UnmutePlayer(string playerName, string userID, string unmuter)
+        public static bool UnmutePlayer(ref string playerName, string userID, string unmuter)
         {
 	        ReloadMutes();
 
@@ -150,8 +156,10 @@ namespace SCPDiscord
 		        return true;
 	        }
 
+	        playerName = playerName.IsEmpty() ? entry.name : playerName;
+
 	        // Modify existing mute
-	        entry.name = playerName.IsEmpty() ? entry.name : playerName;
+	        entry.name = playerName;
 	        entry.unmuter = unmuter;
 	        entry.endTime = DateTime.Now;
 
