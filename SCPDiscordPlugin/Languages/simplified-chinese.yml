@@ -752,15 +752,15 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: "**玩家 <var:player-name> (<var:player-userid>) 因为 <var:issuername> (<var:issuersteamid>) 被封禁 `<var:duration>`. 原因: <var:reason>**"
+      message: "**玩家 <var:player-name> (<var:player-userid>) 因为 <var:issuer-name> (<var:issuer-userid>) 被封禁 `<var:duration>`. 原因: <var:reason>**"
       regex: [ ]
     server:
       # duration - int
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: "**玩家 <var:player-name> (<var:player-userid>) 被服务器封禁 `<var:duration>`. 原因: <var:reason>**"
@@ -771,19 +771,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         **IP-封禁 公告**
         ```
         玩家:    <var:player-name>\n
-        IP:        <var:playerip>\n
+        IP:        <var:player-ip>\n
         时间:    <var:issuedtime>\n
         截止日期:   <var:expirytime>\n
         持续时间:  <var:duration>\n
-        操作人:    <var:issuername>\n
+        操作人:    <var:issuer-name>\n
         原因:    <var:reason>
         ```
       regex: []
@@ -791,19 +791,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         **用户-封禁 公告**
         ```
         玩家:    <var:player-name>\n
-        Steam64位ID:    <var:playeruserid>\n
+        Steam64位ID:    <var:player-userid>\n
         时间:    <var:issuedtime>\n
         截止日期:   <var:expirytime>\n
         持续时间:  <var:duration>\n
-        操作人:    <var:issuername>\n
+        操作人:    <var:issuer-name>\n
         原因:    <var:reason>
         ```
       regex: []
@@ -813,19 +813,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         **IP-封禁 更新**
         ```
         玩家:    <var:player-name>\n
-        IP:        <var:playerip>\n
+        IP:        <var:player-ip>\n
         时间:    <var:issuedtime>\n
         截止日期:   <var:expirytime>\n
         持续时间:  <var:duration>\n
-        操作人:    <var:issuername>\n
+        操作人:    <var:issuer-name>\n
         原因:    <var:reason>
         ```
       regex: []
@@ -833,19 +833,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         **用户-封禁 更新**
         ```
         玩家:    <var:player-name>\n
-        Steam64位ID:    <var:playeruserid>\n
+        Steam64位ID:    <var:player-userid>\n
         时间:    <var:issuedtime>\n
         截止日期:   <var:expirytime>\n
         持续时间:  <var:duration>\n
-        操作人:    <var:issuername>\n
+        操作人:    <var:issuer-name>\n
         原因:    <var:reason>
         ```
       regex: []
@@ -865,14 +865,14 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: "**玩家 <var:player-name> (<var:player-userid>) 被 <var:issuername> (<var:issuersteamid>) 踢出服务器. 原因: <var:reason>**"
+      message: "**玩家 <var:player-name> (<var:player-userid>) 被 <var:issuer-name> (<var:issuer-userid>) 踢出服务器. 原因: <var:reason>**"
       regex: [ ]
     server:
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: "**玩家 <var:player-name> (<var:player-userid>) 被服务器踢出. 原因: <var:reason>**"
@@ -883,12 +883,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuername> (<var:issuersteamid>) 禁止了广播室发言.**"
+        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuer-name> (<var:issuer-userid>) 禁止了广播室发言.**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuername> (<var:issuersteamid>) 禁言了.**"
+        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuer-name> (<var:issuer-userid>) 禁言了.**"
         regex: []
     server:
       intercom:
@@ -905,12 +905,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuername> (<var:issuersteamid>) 解除广播室禁言.**"
+        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuer-name> (<var:issuer-userid>) 解除广播室禁言.**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuername> (<var:issuersteamid>) 解除禁言.**"
+        message: "**<var:player-name> (<var:player-userid>) 被 <var:issuer-name> (<var:issuer-userid>) 解除禁言.**"
         regex: []
     server:
       intercom:

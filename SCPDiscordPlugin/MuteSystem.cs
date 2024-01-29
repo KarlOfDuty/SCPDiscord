@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
-using Utils.NonAllocLINQ;
 using VoiceChat;
 
 namespace SCPDiscord
@@ -89,7 +86,7 @@ namespace SCPDiscord
     {
         public static string ignoreUserID = "";
 		private static Mutex muteFileMutex = new Mutex();
-		private static ConcurrentDictionary<ulong, MuteEntry> muteCache = new ConcurrentDictionary<ulong, MuteEntry>(); // TODO: Switch to thread safe container
+		private static ConcurrentDictionary<ulong, MuteEntry> muteCache = new ConcurrentDictionary<ulong, MuteEntry>();
 
 		private class MuteEntry
         {
@@ -99,6 +96,22 @@ namespace SCPDiscord
 	        public string reason;
 	        public DateTime startTime;
 	        public DateTime endTime;
+        }
+
+        private static async void SchedulePlayerCheck(DateTime targetTime, ulong steamID)
+        {
+	        // Add one second to time to make sure the check triggers after the mute ends
+	        TimeSpan remaining = targetTime - DateTime.UtcNow + TimeSpan.FromSeconds(1);
+	        string userId = steamID + "@steam";
+	        if (remaining > TimeSpan.Zero)
+	        {
+		        await Task.Delay(remaining);
+	        }
+
+	        if (Player.TryGet(userId, out Player player))
+	        {
+		        CheckMuteStatus(player);
+	        }
         }
 
         public static bool MutePlayer(ref string playerName, string userID, string muter, string reason, DateTime endTime)
@@ -146,17 +159,15 @@ namespace SCPDiscord
 	        }
 
 			VoiceChatMutes.IssueLocalMute(userID);
+			Task.Run(() => SchedulePlayerCheck(endTime, steamID));
 			Logger.Debug(playerName + " (" + userID + ") was muted ( " + endTime + " ).");
 	        return SaveMutes();
         }
 
         public static bool UnmutePlayer(ref string playerName, string userID, string unmuter)
         {
-	        Logger.Debug("Playername: " + playerName);
-	        Logger.Debug("Playername: " + userID);
 	        if (!Utilities.IsPossibleSteamID(userID, out ulong steamID))
 	        {
-		        Logger.Debug("Not steamid: " + userID);
 		        return false;
 	        }
 
@@ -190,19 +201,19 @@ namespace SCPDiscord
         public static void CheckMuteStatus(Player player)
         {
 	        if (!Utilities.IsPossibleSteamID(player.UserId, out ulong steamID))
-	        {
 		        return;
-	        }
 
 	        if (!muteCache.TryGetValue(steamID, out MuteEntry entry))
 		        return;
 
 	        if (player.IsMuted && entry.endTime < DateTime.UtcNow)
 	        {
+		        Logger.Debug("Unmuting player " + player.Nickname + " (" + player.UserId + ")");
 		        player.Unmute(true);
 	        }
 	        else if (!player.IsMuted && entry.endTime > DateTime.UtcNow)
 	        {
+		        Logger.Debug("Muting player " + player.Nickname + " (" + player.UserId + ")");
 		        player.Mute(false);
 	        }
         }

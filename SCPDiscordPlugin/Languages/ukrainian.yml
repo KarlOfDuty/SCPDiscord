@@ -743,15 +743,15 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: "Гравець <var:player-name> (<var:player-userid>) був забанений <var:issuername> (<var:issuersteamid>) на `<var:duration>`. Причина: <var:reason>"
+      message: "Гравець <var:player-name> (<var:player-userid>) був забанений <var:issuer-name> (<var:issuer-userid>) на `<var:duration>`. Причина: <var:reason>"
       regex: [ ]
     server:
       # duration - int
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: "Player <var:player-name> (<var:player-userid>) був забанений сервером на `<var:duration>`. Причина: <var:reason>"
@@ -762,19 +762,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         **Видано IP-бан**
         ```
         Гравець:    <var:player-name>\n
-        Айпі:        <var:playerip>\n
+        Айпі:        <var:player-ip>\n
         Виданий:    <var:issuedtime>\n
         До:   <var:expirytime>\n
         Термін:  <var:duration>\n
-        Адмін:    <var:issuername>\n
+        Адмін:    <var:issuer-name>\n
         Причина:    <var:reason>
         ```
       regex: []
@@ -782,19 +782,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         **Видано UserID-бан**
         ```
         Гравець:    <var:player-name>\n
-        Айді:    <var:playeruserid>\n
+        Айді:    <var:player-userid>\n
         Виданий:    <var:issuedtime>\n
         До:   <var:expirytime>\n
         Термін:  <var:duration>\n
-        Адмін:    <var:issuername>\n
+        Адмін:    <var:issuer-name>\n
         Причина:    <var:reason>
         ```
       regex: []
@@ -804,19 +804,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         **IP-бан оновлений**
         ```
         Гравець:    <var:player-name>\n
-        Айпі:        <var:playerip>\n
+        Айпі:        <var:player-ip>\n
         Виданий:    <var:issuedtime>\n
         До:   <var:expirytime>\n
         Термін:  <var:duration>\n
-        Адмін:    <var:issuername>\n
+        Адмін:    <var:issuer-name>\n
         Причина:    <var:reason>
         ```
       regex: []
@@ -824,19 +824,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         **UserID-бан оновлений**
         ```
         Гравець:    <var:player-name>\n
-        Айді:    <var:playeruserid>\n
+        Айді:    <var:player-userid>\n
         Виданий:    <var:issuedtime>\n
         До:   <var:expirytime>\n
         Термін:  <var:duration>\n
-        Адмін:    <var:issuername>\n
+        Адмін:    <var:issuer-name>\n
         Причина:    <var:reason>
         ```
       regex: []
@@ -856,14 +856,14 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: "**Гравець <var:player-name> (<var:player-userid>) був кікнутий <var:issuername> (<var:issuersteamid>). Причина: <var:reason>**"
+      message: "**Гравець <var:player-name> (<var:player-userid>) був кікнутий <var:issuer-name> (<var:issuer-userid>). Причина: <var:reason>**"
       regex: [ ]
     server:
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: "**Player <var:player-name> (<var:player-userid>) був кікнутий сервером. Причина: <var:reason>**"
@@ -874,12 +874,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) був зам'ючений в інтеркомі <var:issuername> (<var:issuersteamid>).**"
+        message: "**<var:player-name> (<var:player-userid>) був зам'ючений в інтеркомі <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) був зам'ючений <var:issuername> (<var:issuersteamid>).**"
+        message: "**<var:player-name> (<var:player-userid>) був зам'ючений <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
     server:
       intercom:
@@ -896,12 +896,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) був розм'ючений в інтеркомі <var:issuername> (<var:issuersteamid>).**"
+        message: "**<var:player-name> (<var:player-userid>) був розм'ючений в інтеркомі <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) був розм'ючений <var:issuername> (<var:issuersteamid>).**"
+        message: "**<var:player-name> (<var:player-userid>) був розм'ючений <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
     server:
       intercom:

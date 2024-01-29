@@ -190,7 +190,7 @@ namespace SCPDiscord
 				foreach (KeyValuePair<string, string> variable in variables)
 				{
 					// Wait until after the regex replacements to add the player names
-					if (variable.Key == "servername" || variable.Key == "name" || variable.Key == "attackername" || variable.Key == "playername" || variable.Key == "adminname" || variable.Key == "feedback" || variable.Key == "admintag")
+					if (variable.Key == "servername" || variable.Key == "name" || variable.Key == "attackername" || variable.Key == "player-name" || variable.Key == "adminname" || variable.Key == "feedback" || variable.Key == "admintag")
 					{
 						continue;
 					}

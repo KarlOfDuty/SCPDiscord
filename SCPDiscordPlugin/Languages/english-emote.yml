@@ -330,10 +330,10 @@ messages:
     # damage - float
     # damagetype - DamageType
     # attacker - Player
-    # playeripaddress - string
-    # playername - string
-    # playerplayerid - int
-    # playersteamid - string
+    # player-ip - string
+    # player-name - string
+    # player-id - int
+    # player-userid - string
     # playerclass - Role
     # playerteam - Team
     default:
@@ -349,10 +349,10 @@ messages:
   onplayerdie:
     # damagetype - DamageType
     # attacker - Player
-    # playeripaddress - string
-    # playername - string
-    # playerplayerid - int
-    # playersteamid - string
+    # player-ip - string
+    # player-name - string
+    # player-id - int
+    # player-userid - string
     # playerclass - Role
     # playerteam - Team
     default:
@@ -766,15 +766,15 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: ":no_entry: **Player <var:player-name> (<var:player-userid>) was banned by <var:issuername> (<var:issuersteamid>) for `<var:duration>`. Reason: <var:reason>**"
+      message: ":no_entry: **Player <var:player-name> (<var:player-userid>) was banned by <var:issuer-name> (<var:issuer-userid>) for `<var:duration>`. Reason: <var:reason>**"
       regex: [ ]
     server:
       # duration - int
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: ":no_entry: **Player <var:player-name> (<var:player-userid>) was banned by the server for `<var:duration>`. Reason: <var:reason>**"
@@ -785,19 +785,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         :no_entry: **IP-ban issued**
         ```
         Player:    <var:player-name>\n
-        IP:        <var:playerip>\n
+        IP:        <var:player-ip>\n
         Issued:    <var:issuedtime>\n
         Expires:   <var:expirytime>\n
         Duration:  <var:duration>\n
-        Issuer:    <var:issuername>\n
+        Issuer:    <var:issuer-name>\n
         Reason:    <var:reason>
         ```
       regex: []
@@ -805,19 +805,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         :no_entry: **UserID-ban issued**
         ```
         Player:    <var:player-name>\n
-        UserID:    <var:playeruserid>\n
+        UserID:    <var:player-userid>\n
         Issued:    <var:issuedtime>\n
         Expires:   <var:expirytime>\n
         Duration:  <var:duration>\n
-        Issuer:    <var:issuername>\n
+        Issuer:    <var:issuer-name>\n
         Reason:    <var:reason>
         ```
       regex: []
@@ -827,19 +827,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         :no_entry: **IP-ban updated**
         ```
         Player:    <var:player-name>\n
-        IP:        <var:playerip>\n
+        IP:        <var:player-ip>\n
         Issued:    <var:issuedtime>\n
         Expires:   <var:expirytime>\n
         Duration:  <var:duration>\n
-        Issuer:    <var:issuername>\n
+        Issuer:    <var:issuer-name>\n
         Reason:    <var:reason>
         ```
       regex: []
@@ -847,19 +847,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         :no_entry: **UserID-ban updated**
         ```
         Player:    <var:player-name>\n
-        UserID:    <var:playeruserid>\n
+        UserID:    <var:player-userid>\n
         Issued:    <var:issuedtime>\n
         Expires:   <var:expirytime>\n
         Duration:  <var:duration>\n
-        Issuer:    <var:issuername>\n
+        Issuer:    <var:issuer-name>\n
         Reason:    <var:reason>
         ```
       regex: []
@@ -879,14 +879,14 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: ":no_entry: **Player <var:player-name> (<var:player-userid>) was kicked by <var:issuername> (<var:issuersteamid>). Reason: <var:reason>**"
+      message: ":no_entry: **Player <var:player-name> (<var:player-userid>) was kicked by <var:issuer-name> (<var:issuer-userid>). Reason: <var:reason>**"
       regex: [ ]
     server:
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: ":no_entry: **Player <var:player-name> (<var:player-userid>) was kicked by the server. Reason: <var:reason>**"
@@ -897,12 +897,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: ":mute: **<var:player-name> (<var:player-userid>) was intercom-muted by <var:issuername> (<var:issuersteamid>).**"
+        message: ":mute: **<var:player-name> (<var:player-userid>) was intercom-muted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: ":mute: **<var:player-name> (<var:player-userid>) was muted by <var:issuername> (<var:issuersteamid>).**"
+        message: ":mute: **<var:player-name> (<var:player-userid>) was muted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
     server:
       intercom:
@@ -919,12 +919,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: ":speaker: **<var:player-name> (<var:player-userid>) was intercom-unmuted by <var:issuername> (<var:issuersteamid>).**"
+        message: ":speaker: **<var:player-name> (<var:player-userid>) was intercom-unmuted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: ":speaker: **<var:player-name> (<var:player-userid>) was unmuted by <var:issuername> (<var:issuersteamid>).**"
+        message: ":speaker: **<var:player-name> (<var:player-userid>) was unmuted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
     server:
       intercom:
@@ -959,10 +959,10 @@ messages:
     regex: []
 
   onplayerreport:
-    # playeripaddress - string
-    # playername - string
-    # playerplayerid - int
-    # playersteamid - string
+    # player-ip - string
+    # player-name - string
+    # player-id - int
+    # player-userid - string
     # playerclass - Role
     # playerteam - Team
     # targetipaddress - string

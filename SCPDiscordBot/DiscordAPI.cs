@@ -65,6 +65,12 @@ namespace SCPDiscord
 
 				ConfigParser.PrintConfig();
 
+				Logger.Log("Hooking events...", LogID.DISCORD);
+				client.SessionCreated += instance.OnReady;
+				client.GuildAvailable += instance.OnGuildAvailable;
+				client.ClientErrored += instance.OnClientError;
+				client.SocketErrored += instance.OnSocketError;
+
 				if (!ConfigParser.config.bot.disableCommands)
 				{
 					client.UseInteractivity(new InteractivityConfiguration
@@ -76,7 +82,6 @@ namespace SCPDiscord
 
 					Logger.Log("Registering commands...", LogID.DISCORD);
 					instance.commands = client.UseSlashCommands();
-
 					instance.commands.RegisterCommands<Commands.BanCommand>();
 					instance.commands.RegisterCommands<Commands.HelpCommand>();
 					instance.commands.RegisterCommands<Commands.KickAllCommand>();
@@ -91,19 +96,18 @@ namespace SCPDiscord
 					instance.commands.RegisterCommands<Commands.UnmuteCommand>();
 					instance.commands.RegisterCommands<Commands.UnsyncCommand>();
 					instance.commands.RegisterCommands<Commands.UnsyncPlayerCommand>();
+
+					Logger.Log("Hooking command events...", LogID.DISCORD);
+					instance.commands.SlashCommandErrored += instance.OnCommandError;
 				}
-
-				Logger.Log("Hooking events...", LogID.DISCORD);
-				client.SessionCreated += instance.OnReady;
-				client.GuildAvailable += instance.OnGuildAvailable;
-				client.ClientErrored += instance.OnClientError;
-				client.SocketErrored += instance.OnSocketError;
-
-				Logger.Log("Hooking command events...", LogID.DISCORD);
-				instance.commands.SlashCommandErrored += instance.OnCommandError;
 
 				Logger.Log("Connecting to Discord...", LogID.DISCORD);
 				await client.ConnectAsync();
+
+				if (ConfigParser.config.bot.disableCommands)
+				{
+					await client.BulkOverwriteGlobalApplicationCommandsAsync(new DiscordApplicationCommand[] {});
+				}
 
 				Logger.Log("Initializing REST API...", LogID.DISCORD);
 				restClient = new DiscordRestClient(new DiscordConfiguration

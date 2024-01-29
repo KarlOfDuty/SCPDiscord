@@ -16,7 +16,7 @@
     # Sets the activity text shown in the bot's status.
     presence-text: "for server startup..."
 
-    # Disable all bot commands.
+    # Disable and delete all existing commands for this bot.
     disable-commands: false
 
 # Sets command permissions for roles, affects the /server and /ra commands.

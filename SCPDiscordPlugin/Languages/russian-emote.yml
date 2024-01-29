@@ -743,15 +743,15 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: ":no_entry: Игрок <var:player-name> (<var:player-userid>) был забанен администратором <var:issuername> (<var:issuersteamid>) на `<var:duration>`. Причина: <var:reason>"
+      message: ":no_entry: Игрок <var:player-name> (<var:player-userid>) был забанен администратором <var:issuer-name> (<var:issuer-userid>) на `<var:duration>`. Причина: <var:reason>"
       regex: [ ]
     server:
       # duration - int
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: ":no_entry: Игрок <var:player-name> (<var:player-userid>) был забанен сервером на `<var:duration>`. Причина: <var:reason>"
@@ -762,19 +762,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         :no_entry: **Был выдан бан по IP**
         ```
         Игрок:           <var:player-name>\n
-        IP-Адрес:        <var:playerip>\n
+        IP-Адрес:        <var:player-ip>\n
         Выдан:           <var:issuedtime>\n
         Заканчивается:   <var:expirytime>\n
         Длительность:    <var:duration>\n
-        Администратор:   <var:issuername>\n
+        Администратор:   <var:issuer-name>\n
         Причина:         <var:reason>
         ```
       regex: []
@@ -782,19 +782,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         :no_entry: **Выдан бан по UserID**
         ```
         Игрок:           <var:player-name>\n
-        UserID:          <var:playerip>\n
+        UserID:          <var:player-ip>\n
         Выдан:           <var:issuedtime>\n
         Заканчивается:   <var:expirytime>\n
         Длительность:    <var:duration>\n
-        Администратор:   <var:issuername>\n
+        Администратор:   <var:issuer-name>\n
         Причина:         <var:reason>
         ```
       regex: []
@@ -804,19 +804,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playerip
-    # playername
-    # issuername
+    # player-ip
+    # player-name
+    # issuer-name
     ip:
       message: >+
         :no_entry: **Бан по IP обновлён**
         ```
         Игрок:           <var:player-name>\n
-        IP-Адрес:        <var:playerip>\n
+        IP-Адрес:        <var:player-ip>\n
         Выдан:           <var:issuedtime>\n
         Заканчивается:   <var:expirytime>\n
         Длительность:    <var:duration>\n
-        Администратор:   <var:issuername>\n
+        Администратор:   <var:issuer-name>\n
         Причина:         <var:reason>
         ```
       regex: []
@@ -824,19 +824,19 @@ messages:
     # expirytime
     # issuedtime
     # reason
-    # playeruserid
-    # playername
-    # issuername
+    # player-userid
+    # player-name
+    # issuer-name
     userid:
       message: >+
         :no_entry: **Бан по UserID обновлён**
         ```
         Игрок:           <var:player-name>\n
-        UserID:          <var:playerip>\n
+        UserID:          <var:player-ip>\n
         Выдан:           <var:issuedtime>\n
         Заканчивается:   <var:expirytime>\n
         Длительность:    <var:duration>\n
-        Администратор:   <var:issuername>\n
+        Администратор:   <var:issuer-name>\n
         Причина:         <var:reason>
         ```
       regex: []
@@ -856,14 +856,14 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: ":no_entry: Игрок <var:player-name> (<var:player-userid>) был кикнут администратором <var:issuername> (<var:issuersteamid>) на `<var:duration>`. Причина: <var:reason>"
+      message: ":no_entry: Игрок <var:player-name> (<var:player-userid>) был кикнут администратором <var:issuer-name> (<var:issuer-userid>) на `<var:duration>`. Причина: <var:reason>"
       regex: [ ]
     server:
       # reason - string
-      # playeripaddress - string
-      # playername - string
-      # playerplayerid - int
-      # playersteamid - string
+      # player-ip - string
+      # player-name - string
+      # player-id - int
+      # player-userid - string
       # playerclass - Role
       # playerteam - Team
       message: ":no_entry: Игрок <var:player-name> (<var:player-userid>) был кикнут сервером на `<var:duration>`. Причина: <var:reason>"
@@ -874,12 +874,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: ":mute: **Администратор <var:issuername> (<var:issuersteamid>) запретил игроку <var:player-name> (<var:player-userid>) использовать интерком.**"
+        message: ":mute: **Администратор <var:issuer-name> (<var:issuer-userid>) запретил игроку <var:player-name> (<var:player-userid>) использовать интерком.**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: ":mute: **Администратор <var:issuername> (<var:issuersteamid>) запретил игроку <var:player-name> (<var:player-userid>) говорить.**"
+        message: ":mute: **Администратор <var:issuer-name> (<var:issuer-userid>) запретил игроку <var:player-name> (<var:player-userid>) говорить.**"
         regex: []
     server:
       intercom:
@@ -896,12 +896,12 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: ":speaker: **Администратор <var:issuername> (<var:issuersteamid>) разрешил игроку <var:player-name> (<var:player-userid>) использовать интерком.**"
+        message: ":speaker: **Администратор <var:issuer-name> (<var:issuer-userid>) разрешил игроку <var:player-name> (<var:player-userid>) использовать интерком.**"
         regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: ":speaker: **Администратор <var:issuername> (<var:issuersteamid>) разрешил говорить игроку <var:player-name> (<var:player-userid>).**"
+        message: ":speaker: **Администратор <var:issuer-name> (<var:issuer-userid>) разрешил говорить игроку <var:player-name> (<var:player-userid>).**"
         regex: []
     server:
       intercom:
