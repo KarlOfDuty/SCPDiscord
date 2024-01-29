@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using PluginAPI.Core;
 using PluginAPI.Events;
 using SCPDiscord.Interface;
-using VoiceChat;
 
 namespace SCPDiscord.BotCommands
 {
@@ -20,7 +19,7 @@ namespace SCPDiscord.BotCommands
 			};
 
 			// Perform very basic SteamID validation.
-			if (!Utilities.IsPossibleSteamID(command.SteamID))
+			if (!Utilities.IsPossibleSteamID(command.SteamID, out ulong _))
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string>
 				{
@@ -41,7 +40,7 @@ namespace SCPDiscord.BotCommands
 			}
 			else if (command.Duration.Trim() == "0")
 			{
-				endTime = DateTime.Now;
+				endTime = DateTime.MinValue;
 			}
 			else
 			{
@@ -65,7 +64,7 @@ namespace SCPDiscord.BotCommands
 				}
 			}
 
-			if (endTime > DateTime.Now)
+			if (endTime > DateTime.UtcNow)
 			{
 				MutePlayer(command, endTime, humanReadableDuration);
 			}
@@ -82,6 +81,7 @@ namespace SCPDiscord.BotCommands
 
 		    if (Player.TryGet(userID, out Player player))
 		    {
+			    MuteSystem.ignoreUserID = userID;
 			    if (!EventManager.ExecuteEvent(new PlayerMutedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, false)))
 			    {
 				    EmbedMessage embed = new EmbedMessage
@@ -165,6 +165,7 @@ namespace SCPDiscord.BotCommands
 
 		    if (Player.TryGet(userID, out Player player))
 		    {
+			    MuteSystem.ignoreUserID = userID;
 			    if (!EventManager.ExecuteEvent(new PlayerMutedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, false)))
 			    {
 				    EmbedMessage embed = new EmbedMessage

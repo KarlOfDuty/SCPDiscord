@@ -18,7 +18,7 @@ namespace SCPDiscord.BotCommands
 			};
 
 			// Perform very basic SteamID and ip validation.
-			if (!Utilities.IsPossibleSteamID(command.SteamIDOrIP) && !IPAddress.TryParse(command.SteamIDOrIP, out IPAddress _))
+			if (!Utilities.IsPossibleSteamID(command.SteamIDOrIP, out ulong _) && !IPAddress.TryParse(command.SteamIDOrIP, out IPAddress _))
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string>
 				{

@@ -67,9 +67,10 @@ namespace SCPDiscord
 			return false;
 		}
 
-		public static bool IsPossibleSteamID(string steamID)
+		public static bool IsPossibleSteamID(string steamID, out ulong id)
 		{
-			return steamID.Length >= 17 && ulong.TryParse(steamID.Replace("@steam", ""), out ulong _);
+			id = 0;
+			return steamID.Length >= 17 && ulong.TryParse(steamID.Replace("@steam", ""), out id);
 		}
 
 		public static string EscapeDiscordFormatting(string input)

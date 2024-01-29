@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,9 +34,12 @@ namespace SCPDiscord
 
 			if (ev?.Player.UserId == MuteSystem.ignoreUserID)
 			{
+				Logger.Debug("Ignored mute event from self.");
 				MuteSystem.ignoreUserID = "";
 				return;
 			}
+
+			Logger.Debug("Caught mute event for " + ev.Player.UserId);
 
 			string name = ev.Player.Nickname;
 			MuteSystem.MutePlayer(ref name,
@@ -55,9 +59,12 @@ namespace SCPDiscord
 
 			if (ev?.Player.UserId == MuteSystem.ignoreUserID)
 			{
+				Logger.Debug("Ignored unmute event from self.");
 				MuteSystem.ignoreUserID = "";
 				return;
 			}
+
+			Logger.Debug("Caught unmute event for " + ev.Player.UserId);
 
 			string name = ev.Player.Nickname;
 			MuteSystem.UnmutePlayer(ref name,
@@ -82,12 +89,11 @@ namespace SCPDiscord
     {
         public static string ignoreUserID = "";
 		private static Mutex muteFileMutex = new Mutex();
-		private static List<MuteEntry> muteCache = new List<MuteEntry>(); // TODO: Switch to thread safe container
+		private static ConcurrentDictionary<ulong, MuteEntry> muteCache = new ConcurrentDictionary<ulong, MuteEntry>(); // TODO: Switch to thread safe container
 
 		private class MuteEntry
         {
 	        public string name;
-	        public string userID;
 	        public string muter;
 	        public string unmuter;
 	        public string reason;
@@ -97,9 +103,14 @@ namespace SCPDiscord
 
         public static bool MutePlayer(ref string playerName, string userID, string muter, string reason, DateTime endTime)
         {
+	        if (!Utilities.IsPossibleSteamID(userID, out ulong steamID))
+	        {
+		        return false;
+	        }
+
 	        ReloadMutes();
 
-	        if (muteCache.TryGetFirst(x => x.userID == userID, out MuteEntry entry))
+	        if (muteCache.TryGetValue(steamID, out MuteEntry entry))
 	        {
 		        playerName = playerName.IsEmpty() ? entry.name : playerName;
 
@@ -111,9 +122,9 @@ namespace SCPDiscord
 		        entry.endTime = endTime;
 
 		        // If the player was not already muted set the start time, otherwise keep the old one
-		        if (entry.endTime < DateTime.Now)
+		        if (entry.endTime < DateTime.UtcNow)
 		        {
-			        entry.startTime = DateTime.Now;
+			        entry.startTime = DateTime.UtcNow;
 		        }
 	        }
 	        else
@@ -124,44 +135,52 @@ namespace SCPDiscord
 		        MuteEntry newEntry = new MuteEntry
 		        {
 			        name = playerName,
-			        userID = userID,
 			        muter = muter,
 			        unmuter = "",
 			        reason = reason.IsEmpty() ? "" : reason,
-			        startTime = DateTime.Now,
+			        startTime = DateTime.UtcNow,
 			        endTime = endTime
 		        };
 
-		        muteCache.Add(newEntry);
+		        muteCache[steamID] = newEntry;
 	        }
 
 			VoiceChatMutes.IssueLocalMute(userID);
-			Logger.Debug(playerName + " (" + userID + ") was muted ( " + endTime.ToLocalTime() + " ).");
+			Logger.Debug(playerName + " (" + userID + ") was muted ( " + endTime + " ).");
 	        return SaveMutes();
         }
 
         public static bool UnmutePlayer(ref string playerName, string userID, string unmuter)
         {
+	        Logger.Debug("Playername: " + playerName);
+	        Logger.Debug("Playername: " + userID);
+	        if (!Utilities.IsPossibleSteamID(userID, out ulong steamID))
+	        {
+		        Logger.Debug("Not steamid: " + userID);
+		        return false;
+	        }
+
 	        ReloadMutes();
 
 	        // Player has not been muted
-	        if (!muteCache.TryGetFirst(x => x.userID == userID, out MuteEntry entry))
+	        if (!muteCache.TryGetValue(steamID, out MuteEntry entry))
 	        {
-		        return true;
-	        }
-
-	        // Player is already unmuted
-	        if (entry.endTime < DateTime.Now)
-	        {
+		        playerName = playerName.IsEmpty() ? entry.name : playerName;
 		        return true;
 	        }
 
 	        playerName = playerName.IsEmpty() ? entry.name : playerName;
 
+	        // Player is already unmuted
+	        if (entry.endTime < DateTime.UtcNow)
+	        {
+		        return true;
+	        }
+
 	        // Modify existing mute
 	        entry.name = playerName;
 	        entry.unmuter = unmuter;
-	        entry.endTime = DateTime.Now;
+	        entry.endTime = DateTime.UtcNow;
 
 			VoiceChatMutes.RevokeLocalMute(userID);
 			Logger.Debug(playerName + " (" + userID + ") was unmuted.");
@@ -170,16 +189,19 @@ namespace SCPDiscord
 
         public static void CheckMuteStatus(Player player)
         {
-	        List<MuteEntry> muteCacheCopy = muteCache;
+	        if (!Utilities.IsPossibleSteamID(player.UserId, out ulong steamID))
+	        {
+		        return;
+	        }
 
-	        if (!muteCacheCopy.TryGetFirst(x => x.userID == player.UserId, out MuteEntry entry))
+	        if (!muteCache.TryGetValue(steamID, out MuteEntry entry))
 		        return;
 
-	        if (player.IsMuted && entry.endTime < DateTime.Now)
+	        if (player.IsMuted && entry.endTime < DateTime.UtcNow)
 	        {
 		        player.Unmute(true);
 	        }
-	        else if (!player.IsMuted && entry.endTime > DateTime.Now)
+	        else if (!player.IsMuted && entry.endTime > DateTime.UtcNow)
 	        {
 		        player.Mute(false);
 	        }
@@ -193,7 +215,7 @@ namespace SCPDiscord
 		        return;
 	        }
 
-	        if (!TryLoadMutes(out List<MuteEntry> mutes))
+	        if (!TryLoadMutes(out ConcurrentDictionary<ulong, MuteEntry> mutes))
 	        {
 		        Logger.Warn("Unable to open mute file to reload.");
 		        muteFileMutex.ReleaseMutex();
@@ -214,7 +236,7 @@ namespace SCPDiscord
 
 	        try
 	        {
-		        File.WriteAllText(Config.GetMutesPath(), JsonConvert.SerializeObject(muteCache));
+		        File.WriteAllText(Config.GetMutesPath(), JsonConvert.SerializeObject(muteCache, Formatting.Indented));
 		        muteFileMutex.ReleaseMutex();
 		        return true;
 	        }
@@ -227,7 +249,7 @@ namespace SCPDiscord
 	        }
         }
 
-	    private static bool TryLoadMutes(out List<MuteEntry> muteEntries)
+	    private static bool TryLoadMutes(out ConcurrentDictionary<ulong, MuteEntry> muteEntries)
 	    {
 		    try
 		    {
@@ -239,10 +261,10 @@ namespace SCPDiscord
 			    if (!File.Exists(Config.GetMutesPath()))
 			    {
 				    Logger.Info("Registry file " + Config.GetMutesPath() + "does not exist, creating...");
-				    File.WriteAllText(Config.GetMutesPath(), "[]");
+				    File.WriteAllText(Config.GetMutesPath(), "{}");
 			    }
 
-			    muteEntries = JsonConvert.DeserializeObject<MuteEntry[]>(File.ReadAllText(Config.GetMutesPath())).ToList();
+			    muteEntries = JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, MuteEntry>>(File.ReadAllText(Config.GetMutesPath()));
 			    return true;
 		    }
 		    catch (Exception e)

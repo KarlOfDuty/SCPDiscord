@@ -19,7 +19,7 @@ namespace SCPDiscord.BotCommands
 			};
 
 			// Perform very basic SteamID validation.
-			if (!Utilities.IsPossibleSteamID(command.SteamID))
+			if (!Utilities.IsPossibleSteamID(command.SteamID, out ulong _))
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string>
 				{
