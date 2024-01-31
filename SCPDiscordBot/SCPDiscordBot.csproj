@@ -4,8 +4,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
-    <Version>3.1.5</Version>
-    <PackageVersion>3.1.5</PackageVersion>
+    <Version>3.2.0</Version>
+    <PackageVersion>3.2.0</PackageVersion>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <LangVersion>default</LangVersion>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
@@ -20,10 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-01946" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-01946" />
-    <PackageReference Include="DSharpPlus.Rest" Version="5.0.0-nightly-01946" />
-    <PackageReference Include="DSharpPlus.SlashCommands" Version="5.0.0-nightly-01946" />
+    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-01979" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-01979" />
+    <PackageReference Include="DSharpPlus.Rest" Version="5.0.0-nightly-01979" />
+    <PackageReference Include="DSharpPlus.SlashCommands" Version="5.0.0-nightly-01979" />
     <PackageReference Include="Google.Protobuf" Version="3.25.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="YamlDotNet" Version="13.7.1" />
