@@ -30,6 +30,7 @@ namespace SCPDiscord
 
 		private static readonly Dictionary<string, bool> configBools = new Dictionary<string, bool>
 		{
+			{ "settings.emotes",                      true  },
 			{ "settings.playercount",                 true  },
 			{ "settings.debug",                       true  },
 			{ "settings.metrics",                     true  },

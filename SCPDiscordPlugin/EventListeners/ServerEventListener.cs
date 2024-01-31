@@ -100,13 +100,13 @@ namespace SCPDiscord.EventListeners
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string>
 				{
-					{ "duration",   Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
-					{ "expirytime", new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
-					{ "issuedtime", new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss") },
-					{ "reason",     ev.BanDetails.Reason        },
-					{ "player-ip",   ev.BanDetails.Id            },
-					{ "player-name", ev.BanDetails.OriginalName  },
-					{ "issuer-name", ev.BanDetails.Issuer        },
+					{ "duration",    Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
+					{ "expirytime",  new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
+					{ "issuedtime",  new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss") },
+					{ "reason",      ev.BanDetails.Reason       },
+					{ "player-ip",   ev.BanDetails.Id           },
+					{ "player-name", ev.BanDetails.OriginalName },
+					{ "issuer-name", ev.BanDetails.Issuer       },
 				};
 				plugin.SendMessage("messages.onbanissued.ip", variables);
 			}
@@ -114,13 +114,13 @@ namespace SCPDiscord.EventListeners
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string>
 				{
-					{ "duration",     Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
-					{ "expirytime",   new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
-					{ "issuedtime",   new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss") },
-					{ "reason",       ev.BanDetails.Reason        },
-					{ "player-userid", ev.BanDetails.Id            },
-					{ "player-name",   ev.BanDetails.OriginalName  },
-					{ "issuer-name",   ev.BanDetails.Issuer        },
+					{ "duration",      Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
+					{ "expirytime",    new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
+					{ "issuedtime",    new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss") },
+					{ "reason",        ev.BanDetails.Reason       },
+					{ "player-userid", ev.BanDetails.Id           },
+					{ "player-name",   ev.BanDetails.OriginalName },
+					{ "issuer-name",   ev.BanDetails.Issuer       },
 				};
 				plugin.SendMessage("messages.onbanissued.userid", variables);
 			}
@@ -133,13 +133,13 @@ namespace SCPDiscord.EventListeners
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string>
 				{
-					{ "duration",   Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
-					{ "expirytime", new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss")            },
-					{ "issuedtime", new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss")       },
-					{ "reason",      ev.BanDetails.Reason        },
-					{ "player-ip",   ev.BanDetails.Id            },
-					{ "player-name", ev.BanDetails.OriginalName  },
-					{ "issuer-name", ev.BanDetails.Issuer        },
+					{ "duration",    Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
+					{ "expirytime",  new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
+					{ "issuedtime",  new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss") },
+					{ "reason",      ev.BanDetails.Reason       },
+					{ "player-ip",   ev.BanDetails.Id           },
+					{ "player-name", ev.BanDetails.OriginalName },
+					{ "issuer-name", ev.BanDetails.Issuer       },
 				};
 				plugin.SendMessage("messages.onbanupdated.ip", variables);
 			}
@@ -150,10 +150,10 @@ namespace SCPDiscord.EventListeners
 					{ "duration",      Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
 					{ "expirytime",    new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
 					{ "issuedtime",    new DateTime(ev.BanDetails.IssuanceTime).ToString("yyyy-MM-dd HH:mm:ss") },
-					{ "reason",        ev.BanDetails.Reason        },
-					{ "player-userid", ev.BanDetails.Id            },
-					{ "player-name",   ev.BanDetails.OriginalName  },
-					{ "issuer-name",   ev.BanDetails.Issuer        },
+					{ "reason",        ev.BanDetails.Reason       },
+					{ "player-userid", ev.BanDetails.Id           },
+					{ "player-name",   ev.BanDetails.OriginalName },
+					{ "issuer-name",   ev.BanDetails.Issuer       },
 				};
 				plugin.SendMessage("messages.onbanupdated.userid", variables);
 			}

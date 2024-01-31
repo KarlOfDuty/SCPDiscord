@@ -10,37 +10,48 @@ bot:
 settings:
     # The language is the same as the name of the language file you want to use.
 
-    # Included languages:        Emote versions:
-    # english (default)          english-emote
-    # ukrainian                  ukrainian-emote
-    # russian                    russian-emote
+    # Included languages:
+    # english (default)
+    # ukrainian
+    # russian
     # simplified-chinese
+    # italian
 
     # If you want to override specific messages you can copy them to overrides.yml
     # and they will automatically replace the corresponding messages from the language selected below
     language: "english"
-    # Whether or not to show this server's player count in the bot's activity.
-    # Set to false to disable.
+
+    # Add an emote as a prefix to messages
+    emotes: true
+
+    # Whether to show this server's player count in the bot's activity.
     playercount: true
+
     # The message timestamp, see syntax guide here: https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/8kb3ddd4(v=vs.85)
     # Set to "" to disable.
     timestamp: "HH:mm:ss"
-    # Whether or not the plugin should send debug information in the console
-    # Set to true to turn on.
+
+    # Whether the plugin should send debug information in the console
     debug: false
+
     # Turns on the config validation which shows the values after they have been read by the plugin so you can see they are correct
     configvalidation: false
+
     # Whether or not to use the rolesync system
     rolesync: true
+
     # Show that this server is using SCPDiscord using invisible text on Kigen's server list (https://kigen.co/scpsl/browser.php?table=y)
     # This is just used to count how many servers are running the plugin, but you may hide your server by setting this to false:
     metrics: true
+
     # Whether files should be read from the global config directory or the local one (aka the server specific one).
     useglobaldirectory:
         language: true
         rolesync: true
         mutes: true
-    # Always replace language files when the plugin starts, use this if you do not edit the language files and want to keep them up to date automatically (does not affect overrides.yml)
+
+    # Always replace language and emote files when the plugin starts, use this if you do not edit the
+    # language files and want to keep them up to date automatically (does not affect overrides.yml)
     regeneratelanguagefiles: true
 
 # Sets commands which are run whenever someone with a synced Discord rank joins the server, only the highest one in the list that matches the player is executed

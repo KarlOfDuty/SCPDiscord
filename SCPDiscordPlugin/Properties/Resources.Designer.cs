@@ -59,9 +59,9 @@ namespace SCPDiscord.Properties {
             }
         }
         
-        internal static byte[] english_emote {
+        internal static byte[] emotes {
             get {
-                object obj = ResourceManager.GetObject("english-emote", resourceCulture);
+                object obj = ResourceManager.GetObject("emotes", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -80,23 +80,9 @@ namespace SCPDiscord.Properties {
             }
         }
         
-        internal static byte[] ukrainian_emote {
-            get {
-                object obj = ResourceManager.GetObject("ukrainian-emote", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static byte[] russian {
             get {
                 object obj = ResourceManager.GetObject("russian", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] russian_emote {
-            get {
-                object obj = ResourceManager.GetObject("russian-emote", resourceCulture);
                 return ((byte[])(obj));
             }
         }

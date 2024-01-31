@@ -1,0 +1,163 @@
+messages:
+  onroundstart: ":zap: "
+  onconnect: ":arrow_right: "
+  onplayerleave: ":arrow_backward: "
+  onroundend: ""
+  onwaitingforplayers: ":white_check_mark: "
+  onroundrestart: ":arrows_counterclockwise: "
+  onsetservername: ""
+  onscp914activate: ":control_knobs: "
+  onstartcountdown:
+    player:
+      initiated: ":radioactive: "
+      resumed: ":radioactive: "
+    server:
+      initiated: ":radioactive: "
+      resumed: ":radioactive: "
+  onstopcountdown:
+    default: ":radioactive: "
+    noplayer: ":radioactive: "
+  ondetonate: ":radioactive: "
+  ondecontaminate: ":biohazard: "
+  onsummonvehicle:
+    chaos: ":blue_car: "
+    mtf: ":helicopter: "
+  ongeneratorfinish: ":electric_plug: "
+  onplayerhurt:
+    default: ":red_circle: "
+    friendlyfire: ":red_circle: "
+    noattacker: ":red_circle: "
+  onplayerdie:
+    default: ":skull: "
+    friendlyfire: ":skull: "
+    nokiller: ":skull: "
+  onplayerpickupitem: ":inbox_tray: "
+  onplayerpickupammo: ":inbox_tray: "
+  onplayerpickuparmor: ":inbox_tray: "
+  onplayerpickupscp330: ":inbox_tray: "
+  onplayerdropitem: ":outbox_tray: "
+  onplayerdropammo: ":outbox_tray: "
+  onplayerjoin: ":arrow_forward: "
+  onnicknameset: ":regional_indicator_n: "
+  onsetrole:
+    roundstart: ":mens: "
+    latejoin: ":mens: "
+    respawn: ":mens: "
+    died: ":skull: "
+    escaped: ":mens: "
+    revived: ":mens: "
+    remoteadmin: ":mens: "
+    left: ":mens: "
+    other: ":mens: "
+  onspawn: ":mens: "
+  ondooraccess:
+    allowed: ":door: "
+    denied: ":door: "
+  onpocketdimensionexit: ":door: "
+  onpocketdimensionenter: ":door: "
+  onthrowprojectile: ":palm_up_hand: "
+  onspawnragdoll: ""
+  onitemuse: ":pill: "
+  onelevatoruse: ":door: "
+  onhandcuff:
+    default: ":link: "
+    nootherplayer: ":link: "
+  onhandcuffremoved:
+    default: ":link: "
+    nootherplayer: ":link: "
+  onplayertriggertesla:
+    default: ":zap: "
+    ignored: ":zap: "
+  onscp914changeknob: ":control_knobs: "
+  onplayerradioswitch: ":radio: "
+  onrecallzombie: ":arrows_counterclockwise: "
+  oncallcommand:
+    remoteadmin:
+      player: ":keyboard: "
+      server: ":keyboard: "
+    game:
+      player: ":keyboard: "
+      server: ":keyboard: "
+    console:
+      player: ":keyboard: "
+      server: ":keyboard: "
+  onexecutedcommand:
+    remoteadmin:
+      player: ":keyboard: "
+      server: ":keyboard: "
+    game:
+      player: ":keyboard: "
+      server: ":keyboard: "
+    console:
+      player: ":keyboard: "
+      server: ":keyboard: "
+  onreload: ":arrows_counterclockwise: "
+  ongrenadeexplosion: ":boom: "
+  ongrenadehitplayer: ":boom: "
+  ongeneratorunlock: ":unlock: "
+  ongeneratorclose: ":lock: "
+  ongeneratoropen: ":unlock: "
+  ongeneratoractivated: ":electric_plug: "
+  ongeneratordeactivated: ":electric_plug: "
+  on079lockdoor: ":lock: "
+  on079teslagate: ":zap: "
+  on079addexp: ":heavy_plus_sign: "
+  on079levelup: ":arrow_up: "
+  on079unlockdoor: ":unlock: "
+  on079lockdown: ":lock: "
+  on079cancellockdown: ":unlock: "
+  onban:
+    player: ":no_entry: "
+    server: ":no_entry: "
+  onbanissued:
+    ip: ":no_entry: "
+    userid: ":no_entry: "
+  onbanupdated:
+    ip: ":no_entry: "
+    userid: ":no_entry: "
+  onbanrevoked:
+    ip: ":leftwards_arrow_with_hook: "
+    userid: ":leftwards_arrow_with_hook: "
+  onkick:
+    player: ":no_entry: "
+    server: ":no_entry: "
+  onplayermuted:
+    player:
+      intercom: ":mute: "
+      standard: ":mute: "
+    server:
+      intercom: ":mute: "
+      standard: ":mute: "
+  onplayerunmuted:
+    player:
+      intercom: ":speaker: "
+      standard: ":speaker: "
+    server:
+      intercom: ":speaker: "
+      standard: ":speaker: "
+  onteamrespawn:
+    mtf: ":cop: "
+    ci: ":spy: "
+  onplayerescape: ":door: "
+  onplayercheaterreport: ":warning: "
+  onplayerreport: ":warning: "
+  connectedtobot: ""
+  invalidsteamid: ""
+  invalidsteamidorip: ""
+  invalidduration: ""
+  playernotfound: ""
+  playerkicked: ""
+  playerbanned: ""
+  playerunbanned: ""
+  playermuted: ""
+  playertempmuted: ""
+  mutefailed: ""
+  playerunmuted: ""
+  unmutefailed: ""
+  kickall: ""
+  consolecommandfeedback: ""
+  botstatus: ""
+  listtitle: ""
+  listrow:
+    default: ""
+    empty: ""

@@ -119,28 +119,22 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\config.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\config.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="english" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Languages\english.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Languages\english.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="english-emote" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Languages\english-emote.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="emotes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Languages\emotes.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="overrides" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Languages\overrides.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ukrainian" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Languages\ukrainian.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ukrainian-emote" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Languages\ukrainian-emote.yml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Languages\ukrainian.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="russian" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Languages\russian.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="russian-emote" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Languages\russian-emote.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="simplified-chinese" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Languages\simplified-chinese.yml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -19,6 +19,7 @@ namespace SCPDiscord
 		private static JObject primary;
 		private static JObject backup;
 		private static JObject overrides;
+		private static JObject emotes;
 
 		private static string languagesPath = Config.GetLanguageDir();
 
@@ -26,14 +27,12 @@ namespace SCPDiscord
 		private static readonly Dictionary<string, string> defaultLanguages = new Dictionary<string, string>
 		{
 			{ "overrides",          Encoding.UTF8.GetString(Resources.overrides)          },
+			{ "emotes",             Encoding.UTF8.GetString(Resources.emotes)             },
 			{ "english",            Encoding.UTF8.GetString(Resources.english)            },
 			{ "ukrainian",          Encoding.UTF8.GetString(Resources.ukrainian)          },
 			{ "russian",            Encoding.UTF8.GetString(Resources.russian)            },
 			{ "simplified-chinese", Encoding.UTF8.GetString(Resources.simplified_chinese) },
-			{ "italian",            Encoding.UTF8.GetString(Resources.italian)            },
-			{ "english-emote",      Encoding.UTF8.GetString(Resources.english_emote)      },
-			{ "ukrainian-emote",    Encoding.UTF8.GetString(Resources.ukrainian_emote)    },
-			{ "russian-emote",      Encoding.UTF8.GetString(Resources.russian_emote)      },
+			{ "italian",            Encoding.UTF8.GetString(Resources.italian)            }
 		};
 
 		public static void Reload()
@@ -51,104 +50,24 @@ namespace SCPDiscord
 
 			// Read primary language file
 			Logger.Info("Loading primary language file...");
-			try
-			{
-				LoadLanguageFile(Config.GetString("settings.language"), "primary", out primary);
-			}
-			catch (Exception e)
-			{
-				switch (e)
-				{
-					case DirectoryNotFoundException _:
-						Logger.Error("Language directory not found.");
-						break;
-					case UnauthorizedAccessException _:
-						Logger.Error("Primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml' access denied.");
-						break;
-					case FileNotFoundException _:
-						Logger.Error("Primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
-						break;
-					case JsonReaderException _:
-					case YamlException _:
-						Logger.Error("Primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
-						break;
-					default:
-						Logger.Error("Error reading primary language file '" + languagesPath + Config.GetString("settings.language") + ".yml'. Attempting to initialize backup system...");
-						break;
-				}
-				Logger.Error(e.ToString());
-			}
+			LoadLanguageFile(Config.GetString("settings.language"), "primary", out primary);
 
 			// Read backup language file if not the same as the primary
 			if (Config.GetString("settings.language") != "english")
 			{
 				Logger.Info("Loading backup language file...");
-				try
-				{
-					LoadLanguageFile("english", "backup", out backup);
-				}
-				catch (Exception e)
-				{
-					switch (e)
-					{
-						case DirectoryNotFoundException _:
-							Logger.Error("Language directory not found.");
-							break;
-						case UnauthorizedAccessException _:
-							Logger.Error("Backup language file '" + languagesPath + Config.GetString("settings.language") + ".yml' access denied.");
-							break;
-						case FileNotFoundException _:
-							Logger.Error("Backup language file '" + languagesPath + Config.GetString("settings.language") + ".yml' was not found.");
-							break;
-						case JsonReaderException _:
-						case YamlException _:
-							Logger.Error("Backup language file '" + languagesPath + Config.GetString("settings.language") + ".yml' formatting error.");
-							break;
-						default:
-							Logger.Error("Error reading backup language file '" + languagesPath + "english.yml'.");
-							break;
-					}
-					Logger.Error(e.ToString());
-				}
+				LoadLanguageFile("english", "backup", out backup);
 			}
+
 			if (primary == null && backup == null)
 			{
 				Logger.Error("NO LANGUAGE FILE LOADED! DEACTIVATING SCPDISCORD.");
 				throw new Exception();
 			}
 
-			try
-			{
-				LoadLanguageFile("overrides", "overrides", out overrides);
-			}
-			catch (Exception e)
-			{
-				switch (e)
-				{
-					case DirectoryNotFoundException _:
-						Logger.Warn("Language directory not found.");
-						break;
-					case UnauthorizedAccessException _:
-						Logger.Warn("Overrides language file '" + languagesPath + "overrides.yml' access denied.");
-						break;
-					case FileNotFoundException _:
-						Logger.Warn("Overrides language file '" + languagesPath + "overrides.yml' was not found.");
-						break;
-					case JsonReaderException _:
-					case YamlException _:
-						Logger.Warn("Overrides language file '" + languagesPath + "overrides.yml' formatting error.");
-						break;
-					default:
-						Logger.Warn("Error reading overrides language file '" + languagesPath + "overrides.yml'.");
-						break;
-				}
-				Logger.Error(e.ToString());
-			}
-
-			if (Config.GetBool("settings.configvalidation"))
-			{
-				ValidateLanguageStrings();
-			}
+			LoadLanguageFile("overrides", "overrides", out overrides);
+			LoadLanguageFile("emotes", "emotes", out emotes);
+			ValidateLanguageStrings();
 
 			ready = true;
 		}
@@ -165,6 +84,11 @@ namespace SCPDiscord
 			{
 				Logger.Error("Error reading base message" + e);
 				return null;
+			}
+
+			if (Config.GetBool("settings.emotes"))
+			{
+				message = GetEmote(messagePath) + message;
 			}
 
 			switch (message)
@@ -274,7 +198,7 @@ namespace SCPDiscord
 			{
 				if (!File.Exists(languagesPath + language.Key + ".yml") || (Config.GetBool("settings.regeneratelanguagefiles") && language.Key != "overrides"))
 				{
-					Logger.Info("Creating language file " + languagesPath + language.Key + ".yml...");
+					Logger.Debug("Creating language file " + languagesPath + language.Key + ".yml...");
 					try
 					{
 						File.WriteAllText((languagesPath + language.Key + ".yml"), language.Value);
@@ -296,27 +220,52 @@ namespace SCPDiscord
 		/// </summary>
 		private static void LoadLanguageFile(string language, string type, out JObject dataObject)
 		{
-			// Reads file contents into FileStream
-			FileStream stream = File.OpenRead(languagesPath + language + ".yml");
+			try
+			{
+				// Reads file contents into FileStream
+                FileStream stream = File.OpenRead(languagesPath + language + ".yml");
 
-			// Converts the FileStream into a YAML Dictionary object
-			IDeserializer deserializer = new DeserializerBuilder().Build();
-			object yamlObject = deserializer.Deserialize(new StreamReader(stream));
+                // Converts the FileStream into a YAML Dictionary object
+                IDeserializer deserializer = new DeserializerBuilder().Build();
+                object yamlObject = deserializer.Deserialize(new StreamReader(stream));
 
-			// Converts the YAML Dictionary into JSON String
-			ISerializer serializer = new SerializerBuilder()
-				.JsonCompatible()
-				.Build();
-			string jsonString = serializer.Serialize(yamlObject);
-			dataObject = JObject.Parse(jsonString);
+                // Converts the YAML Dictionary into JSON String
+                ISerializer serializer = new SerializerBuilder()
+                	.JsonCompatible()
+                	.Build();
+                string jsonString = serializer.Serialize(yamlObject);
+                dataObject = JObject.Parse(jsonString);
 
-			Logger.Info("Successfully loaded " + type + " language file '" + language + ".yml'.");
+                Logger.Info("Successfully loaded " + type + " language file '" + language + ".yml'.");
+			}
+			catch (Exception e)
+			{
+				switch (e)
+				{
+					case DirectoryNotFoundException _:
+						Logger.Warn("Language directory not found.");
+						break;
+					case UnauthorizedAccessException _:
+						Logger.Warn("Language file '" + languagesPath + language + ".yml' access denied.");
+						break;
+					case FileNotFoundException _:
+						Logger.Warn("Language file '" + languagesPath + language + ".yml' was not found.");
+						break;
+					case JsonReaderException _:
+					case YamlException _:
+						Logger.Warn("Language file '" + languagesPath + language + ".yml' formatting error.");
+						break;
+					default:
+						Logger.Warn("Error reading language file '" + languagesPath + language + ".yml'.");
+						break;
+				}
+				Logger.Error(e.ToString());
+				dataObject = new JObject();
+			}
 		}
 
 		public static void ValidateLanguageStrings()
 		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("\n||||||||||||| SCPDiscord language validator ||||||||||||||\n");
 			bool valid = true;
 			foreach (string node in Config.languageNodes)
 			{
@@ -326,18 +275,44 @@ namespace SCPDiscord
 				}
 				catch (Exception)
 				{
-					sb.Append("Your SCPDiscord language file \"" + Config.GetString("settings.language") + ".yml\" does not contain the node \"" + node + ".message\".\nEither add it to your language file or delete the file to generate a new one.\n");
+					Logger.Warn("Your SCPDiscord language file \"" + Config.GetString("settings.language") + ".yml\" does not contain the node \"" + node + ".message\".");
+					valid = false;
+				}
+			}
+
+			if (Config.GetString("settings.language") != "english")
+			{
+				foreach (string node in Config.languageNodes)
+				{
+					try
+					{
+						backup.SelectToken(node + ".message").Value<string>();
+					}
+					catch (Exception)
+					{
+						Logger.Warn("Your SCPDiscord backup language file \"english.yml\" does not contain the node \"" + node + ".message\".");
+						valid = false;
+					}
+				}
+			}
+
+			foreach (string node in Config.languageNodes)
+			{
+				try
+				{
+					emotes.SelectToken(node).Value<string>();
+				}
+				catch (Exception)
+				{
+					Logger.Warn("The emote file \"emotes.yml\" does not contain the node \"" + node + "\".");
 					valid = false;
 				}
 			}
 
 			if (valid)
 			{
-				sb.Append("No language errors.\n");
+				Logger.Info("No language errors.\n");
 			}
-
-			sb.Append("||||||||||||| End of language validation ||||||||||||||");
-			Logger.Info(sb.ToString());
 		}
 
 		/// <summary>
@@ -375,12 +350,12 @@ namespace SCPDiscord
 					// The node also does not exist in the backup file
 					catch (NullReferenceException)
 					{
-						Logger.Error("Error: Language language string '" + path + "' does not exist. Message can not be sent.");
+						Logger.Error("Error: Language string '" + path + "' does not exist. Message can not be sent.");
 						return null;
 					}
 					catch (ArgumentNullException)
 					{
-						Logger.Error("Error: Language language string '" + path + "' does not exist. Message can not be sent.");
+						Logger.Error("Error: Language string '" + path + "' does not exist. Message can not be sent.");
 						return null;
 					}
 					catch (InvalidCastException e)
@@ -471,6 +446,40 @@ namespace SCPDiscord
 
 			Logger.Warn("Error: Language regex dictionary '" + path + "' does not exist in language file.");
 			return new Dictionary<string, string>();
+		}
+
+		public static string GetEmote(string path)
+		{
+			if (emotes == null)
+			{
+				Logger.Warn("Tried to read emote string before loading languages.");
+				return null;
+			}
+
+			try
+			{
+				return emotes?.SelectToken(path).Value<string>();
+			}
+			catch (NullReferenceException)
+			{
+				Logger.Warn("Emote string '" + path + "' does not exist.");
+				return "";
+			}
+			catch (ArgumentNullException)
+			{
+				Logger.Warn("Emote string '" + path + "' does not exist.");
+				return "";
+			}
+			catch (InvalidCastException e)
+			{
+				Logger.Error(e.ToString());
+				throw;
+			}
+			catch (JsonException e)
+			{
+				Logger.Error(e.ToString());
+				throw;
+			}
 		}
 	}
 }
