@@ -18,7 +18,7 @@ public class UnmuteCommand : ApplicationCommandModule
                 ChannelID = command.Channel.Id,
                 SteamID = steamID,
                 Duration = "0",
-                AdminTag = "@" + command.Member?.Username,
+                AdminTag = command.Member?.Username,
                 AdminID = command.Member.Id,
                 Reason = "",
                 InteractionID = command.InteractionId
@@ -26,6 +26,6 @@ public class UnmuteCommand : ApplicationCommandModule
         };
         MessageScheduler.CacheInteraction(command);
         await NetworkSystem.SendMessage(message, command);
-        Logger.Debug("Sending UnbanCommand to plugin from " + command.Member?.Username + "#" + command.Member?.Discriminator, LogID.DISCORD);
+        Logger.Debug("Sending UnbanCommand to plugin from @" + command.Member?.Username, LogID.DISCORD);
     }
 }

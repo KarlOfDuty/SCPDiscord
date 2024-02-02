@@ -21,7 +21,7 @@ public class MuteCommand : ApplicationCommandModule
                 ChannelID = command.Channel.Id,
                 SteamID = steamID,
                 Duration = duration,
-                AdminTag = "@" + command.Member?.Username,
+                AdminTag = command.Member?.Username,
                 AdminID = command.Member.Id,
                 Reason = reason,
                 InteractionID = command.InteractionId
@@ -30,6 +30,6 @@ public class MuteCommand : ApplicationCommandModule
 
         MessageScheduler.CacheInteraction(command);
         await NetworkSystem.SendMessage(message, command);
-        Logger.Debug("Sending MuteCommand to plugin from " + command.Member?.Username, LogID.DISCORD);
+        Logger.Debug("Sending MuteCommand to plugin from @" + command.Member?.Username, LogID.DISCORD);
     }
 }

@@ -22,7 +22,7 @@ namespace SCPDiscord.Commands
 			};
 			MessageScheduler.CacheInteraction(command);
 			await NetworkSystem.SendMessage(message, command);
-			Logger.Debug("Sending UnbanCommand to plugin from " + command.Member?.Username + "#" + command.Member?.Discriminator, LogID.DISCORD);
+			Logger.Debug("Sending UnbanCommand to plugin from @" + command.Member?.Username, LogID.DISCORD);
 		}
 	}
 }

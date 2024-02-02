@@ -21,7 +21,7 @@ namespace SCPDiscord.Commands
 					ChannelID = command.Channel.Id,
 					SteamID = steamID,
 					Duration = duration,
-					AdminTag = "@" + command.Member?.Username,
+					AdminTag = command.Member?.Username,
 					Reason = reason,
 					InteractionID = command.InteractionId
 				}
@@ -29,7 +29,7 @@ namespace SCPDiscord.Commands
 
 			MessageScheduler.CacheInteraction(command);
 			await NetworkSystem.SendMessage(message, command);
-			Logger.Debug("Sending BanCommand to plugin from " + command.Member?.Username + "#" + command.Member?.Discriminator, LogID.DISCORD);
+			Logger.Debug("Sending BanCommand to plugin from @" + command.Member?.Username, LogID.DISCORD);
 		}
 	}
 }
