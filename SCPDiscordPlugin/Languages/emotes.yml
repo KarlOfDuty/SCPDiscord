@@ -161,3 +161,7 @@ messages:
   listrow:
     default: ""
     empty: ""
+  botactivity:
+    empty: ""
+    active: ""
+    full: ""

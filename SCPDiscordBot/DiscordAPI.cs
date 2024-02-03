@@ -129,14 +129,19 @@ namespace SCPDiscord
 
 		public static void SetDisconnectedActivity()
 		{
-			// Checking activity type
 			if (!Enum.TryParse(ConfigParser.config.bot.presenceType, true, out ActivityType activityType))
 			{
-				Logger.Warn("Presence type '" + ConfigParser.config.bot.presenceType + "' invalid, using 'Playing' instead.", LogID.DISCORD);
+				Logger.Warn("Activity type '" + ConfigParser.config.bot.presenceType + "' invalid, using 'Playing' instead.", LogID.DISCORD);
 				activityType = ActivityType.Playing;
 			}
 
-			SetActivity(ConfigParser.config.bot.presenceText, activityType, UserStatus.DoNotDisturb);
+			if (!Enum.TryParse(ConfigParser.config.bot.statusType, true, out UserStatus statusType))
+			{
+				Logger.Warn("Status type '" + ConfigParser.config.bot.statusType + "' invalid, using 'DoNotDisturb' instead.", LogID.DISCORD);
+				statusType = UserStatus.DoNotDisturb;
+			}
+
+			SetActivity(ConfigParser.config.bot.presenceText, activityType, statusType);
 		}
 
 		public static void SetActivity(string activityText, ActivityType activityType, UserStatus status)

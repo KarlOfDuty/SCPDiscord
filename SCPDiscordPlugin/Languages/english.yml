@@ -1082,12 +1082,6 @@ messages:
     message: "<var:feedback>"
     regex: []
 
-  botstatus:
-    # players - int
-    # maxplayers - int
-    message: "<var:players> / <var:maxplayers>"
-    regex: []
-
   listtitle:
     # players
     # maxplayers
@@ -1101,3 +1095,20 @@ messages:
       regex: []
     empty:
       message: "No players online."
+
+  botactivity:
+    empty:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> online"
+      regex: [ ]
+    active:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> online"
+      regex: [ ]
+    full:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> online"
+      regex: []

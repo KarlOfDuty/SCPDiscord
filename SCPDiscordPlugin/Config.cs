@@ -22,16 +22,20 @@ namespace SCPDiscord
 
 		private static readonly Dictionary<string, string> configStrings = new Dictionary<string, string>
 		{
-			{ "bot.ip",             "127.0.0.1" },
-
-			{ "settings.language",  "english"   },
-			{ "settings.timestamp", ""          }
+			{ "bot.ip",              "127.0.0.1" },
+			{ "bot.status.empty",    ""          },
+			{ "bot.status.active",   ""          },
+			{ "bot.status.full",     ""          },
+			{ "bot.activity.empty",  ""          },
+			{ "bot.activity.active", ""          },
+			{ "bot.activity.full",   ""          },
+			{ "settings.language",   "english"   },
+			{ "settings.timestamp",  ""          },
 		};
 
 		private static readonly Dictionary<string, bool> configBools = new Dictionary<string, bool>
 		{
 			{ "settings.emotes",                      true  },
-			{ "settings.playercount",                 true  },
 			{ "settings.debug",                       true  },
 			{ "settings.configvalidation",            true  },
 			{ "settings.rolesync",                    false },
@@ -171,7 +175,6 @@ namespace SCPDiscord
 
 		private static readonly IReadOnlyList<string> languageOnlyNodes = new List<string>
 		{
-			"messages.botstatus",
 			"messages.consolecommandfeedback",
 			"messages.invalidduration",
 			"messages.invalidsteamid",
@@ -186,7 +189,10 @@ namespace SCPDiscord
 			"messages.playernotfound",
 			"messages.playertempmuted",
 			"messages.playerunbanned",
-			"messages.playerunmuted"
+			"messages.playerunmuted",
+			"messages.botactivity.empty",
+			"messages.botactivity.active",
+			"messages.botactivity.full",
 		};
 
 		internal static readonly IReadOnlyList<string> languageNodes = configMessageArrays.Concat(languageOnlyNodes).ToList();
@@ -194,7 +200,8 @@ namespace SCPDiscord
 		// Convert message nodes to a dictionary and combine it with the other config arrays, I am aware this is jank af
 		private static readonly Dictionary<string, string[]> configArrays =
 			// Convert the config message array to a dictionary of arrays
-			configMessageArrays.Zip(new string[configMessageArrays.Count][], (name, emptyArray) => (name: name, emptyArray: emptyArray)).ToDictionary(ns => ns.name, ns => ns.emptyArray)
+			configMessageArrays.Zip(new string[configMessageArrays.Count][], (name, emptyArray) => (name: name, emptyArray: emptyArray))
+				.ToDictionary(ns => ns.name, ns => ns.emptyArray)
 			// Add general config arrays
 			.Concat(generalConfigArrays).ToDictionary(e => e.Key, e => e.Value);
 

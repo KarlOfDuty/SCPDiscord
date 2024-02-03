@@ -1,4 +1,4 @@
-
+﻿
 ############# SCPDiscord configuration file #############
 
 
@@ -6,6 +6,21 @@
 bot:
     ip: "127.0.0.1"
     port: 8888
+
+    # Set which Discord activity should be used.
+    # The options are one of the following:
+    # Playing, Streaming, ListeningTo, Watching, Custom, Competing
+    activity:
+        empty:  "Custom"
+        active: "Custom"
+        full:   "Custom"
+    # Set which Discord activity should be used.
+    # The options are one of the following:
+    # Offline, Online, Idle, DoNotDisturb, Invisible
+    status:
+        empty:  "Idle"
+        active: "Online"
+        full:   "Online"
 
 settings:
     # The language is the same as the name of the language file you want to use.
@@ -43,11 +58,14 @@ settings:
         rolesync: true
         mutes: true
 
-    # Always replace language and emote files when the plugin starts, use this if you do not edit the
-    # language files and want to keep them up to date automatically (does not affect overrides.yml)
+    # Always replace language and emote files when the plugin starts (does not affect overrides.yml).
+    # Turn this off if you will be directly editing the language files.
+    # If you are only making small edits to the language files it is highly
+    # recommended to use overrides.yml instead of editing the language file.
     regeneratelanguagefiles: true
 
-# Sets commands which are run whenever someone with a synced Discord rank joins the server, only the highest one in the list that matches the player is executed
+# Sets commands which are run whenever someone with a synced Discord rank joins the server,
+# only the highest one in the list that matches the player is executed
 # Turn on debug above to see console feedback when the commands are used
 # Valid variables:
 # player-userid
@@ -73,7 +91,8 @@ rolesync:
     - "add-everyone-role-id-here":
         - "scpd removereservedslot <var:player-userid>"
 
-# Name your channels here, this name is used in the channels section below. The left value is a name of your choice and the right is a channel id you want it to represent.
+# Name your channels here, this name is used in the channels section below.
+# The left value is a name of your choice and the right is a channel id you want it to represent in the lists below.
 channels:
     - "default": "add-channel-id-here"
     - "staff": "add-channel-id-here"

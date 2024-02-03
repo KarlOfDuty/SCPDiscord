@@ -17,6 +17,7 @@ namespace SCPDiscord
 			public string token = "";
 			public ulong serverId = 0;
 			public string logLevel = "Information";
+			public string statusType = "DoNotDisturb";
 			public string presenceType = "Watching";
 			public string presenceText = "for server startup...";
 			public bool disableCommands = false;

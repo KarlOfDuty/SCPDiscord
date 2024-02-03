@@ -1,4 +1,4 @@
-bot:
+﻿bot:
     # The bot token from https://discord.com/developers/applications.
     token: "add-your-token-here"
 
@@ -10,11 +10,11 @@ bot:
     log-level: "Information"
 
     # Sets the type of activity for the bot to display in its presence status when the server is offline.
-    # Possible values are: Playing, Streaming, ListeningTo, Watching, Competing.
-    presence-type: "Watching"
+    # Possible values are: Playing, Streaming, ListeningTo, Watching, Custom, Competing.
+    presence-type: "Custom"
 
     # Sets the activity text shown in the bot's status.
-    presence-text: "for server startup..."
+    presence-text: "Server offline"
 
     # Disable and delete all existing commands for this bot.
     disable-commands: false

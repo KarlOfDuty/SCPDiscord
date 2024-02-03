@@ -157,5 +157,27 @@ namespace SCPDiscord
 			durationSeconds = (long)timeSpanDuration.TotalSeconds;
 			return DateTime.UtcNow.Add(timeSpanDuration);
 		}
+
+		public static Interface.BotActivity.Types.Activity ParseBotActivity(string activity)
+		{
+			if (!Enum.TryParse(activity, true, out Interface.BotActivity.Types.Activity result))
+			{
+				Logger.Warn("Bot activity type '" + activity + "' invalid, using 'Playing' instead.");
+				return Interface.BotActivity.Types.Activity.Playing;
+			}
+
+			return result;
+		}
+
+		public static Interface.BotActivity.Types.Status ParseBotStatus(string status)
+		{
+			if (!Enum.TryParse(status, true, out Interface.BotActivity.Types.Status result))
+			{
+				Logger.Warn("Bot status type '" + status + "' invalid, using 'Online' instead.");
+				return Interface.BotActivity.Types.Status.Online;
+			}
+
+			return result;
+		}
 	}
 }

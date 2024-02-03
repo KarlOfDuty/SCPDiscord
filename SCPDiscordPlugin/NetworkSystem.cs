@@ -369,26 +369,45 @@ namespace SCPDiscord
 			activityUpdateTimer.Start();
 
 			// Update player count
-			if (Config.GetBool("settings.playercount"))
+			Dictionary<string, string> variables = new Dictionary<string, string>
 			{
-				Dictionary<string, string> variables = new Dictionary<string, string>
-				{
-					{ "players",    Math.Max(0, Player.Count).ToString() },
-					{ "maxplayers", Server.MaxPlayers.ToString()         }
-				};
+				{ "players",    Math.Max(0, Player.Count).ToString() },
+				{ "maxplayers", Server.MaxPlayers.ToString()         }
+			};
 
-				MessageWrapper wrapper = new MessageWrapper
-				{
-					BotActivity = new BotActivity
-					{
-						StatusType = Player.Count <= 0 ? BotActivity.Types.Status.Idle : BotActivity.Types.Status.Online,
-						ActivityType = BotActivity.Types.Activity.Playing,
-						ActivityText = Language.GetProcessedMessage("messages.botstatus", variables)
-					}
-				};
-
-				QueueMessage(wrapper);
+			BotActivity.Types.Status botStatus;
+			BotActivity.Types.Activity botActivity;
+			string activityText;
+			if (Player.Count <= 0)
+			{
+				botStatus = Utilities.ParseBotStatus(Config.GetString("bot.status.empty"));
+				botActivity = Utilities.ParseBotActivity(Config.GetString("bot.activity.empty"));
+				activityText = Language.GetProcessedMessage("messages.botactivity.empty", variables);
 			}
+			else if (Player.Count >= Server.MaxPlayers)
+			{
+				botStatus = Utilities.ParseBotStatus(Config.GetString("bot.status.full"));
+				botActivity = Utilities.ParseBotActivity(Config.GetString("bot.activity.full"));
+				activityText = Language.GetProcessedMessage("messages.botactivity.full", variables);
+			}
+			else
+			{
+				botStatus = Utilities.ParseBotStatus(Config.GetString("bot.status.active"));
+				botActivity = Utilities.ParseBotActivity(Config.GetString("bot.activity.active"));
+				activityText = Language.GetProcessedMessage("messages.botactivity.active", variables);
+			}
+
+			MessageWrapper wrapper = new MessageWrapper
+			{
+				BotActivity = new BotActivity
+				{
+					StatusType = botStatus,
+					ActivityType = botActivity,
+					ActivityText = activityText
+				}
+			};
+
+			QueueMessage(wrapper);
 		}
 	}
 }
