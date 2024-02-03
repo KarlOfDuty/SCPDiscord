@@ -33,7 +33,6 @@ namespace SCPDiscord
 			{ "settings.emotes",                      true  },
 			{ "settings.playercount",                 true  },
 			{ "settings.debug",                       true  },
-			{ "settings.metrics",                     true  },
 			{ "settings.configvalidation",            true  },
 			{ "settings.rolesync",                    false },
 			{ "settings.useglobaldirectory.language", true  },

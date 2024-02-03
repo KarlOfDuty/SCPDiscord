@@ -37,10 +37,6 @@ settings:
     # Whether or not to use the rolesync system
     rolesync: true
 
-    # Show that this server is using SCPDiscord using invisible text on Kigen's server list (https://kigen.co/scpsl/browser.php?table=y)
-    # This is just used to count how many servers are running the plugin, but you may hide your server by setting this to false:
-    metrics: true
-
     # Whether files should be read from the global config directory or the local one (aka the server specific one).
     useglobaldirectory:
         language: true
