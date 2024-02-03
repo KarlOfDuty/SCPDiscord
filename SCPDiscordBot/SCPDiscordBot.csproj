@@ -17,6 +17,7 @@
     <PackageIconUrl>./icon.ico</PackageIconUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PublishSingleFile>true</PublishSingleFile>
+    <TrimMode>partial</TrimMode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
     <PackageReference Include="DSharpPlus.SlashCommands" Version="5.0.0-nightly-01979" />
     <PackageReference Include="Google.Protobuf" Version="3.25.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="YamlDotNet" Version="13.7.1" />
+    <PackageReference Include="YamlDotNet" Version="15.1.0" />
   </ItemGroup>
 
   <ItemGroup>
