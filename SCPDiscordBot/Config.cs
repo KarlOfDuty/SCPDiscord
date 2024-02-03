@@ -68,16 +68,28 @@ namespace SCPDiscord
 
 		public static void PrintConfig()
 		{
-			Logger.Debug("#### Config settings ####", LogID.CONFIG);
-			// Token skipped
-			Logger.Debug("bot.server-id: " + config.bot.serverId, LogID.CONFIG);
-			Logger.Debug("bot.log-level: " + config.bot.logLevel, LogID.CONFIG);
-			Logger.Debug("bot.presence-type: " + config.bot.presenceType, LogID.CONFIG);
-			Logger.Debug("bot.presence-text: " + config.bot.presenceText, LogID.CONFIG);
-			Logger.Debug("bot.disable-commands: " + config.bot.disableCommands, LogID.CONFIG);
-			// TODO: Print permissions
-			Logger.Debug("plugin.address: " + config.plugin.address, LogID.CONFIG);
-			Logger.Debug("plugin.port: " + config.plugin.port, LogID.CONFIG);
+			Logger.Debug("######### Config #########", LogID.CONFIG);
+			Logger.Debug("bot:", LogID.CONFIG);
+			Logger.Debug("  token:            HIDDEN", LogID.CONFIG);
+			Logger.Debug("  server-id:        " + config.bot.serverId, LogID.CONFIG);
+			Logger.Debug("  log-level:        " + config.bot.logLevel, LogID.CONFIG);
+			Logger.Debug("  presence-type:    " + config.bot.presenceType, LogID.CONFIG);
+			Logger.Debug("  presence-text:    " + config.bot.presenceText, LogID.CONFIG);
+			Logger.Debug("  disable-commands: " + config.bot.disableCommands, LogID.CONFIG);
+			Logger.Debug("", LogID.CONFIG);
+			Logger.Debug("permissions:", LogID.CONFIG);
+			foreach (KeyValuePair<ulong, string[]> node in config.permissions)
+			{
+				Logger.Debug("  " + node.Key + ":", LogID.CONFIG);
+				foreach (string command in node.Value)
+				{
+					Logger.Debug("    " + command, LogID.CONFIG);
+				}
+			}
+			Logger.Debug("", LogID.CONFIG);
+			Logger.Debug("plugin:", LogID.CONFIG);
+			Logger.Debug("  address: " + config.plugin.address, LogID.CONFIG);
+			Logger.Debug("  port:    " + config.plugin.port, LogID.CONFIG);
 		}
 
 		public static bool HasPermission(DiscordMember member, string command)
