@@ -1,0 +1,8 @@
+# Use this file if you want to override specific parts of the emote file.
+# Simply copy sections from the normal emote file into this one and edit them here.
+
+messages:
+# Example for removing emotes from the ban event:
+#  onban:
+#    player: ""
+#    server: ""

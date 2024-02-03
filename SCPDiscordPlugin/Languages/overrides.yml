@@ -1,9 +1,11 @@
-# Use this file if you want to override specific parts of your normal language file but still want it to be updated when you update the bot.
+# Use this file if you want to override specific parts of your normal language file.
+# Simply copy sections from the normal language file into this one and edit them here.
 
 messages:
-# Example for overriding the bot status:
-#     botstatus:
-#        # players - int
-#        # maxplayers - int
-#        message: "<var:players>/<var:maxplayers>"
-#        regex: []
+# Example for overriding the bot activity:
+#  botactivity:
+#    empty:
+#      # players - int
+#      # maxplayers - int
+#      message: "<var:players>/<var:maxplayers>"
+#      regex: []

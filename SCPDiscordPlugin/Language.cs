@@ -20,6 +20,7 @@ namespace SCPDiscord
 		private static JObject backup;
 		private static JObject overrides;
 		private static JObject emotes;
+		private static JObject emote_overrides;
 
 		private static string languagesPath = Config.GetLanguageDir();
 
@@ -28,6 +29,7 @@ namespace SCPDiscord
 		{
 			{ "overrides",          Encoding.UTF8.GetString(Resources.overrides)          },
 			{ "emotes",             Encoding.UTF8.GetString(Resources.emotes)             },
+			{ "emote-overrides",    Encoding.UTF8.GetString(Resources.emote_overrides)    },
 			{ "english",            Encoding.UTF8.GetString(Resources.english)            },
 			{ "ukrainian",          Encoding.UTF8.GetString(Resources.ukrainian)          },
 			{ "russian",            Encoding.UTF8.GetString(Resources.russian)            },
@@ -50,13 +52,13 @@ namespace SCPDiscord
 
 			// Read primary language file
 			Logger.Info("Loading primary language file...");
-			LoadLanguageFile(Config.GetString("settings.language"), "primary", out primary);
+			LoadLanguageFile(Config.GetString("settings.language"), "primary language", out primary);
 
 			// Read backup language file if not the same as the primary
 			if (Config.GetString("settings.language") != "english")
 			{
 				Logger.Info("Loading backup language file...");
-				LoadLanguageFile("english", "backup", out backup);
+				LoadLanguageFile("english", "backup language", out backup);
 			}
 
 			if (primary == null && backup == null)
@@ -65,8 +67,9 @@ namespace SCPDiscord
 				throw new Exception();
 			}
 
-			LoadLanguageFile("overrides", "overrides", out overrides);
-			LoadLanguageFile("emotes", "emotes", out emotes);
+			LoadLanguageFile("overrides", "language overrides", out overrides);
+			LoadLanguageFile("emotes", "emote", out emotes);
+			LoadLanguageFile("emote-overrides", "emote overrides", out emote_overrides);
 			ValidateLanguageStrings();
 
 			ready = true;
@@ -196,9 +199,10 @@ namespace SCPDiscord
 		{
 			foreach (KeyValuePair<string, string> language in defaultLanguages)
 			{
-				if (!File.Exists(languagesPath + language.Key + ".yml") || (Config.GetBool("settings.regeneratelanguagefiles") && language.Key != "overrides"))
+				if (!File.Exists(languagesPath + language.Key + ".yml") || (Config.GetBool("settings.regeneratelanguagefiles")
+				                                                            && language.Key != "overrides" && language.Key != "emote-overrides"))
 				{
-					Logger.Debug("Creating language file " + languagesPath + language.Key + ".yml...");
+					Logger.Debug("Creating file " + languagesPath + language.Key + ".yml...");
 					try
 					{
 						File.WriteAllText((languagesPath + language.Key + ".yml"), language.Value);
@@ -236,7 +240,7 @@ namespace SCPDiscord
                 string jsonString = serializer.Serialize(yamlObject);
                 dataObject = JObject.Parse(jsonString);
 
-                Logger.Info("Successfully loaded " + type + " language file '" + language + ".yml'.");
+                Logger.Info("Successfully loaded " + type + " file '" + language + ".yml'.");
 			}
 			catch (Exception e)
 			{
@@ -322,7 +326,7 @@ namespace SCPDiscord
 		/// <returns></returns>
 		public static string GetString(string path)
 		{
-			if (primary == null)
+			if (primary == null && backup == null)
 			{
 				Logger.Warn("Tried to read language string before loading languages.");
 				return null;
@@ -332,10 +336,10 @@ namespace SCPDiscord
 			{
 				try
 				{
-					return overrides?.SelectToken(path).Value<string>();
+					return overrides.SelectToken(path).Value<string>();
 				}
 				catch (Exception) { /* ignore */ }
-				return primary?.SelectToken(path).Value<string>();
+				return primary.SelectToken(path).Value<string>();
 			}
 			catch (Exception primaryException)
 			{
@@ -458,7 +462,12 @@ namespace SCPDiscord
 
 			try
 			{
-				return emotes?.SelectToken(path).Value<string>();
+				try
+				{
+					return emote_overrides.SelectToken(path).Value<string>();
+				}
+				catch (Exception) { /* ignore */ }
+				return emotes.SelectToken(path).Value<string>();
 			}
 			catch (NullReferenceException)
 			{

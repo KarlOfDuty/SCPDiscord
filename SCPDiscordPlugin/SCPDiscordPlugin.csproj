@@ -148,6 +148,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Languages\emote-overrides.yml" />
     <Content Include="Languages\emotes.yml" />
     <Content Include="Languages\overrides.yml" />
     <Content Include="Languages\simplified-chinese.yml" />

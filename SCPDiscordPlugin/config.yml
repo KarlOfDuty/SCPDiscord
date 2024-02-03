@@ -58,7 +58,7 @@ settings:
         rolesync: true
         mutes: true
 
-    # Always replace language and emote files when the plugin starts (does not affect overrides.yml).
+    # Always replace language and emote files when the plugin starts (does not affect overrides.yml and emote-overrides.yml).
     # Turn this off if you will be directly editing the language files.
     # If you are only making small edits to the language files it is highly
     # recommended to use overrides.yml instead of editing the language file.

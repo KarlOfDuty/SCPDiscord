@@ -100,5 +100,12 @@ namespace SCPDiscord.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        internal static byte[] emote_overrides {
+            get {
+                object obj = ResourceManager.GetObject("emote-overrides", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
