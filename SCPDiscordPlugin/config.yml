@@ -1,4 +1,4 @@
-﻿
+
 ############# SCPDiscord configuration file #############
 
 
@@ -24,12 +24,9 @@ settings:
     # Add an emote as a prefix to messages
     emotes: true
 
-    # Whether to show this server's player count in the bot's activity.
-    playercount: true
-
-    # The message timestamp, see syntax guide here: https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-3.0/8kb3ddd4(v=vs.85)
-    # Set to "" to disable.
-    timestamp: "HH:mm:ss"
+    # The message timestamp, see syntax guide here: https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+    # You can set it to "HH:mm:ss" for a simple timestamp.
+    timestamp: ""
 
     # Whether the plugin should send debug information in the console
     debug: false
