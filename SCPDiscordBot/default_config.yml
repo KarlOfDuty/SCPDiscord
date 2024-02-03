@@ -1,4 +1,4 @@
-﻿bot:
+bot:
     # The bot token from https://discord.com/developers/applications.
     token: "add-your-token-here"
 
@@ -40,8 +40,16 @@ permissions:
         - "restartnextround"
 
 plugin:
-    # Host to listen on, localhost by default. Try changing this to "0.0.0.0" (all addresses available) if the plugin isn't able to connect, some windows setups don't seem to work with a set address to listen on.
-    # In case you want server to listen on something other than "127.0.0.1", make sure your firewall rules are correct so any outside connections are blocked to the port.
+    # Host to listen on, localhost by default.
+
+    # It is HIGHLY recommended to keep this at "127.0.0.1" if you don't absolutely
+    # have to change it (like for instance when running the bot and server on different devices).
+
+    # WINDOWS: Try changing this to "0.0.0.0" (listen on all addresses) if the plugin isn't able to connect,
+    # some Windows setups don't seem to work with a set address to listen on.
+
+    # WARNING: In case you listen on something other than "127.0.0.1", make sure your firewall rules
+    # are correct so any outside connections (except the plugin's) are blocked on the below port.
     address: "127.0.0.1"
 
     # Port to listen on, this has to be the same as the "bot port" in the plugin config and all bots you run have to have different ports or they will clash.
