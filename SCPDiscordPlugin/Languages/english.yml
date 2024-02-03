@@ -1,11 +1,56 @@
 #####################################################################################################################
-#                                                                                                                   #
-#                                                     EVENTS                                                        #
-#                                                                                                                   #
-#   message: The message to be displayed. Variables are inserted in the format <var:name>, such as <var:ipaddress>. #
-#   regex: A regular expression paired with a replacement string to find and replace parts of a message.            #
-#                                                                                                                   #
+#
+#                                                     EVENTS
+#
+#   message: The message to be displayed. Variables are inserted in the format <var:name>, such as <var:ipaddress>.
+#   regex: A regular expression paired with a replacement string to find and replace parts of a message.
+#
 #####################################################################################################################
+
+#####################################################################################################################
+#
+#                                                  PLAYER INFO
+#
+#  You may notice many of the events below have variables of the type "Player". This means they provide a large
+#  amount of variables containing different player information. You can view an up to date list of these variabels
+#  in the APIExtensions.cs file in the Git repository.
+#
+#  Usage example:
+#  If an event has an "attacker" variable of the Player type this means you can use <var:attacker-name> to get
+#  their username. It works the same way for all player subvariables, except for the disarmer variable.
+#  The disarmer variable is also a player type, so if the "attacker" player from before was disarmed you could
+#  get the name of the disarming player using <var:attacker-disarmer-name>.
+#
+#  List of Player sub-variables:
+#  -ipaddress
+#  -name
+#  -id
+#  -userid
+#  -role
+#  -team
+#  -donottrack
+#  -health
+#  -isdisarmed
+#  -isalive
+#  -ismuted
+#  -hasreservedslot
+#  -isglobalmod
+#  -isintercommuted
+#  -hasfullinventory
+#  -hasnoitems
+#  -isnortwoodstaff
+#  -overwatchon
+#  -noclipon
+#  -godmodeon
+#  -isoutofammo
+#  -hasremoteadminac
+#  -bypassenabled
+#  -isscp
+#  -ismtf
+#  -ischaos
+#  -ishuman
+#
+######################################################################################################################
 
 # Executed after variables have been inserted but before the message specific regex replacement and before player names have been added on all messages.
 global_regex: [
@@ -336,7 +381,7 @@ messages:
       cancel_regex: []
 
   ongeneratorfinish:
-    # room
+    # room - string
     # player - Player
     message: "Generator in <var:room> has been activated."
     regex: [ ]
