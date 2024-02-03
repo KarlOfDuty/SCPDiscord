@@ -20,7 +20,7 @@ namespace SCPDiscord
 		private static JObject backup;
 		private static JObject overrides;
 		private static JObject emotes;
-		private static JObject emote_overrides;
+		private static JObject emoteOverrides;
 
 		private static string languagesPath = Config.GetLanguageDir();
 
@@ -69,12 +69,13 @@ namespace SCPDiscord
 
 			LoadLanguageFile("overrides", "language overrides", out overrides);
 			LoadLanguageFile("emotes", "emote", out emotes);
-			LoadLanguageFile("emote-overrides", "emote overrides", out emote_overrides);
+			LoadLanguageFile("emote-overrides", "emote overrides", out emoteOverrides);
 			ValidateLanguageStrings();
 
 			ready = true;
 		}
 
+		// TODO: Clean this function up
 		public static string GetProcessedMessage(string messagePath, Dictionary<string, string> variables)
 		{
 			// Get unparsed message from config
@@ -103,7 +104,7 @@ namespace SCPDiscord
 				case "":
 				case " ":
 				case ".":
-					Logger.Warn("Tried to send empty message " + messagePath + " to discord. Verify your language files.");
+					Logger.Warn("Tried to send empty message '" + messagePath + "' to discord. Check your language files.");
 					return null;
 			}
 
@@ -117,7 +118,12 @@ namespace SCPDiscord
 				foreach (KeyValuePair<string, string> variable in variables)
 				{
 					// Wait until after the regex replacements to add the player names
-					if (variable.Key == "servername" || variable.Key == "name" || variable.Key == "attackername" || variable.Key == "player-name" || variable.Key == "adminname" || variable.Key == "feedback" || variable.Key == "admintag")
+					if (variable.Key == "name"
+					 || variable.Key == "attacker-name"
+					 || variable.Key == "player-name"
+					 || variable.Key == "disarmer-name"
+					 || variable.Key == "target-name"
+					 || variable.Key == "issuer-name")
 					{
 						continue;
 					}
@@ -159,6 +165,27 @@ namespace SCPDiscord
 			foreach (KeyValuePair<string, string> entry in localRegex)
 			{
 				message = Regex.Replace(message, entry.Key, entry.Value);
+			}
+			///////////////////////////////////////////////
+
+			// Regex cancel checks ////////////////////////
+			List<string> cancelRegex;
+			try
+			{
+				cancelRegex = GetCancelRegexList(messagePath + ".cancel_regex");
+			}
+			catch (Exception e)
+			{
+				Logger.Error("Error reading local regex" + e);
+				return null;
+			}
+			// Run the regex cancel checks
+			foreach (string entry in cancelRegex)
+			{
+				if (Regex.IsMatch(message, entry))
+				{
+					return null;
+				}
 			}
 			///////////////////////////////////////////////
 
@@ -388,7 +415,7 @@ namespace SCPDiscord
 		/// <returns></returns>
 		public static Dictionary<string, string> GetRegexDictionary(string path)
 		{
-			if (primary == null)
+			if (primary == null && backup == null)
 			{
 				Logger.Warn("Tried to read regex dictionary '" + path + "' before loading languages.");
 				return new Dictionary<string, string>();
@@ -452,6 +479,69 @@ namespace SCPDiscord
 			return new Dictionary<string, string>();
 		}
 
+		public static List<string> GetCancelRegexList(string path)
+		{
+			if (primary == null && backup == null)
+			{
+				Logger.Warn("Tried to read cancel regex array '" + path + "' before loading languages.");
+				return new List<string>();
+			}
+
+			try
+			{
+				try
+				{
+					return overrides.SelectToken(path).Value<JArray>().Values<string>().ToList();
+				}
+				catch (Exception) { /* ignore */ }
+				return primary.SelectToken(path).Value<JArray>().Values<string>().ToList();
+			}
+			catch (NullReferenceException)
+			{
+				try
+				{
+					return backup.SelectToken(path).Value<JArray>().Values<string>().ToList();
+				}
+				catch (NullReferenceException)
+				{
+					// Doesn't exist
+				}
+				catch (ArgumentNullException)
+				{
+					// Regex array is empty
+					return new List<string>();
+				}
+				catch (InvalidCastException e)
+				{
+					Logger.Error(e.ToString());
+					throw;
+				}
+				catch (JsonException e)
+				{
+					Logger.Error(e.ToString());
+					throw;
+				}
+			}
+			catch (ArgumentNullException)
+			{
+				// Regex array is empty
+				return new List<string>();
+			}
+			catch (InvalidCastException e)
+			{
+				Logger.Error(e.ToString());
+				throw;
+			}
+			catch (JsonException e)
+			{
+				Logger.Error(e.ToString());
+				throw;
+			}
+
+			Logger.Warn("Error: Language cancel regex array '" + path + "' does not exist in language file.");
+			return new List<string>();
+		}
+
 		public static string GetEmote(string path)
 		{
 			if (emotes == null)
@@ -464,7 +554,7 @@ namespace SCPDiscord
 			{
 				try
 				{
-					return emote_overrides.SelectToken(path).Value<string>();
+					return emoteOverrides.SelectToken(path).Value<string>();
 				}
 				catch (Exception) { /* ignore */ }
 				return emotes.SelectToken(path).Value<string>();

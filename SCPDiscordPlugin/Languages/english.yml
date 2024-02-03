@@ -203,6 +203,7 @@ messages:
   onroundstart:
     message: "**Round started.**"
     regex: []
+    cancel_regex: []
 
   onconnect:
     # ipaddress - string
@@ -211,6 +212,7 @@ messages:
     # region - string
     message: "Player (<var:userid>) attempting connection..."
     regex: []
+    cancel_regex: []
 
   onplayerleave:
     # ipaddress - string
@@ -219,6 +221,7 @@ messages:
     # name - string
     message: "**<var:player-name> (<var:player-userid>) left the game.**"
     regex: []
+    cancel_regex: []
 
   onroundend:
     # duration - int
@@ -256,21 +259,25 @@ messages:
   onwaitingforplayers:
     message: "**Server is ready and waiting for players.**"
     regex: []
+    cancel_regex: []
 
   onroundrestart:
     message: "**Round is restarting...**"
     regex: []
+    cancel_regex: []
 
   onsetservername:
     # servername - string
     message: "**Server name: <var:servername>.**"
     regex: []
+    cancel_regex: []
 
   onscp914activate:
     # knobsetting - KnobSetting
     # player - Player
     message: "<var:player-name> (<var:player-userid>) activated SCP-914 on the setting <var:knobsetting>."
     regex: []
+    cancel_regex: []
 
   onstartcountdown:
     player:
@@ -289,9 +296,11 @@ messages:
       initiated:
         message: "**The alpha warhead has been remotely activated by order of the O5 Council. All personnel must evacuate immediately.**"
         regex: []
+        cancel_regex: []
       resumed:
         message: "**The alpha warhead countdown has been remotely resumed by order of the O5 Council. <var:timeleft> seconds left until detonation.**"
         regex: []
+        cancel_regex: []
 
   onstopcountdown:
     default:
@@ -299,26 +308,32 @@ messages:
       # player - Player
       message: "**The alpha warhead detonation has been canceled by <var:player-name> (<var:player-userid>) with <var:timeleft> seconds left.**"
       regex: []
+      cancel_regex: []
     noplayer:
       # timeleft
       message: "**The alpha warhead detonation has been canceled remotely by order of the Ethics Committee with <var:timeleft> seconds left.**"
       regex: []
+      cancel_regex: []
 
   ondetonate:
     message: "**Detonation of the alpha warhead has been detected. MTF operatives are inbound to clear out any remaining threats.**"
     regex: []
+    cancel_regex: []
 
   ondecontaminate:
     message: "**Light Containment Zone de-contamination has been initiated, all biological material will be destroyed.**"
     regex: []
+    cancel_regex: []
 
   onsummonvehicle:
     chaos:
       message: "**Warning: Unauthorized vehicle has breached the site perimeter.**"
       regex: []
+      cancel_regex: []
     mtf:
       message: "**MTF helicopter is in visual range of the site, preparing to land.**"
       regex: []
+      cancel_regex: []
 
   ongeneratorfinish:
     # room
@@ -370,29 +385,34 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) picked up <var:item>."
     regex: []
+    cancel_regex: []
 
   onplayerpickupammo:
     # ammo - Item
     # player - Player
     message: "<var:player-name> (<var:player-userid>) picked up <var:ammo>."
     regex: []
+    cancel_regex: []
 
   onplayerpickuparmor:
     # item - Item
     # player - Player
     message: "<var:player-name> (<var:player-userid>) picked up <var:armor>."
     regex: []
+    cancel_regex: []
 
   onplayerpickupscp330:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) picked up SCP-330."
     regex: []
+    cancel_regex: []
 
   onplayerdropitem:
     # item - Item
     # player - Player
     message: "<var:player-name> (<var:player-userid>) dropped <var:item>."
     regex: []
+    cancel_regex: []
 
   onplayerdropammo:
     # ammo - Item
@@ -400,17 +420,20 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) dropped <var:amount> <var:ammo>."
     regex: []
+    cancel_regex: []
 
   onplayerjoin:
     # player - Player
     message: "**<var:player-name> (<var:player-userid>) joined the game.**"
     regex: []
+    cancel_regex: []
 
   onnicknameset:
     # nickname - string
     # player - Player
     message: "Player '<var:player-name> (<var:player-userid>)' set their nickname to <var:nickname>."
     regex: []
+    cancel_regex: []
 
   onsetrole:
     # oldrole - Role
@@ -442,11 +465,13 @@ messages:
     other:
       message: "<var:player-name> (<var:player-userid>) has become a <var:player-role>."
       regex: []
+      cancel_regex: []
 
   onspawn:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) spawned as <var:player-role>."
     regex: []
+    cancel_regex: []
 
   ondooraccess:
     # doorname - string
@@ -466,36 +491,42 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) escaped the SCP-106 pocket dimension."
     regex: []
+    cancel_regex: []
 
   onpocketdimensionenter:
     # attacker - Player
     # target - Player
     message: "<var:player-name> (<var:player-userid>) was taken into the SCP-106 pocket dimension by <var:attacker-name> (<var:attacker-userid>)."
     regex: []
+    cancel_regex: []
 
   onthrowprojectile:
     # type - GrenadeType
     # player - Player
     message: "<var:player-name> (<var:player-userid>) threw a <var:type>."
     regex: []
+    cancel_regex: []
 
   onspawnragdoll:
     # damagetype - string
     # player - Player
     message: "<var:player-name> (<var:player-userid>)'s <var:player-role> ragdoll spawned."
     regex: []
+    cancel_regex: []
 
   onitemuse:
     # item - string
     # player - Player
     message: "<var:player-name> (<var:player-userid>) used <var:item>."
     regex: []
+    cancel_regex: []
 
   onelevatoruse:
     # elevatorname - ElevatorType
     # player - Player
     message: "<var:player-name> (<var:player-userid>) called the <var:elevatorname> elevator."
     regex: []
+    cancel_regex: []
 
   onhandcuff:
     # target - Player
@@ -503,9 +534,11 @@ messages:
     default:
       message: "<var:target-role> <var:target-name> (<var:target-userid>) was handcuffed by <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>)."
       regex: []
+      cancel_regex: []
     nootherplayer:
       message: "<var:target-role> <var:target-name> (<var:target-userid>) was handcuffed."
       regex: []
+      cancel_regex: []
 
   onhandcuffremoved:
     # target - Player
@@ -513,18 +546,22 @@ messages:
     default:
       message: "<var:target-role> <var:target-name> (<var:target-userid>) was released by <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>)."
       regex: []
+      cancel_regex: []
     nootherplayer:
       message: "<var:target-role> <var:target-name> (<var:target-userid>) was released."
       regex: []
+      cancel_regex: []
 
   onplayertriggertesla:
     # player - Player
     default:
       message: "<var:player-team> <var:player-name> (<var:player-userid>) activated a tesla gate."
       regex: []
+      cancel_regex: []
     ignored:
       message: "<var:player-team> <var:player-name> (<var:player-userid>) went through a tesla gate without activating it."
       regex: []
+      cancel_regex: []
 
   onscp914changeknob:
     # newsetting - KnobSetting
@@ -532,18 +569,21 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) set the SCP-914 knob to \"<var:newsetting>\"."
     regex: []
+    cancel_regex: []
 
   onplayerradioswitch:
     # setting - RadioStatus
     # player - Player
     message: "<var:player-name> (<var:player-userid>) switched their radio to the <var:setting> status."
     regex: []
+    cancel_regex: []
 
   onrecallzombie:
     # target - Player
     # player - Player
     message: "<var:target-name> (<var:target-userid>) was revived as an SCP-049-2 instance by <var:player-name> (<var:player-userid>)"
     regex: []
+    cancel_regex: []
 
   oncallcommand:
     remoteadmin:
@@ -627,17 +667,20 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) reloaded their <var:weapon>."
     regex: []
+    cancel_regex: []
 
   ongrenadeexplosion:
     # player - Player
     message: "<var:player-name> (<var:player-userid>)'s grenade exploded."
     regex: []
+    cancel_regex: []
 
   ongrenadehitplayer:
     # player - Player
     # target - Player
     message: "<var:player-name> (<var:player-userid>)'s grenade hit <var:target-name> (<var:target-userid>)"
     regex: []
+    cancel_regex: []
 
   ongeneratorunlock:
     # engaged - bool
@@ -716,12 +759,14 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) locked a door as SCP-079."
     regex: []
+    cancel_regex: []
 
   on079teslagate:
     # apdrain - float
     # player - Player
     message: "<var:player-name> (<var:player-userid>) activated a tesla gate."
     regex: []
+    cancel_regex: []
 
   on079addexp:
     # xptype - ExperienceType
@@ -729,18 +774,21 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) got <var:amount> xp."
     regex: []
+    cancel_regex: []
 
   on079levelup:
     # level - int
     # player - Player
     message: "<var:player-name> (<var:player-userid>) leveled up as SCP-079."
     regex: []
+    cancel_regex: []
 
   on079unlockdoor:
     # doorname - string
     # player - Player
     message: "<var:player-name> (<var:player-userid>) locked a <var:doorname> door."
     regex: []
+    cancel_regex: []
 
   on079lockdown:
     # room - RoomType
@@ -779,6 +827,7 @@ messages:
       # playerteam - Team
       message: "**Player <var:player-name> (<var:player-userid>) was banned by the server for `<var:duration>`. Reason: <var:reason>**"
       regex: []
+      cancel_regex: []
 
   onbanissued:
     # duration
@@ -801,6 +850,7 @@ messages:
         Reason:    <var:reason>
         ```
       regex: []
+      cancel_regex: []
     # duration
     # expirytime
     # issuedtime
@@ -821,6 +871,7 @@ messages:
         Reason:    <var:reason>
         ```
       regex: []
+      cancel_regex: []
 
   onbanupdated:
     # duration
@@ -843,6 +894,7 @@ messages:
         Reason:    <var:reason>
         ```
       regex: []
+      cancel_regex: []
     # duration
     # expirytime
     # issuedtime
@@ -863,16 +915,19 @@ messages:
         Reason:    <var:reason>
         ```
       regex: []
+      cancel_regex: []
 
   onbanrevoked:
     # ip
     ip:
       message: "**IP-ban '<var:ip>' revoked.**"
       regex: []
+      cancel_regex: []
     # userid
     userid:
       message: "**UserID-ban '<var:userid>' revoked.**"
       regex: []
+      cancel_regex: []
 
   onkick:
     player:
@@ -891,6 +946,7 @@ messages:
       # playerteam - Team
       message: "**Player <var:player-name> (<var:player-userid>) was kicked by the server. Reason: <var:reason>**"
       regex: []
+      cancel_regex: []
 
   onplayermuted:
     player:
@@ -899,20 +955,24 @@ messages:
         # issuer - Player
         message: "**<var:player-name> (<var:player-userid>) was intercom-muted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
+        cancel_regex: []
       standard:
         # player - Player
         # issuer - Player
         message: "**<var:player-name> (<var:player-userid>) was muted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
+        cancel_regex: []
     server:
       intercom:
         # player - Player
         message: "**<var:player-name> (<var:player-userid>) was intercom-muted by the server.**"
         regex: []
+        cancel_regex: []
       standard:
         # player - Player
         message: "**<var:player-name> (<var:player-userid>) was muted by the server.**"
         regex: []
+        cancel_regex: []
 
   onplayerunmuted:
     player:
@@ -921,20 +981,24 @@ messages:
         # issuer - Player
         message: "**<var:player-name> (<var:player-userid>) was intercom-unmuted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
+        cancel_regex: []
       standard:
         # player - Player
         # issuer - Player
         message: "**<var:player-name> (<var:player-userid>) was unmuted by <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
+        cancel_regex: []
     server:
       intercom:
         # player - Player
         message: "**<var:player-name> (<var:player-userid>) was intercom-unmuted by the server.**"
         regex: []
+        cancel_regex: []
       standard:
         # player - Player
         message: "**<var:player-name> (<var:player-userid>) was unmuted by the server.**"
         regex: []
+        cancel_regex: []
 
   onteamrespawn:
     # players - List<Player>
@@ -942,15 +1006,18 @@ messages:
     mtf:
       message: "**Mobile Task Force Epsilon-11 designated Nine-Tailed Fox has entered the facility.**"
       regex: []
+      cancel_regex: []
     ci:
       message: "**Facility incursion detected, intruders identified as members of hostile GOI \"Chaos Insurgency\".**"
       regex: []
+      cancel_regex: []
 
   onplayerescape:
     # newclass - Role
     # player - Player
     message: "<var:player-name> (<var:player-userid>) has escaped and become a <var:newclass>"
     regex: []
+    cancel_regex: []
 
   onplayercheaterreport:
     # player - Player
@@ -958,6 +1025,7 @@ messages:
     # reason - string
     message: "**<var:player-name> (<var:player-userid>) reported <var:target-name> (<var:target-userid>) as a cheater:**\n```<var:reason>```"
     regex: []
+    cancel_regex: []
 
   onplayerreport:
     # player - Player
@@ -965,6 +1033,7 @@ messages:
     # reason - string
     message: "**<var:player-name> (<var:player-userid>) reported <var:target-name> (<var:target-userid>) for breaking server rules:**\n```<var:reason>```"
     regex: []
+    cancel_regex: []
 
   #####################################################################################################################
   #                                                                                                                   #
@@ -978,26 +1047,31 @@ messages:
   connectedtobot:
     message: "**SCP:SL server connected.**"
     regex: []
+    cancel_regex: []
 
   invalidsteamid:
     # userid - string
     message: "Invalid SteamID '<var:userid>'."
     regex: []
+    cancel_regex: []
 
   invalidsteamidorip:
     # steamidorip - string
     message: "Invalid SteamID or IP '<var:steamidorip>'."
     regex: []
+    cancel_regex: []
 
   invalidduration:
     # duration - string
     message: "Invalid duration '<var:duration>'."
     regex: []
+    cancel_regex: []
 
   playernotfound:
     # userid - string
     message: "Player with SteamID '<var:userid>' not found."
     regex: []
+    cancel_regex: []
 
   playerkicked:
     # name - string
@@ -1005,6 +1079,7 @@ messages:
     # admintag - string
     message: "'<var:name>' (<var:userid>) was kicked from the server."
     regex: []
+    cancel_regex: []
 
   playerbanned:
     # name - string
@@ -1014,11 +1089,13 @@ messages:
     # admintag - string
     message: "'<var:name>' (<var:userid>) was banned for the reason '<var:reason>' (<var:duration>)."
     regex: []
+    cancel_regex: []
 
   playerunbanned:
     # steamidorip - string
     message: "All entries with SteamID/IP '<var:steamidorip>' have been cleared from the ban lists."
     regex: []
+    cancel_regex: []
 
   playermuted:
     # name - string
@@ -1029,6 +1106,7 @@ messages:
     # adminid - long
     message: "<var:name> (<var:userid>) was muted for the reason '<var:reason>' (Permanently)."
     regex: []
+    cancel_regex: []
 
   playertempmuted:
     # name - string
@@ -1039,6 +1117,7 @@ messages:
     # adminid - long
     message: "<var:name> (<var:userid>) was muted for the reason '<var:reason>' (<var:duration>)."
     regex: []
+    cancel_regex: []
 
   mutefailed:
     # name - string
@@ -1049,6 +1128,7 @@ messages:
     # adminid - long
     message: "Error occured trying to mute player with steamid '<var:userid>', check the console for more info."
     regex: []
+    cancel_regex: []
 
   playerunmuted:
     # name - string
@@ -1059,6 +1139,7 @@ messages:
     # adminid - long
     message: "<var:name> (<var:userid>) was unmuted."
     regex: []
+    cancel_regex: []
 
   unmutefailed:
     # name - string
@@ -1069,30 +1150,35 @@ messages:
     # adminid - long
     message: "Error occured trying to unmute player with steamid '<var:userid>', check the console for more info."
     regex: []
+    cancel_regex: []
 
   kickall:
     # reason - string
     # admintag - string
     message: "All players have been kicked from the server with the reason '<var:reason>'."
     regex: []
+    cancel_regex: []
 
   # The feedback from a console command, except the custom ones above. (Is not affected by global regex other than final_regex)
   consolecommandfeedback:
     # feedback - string
     message: "<var:feedback>"
     regex: []
+    cancel_regex: []
 
   listtitle:
     # players
     # maxplayers
     message: "<var:players> / <var:maxplayers> players"
     regex: []
+    cancel_regex: []
 
   listrow:
     default:
       # player - Player
       message: "**<var:player-name>** | **<var:player-role>** | `<var:player-userid>` \n"
       regex: []
+      cancel_regex: []
     empty:
       message: "No players online."
 
@@ -1112,3 +1198,4 @@ messages:
       # maxplayers - int
       message: "<var:players> / <var:maxplayers> online"
       regex: []
+      cancel_regex: []
