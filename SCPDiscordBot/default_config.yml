@@ -9,6 +9,10 @@
     # Possible values are: Critical, Error, Warning, Information, Debug.
     log-level: "Information"
 
+    # Set which Discord status should be used when the server is offline.
+    # Possible values are: Offline, Online, Idle, DoNotDisturb, Invisible
+    status-type: "DoNotDisturb"
+
     # Sets the type of activity for the bot to display in its presence status when the server is offline.
     # Possible values are: Playing, Streaming, ListeningTo, Watching, Custom, Competing.
     presence-type: "Custom"
