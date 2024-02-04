@@ -136,7 +136,7 @@ namespace SCPDiscord
 			Dictionary<string, string> globalRegex;
 			try
 			{
-				globalRegex = Language.GetRegexDictionary("global_regex");
+				globalRegex = GetRegexDictionary("global_regex");
 			}
 			catch (Exception e)
 			{
