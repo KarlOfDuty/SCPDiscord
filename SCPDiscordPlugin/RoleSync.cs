@@ -14,21 +14,16 @@ using PluginAPI.Core;
 
 namespace SCPDiscord
 {
-	public class RoleSync
+	public static class RoleSync
 	{
-		private Dictionary<string, ulong> syncedPlayers = new Dictionary<string, ulong>();
+		private static Dictionary<string, ulong> syncedPlayers = new Dictionary<string, ulong>();
 
-		private readonly SCPDiscord plugin;
+		private static Utilities.FileWatcher fileWatcher;
 
-		public RoleSync(SCPDiscord plugin)
+		public static void Reload()
 		{
-			this.plugin = plugin;
-			Reload();
-			Logger.Info("RoleSync system loaded.");
-		}
+			fileWatcher?.Dispose();
 
-		public void Reload()
-		{
 			if (!Directory.Exists(Config.GetRolesyncDir()))
 			{
 				Directory.CreateDirectory(Config.GetRolesyncDir());
@@ -36,15 +31,19 @@ namespace SCPDiscord
 
 			if (!File.Exists(Config.GetRolesyncPath()))
 			{
-				Logger.Info("Registry file " + Config.GetRolesyncPath() + " does not exist, creating...");
+				Logger.Info("Rolesync file " + Config.GetRolesyncPath() + " does not exist, creating...");
 				File.WriteAllText(Config.GetRolesyncPath(), "[]");
 			}
 
-			syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(k => ((JObject)k).Properties().First().Name, v => v.Values().First().Value<ulong>());
-			Logger.Info("Successfully loaded '" + Config.GetRolesyncDir() + "rolesync.json'.");
+			fileWatcher = new Utilities.FileWatcher(Config.GetRolesyncDir(), "rolesync.json", Reload);
+
+			syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(
+				k => ((JObject)k).Properties().First().Name,
+				v => v.Values().First().Value<ulong>());
+			Logger.Debug("Successfully loaded '" + Config.GetRolesyncPath() + "'.");
 		}
 
-		private void SavePlayers()
+		private static void SavePlayers()
 		{
 			// Save the state to file
 			StringBuilder builder = new StringBuilder();
@@ -57,7 +56,7 @@ namespace SCPDiscord
 			File.WriteAllText(Config.GetRolesyncDir() + "rolesync.json", builder.ToString());
 		}
 
-		public void SendRoleQuery(Player player)
+		public static void SendRoleQuery(Player player)
 		{
 			if (PlayerAuthenticationManager.OnlineMode)
 			{
@@ -99,7 +98,7 @@ namespace SCPDiscord
 			}
 		}
 
-		public void ReceiveQueryResponse(UserInfo userInfo)
+		public static void ReceiveQueryResponse(UserInfo userInfo)
 		{
 			Task.Delay(1000);
 			try
@@ -160,7 +159,7 @@ namespace SCPDiscord
 									command = command.Replace("<var:" + variable.Key + ">", variable.Value);
 								}
 								Logger.Debug("Running rolesync command: " + command);
-								plugin.sync.ScheduleRoleSyncCommand(command);
+								SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
 							}
 
 							Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
@@ -175,7 +174,7 @@ namespace SCPDiscord
 			}
 		}
 
-		public EmbedMessage AddPlayer(SyncRoleCommand command)
+		public static EmbedMessage AddPlayer(SyncRoleCommand command)
 		{
 			if (PlayerAuthenticationManager.OnlineMode)
 			{
@@ -259,7 +258,7 @@ namespace SCPDiscord
 			}
 		}
 
-		private bool CheckSteamAccount(string steamID, ref string response)
+		private static bool CheckSteamAccount(string steamID, ref string response)
 		{
 			ServicePointManager.ServerCertificateValidationCallback = SSLValidation;
 			HttpWebResponse webResponse = null;
@@ -305,7 +304,7 @@ namespace SCPDiscord
 			return false;
 		}
 
-		private bool SSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+		private static bool SSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
 		{
 
 			if (sslPolicyErrors == SslPolicyErrors.None)
@@ -336,7 +335,7 @@ namespace SCPDiscord
 			return true;
 		}
 
-		public EmbedMessage RemovePlayer(UnsyncRoleCommand command)
+		public static EmbedMessage RemovePlayer(UnsyncRoleCommand command)
 		{
 			if (!syncedPlayers.ContainsValue(command.DiscordID))
 			{
@@ -361,7 +360,7 @@ namespace SCPDiscord
 			};
 		}
 
-		public string RemovePlayerLocally(ulong discordID)
+		public static string RemovePlayerLocally(ulong discordID)
 		{
 			if (!syncedPlayers.ContainsValue(discordID))
 			{

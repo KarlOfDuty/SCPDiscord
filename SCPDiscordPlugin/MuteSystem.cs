@@ -70,22 +70,11 @@ namespace SCPDiscord
 		}
 	}
 
-	public class MuteFileReloader
-	{
-		public MuteFileReloader()
-		{
-			while (true)
-			{
-				MuteSystem.ReloadMutes();
-				Thread.Sleep(60000);
-			}
-		}
-	}
-
     public static class MuteSystem
     {
         public static string ignoreUserID = "";
 		private static Mutex muteFileMutex = new Mutex();
+		private static Utilities.FileWatcher fileWatcher;
 		private static ConcurrentDictionary<ulong, MuteEntry> muteCache = new ConcurrentDictionary<ulong, MuteEntry>();
 
 		private class MuteEntry
@@ -120,8 +109,6 @@ namespace SCPDiscord
 	        {
 		        return false;
 	        }
-
-	        ReloadMutes();
 
 	        if (muteCache.TryGetValue(steamID, out MuteEntry entry))
 	        {
@@ -170,8 +157,6 @@ namespace SCPDiscord
 	        {
 		        return false;
 	        }
-
-	        ReloadMutes();
 
 	        // Player has not been muted
 	        if (!muteCache.TryGetValue(steamID, out MuteEntry entry))
@@ -225,6 +210,7 @@ namespace SCPDiscord
 		        Logger.Warn("Unable to open mute file to reload.");
 		        return;
 	        }
+	        fileWatcher?.Dispose();
 
 	        if (!TryLoadMutes(out ConcurrentDictionary<ulong, MuteEntry> mutes))
 	        {
@@ -271,11 +257,12 @@ namespace SCPDiscord
 
 			    if (!File.Exists(Config.GetMutesPath()))
 			    {
-				    Logger.Info("Registry file " + Config.GetMutesPath() + "does not exist, creating...");
+				    Logger.Info("Mute file " + Config.GetMutesPath() + "does not exist, creating...");
 				    File.WriteAllText(Config.GetMutesPath(), "{}");
 			    }
-
+			    fileWatcher = new Utilities.FileWatcher(Config.GetMutesDir(), "mutes.json", ReloadMutes);
 			    muteEntries = JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, MuteEntry>>(File.ReadAllText(Config.GetMutesPath()));
+			    Logger.Debug("Successfully loaded '" + Config.GetMutesPath() + "'.");
 			    return true;
 		    }
 		    catch (Exception e)

@@ -30,7 +30,7 @@ namespace SCPDiscord.Commands
 			}
 
 			Language.Reload();
-			SCPDiscord.plugin.roleSync.Reload();
+			RoleSync.Reload();
 			if (NetworkSystem.IsConnected())
 			{
 				NetworkSystem.Disconnect();

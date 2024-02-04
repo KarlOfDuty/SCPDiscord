@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using PluginAPI.Core;
 
@@ -7,6 +8,44 @@ namespace SCPDiscord
 {
     public static class Utilities
 	{
+		public class FileWatcher : IDisposable
+		{
+			private FileSystemWatcher watcher;
+			private Action action;
+			public FileWatcher(string dirPath, string fileName, Action func)
+			{
+				action = func;
+				watcher = new FileSystemWatcher(dirPath);
+				watcher.Filter = fileName;
+				watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime;
+				watcher.EnableRaisingEvents = true;
+				watcher.Changed += OnChanged;
+				watcher.Created += OnChanged;
+			}
+
+			private void OnChanged(object sender, FileSystemEventArgs e)
+			{
+				action();
+			}
+
+			private void ReleaseUnmanagedResources() { /* IGNORED */ }
+
+			private void Dispose(bool disposing)
+			{
+				ReleaseUnmanagedResources();
+				if (disposing)
+				{
+					watcher?.Dispose();
+				}
+			}
+
+			public void Dispose()
+			{
+				Dispose(true);
+				GC.SuppressFinalize(this);
+			}
+		}
+
         public static string SecondsToCompoundTime(long seconds)
         {
             if (seconds < 0) throw new ArgumentOutOfRangeException(nameof(seconds));

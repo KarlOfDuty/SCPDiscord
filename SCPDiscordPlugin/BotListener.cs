@@ -37,11 +37,11 @@ namespace SCPDiscord
 						switch (data.MessageCase)
 						{
 							case Interface.MessageWrapper.MessageOneofCase.SyncRoleCommand:
-								plugin.SendEmbedByID(plugin.roleSync.AddPlayer(data.SyncRoleCommand));
+								plugin.SendEmbedByID(RoleSync.AddPlayer(data.SyncRoleCommand));
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.UnsyncRoleCommand:
-								plugin.SendEmbedByID(plugin.roleSync.RemovePlayer(data.UnsyncRoleCommand));
+								plugin.SendEmbedByID(RoleSync.RemovePlayer(data.UnsyncRoleCommand));
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.ConsoleCommand:
@@ -49,7 +49,7 @@ namespace SCPDiscord
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.UserInfo:
-								plugin.roleSync.ReceiveQueryResponse(data.UserInfo);
+								RoleSync.ReceiveQueryResponse(data.UserInfo);
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.BanCommand:

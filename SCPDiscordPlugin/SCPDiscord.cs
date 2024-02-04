@@ -26,8 +26,6 @@ namespace SCPDiscord
 
 		public bool roundStarted = false;
 
-		public RoleSync roleSync;
-
 		public bool shutdown;
 
 		public const string VERSION = "3.2.0";
@@ -62,15 +60,19 @@ namespace SCPDiscord
 			}
 			*/
 
-			roleSync = new RoleSync(this);
+
+
 			if (Server.Port == Config.GetInt("bot.port"))
 			{
 				Logger.Error("ERROR: Server is running on the same port as the plugin, aborting...");
 				throw new Exception();
 			}
 			Language.Reload();
+			RoleSync.Reload();
+			Logger.Info("RoleSync system loaded.");
+			MuteSystem.ReloadMutes();
+			Logger.Info("Mute system loaded.");
 
-			new Thread(() => new MuteFileReloader());
 			new Thread(() => new StartNetworkSystem(plugin)).Start();
 
 			Logger.Info("SCPDiscord " + VERSION + " enabled.");
@@ -85,7 +87,7 @@ namespace SCPDiscord
 
 				try
 				{
-					plugin.roleSync.SendRoleQuery(player);
+					RoleSync.SendRoleQuery(player);
 				}
 				catch (Exception e)
 				{

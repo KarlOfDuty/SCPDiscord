@@ -23,7 +23,7 @@ namespace SCPDiscord.Commands
 
 			if (arguments.Count > 0 && ulong.TryParse(arguments.At(0), out ulong discordID))
 			{
-				response = SCPDiscord.plugin.roleSync.RemovePlayerLocally(discordID);
+				response = RoleSync.RemovePlayerLocally(discordID);
 				return true;
 			}
 
