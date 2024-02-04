@@ -385,9 +385,12 @@ namespace SCPDiscord.EventListeners
 		{
 			Dictionary<string, string> variables = new Dictionary<string, string>
 			{
-				{ "type", ev.Grenade.Info.ItemId.ToString() }
+				{ "type", ev?.Grenade.Info.ItemId.ToString() }
 			};
-			variables.AddPlayerVariables(new Player(ev.Thrower.Hub), "player");
+
+			if (ev?.Thrower.Hub != null)
+				variables.AddPlayerVariables(new Player(ev.Thrower.Hub), "player");
+
 			plugin.SendMessage("messages.ongrenadeexplosion", variables);
 		}
 
@@ -398,6 +401,7 @@ namespace SCPDiscord.EventListeners
 			{
 				{ "newrole", ev.NewRole.ToString() }
 			};
+
 			variables.AddPlayerVariables(ev.Player, "player");
 			plugin.SendMessage("messages.onplayerescape", variables);
 		}

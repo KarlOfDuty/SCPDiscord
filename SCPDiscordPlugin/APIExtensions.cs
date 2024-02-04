@@ -54,8 +54,8 @@ namespace SCPDiscord
 			variables.AddIfNotExist(prefix + "-hasreservedslot",      player?.HasReservedSlot.ToString());
 			variables.AddIfNotExist(prefix + "-isglobalmod",          player?.IsGlobalModerator.ToString());
 			variables.AddIfNotExist(prefix + "-isintercommuted",      player?.IsIntercomMuted.ToString());
-			variables.AddIfNotExist(prefix + "-hasfullinventory",     player?.IsInventoryFull .ToString());
-			variables.AddIfNotExist(prefix + "-hasnoitems",           player?.IsWithoutItems .ToString());
+			variables.AddIfNotExist(prefix + "-hasfullinventory",     player?.IsInventoryFull.ToString());
+			variables.AddIfNotExist(prefix + "-hasnoitems",           player?.IsWithoutItems.ToString());
 			variables.AddIfNotExist(prefix + "-isnortwoodstaff",      player?.IsNorthwoodStaff.ToString());
 			variables.AddIfNotExist(prefix + "-overwatchon",          player?.IsOverwatchEnabled.ToString());
 			variables.AddIfNotExist(prefix + "-noclipon",             player?.IsNoclipEnabled.ToString());
