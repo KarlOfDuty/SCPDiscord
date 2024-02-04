@@ -28,7 +28,6 @@ namespace SCPDiscord.Commands
             RegisterCommand(new SetNickname());
             RegisterCommand(new UnsyncCommand());
             RegisterCommand(new ValidateCommand());
-            RegisterCommand(new VerboseCommand());
         }
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)

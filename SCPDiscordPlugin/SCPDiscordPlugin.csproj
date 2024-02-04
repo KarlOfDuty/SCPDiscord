@@ -118,7 +118,6 @@
     <Compile Include="RoleSync.cs" />
     <Compile Include="SCPDiscord.cs" />
     <Compile Include="ServerCommands\UnsyncCommand.cs" />
-    <Compile Include="ServerCommands\VerboseCommand.cs" />
     <Compile Include="ServerCommands\ValidateCommand.cs" />
     <Compile Include="SynchronousExecutor.cs" />
     <Compile Include="Utilities.cs" />
