@@ -17,7 +17,6 @@ namespace SCPDiscord
 		public void OnPlayerJoinMuteCheck(PlayerJoinedEvent ev)
 		{
 			if (ev.Player.PlayerId == Server.Instance.PlayerId) return;
-
 			MuteSystem.CheckMuteStatus(ev.Player);
 		}
 

@@ -30,7 +30,7 @@ namespace SCPDiscord
 			{ "bot.activity.active", ""          },
 			{ "bot.activity.full",   ""          },
 			{ "settings.language",   "english"   },
-			{ "settings.timestamp",  ""          },
+			{ "settings.timestamp",  ""          }
 		};
 
 		private static readonly Dictionary<string, bool> configBools = new Dictionary<string, bool>

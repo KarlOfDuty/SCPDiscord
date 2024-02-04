@@ -106,6 +106,11 @@ namespace SCPDiscord.BotCommands
 			    }
 			    playerName = player.Nickname;
 		    }
+		    else
+		    {
+			    // If the player is not online, check the steam api instead
+			    Utilities.TryGetSteamName(userID, out playerName);
+		    }
 
 		    if (MuteSystem.MutePlayer(ref playerName, userID, command.AdminTag, command.Reason, endTime))
 		    {
@@ -187,6 +192,11 @@ namespace SCPDiscord.BotCommands
 				    return;
 			    }
 			    playerName = player.Nickname;
+		    }
+		    else
+		    {
+			    // If the player is not online, check the steam api instead
+			    Utilities.TryGetSteamName(userID, out playerName);
 		    }
 
 		    if (MuteSystem.UnmutePlayer(ref playerName, userID, command.AdminTag))

@@ -1119,10 +1119,10 @@ messages:
     cancel_regex: []
 
   playerkicked:
-    # name - string
-    # userid - string
+    # player - Player
+    # reason - string
     # admintag - string
-    message: "'<var:name>' (<var:userid>) was kicked from the server."
+    message: "'<var:player-name>' (<var:player-userid>) was kicked from the server by <var:admintag> for the reason '<var:reason>'."
     regex: []
     cancel_regex: []
 

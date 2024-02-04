@@ -53,10 +53,12 @@ namespace SCPDiscord.BotCommands
 				return;
 			}
 
-			string name = "";
-			if (!Utilities.GetPlayerName(command.SteamID, ref name))
+			if (!Utilities.TryGetPlayerName(command.SteamID, out string name))
 			{
-				name = "Offline player";
+				if (!Utilities.TryGetSteamName(command.SteamID, out name))
+				{
+					name = "Offline player";
+				}
 			}
 
 			//Semicolons are separators in the ban file so cannot be part of strings
@@ -69,6 +71,8 @@ namespace SCPDiscord.BotCommands
 			}
 
 			// TODO: Feedback if the request is cancelled by another plugin
+
+			// Send player banned event if player is online, and add ipban
 			if (Player.TryGet(command.SteamID.EndsWith("@steam") ? command.SteamID : command.SteamID + "@steam", out Player player))
 			{
 				PlayerBannedEvent eventArgs = new PlayerBannedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, command.Reason, durationSeconds);

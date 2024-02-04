@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PluginAPI.Core;
 using SCPDiscord.Interface;
 
 namespace SCPDiscord.BotCommands
@@ -17,38 +18,41 @@ namespace SCPDiscord.BotCommands
         	//Perform very basic SteamID validation
         	if (!Utilities.IsPossibleSteamID(command.SteamID, out ulong _))
         	{
-        		Dictionary<string, string> variables = new Dictionary<string, string>
+        		Dictionary<string, string> vars = new Dictionary<string, string>
         		{
         			{ "userid", command.SteamID }
         		};
-        		SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.invalidsteamid", variables);
+        		SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.invalidsteamid", vars);
         		return;
         	}
 
         	//Get player name for feedback message
-        	string playerName = "";
-	        Utilities.GetPlayerName(command.SteamID, ref playerName);
+	        if (!Player.TryGet(command.SteamID, out Player player))
+	        {
+		        Dictionary<string, string> vars = new Dictionary<string, string>
+		        {
+			        { "userid", command.SteamID }
+		        };
+		        SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playernotfound", vars);
+	        }
+
+	        if (string.IsNullOrWhiteSpace(command.Reason))
+	        {
+		        command.Reason = "Kicked by server moderators";
+	        }
 
         	//Kicks the player
-        	if (Utilities.KickPlayer(command.SteamID, command.Reason))
+        	Dictionary<string, string> variables = new Dictionary<string, string>
         	{
-        		Dictionary<string, string> variables = new Dictionary<string, string>
-        		{
-        			{ "name", playerName },
-        			{ "userid", command.SteamID },
-        			{ "admintag", command.AdminTag }
-        		};
-        		embed.Colour = EmbedMessage.Types.DiscordColour.Green;
-		        SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playerkicked", variables);
-        	}
-        	else
-        	{
-        		Dictionary<string, string> variables = new Dictionary<string, string>
-        		{
-        			{ "userid", command.SteamID }
-        		};
-		        SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playernotfound", variables);
-        	}
+		        { "reason", command.Reason },
+        		{ "admintag", command.AdminTag }
+        	};
+	        variables.AddPlayerVariables(player, "player");
+        	embed.Colour = EmbedMessage.Types.DiscordColour.Green;
+
+	        player.Kick(command.Reason);
+	        SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playerkicked", variables);
+
         }
     }
 }

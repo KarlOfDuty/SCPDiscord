@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Xml;
 using PluginAPI.Core;
 
 namespace SCPDiscord
@@ -15,8 +19,7 @@ namespace SCPDiscord
 			public FileWatcher(string dirPath, string fileName, Action func)
 			{
 				action = func;
-				watcher = new FileSystemWatcher(dirPath);
-				watcher.Filter = fileName;
+				watcher = new FileSystemWatcher(dirPath, fileName);
 				watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime;
 				watcher.EnableRaisingEvents = true;
 				watcher.Changed += OnChanged;
@@ -28,11 +31,8 @@ namespace SCPDiscord
 				action();
 			}
 
-			private void ReleaseUnmanagedResources() { /* IGNORED */ }
-
 			private void Dispose(bool disposing)
 			{
-				ReleaseUnmanagedResources();
 				if (disposing)
 				{
 					watcher?.Dispose();
@@ -66,21 +66,7 @@ namespace SCPDiscord
 			return SecondsToCompoundTime(ticks / TimeSpan.TicksPerSecond);
 		}
 
-		public static string GetParsedUserID(string userID)
-		{
-			if (!string.IsNullOrWhiteSpace(userID))
-			{
-				int charLocation = userID.LastIndexOf('@');
-
-				if (charLocation > 0)
-				{
-					return userID.Substring(0, charLocation);
-				}
-			}
-			return null;
-		}
-
-		public static bool GetPlayerName(string userID, ref string name)
+		public static bool TryGetPlayerName(string userID, out string name)
 		{
 			foreach (Player player in Player.GetPlayers<Player>())
 			{
@@ -90,19 +76,8 @@ namespace SCPDiscord
 					return true;
 				}
 			}
-			return false;
-		}
 
-		public static bool KickPlayer(string steamID, string message = "Kicked from server")
-		{
-			foreach (Player player in Player.GetPlayers<Player>())
-			{
-				if (player.GetParsedUserID() == steamID)
-				{
-					player.Ban(message, 0);
-					return true;
-				}
-			}
+			name = "";
 			return false;
 		}
 
@@ -217,6 +192,81 @@ namespace SCPDiscord
 			}
 
 			return result;
+		}
+
+		public static bool TryGetSteamName(string userID, out string steamName)
+		{
+			userID = userID.Replace("@steam", "");
+			steamName = null;
+
+			HttpWebResponse response = null;
+			ServicePointManager.ServerCertificateValidationCallback = SSLValidation;
+			try
+			{
+				HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://steamcommunity.com/profiles/" + userID + "?xml=1");
+				request.Method = "GET";
+
+				response = (HttpWebResponse)request.GetResponse();
+				Stream responseStream = response.GetResponseStream();
+
+				if (responseStream == null)
+				{
+					return false;
+				}
+
+				string xmlResponse = new StreamReader(responseStream).ReadToEnd();
+
+				XmlDocument xml = new XmlDocument();
+				xml.LoadXml(xmlResponse);
+				steamName = xml.DocumentElement?.SelectSingleNode("/profile/steamID")?.InnerText;
+
+				response.Close();
+				return !string.IsNullOrWhiteSpace(steamName);
+			}
+			catch (WebException e)
+			{
+				if (e.Status == WebExceptionStatus.ProtocolError)
+				{
+					Logger.Debug("Steam profile connection error: " + ((HttpWebResponse)e.Response).StatusCode);
+				}
+				else
+				{
+					Logger.Debug("Steam profile connection error: " + e.Status);
+				}
+			}
+			finally
+			{
+				response?.Close();
+			}
+			return false;
+		}
+
+		private static bool SSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+		{
+			bool isOk = true;
+			// If there are errors in the certificate chain,
+			// look at each error to determine the cause.
+			if (sslPolicyErrors != SslPolicyErrors.None)
+			{
+				for (int i = 0; i < chain.ChainStatus.Length; i++)
+				{
+					if (chain.ChainStatus[i].Status == X509ChainStatusFlags.RevocationStatusUnknown)
+					{
+						continue;
+					}
+					chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
+					chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+					chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 1, 0);
+					chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllFlags;
+					bool chainIsValid = chain.Build((X509Certificate2)certificate);
+					if (!chainIsValid)
+					{
+						isOk = false;
+						break;
+					}
+				}
+			}
+			return isOk;
 		}
 	}
 }
