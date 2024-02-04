@@ -42,7 +42,10 @@ namespace SCPDiscord
 			{ "settings.useglobaldirectory.language", true  },
 			{ "settings.useglobaldirectory.rolesync", true  },
 			{ "settings.useglobaldirectory.mutes",    true  },
-			{ "settings.regeneratelanguagefiles",     false }
+			{ "settings.regeneratelanguagefiles",     false },
+			{ "settings.autoreload.reservedslots",    true  },
+			{ "settings.autoreload.whitelist",        true  },
+			//{ "settings.autoreload.mutes",            true  }
 		};
 
 		private static readonly Dictionary<string, int> configInts = new Dictionary<string, int>
@@ -494,6 +497,12 @@ namespace SCPDiscord
 		public static string GetMutesPath()
 		{
 			return GetRolesyncDir() + "mutes.json";
+		}
+
+		public static string GetReservedSlotDir()
+		{
+			// From ConfigSharing.Reload
+			return ConfigSharing.Paths[3];
 		}
 
 		public static string GetReservedSlotPath()

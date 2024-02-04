@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using GameCore;
 using Mirror.LiteNetLib4Mirror;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PluginAPI.Events;
+using VoiceChat;
 using YamlDotNet.Core;
 using Log = PluginAPI.Core.Log;
 
@@ -27,6 +29,10 @@ namespace SCPDiscord
 		public bool roundStarted = false;
 
 		public bool shutdown;
+
+		private Utilities.FileWatcher reservedSlotsWatcher;
+		//private Utilities.FileWatcher vanillaMutesWatcher;
+		private Utilities.FileWatcher whitelistWatcher;
 
 		public const string VERSION = "3.2.0";
 
@@ -100,7 +106,26 @@ namespace SCPDiscord
 		{
 			try
 			{
+				reservedSlotsWatcher?.Dispose();
+				//vanillaMutesWatcher?.Dispose();
+				whitelistWatcher?.Dispose();
 				Config.Reload(plugin);
+
+				if (Config.GetBool("settings.autoreload.reservedslots"))
+				{
+					reservedSlotsWatcher = new Utilities.FileWatcher(Config.GetReservedSlotDir(), "UserIDReservedSlots.txt", ReservedSlot.Reload);
+				}
+
+				/*if (Config.GetBool("settings.autoreload.mutes"))
+				{
+					vanillaMutesWatcher = new Utilities.FileWatcher(ConfigSharing.Paths[1], "mutes.txt", VoiceChatMutes.LoadMutes);
+				}*/
+
+				if (Config.GetBool("settings.autoreload.whitelist"))
+				{
+					whitelistWatcher = new Utilities.FileWatcher(ConfigSharing.Paths[2], "UserIDWhitelist.txt", WhiteList.Reload);
+				}
+
 				Logger.Info("Successfully loaded config '" + Config.GetConfigPath() + "'.");
 				return true;
 			}

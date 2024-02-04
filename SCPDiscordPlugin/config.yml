@@ -65,6 +65,12 @@ settings:
     # recommended to use overrides.yml instead of editing the language file.
     regeneratelanguagefiles: true
 
+    # EXPERIMENTAL:
+    # Whether SCPDiscord should automatically cause the game to reload certain files when they are changed by other servers
+    autoreload:
+        reservedslots: false
+        whitelist: false
+
 # Sets commands which are run whenever someone with a synced Discord rank joins the server,
 # only the highest one in the list that matches the player is executed
 # Turn on debug above to see console feedback when the commands are used
