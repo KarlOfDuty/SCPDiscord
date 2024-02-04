@@ -97,23 +97,30 @@ namespace SCPDiscord
 		{
 			foreach (DiscordRole role in member.Roles)
 			{
+				Logger.Debug("Checking role '" + role.Id + "' for command permissions...", LogID.CONFIG);
 				if (config.permissions.TryGetValue(role.Id, out string[] permissions))
 				{
+					Logger.Debug("Found role '" + role.Id + "' in config...", LogID.CONFIG);
 					if (permissions.Any(s => Regex.IsMatch(command, "^" + s)))
 					{
+						Logger.Debug("Role '" + role.Id + "' has permission to run '" + command + "'.", LogID.CONFIG);
 						return true;
 					}
 				}
 			}
 
+			Logger.Debug("Checking @everyone role...", LogID.CONFIG);
 			if (config.permissions.TryGetValue(0, out string[] everyonePermissions))
 			{
+				Logger.Debug("Found @everyone role in config...", LogID.CONFIG);
 				if (everyonePermissions.Any(s => Regex.IsMatch(command, "^" + s)))
 				{
+					Logger.Debug("Role @everyone has permission to run '" + command + "'.", LogID.CONFIG);
 					return true;
 				}
 			}
 
+			Logger.Debug("None of the user's roles have permission to run '" + command + "'.", LogID.CONFIG);
 			return false;
 		}
 	}
