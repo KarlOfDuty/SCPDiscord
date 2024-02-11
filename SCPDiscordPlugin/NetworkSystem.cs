@@ -304,36 +304,10 @@ namespace SCPDiscord
 			switch (message.MessageCase)
 			{
 				case MessageWrapper.MessageOneofCase.EmbedMessage:
-					if (Config.GetChannelIDs("channelsettings.filterips").Contains(message.EmbedMessage.ChannelID))
-					{
-						foreach (Player player in Player.GetPlayers())
-						{
-							message.EmbedMessage.Description = message.EmbedMessage.Description.Replace(player.IpAddress, new string('#', player.IpAddress.Length));
-						}
-					}
-					if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(message.EmbedMessage.ChannelID))
-					{
-						foreach (Player player in Player.GetPlayers())
-						{
-							message.EmbedMessage.Description = message.EmbedMessage.Description.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
-						}
-					}
+					message.EmbedMessage.Description = Language.RunFilters(message.EmbedMessage.ChannelID, message.EmbedMessage.Description);
 					break;
 				case MessageWrapper.MessageOneofCase.ChatMessage:
-					if (Config.GetChannelIDs("channelsettings.filterips").Contains(message.ChatMessage.ChannelID))
-					{
-						foreach (Player player in Player.GetPlayers())
-						{
-							message.ChatMessage.Content = message.ChatMessage.Content.Replace(player.IpAddress, new string('#', player.IpAddress.Length));
-						}
-					}
-					if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(message.ChatMessage.ChannelID))
-					{
-						foreach (Player player in Player.GetPlayers())
-						{
-							message.ChatMessage.Content = message.ChatMessage.Content.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
-						}
-					}
+					message.ChatMessage.Content = Language.RunFilters(message.ChatMessage.ChannelID, message.ChatMessage.Content);
 					break;
 				case MessageWrapper.MessageOneofCase.PaginatedMessage:
 				case MessageWrapper.MessageOneofCase.BanCommand:
@@ -348,6 +322,10 @@ namespace SCPDiscord
 				case MessageWrapper.MessageOneofCase.UnsyncRoleCommand:
 				case MessageWrapper.MessageOneofCase.UserInfo:
 				case MessageWrapper.MessageOneofCase.UserQuery:
+				case MessageWrapper.MessageOneofCase.MuteCommand:
+				case MessageWrapper.MessageOneofCase.ListRankedCommand:
+				case MessageWrapper.MessageOneofCase.ListSyncedCommand:
+				case MessageWrapper.MessageOneofCase.PlayerInfoCommand:
 				default:
 					break;
 			}

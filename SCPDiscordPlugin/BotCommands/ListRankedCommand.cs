@@ -17,8 +17,7 @@ namespace SCPDiscord.BotCommands
 				variables.AddPlayerVariables(player, "player");
 				string row = Language.GetProcessedMessage("messages.list.ranked.row.default", variables);
 
-				Language.RunFilters(command.ChannelID, player, ref row);
-				listItems.Add(row);
+				listItems.Add(Language.RunFilters(command.ChannelID, player, row));
 			}
 
 			if (listItems.Count == 0)

@@ -582,7 +582,7 @@ namespace SCPDiscord
 			}
 		}
 
-		public static void RunFiltersManually(ulong channelID, string ipAddress, string parsedUserID, string userIDReplacement, ref string message)
+		public static string RunFilters(ulong channelID, string ipAddress, string parsedUserID, string userIDReplacement, string message)
 		{
 			if (Config.GetChannelIDs("channelsettings.filterips").Contains(channelID) && !string.IsNullOrWhiteSpace(ipAddress))
 			{
@@ -593,9 +593,11 @@ namespace SCPDiscord
 			{
 				message = message.Replace(parsedUserID, userIDReplacement);
 			}
+
+			return message;
 		}
 
-		public static void RunFilters(ulong channelID, Player player, ref string message)
+		public static string RunFilters(ulong channelID, Player player, string message)
 		{
 			if (Config.GetChannelIDs("channelsettings.filterips").Contains(channelID))
 			{
@@ -606,22 +608,35 @@ namespace SCPDiscord
 			{
 				message = message.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
 			}
+
+			return message;
 		}
 
-		public static void RunFilters(ulong channelID, ref string message)
+		public static string RunFilters(ulong channelID, string message)
 		{
+			bool filterIPs = Config.GetChannelIDs("channelsettings.filterips").Contains(channelID);
+			bool filterSteamIDs = Config.GetChannelIDs("channelsettings.filtersteamids").Contains(channelID);
+
+			if (Config.GetBool("channelsettings.invertfilters"))
+			{
+				filterIPs = !filterIPs;
+				filterSteamIDs = !filterSteamIDs;
+			}
+
 			foreach (Player player in Player.GetPlayers())
 			{
-				if (Config.GetChannelIDs("channelsettings.filterips").Contains(channelID))
+				if (filterIPs)
 				{
 					message = message.Replace(player.IpAddress, new string('#', player.IpAddress.Length));
 				}
 
-				if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(channelID))
+				if (filterSteamIDs)
 				{
 					message = message.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
 				}
 			}
+
+			return message;
 		}
 
 		public static string RunUsernameRegexReplacements(string input)

@@ -90,9 +90,7 @@ namespace SCPDiscord.BotCommands
 			    };
 			    string row = Language.GetProcessedMessage("messages.list.synced.row.all.default", variables);
 
-			    Language.RunFiltersManually(channelID, null, syncedPlayer.Key, "<hidden>", ref row);
-
-			    rows.Add(row);
+			    rows.Add(Language.RunFilters(channelID, null, syncedPlayer.Key, "<hidden>", row));
 		    }
 		    return rows;
 	    }
@@ -112,9 +110,7 @@ namespace SCPDiscord.BotCommands
 				variables.AddPlayerVariables(player, "player");
 				string row = Language.GetProcessedMessage("messages.list.synced.row.online-only.default", variables);
 
-				Language.RunFilters(channelID, player, ref row);
-
-				rows.Add(row);
+				rows.Add(Language.RunFilters(channelID, player, row));
 			}
 
 			return rows;

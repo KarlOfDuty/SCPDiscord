@@ -35,8 +35,7 @@ namespace SCPDiscord.BotCommands
 				variables.AddPlayerVariables(player, "player");
 				string row = Language.GetProcessedMessage("messages.list.default.row.default", variables);
 
-				Language.RunFilters(command.ChannelID, player, ref row);
-				listItems.Add(row);
+				listItems.Add(Language.RunFilters(command.ChannelID, player, row));
 			}
 
 			List<EmbedMessage> embeds = new List<EmbedMessage>();

@@ -35,6 +35,7 @@ namespace SCPDiscord
 
 		private static readonly Dictionary<string, bool> configBools = new Dictionary<string, bool>
 		{
+			{ "channelsettings.invertfilters",        false },
 			{ "settings.autoreload.reservedslots",    true  },
 			{ "settings.autoreload.whitelist",        true  },
 			{ "settings.configvalidation",            true  },
