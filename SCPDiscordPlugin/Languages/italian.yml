@@ -195,8 +195,11 @@ global_regex: [
   "\\(Clone\\)":""
 ]
 
-# Executes on the final version of the message, this is the only regex that affects player names
-final_regex: ["discord\\.gg":"","http://":"","https://":"","www\\.":"", "<@":"<", "<@!":"<!"]
+# Executes on usernames
+user_regex: ["<@":"\\<@", "<@!":"\\<@!", "`":"\\`", "\\*":"\\*", "_":"\\_", "~":"\\~"]
+
+# Executes on the final version of the message, after everything else has completed
+final_regex: ["discord\\.gg":"","discord\\.com":"","http://":"","https://":""]
 
 messages:
   onroundstart:
@@ -650,7 +653,7 @@ messages:
     message: "<var:player-name> (<var:player-userid>) ha sbloccato un generatore: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   ongeneratorclose:
@@ -665,7 +668,7 @@ messages:
     message: "<var:player-name> (<var:player-userid>) ha chiuso un generatore: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   ongeneratoropen:
@@ -680,7 +683,7 @@ messages:
     message: "<var:player-name> (<var:player-userid>) ha aperto un generatore: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   ongeneratoractivated:
@@ -695,7 +698,7 @@ messages:
     message: "<var:player-name> (<var:player-userid>) ha attivato un generatore: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   ongeneratordeactivated:
@@ -710,7 +713,7 @@ messages:
     message: "Un generatore � stato disattivato: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   on079lockdoor:
@@ -753,7 +756,7 @@ messages:
     message: "<var:player-name> (<var:player-userid>) ha attivato il lockdown in una stanza: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   on079cancellockdown:
@@ -763,7 +766,7 @@ messages:
     message: "<var:player-name> (<var:player-userid>) ha cancellato il lockdown in una stanza: <var:room>."
     regex: [
       "Micro-HID":"nella stanza della Micro H.I.D.",
-      "nuke":"nella warhead" 
+      "nuke":"nella warhead"
     ]
 
   onban:

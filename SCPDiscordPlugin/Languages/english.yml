@@ -49,6 +49,7 @@
 #  -ismtf
 #  -ischaos
 #  -ishuman
+#  -rank
 #
 ######################################################################################################################
 
@@ -241,8 +242,11 @@ global_regex: [
   "\\(Clone\\)":""
 ]
 
-# Executes on the final version of the message, this is the only regex that affects player names
-final_regex: ["discord\\.gg":"","http://":"","https://":"","www\\.":"", "<@":"<", "<@!":"<!"]
+# Executes on usernames
+user_regex: ["<@":"\\<@", "<@!":"\\<@!", "`":"\\`", "\\*":"\\*", "_":"\\_", "~":"\\~"]
+
+# Executes on the final version of the message, after everything else has completed
+final_regex: ["discord\\.gg":"","discord\\.com":"","http://":"","https://":""]
 
 messages:
   onroundstart:
@@ -1211,21 +1215,86 @@ messages:
     regex: []
     cancel_regex: []
 
-  listtitle:
-    # players
-    # maxplayers
-    message: "<var:players> / <var:maxplayers> players"
-    regex: []
-    cancel_regex: []
-
-  listrow:
+  list:
     default:
-      # player - Player
-      message: "**<var:player-name>** | **<var:player-role>** | `<var:player-userid>` \n"
-      regex: []
-      cancel_regex: []
-    empty:
-      message: "No players online."
+      title:
+        # players - int
+        # maxplayers - int
+        # page - int
+        # pages - int
+        message: "<var:players> / <var:maxplayers> players"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-role>** | `<var:player-userid>` \n"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "No players online."
+
+    ranked:
+      title:
+        # players - int
+        # rankedplayers - int
+        # maxplayers - int
+        # page - int
+        # pages - int
+        message: "<var:rankedplayers> / <var:players> ranked players"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-rank>** | `<var:player-userid>` \n"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "No ranked players online."
+
+    synced:
+      title:
+        online-only:
+          # players - int
+          # maxplayers - int
+          # syncedplayers - int
+          # page - int
+          # pages - int
+          message: "<var:syncedplayers> / <var:maxplayers> synced players"
+          regex: [ "1 synced players":"1 synced player" ]
+          cancel_regex: []
+        all:
+          # players - int
+          # maxplayers - int
+          # syncedplayers - int
+          # page - int
+          # pages - int
+          message: "<var:syncedplayers> synced players"
+          regex: [ "1 synced players":"1 synced player" ]
+          cancel_regex: []
+      row:
+        online-only:
+          default:
+            # player - Player
+            # discordid - int
+            # discordmention - string
+            message: "**<var:player-name>** | <var:discordmention> | `<var:player-userid>`\n"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "No synced players online."
+        all:
+          default:
+            # userid - string
+            # name - string
+            # discordid - int
+            # discordmention - string
+            message: "**<var:name>** | <var:discordmention> | `<var:userid>`\n"
+            regex: [ ]
+            cancel_regex: [ ]
+          empty:
+            message: "There are no synced players."
 
   botactivity:
     empty:

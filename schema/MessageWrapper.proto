@@ -10,6 +10,9 @@ import "BotToPlugin/KickCommand.proto";
 import "BotToPlugin/KickallCommand.proto";
 import "BotToPlugin/ListCommand.proto";
 import "BotToPlugin/MuteCommand.proto";
+import "BotToPlugin/ListRankedCommand.proto";
+import "BotToPlugin/ListSyncedCommand.proto";
+import "BotToPlugin/PlayerInfoCommand.proto";
 
 import "PluginToBot/BotActivity.proto";
 import "PluginToBot/ChatMessage.proto";
@@ -38,5 +41,8 @@ message MessageWrapper
 		EmbedMessage embedMessage = 14;
 		PaginatedMessage paginatedMessage = 15;
 		MuteCommand muteCommand = 16;
+		ListRankedCommand listRankedCommand = 17;
+		ListSyncedCommand listSyncedCommand = 18;
+		PlayerInfoCommand playerInfoCommand = 19;
 	}
 }

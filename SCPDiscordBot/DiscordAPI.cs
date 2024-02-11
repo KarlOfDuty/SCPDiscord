@@ -87,7 +87,10 @@ namespace SCPDiscord
 					instance.commands.RegisterCommands<Commands.KickAllCommand>();
 					instance.commands.RegisterCommands<Commands.KickCommand>();
 					instance.commands.RegisterCommands<Commands.ListCommand>();
+					//instance.commands.RegisterCommands<Commands.ListRankedCommand>();
+					instance.commands.RegisterCommands<Commands.ListSyncedCommand>();
 					instance.commands.RegisterCommands<Commands.MuteCommand>();
+					instance.commands.RegisterCommands<Commands.PlayerInfoCommand>();
 					instance.commands.RegisterCommands<Commands.RACommand>();
 					instance.commands.RegisterCommands<Commands.ServerCommand>();
 					instance.commands.RegisterCommands<Commands.SyncIPCommand>();

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using PluginAPI.Core;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -194,7 +195,7 @@ namespace SCPDiscord
 				// Add names/command feedback to the message //
 				foreach (KeyValuePair<string, string> variable in variables)
 				{
-					message = message.Replace("<var:" + variable.Key + ">", Utilities.EscapeDiscordFormatting(variable.Value ?? "null"));
+					message = message.Replace("<var:" + variable.Key + ">", RunUsernameRegexReplacements(variable.Value ?? "null"));
 				}
 				///////////////////////////////////////////////
 
@@ -579,6 +580,68 @@ namespace SCPDiscord
 				Logger.Error(e.ToString());
 				throw;
 			}
+		}
+
+		public static void RunFiltersManually(ulong channelID, string ipAddress, string parsedUserID, string userIDReplacement, ref string message)
+		{
+			if (Config.GetChannelIDs("channelsettings.filterips").Contains(channelID) && !string.IsNullOrWhiteSpace(ipAddress))
+			{
+				message = message.Replace(ipAddress, new string('#', ipAddress.Length));
+			}
+
+			if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(channelID) && !string.IsNullOrWhiteSpace(parsedUserID))
+			{
+				message = message.Replace(parsedUserID, userIDReplacement);
+			}
+		}
+
+		public static void RunFilters(ulong channelID, Player player, ref string message)
+		{
+			if (Config.GetChannelIDs("channelsettings.filterips").Contains(channelID))
+			{
+				message = message.Replace(player.IpAddress, new string('#', player.IpAddress.Length));
+			}
+
+			if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(channelID))
+			{
+				message = message.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
+			}
+		}
+
+		public static void RunFilters(ulong channelID, ref string message)
+		{
+			foreach (Player player in Player.GetPlayers())
+			{
+				if (Config.GetChannelIDs("channelsettings.filterips").Contains(channelID))
+				{
+					message = message.Replace(player.IpAddress, new string('#', player.IpAddress.Length));
+				}
+
+				if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(channelID))
+				{
+					message = message.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
+				}
+			}
+		}
+
+		public static string RunUsernameRegexReplacements(string input)
+		{
+			Dictionary<string, string> userRegex;
+			try
+			{
+				userRegex = GetRegexDictionary("user_regex");
+			}
+			catch (Exception e)
+			{
+				Logger.Error("Error reading user regex" + e);
+				return "null";
+			}
+
+			foreach (KeyValuePair<string, string> entry in userRegex)
+			{
+				input = Regex.Replace(input, entry.Key, entry.Value);
+			}
+			return input;
 		}
 	}
 }

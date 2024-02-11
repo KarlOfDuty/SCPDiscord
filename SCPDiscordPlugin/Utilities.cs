@@ -87,15 +87,6 @@ namespace SCPDiscord
 			return steamID.Length >= 17 && ulong.TryParse(steamID.Replace("@steam", ""), out id);
 		}
 
-		public static string EscapeDiscordFormatting(string input)
-		{
-			input = input.Replace("`", "\\`");
-			input = input.Replace("*", "\\*");
-			input = input.Replace("_", "\\_");
-			input = input.Replace("~", "\\~");
-			return input;
-		}
-
 		public static LinkedList<string> ParseListIntoMessages(List<string> listItems)
 		{
 			LinkedList<string> messages = new LinkedList<string>();

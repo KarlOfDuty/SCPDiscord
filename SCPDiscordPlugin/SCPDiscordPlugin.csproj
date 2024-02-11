@@ -69,9 +69,15 @@
     <Compile Include="BotCommands\KickallCommand.cs" />
     <Compile Include="BotCommands\KickCommand.cs" />
     <Compile Include="BotCommands\ListCommand.cs" />
+    <Compile Include="BotCommands\ListRankedCommand.cs" />
+    <Compile Include="BotCommands\ListSyncedCommand.cs" />
     <Compile Include="BotCommands\MuteCommand.cs" />
+    <Compile Include="BotCommands\PlayerInfoCommand.cs" />
     <Compile Include="BotCommands\UnbanCommand.cs" />
+    <Compile Include="Interface\ListRankedCommand.cs" />
+    <Compile Include="Interface\ListSyncedCommand.cs" />
     <Compile Include="Interface\MuteCommand.cs" />
+    <Compile Include="Interface\PlayerInfoCommand.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MuteSystem.cs" />
     <Compile Include="ServerCommands\GrantVanillaRankCommand.cs" />
@@ -157,7 +163,10 @@
     <Content Include="schema\BotToPlugin\KickallCommand.proto" />
     <Content Include="schema\BotToPlugin\KickCommand.proto" />
     <Content Include="schema\BotToPlugin\ListCommand.proto" />
+    <Content Include="schema\BotToPlugin\ListRankedCommand.proto" />
+    <Content Include="schema\BotToPlugin\ListSyncedCommand.proto" />
     <Content Include="schema\BotToPlugin\MuteCommand.proto" />
+    <Content Include="schema\BotToPlugin\PlayerInfoCommand.proto" />
     <Content Include="schema\BotToPlugin\SyncRoleCommand.proto" />
     <Content Include="schema\BotToPlugin\UnbanCommand.proto" />
     <Content Include="schema\BotToPlugin\UnsyncRoleCommand.proto" />

@@ -13,9 +13,9 @@ namespace SCPDiscord
 	// Separate class to run the thread
 	public class StartNetworkSystem
 	{
-		public StartNetworkSystem(SCPDiscord plugin)
+		public StartNetworkSystem()
 		{
-			NetworkSystem.Run(plugin);
+			NetworkSystem.Run();
 		}
 	}
 
@@ -121,20 +121,18 @@ namespace SCPDiscord
 		private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		public static NetworkStream networkStream = null;
 		private static readonly List<MessageWrapper> messageQueue = new List<MessageWrapper>();
-		private static SCPDiscord plugin;
 		private static Stopwatch activityUpdateTimer = new Stopwatch();
 
 		private static Thread messageThread;
 
-		public static void Run(SCPDiscord pl)
+		public static void Run()
 		{
-			plugin = pl;
 			while (!Config.ready || !Language.ready)
 			{
 				Thread.Sleep(1000);
 			}
 
-			while (!plugin.shutdown)
+			while (!SCPDiscord.plugin.shutdown)
 			{
 				try
 				{
@@ -213,7 +211,7 @@ namespace SCPDiscord
 
 					socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 					socket.Connect(Config.GetString("bot.ip"), Config.GetInt("bot.port"));
-					messageThread = new Thread(() => new BotListener(plugin));
+					messageThread = new Thread(() => new BotListener());
 					messageThread.Start();
 
 					networkStream = new NetworkStream(socket);
@@ -225,7 +223,7 @@ namespace SCPDiscord
 						Colour = EmbedMessage.Types.DiscordColour.Green
 					};
 
-					plugin.SendEmbedWithMessage("messages.connectedtobot", embed);
+					SCPDiscord.plugin.SendEmbedWithMessage("messages.connectedtobot", embed);
 				}
 				catch (SocketException e)
 				{

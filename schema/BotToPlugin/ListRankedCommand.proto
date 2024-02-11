@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package SCPDiscord.Interface;
+
+message ListRankedCommand
+{
+	uint64 channelID = 1;
+	uint64 userID = 2;
+	uint64 interactionID = 3;
+}

@@ -183,8 +183,11 @@ global_regex: [
   "\\(Clone\\)":""
 ]
 
-# Executes on the final version of the message, this is the only regex that affects player names
-final_regex: ["discord\\.gg":"","http://":"","https://":"","www\\.":"", "<@":"<", "<@!":"<!"]
+# Executes on usernames
+user_regex: ["<@":"\\<@", "<@!":"\\<@!", "`":"\\`", "\\*":"\\*", "_":"\\_", "~":"\\~"]
+
+# Executes on the final version of the message, after everything else has completed
+final_regex: ["discord\\.gg":"","discord\\.com":"","http://":"","https://":""]
 
 messages:
   onroundstart:

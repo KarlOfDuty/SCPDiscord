@@ -7,10 +7,8 @@ namespace SCPDiscord
 {
 	class BotListener
 	{
-		private readonly SCPDiscord plugin;
-		public BotListener(SCPDiscord plugin)
+		public BotListener()
 		{
-			this.plugin = plugin;
 			while (true)
 			{
 				try
@@ -37,15 +35,15 @@ namespace SCPDiscord
 						switch (data.MessageCase)
 						{
 							case Interface.MessageWrapper.MessageOneofCase.SyncRoleCommand:
-								plugin.SendEmbedByID(RoleSync.AddPlayer(data.SyncRoleCommand));
+								SCPDiscord.plugin.SendEmbedByID(RoleSync.AddPlayer(data.SyncRoleCommand));
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.UnsyncRoleCommand:
-								plugin.SendEmbedByID(RoleSync.RemovePlayer(data.UnsyncRoleCommand));
+								SCPDiscord.plugin.SendEmbedByID(RoleSync.RemovePlayer(data.UnsyncRoleCommand));
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.ConsoleCommand:
-								plugin.sync.ScheduleDiscordCommand(data.ConsoleCommand);
+								SCPDiscord.plugin.sync.ScheduleDiscordCommand(data.ConsoleCommand);
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.UserInfo:
@@ -72,8 +70,20 @@ namespace SCPDiscord
 								ListCommand.Execute(data.ListCommand);
 								break;
 
+							case Interface.MessageWrapper.MessageOneofCase.ListRankedCommand:
+								ListRankedCommand.Execute(data.ListRankedCommand);
+								break;
+
+							case Interface.MessageWrapper.MessageOneofCase.ListSyncedCommand:
+								ListSyncedCommand.Execute(data.ListSyncedCommand);
+								break;
+
 							case Interface.MessageWrapper.MessageOneofCase.MuteCommand:
 								MuteCommand.Execute(data.MuteCommand);
+								break;
+
+							case Interface.MessageWrapper.MessageOneofCase.PlayerInfoCommand:
+								PlayerInfoCommand.Execute(data.PlayerInfoCommand);
 								break;
 
 							case Interface.MessageWrapper.MessageOneofCase.BotActivity:

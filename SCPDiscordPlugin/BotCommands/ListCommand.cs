@@ -12,12 +12,14 @@ namespace SCPDiscord.BotCommands
 			{
 				EmbedMessage embed = new EmbedMessage
 				{
-					Title = Language.GetProcessedMessage("messages.listtitle", new Dictionary<string, string>
+					Title = Language.GetProcessedMessage("messages.list.default.title", new Dictionary<string, string>
 					{
 						{ "players",    Math.Max(0, Player.Count).ToString() },
-						{ "maxplayers", Server.MaxPlayers.ToString()         }
+						{ "maxplayers", Server.MaxPlayers.ToString() },
+						{ "page",  "1" },
+						{ "pages", "1" }
 					}),
-					Description = Language.GetProcessedMessage("messages.listrow.empty", new Dictionary<string, string>()),
+					Description = Language.GetProcessedMessage("messages.list.default.row.empty", new Dictionary<string, string>()),
 					Colour = EmbedMessage.Types.DiscordColour.Red,
 					ChannelID = command.ChannelID,
 					InteractionID = command.InteractionID
@@ -31,33 +33,29 @@ namespace SCPDiscord.BotCommands
 			{
 				Dictionary<string, string> variables = new Dictionary<string, string> {};
 				variables.AddPlayerVariables(player, "player");
-				string row = Language.GetProcessedMessage("messages.listrow.default", variables);
+				string row = Language.GetProcessedMessage("messages.list.default.row.default", variables);
 
-				// Remove sensitive information if set in config
-				if (Config.GetChannelIDs("channelsettings.filterips").Contains(command.ChannelID))
-				{
-					row = row.Replace(player.IpAddress, new string('#', player.IpAddress.Length));
-				}
-				if (Config.GetChannelIDs("channelsettings.filtersteamids").Contains(command.ChannelID))
-				{
-					row = row.Replace(player.GetParsedUserID(), "Player " + player.PlayerId);
-				}
-
+				Language.RunFilters(command.ChannelID, player, ref row);
 				listItems.Add(row);
 			}
 
 			List<EmbedMessage> embeds = new List<EmbedMessage>();
-			foreach (string message in Utilities.ParseListIntoMessages(listItems))
+			int pageNum = 0;
+			LinkedList<string> pages = Utilities.ParseListIntoMessages(listItems);
+			foreach (string page in pages)
 			{
+				++pageNum;
 				embeds.Add(new EmbedMessage
 				{
-					Title = Language.GetProcessedMessage("messages.listtitle", new Dictionary<string, string>
+					Title = Language.GetProcessedMessage("messages.list.default.title", new Dictionary<string, string>
 					{
 						{ "players",    Math.Max(0, Player.Count).ToString() },
-						{ "maxplayers", Server.MaxPlayers.ToString()         }
+						{ "maxplayers", Server.MaxPlayers.ToString()         },
+						{ "page",       pageNum.ToString()                   },
+						{ "pages",      pages.Count.ToString()               }
 					}),
 					Colour = EmbedMessage.Types.DiscordColour.Cyan,
-					Description = message
+					Description = page
 				});
 			}
 

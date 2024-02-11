@@ -24,16 +24,32 @@ namespace SCPDiscord
 
 		public static void SetRank(this Player player, string color = null, string text = null, string group = null)
 		{
-			ServerRoles roleComponent = player.ReferenceHub.serverRoles;
-
-			if (roleComponent == null)
+			if (player.ReferenceHub.serverRoles == null)
 				return;
 			if (group != null)
-				roleComponent.SetGroup(ServerStatic.GetPermissionsHandler().GetGroup(group), false);
+				player.ReferenceHub.serverRoles.SetGroup(ServerStatic.GetPermissionsHandler().GetGroup(group), false);
 			if (color != null)
-				roleComponent.SetColor(color);
+				player.ReferenceHub.serverRoles.SetColor(color);
 			if (text != null)
-				roleComponent.SetText(text);
+				player.ReferenceHub.serverRoles.SetText(text);
+		}
+
+		public static bool TryGetRank(this Player player, out string rank)
+		{
+			// TODO: Update this when fixed by northwood
+			if (!string.IsNullOrWhiteSpace(ServerStatic.GetPermissionsHandler()?.GetUserGroup(player.UserId)?.BadgeText))
+			{
+				rank = ServerStatic.GetPermissionsHandler().GetUserGroup(player.UserId).BadgeText;
+				return true;
+			}
+
+			rank = "";
+			return false;
+		}
+
+		public static string GetRank(this Player player)
+		{
+			return TryGetRank(player, out string rank) ? rank : "";
 		}
 
 		public static void AddPlayerVariables(this Dictionary<string, string> variables, Player player, string prefix, bool includeDisarmer = true)
@@ -67,11 +83,28 @@ namespace SCPDiscord
 			variables.AddIfNotExist(prefix + "-ismtf",                player?.IsNTF.ToString());
 			variables.AddIfNotExist(prefix + "-ischaos",              player?.IsChaos.ToString());
 			variables.AddIfNotExist(prefix + "-ishuman",              player?.IsHuman.ToString());
+			variables.AddIfNotExist(prefix + "-rank",                 player?.GetRank());
 
 			if (includeDisarmer)
 			{
 				variables.AddPlayerVariables(player?.DisarmedBy, prefix + "-disarmer", false);
 			}
+		}
+
+		public static bool TryGetFirstKey<K, V>(this Dictionary<K, V> dict, V value, out K key)
+		{
+			key = default;
+
+			foreach (KeyValuePair<K,V> pair in dict)
+			{
+				if (Comparer<V>.Default.Compare(pair.Value, value) == 0)
+				{
+					key = pair.Key;
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public static void AddIfNotExist<TKey, TValue>(this Dictionary<TKey, TValue> variables, TKey key, TValue value)

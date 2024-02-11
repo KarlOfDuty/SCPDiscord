@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package SCPDiscord.Interface;
+
+message PlayerInfoCommand
+{
+	uint64 channelID = 1;
+	string steamID = 2;
+	uint64 interactionID = 3;
+}

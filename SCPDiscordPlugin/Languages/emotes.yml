@@ -157,10 +157,30 @@ messages:
   kickall: ""
   consolecommandfeedback: ""
   botstatus: ""
-  listtitle: ""
-  listrow:
-    default: ""
-    empty: ""
+  list:
+    default:
+      title: ""
+      row:
+        default: ""
+        empty: ""
+
+    ranked:
+      title: ""
+      row:
+        default: ""
+        empty: ""
+
+    synced:
+      title:
+        online-only: ""
+        all: ""
+      row:
+        online-only:
+          default: ""
+          empty: ""
+        all:
+          default: ""
+          empty: ""
   botactivity:
     empty: ""
     active: ""

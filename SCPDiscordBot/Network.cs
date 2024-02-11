@@ -194,13 +194,16 @@ namespace SCPDiscord
 					}
 					break;
 				case MessageWrapper.MessageOneofCase.BanCommand:
-				case MessageWrapper.MessageOneofCase.UnbanCommand:
+				case MessageWrapper.MessageOneofCase.ConsoleCommand:
 				case MessageWrapper.MessageOneofCase.KickCommand:
 				case MessageWrapper.MessageOneofCase.KickallCommand:
 				case MessageWrapper.MessageOneofCase.ListCommand:
+				case MessageWrapper.MessageOneofCase.ListRankedCommand:
+				case MessageWrapper.MessageOneofCase.ListSyncedCommand:
+				case MessageWrapper.MessageOneofCase.PlayerInfoCommand:
 				case MessageWrapper.MessageOneofCase.SyncRoleCommand:
+				case MessageWrapper.MessageOneofCase.UnbanCommand:
 				case MessageWrapper.MessageOneofCase.UnsyncRoleCommand:
-				case MessageWrapper.MessageOneofCase.ConsoleCommand:
 				case MessageWrapper.MessageOneofCase.UserInfo:
 					Logger.Warn("Received packet meant for plugin: " + JsonFormatter.Default.Format(wrapper), LogID.NETWORK);
 					break;

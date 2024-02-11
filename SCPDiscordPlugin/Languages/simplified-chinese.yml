@@ -193,8 +193,11 @@ global_regex: [
   "\\(Clone\\)":""
 ]
 
-# 对最终版本的消息进行处理，这是唯一影响玩家名称的正则表达式。
-final_regex: ["discord\\.gg":"","http://":"","https://":"","www\\.":"", "<@":"<", "<@!":"<!"]
+# Executes on usernames
+user_regex: ["<@":"\\<@", "<@!":"\\<@!", "`":"\\`", "\\*":"\\*", "_":"\\_", "~":"\\~"]
+
+# Executes on the final version of the message, after everything else has completed
+final_regex: ["discord\\.gg":"","discord\\.com":"","http://":"","https://":""]
 
 messages:
   onroundstart:

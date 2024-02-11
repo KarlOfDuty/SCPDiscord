@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using CentralAuth;
@@ -200,14 +197,13 @@ namespace SCPDiscord
 					};
 				}
 
-				string response = "";
-				if (!CheckSteamAccount(command.SteamIDOrIP, ref response))
+				if (!Utilities.TryGetSteamName(command.SteamIDOrIP, out string _))
 				{
 					return new EmbedMessage
 					{
 						Colour = EmbedMessage.Types.DiscordColour.Red,
 						ChannelID = command.ChannelID,
-						Description = response,
+						Description = "Could not find a user in the Steam API using that ID.",
 						InteractionID = command.InteractionID
 					};
 				}
@@ -258,83 +254,6 @@ namespace SCPDiscord
 			}
 		}
 
-		private static bool CheckSteamAccount(string steamID, ref string response)
-		{
-			ServicePointManager.ServerCertificateValidationCallback = SSLValidation;
-			HttpWebResponse webResponse = null;
-			try
-			{
-				HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://steamcommunity.com/profiles/" + steamID + "?xml=1");
-				request.Method = "GET";
-
-				webResponse = (HttpWebResponse)request.GetResponse();
-
-				string xmlResponse = new StreamReader(webResponse.GetResponseStream() ?? new MemoryStream()).ReadToEnd();
-
-				string[] foundStrings = xmlResponse.Split('\n').Where(w => w.Contains("steamID64")).ToArray();
-
-				if (foundStrings.Length == 0)
-				{
-					response = "SteamID does not seem to exist.";
-					Logger.Debug(response);
-					return false;
-				}
-				response = "SteamID found.";
-				return true;
-
-			}
-			catch (WebException e)
-			{
-				if (e.Status == WebExceptionStatus.ProtocolError)
-				{
-					webResponse = (HttpWebResponse)e.Response;
-					response = "Error occured connecting to steam services.";
-					Logger.Error("Steam profile connection error: " + webResponse.StatusCode);
-				}
-				else
-				{
-					response = "Error occured connecting to steam services.";
-					Logger.Error("Steam profile connection error: " + e.Status.ToString());
-				}
-			}
-			finally
-			{
-				webResponse?.Close();
-			}
-			return false;
-		}
-
-		private static bool SSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-		{
-
-			if (sslPolicyErrors == SslPolicyErrors.None)
-			{
-				return true;
-			}
-
-			// If there are errors in the certificate chain,
-			// look at each error to determine the cause.
-			foreach (X509ChainStatus element in chain.ChainStatus)
-			{
-				if (element.Status == X509ChainStatusFlags.RevocationStatusUnknown)
-				{
-					continue;
-				}
-
-				chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
-				chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-				chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 1, 0);
-				chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllFlags;
-
-				// If chain is not valid
-				if (!chain.Build((X509Certificate2)certificate))
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
 		public static EmbedMessage RemovePlayer(UnsyncRoleCommand command)
 		{
 			if (!syncedPlayers.ContainsValue(command.DiscordID))
@@ -371,6 +290,21 @@ namespace SCPDiscord
 			syncedPlayers.Remove(player.Key);
 			SavePlayers();
 			return "Discord user ID link has been removed.";
+		}
+
+		public static bool IsPlayerSynced(string userID, out ulong discordID)
+		{
+			return syncedPlayers.TryGetValue(userID, out discordID);
+		}
+
+		public static bool IsPlayerSynced(ulong discordID, out string userID)
+		{
+			return syncedPlayers.TryGetFirstKey(discordID, out userID);
+		}
+
+		public static Dictionary<string, ulong> GetSyncedPlayers()
+		{
+			return syncedPlayers;
 		}
 	}
 }

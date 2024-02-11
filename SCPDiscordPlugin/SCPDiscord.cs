@@ -79,7 +79,7 @@ namespace SCPDiscord
 			MuteSystem.ReloadMutes();
 			Logger.Info("Mute system loaded.");
 
-			new Thread(() => new StartNetworkSystem(plugin)).Start();
+			new Thread(() => new StartNetworkSystem()).Start();
 
 			Logger.Info("SCPDiscord " + VERSION + " enabled.");
 		}

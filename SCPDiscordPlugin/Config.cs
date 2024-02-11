@@ -22,29 +22,29 @@ namespace SCPDiscord
 
 		private static readonly Dictionary<string, string> configStrings = new Dictionary<string, string>
 		{
-			{ "bot.ip",              "127.0.0.1" },
-			{ "bot.status.empty",    ""          },
-			{ "bot.status.active",   ""          },
-			{ "bot.status.full",     ""          },
-			{ "bot.activity.empty",  ""          },
 			{ "bot.activity.active", ""          },
+			{ "bot.activity.empty",  ""          },
 			{ "bot.activity.full",   ""          },
+			{ "bot.ip",              "127.0.0.1" },
+			{ "bot.status.active",   ""          },
+			{ "bot.status.empty",    ""          },
+			{ "bot.status.full",     ""          },
 			{ "settings.language",   "english"   },
 			{ "settings.timestamp",  ""          }
 		};
 
 		private static readonly Dictionary<string, bool> configBools = new Dictionary<string, bool>
 		{
-			{ "settings.emotes",                      true  },
-			{ "settings.debug",                       true  },
-			{ "settings.configvalidation",            true  },
-			{ "settings.rolesync",                    false },
-			{ "settings.useglobaldirectory.language", true  },
-			{ "settings.useglobaldirectory.rolesync", true  },
-			{ "settings.useglobaldirectory.mutes",    true  },
-			{ "settings.regeneratelanguagefiles",     false },
 			{ "settings.autoreload.reservedslots",    true  },
 			{ "settings.autoreload.whitelist",        true  },
+			{ "settings.configvalidation",            true  },
+			{ "settings.debug",                       true  },
+			{ "settings.emotes",                      true  },
+			{ "settings.regeneratelanguagefiles",     false },
+			{ "settings.rolesync",                    false },
+			{ "settings.useglobaldirectory.language", true  },
+			{ "settings.useglobaldirectory.mutes",    true  },
+			{ "settings.useglobaldirectory.rolesync", true  },
 			//{ "settings.autoreload.mutes",            true  }
 		};
 
@@ -178,14 +178,26 @@ namespace SCPDiscord
 
 		private static readonly IReadOnlyList<string> languageOnlyNodes = new List<string>
 		{
+			"messages.botactivity.active",
+			"messages.botactivity.empty",
+			"messages.botactivity.full",
 			"messages.consolecommandfeedback",
 			"messages.invalidduration",
 			"messages.invalidsteamid",
 			"messages.invalidsteamidorip",
 			"messages.kickall",
-			"messages.listrow.default",
-			"messages.listrow.empty",
-			"messages.listtitle",
+			"messages.list.default.title",
+			"messages.list.default.row.default",
+			"messages.list.default.row.empty",
+			"messages.list.ranked.title",
+			"messages.list.ranked.row.default",
+			"messages.list.ranked.row.empty",
+			"messages.list.synced.title.online-only",
+			"messages.list.synced.title.all",
+			"messages.list.synced.row.online-only.default",
+			"messages.list.synced.row.online-only.empty",
+			"messages.list.synced.row.all.default",
+			"messages.list.synced.row.all.empty",
 			"messages.playerbanned",
 			"messages.playerkicked",
 			"messages.playermuted",
@@ -193,9 +205,6 @@ namespace SCPDiscord
 			"messages.playertempmuted",
 			"messages.playerunbanned",
 			"messages.playerunmuted",
-			"messages.botactivity.empty",
-			"messages.botactivity.active",
-			"messages.botactivity.full",
 		};
 
 		internal static readonly IReadOnlyList<string> languageNodes = configMessageArrays.Concat(languageOnlyNodes).ToList();
@@ -226,8 +235,8 @@ namespace SCPDiscord
 
 			if (!File.Exists(GetConfigPath()))
 			{
-				Logger.Info("Config file '" + Config.GetConfigPath() + "' does not exist, creating...");
-				File.WriteAllText(Config.GetConfigPath(), Encoding.UTF8.GetString(Resources.config));
+				Logger.Info("Config file '" + GetConfigPath() + "' does not exist, creating...");
+				File.WriteAllText(GetConfigPath(), Encoding.UTF8.GetString(Resources.config));
 			}
 
 			// Reads file contents into FileStream
