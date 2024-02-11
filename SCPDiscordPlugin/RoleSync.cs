@@ -294,7 +294,7 @@ namespace SCPDiscord
 
 		public static bool IsPlayerSynced(string userID, out ulong discordID)
 		{
-			return syncedPlayers.TryGetValue(userID, out discordID);
+			return syncedPlayers.TryGetValue(userID.EndsWith("@steam") ? userID : userID + "@steam", out discordID);
 		}
 
 		public static bool IsPlayerSynced(ulong discordID, out string userID)

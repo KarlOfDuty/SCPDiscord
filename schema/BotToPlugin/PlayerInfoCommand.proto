@@ -7,4 +7,5 @@ message PlayerInfoCommand
 	uint64 channelID = 1;
 	string steamID = 2;
 	uint64 interactionID = 3;
+	uint64 discordID = 4;
 }

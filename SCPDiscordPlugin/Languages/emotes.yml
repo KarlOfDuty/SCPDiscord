@@ -181,6 +181,9 @@ messages:
         all:
           default: ""
           empty: ""
+  playerinfo:
+    online: ""
+    offline: ""
   botactivity:
     empty: ""
     active: ""

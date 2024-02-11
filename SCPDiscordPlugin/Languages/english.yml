@@ -43,7 +43,7 @@
 #  -noclipon
 #  -godmodeon
 #  -isoutofammo
-#  -hasremoteadminac
+#  -hasremoteadminaccess
 #  -bypassenabled
 #  -isscp
 #  -ismtf
@@ -1233,6 +1233,8 @@ messages:
           cancel_regex: []
         empty:
           message: "No players online."
+          regex: []
+          cancel_regex: []
 
     ranked:
       title:
@@ -1252,6 +1254,8 @@ messages:
           cancel_regex: []
         empty:
           message: "No ranked players online."
+          regex: []
+          cancel_regex: []
 
     synced:
       title:
@@ -1284,6 +1288,8 @@ messages:
             cancel_regex: []
           empty:
             message: "No synced players online."
+            regex: []
+            cancel_regex: []
         all:
           default:
             # userid - string
@@ -1291,10 +1297,64 @@ messages:
             # discordid - int
             # discordmention - string
             message: "**<var:name>** | <var:discordmention> | `<var:userid>`\n"
-            regex: [ ]
-            cancel_regex: [ ]
+            regex: []
+            cancel_regex: []
           empty:
             message: "There are no synced players."
+            regex: []
+            cancel_regex: []
+
+  playerinfo:
+    online:
+      # player - Player
+      # discordid - int
+      # discordmention - string
+      # issynced - bool
+      # mutestatus - string
+      message: >+
+        **Player Information - <var:discordmention>**
+        ```
+        Online:          Yes\n
+        Name:            <var:player-name>\n
+        SteamID:         <var:player-userid>\n
+        IP:              <var:player-ipaddress>\n
+        Northwood Staff: replaceYesNo<var:player-isnortwoodstaff>\n
+        Discord Synced:  replaceYesNo<var:issynced>\n
+        \n
+        Role:            <var:player-role>\n
+        Muted:           <var:mutestatus> (Reason: <var:mutereason>)\n
+        Overwatch:       replaceOnOff<var:player-overwatchon>\n
+        Noclip:          replaceOnOff<var:player-noclipon>\n
+        Godmode:         replaceOnOff<var:player-godmodeon>\n
+        RA Access:       replaceYesNo<var:player-hasremoteadminaccess>\n
+        Bypass:          replaceOnOff<var:player-bypassenabled>\n
+        Reserved Slot:   replaceYesNo<var:player-hasreservedslot>\n
+        Do Not Track:    replaceOnOff<var:player-donottrack>
+        ```
+      regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
+      cancel_regex: []
+    offline:
+      # userid - int
+      # name - string
+      # discordid - int
+      # discordmention - int
+      # issynced - bool
+      # mutestatus - string
+      # mutereason - string
+      # banstatus - string
+      # banreason - string
+      message: >+
+        **Player Information - <var:discordmention>**
+        ```
+        Online:         No\n
+        Name:           <var:name>\n
+        SteamID:        <var:userid>\n
+        Discord Synced: replaceYesNo<var:issynced>\n
+        Muted:          <var:mutestatus> (Reason: <var:mutereason>)\n
+        Banned:         <var:banstatus> (Reason: <var:banreason>)
+        ```
+      regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
+      cancel_regex: []
 
   botactivity:
     empty:

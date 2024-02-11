@@ -102,6 +102,31 @@ namespace SCPDiscord
 	        }
         }
 
+        public static bool IsMuted(string userID, out DateTime endTime, out string reason)
+        {
+	        endTime = DateTime.Now;
+	        reason = "";
+	        if (!Utilities.IsPossibleSteamID(userID, out ulong steamID))
+	        {
+		        return false;
+	        }
+
+	        if (muteCache.TryGetValue(steamID, out MuteEntry entry) && entry.endTime > DateTime.Now)
+	        {
+		        endTime = entry.endTime;
+		        reason = entry.reason;
+		        return true;
+	        }
+
+	        if (VoiceChatMutes.QueryLocalMute(userID))
+	        {
+		        endTime = DateTime.MaxValue;
+		        return true;
+	        }
+
+	        return false;
+        }
+
         public static bool MutePlayer(ref string playerName, string userID, string muter, string reason, DateTime endTime)
         {
 	        if (!Utilities.IsPossibleSteamID(userID, out ulong steamID))

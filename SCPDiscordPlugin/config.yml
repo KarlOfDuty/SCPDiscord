@@ -113,12 +113,10 @@ channelsettings:
 
     # Removes online players' IPs from discord messages in specific channels, use the channel aliases from above.
     # Warning: This only works on online players, so may fail on player disconnect related events
-    # Set to [] to disable
     filterips: [ "staff" ]
 
     # Replaces online players' SteamIDs with PlayerIDs in discord messages in specific channels, use the channel aliases from above.
     # Warning: This only works on online players, so may fail on player disconnect related events
-    # Set to [] to disable
     filtersteamids: [ "default", "staff" ]
 
 # Using the channel aliases above you can direct events to different channels here
