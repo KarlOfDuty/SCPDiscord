@@ -2,10 +2,26 @@
 # Simply copy sections from the normal language file into this one and edit them here.
 
 messages:
-# Example for overriding the bot activity:
+## Example for overriding the bot activity:
 #  botactivity:
 #    empty:
 #      # players - int
 #      # maxplayers - int
 #      message: "<var:players>/<var:maxplayers>"
 #      regex: []
+## Example for overriding the report events in order to add a discord ping to a specific user:
+#  onplayercheaterreport:
+#    # player - Player
+#    # target - Player
+#    # reason - string
+#    message: "**<var:player-name> (<var:player-userid>) reported <var:target-name> (<var:target-userid>) as a cheater:**\n```<var:reason>``` <@170904988724232192>"
+#    regex: []
+#    cancel_regex: []
+#
+#  onplayerreport:
+#    # player - Player
+#    # target - Player
+#    # reason - string
+#    message: "**<var:player-name> (<var:player-userid>) reported <var:target-name> (<var:target-userid>) for breaking server rules:**\n```<var:reason>``` <@170904988724232192>"
+#    regex: []
+#    cancel_regex: []
