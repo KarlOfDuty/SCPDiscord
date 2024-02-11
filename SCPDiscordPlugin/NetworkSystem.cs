@@ -169,7 +169,7 @@ namespace SCPDiscord
 
 			if (messageQueue.Count != 0)
 			{
-				Logger.DebugWarn("Could not send all messages.");
+				Logger.Debug("Could not send all messages.");
 			}
 		}
 
@@ -188,7 +188,7 @@ namespace SCPDiscord
 			catch (ObjectDisposedException e)
 			{
 				Logger.Error("TCP client was unexpectedly closed.");
-				Logger.DebugError(e.ToString());
+				Logger.Debug(e.ToString());
 				return false;
 			}
 		}
@@ -228,25 +228,25 @@ namespace SCPDiscord
 				catch (SocketException e)
 				{
 					Logger.Error("Error occured while connecting to discord bot server: " + e.Message.Trim());
-					Logger.DebugError(e.ToString());
+					Logger.Debug(e.ToString());
 					Thread.Sleep(5000);
 				}
 				catch (ObjectDisposedException e)
 				{
 					Logger.Error("TCP client was unexpectedly closed.");
-					Logger.DebugError(e.ToString());
+					Logger.Debug(e.ToString());
 					Thread.Sleep(5000);
 				}
 				catch (ArgumentOutOfRangeException e)
 				{
 					Logger.Error("Invalid port.");
-					Logger.DebugError(e.ToString());
+					Logger.Debug(e.ToString());
 					Thread.Sleep(5000);
 				}
 				catch (ArgumentNullException e)
 				{
 					Logger.Error("IP address is null.");
-					Logger.DebugError(e.ToString());
+					Logger.Debug(e.ToString());
 					Thread.Sleep(5000);
 				}
 			}
@@ -270,7 +270,7 @@ namespace SCPDiscord
 			// Abort if client is dead
 			if (socket == null || networkStream == null || !socket.Connected)
 			{
-				Logger.DebugWarn("Error sending message '" + message.MessageCase + "' to bot: Not connected.");
+				Logger.Debug("Error sending message '" + message.MessageCase + "' to bot: Not connected.");
 				return false;
 			}
 

@@ -49,6 +49,7 @@ namespace SCPDiscord
 			// Event handlers
             EventManager.RegisterEvents(this, sync);
             EventManager.RegisterEvents(this, new MuteEventListener());
+            EventManager.RegisterEvents(this, new TimeTrackingListener());
 			EventManager.RegisterEvents(this, new SyncPlayerRole());
 			EventManager.RegisterEvents(this, new PlayerEventListener(this));
 			EventManager.RegisterEvents(this, new ServerEventListener(this));

@@ -23,23 +23,7 @@ namespace SCPDiscord
         {
             if (Config.GetBool("settings.debug"))
             {
-                Log.Info(message);
-            }
-        }
-
-        public static void DebugWarn(string message)
-        {
-            if (Config.GetBool("settings.debug"))
-            {
-                Log.Warning(message);
-            }
-        }
-
-        public static void DebugError(string message)
-        {
-            if (Config.GetBool("settings.debug"))
-            {
-                Log.Error(message);
+                Log.Debug(message);
             }
         }
     }

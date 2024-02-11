@@ -50,6 +50,7 @@
 #  -ischaos
 #  -ishuman
 #  -rank
+#  -playtimehours
 #
 ######################################################################################################################
 
@@ -1311,6 +1312,7 @@ messages:
       # discordmention - string
       # issynced - bool
       # mutestatus - string
+      # mutereason - string
       message: >+
         **Player Information - <var:discordmention>**
         ```
@@ -1318,18 +1320,22 @@ messages:
         Name:            <var:player-name>\n
         SteamID:         <var:player-userid>\n
         IP:              <var:player-ipaddress>\n
-        Northwood Staff: replaceYesNo<var:player-isnortwoodstaff>\n
-        Discord Synced:  replaceYesNo<var:issynced>\n
+        Playtime:        <var:player-playtimehours> hours\n
         \n
         Role:            <var:player-role>\n
-        Muted:           <var:mutestatus> (Reason: <var:mutereason>)\n
+        HP:              <var:player-health>\n
         Overwatch:       replaceOnOff<var:player-overwatchon>\n
         Noclip:          replaceOnOff<var:player-noclipon>\n
         Godmode:         replaceOnOff<var:player-godmodeon>\n
-        RA Access:       replaceYesNo<var:player-hasremoteadminaccess>\n
         Bypass:          replaceOnOff<var:player-bypassenabled>\n
+        \n
+        Muted:           <var:mutestatus> (Reason: <var:mutereason>)\n
+        Banned:          No\n
+        Discord Synced:  replaceYesNo<var:issynced>\n
+        RA Access:       replaceYesNo<var:player-hasremoteadminaccess>\n
         Reserved Slot:   replaceYesNo<var:player-hasreservedslot>\n
-        Do Not Track:    replaceOnOff<var:player-donottrack>
+        Do Not Track:    replaceOnOff<var:player-donottrack>\n
+        Northwood Staff: replaceYesNo<var:player-isnortwoodstaff>
         ```
       regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
       cancel_regex: []
@@ -1349,9 +1355,10 @@ messages:
         Online:         No\n
         Name:           <var:name>\n
         SteamID:        <var:userid>\n
-        Discord Synced: replaceYesNo<var:issynced>\n
+        Playtime:       <var:playtimehours> hours\n
         Muted:          <var:mutestatus> (Reason: <var:mutereason>)\n
-        Banned:         <var:banstatus> (Reason: <var:banreason>)
+        Banned:         <var:banstatus> (Reason: <var:banreason>)\n
+        Discord Synced: replaceYesNo<var:issynced>
         ```
       regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
       cancel_regex: []

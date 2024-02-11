@@ -84,6 +84,7 @@ namespace SCPDiscord
 			variables.AddIfNotExist(prefix + "-ischaos",              player?.IsChaos.ToString());
 			variables.AddIfNotExist(prefix + "-ishuman",              player?.IsHuman.ToString());
 			variables.AddIfNotExist(prefix + "-rank",                 player?.GetRank());
+			variables.AddIfNotExist(prefix + "-playtimehours",        TimeTracking.GetHours(player?.UserId));
 
 			if (includeDisarmer)
 			{

@@ -35,17 +35,18 @@ namespace SCPDiscord
 
 		private static readonly Dictionary<string, bool> configBools = new Dictionary<string, bool>
 		{
-			{ "channelsettings.invertfilters",        false },
-			{ "settings.autoreload.reservedslots",    true  },
-			{ "settings.autoreload.whitelist",        true  },
-			{ "settings.configvalidation",            true  },
-			{ "settings.debug",                       true  },
-			{ "settings.emotes",                      true  },
-			{ "settings.regeneratelanguagefiles",     false },
-			{ "settings.rolesync",                    false },
-			{ "settings.useglobaldirectory.language", true  },
-			{ "settings.useglobaldirectory.mutes",    true  },
-			{ "settings.useglobaldirectory.rolesync", true  },
+			{ "channelsettings.invertfilters",            false },
+			{ "settings.autoreload.reservedslots",        true  },
+			{ "settings.autoreload.whitelist",            true  },
+			{ "settings.configvalidation",                true  },
+			{ "settings.debug",                           true  },
+			{ "settings.emotes",                          true  },
+			{ "settings.regeneratelanguagefiles",         false },
+			{ "settings.rolesync",                        false },
+			{ "settings.useglobaldirectory.language",     true  },
+			{ "settings.useglobaldirectory.mutes",        true  },
+			{ "settings.useglobaldirectory.rolesync",     true  },
+			{ "settings.useglobaldirectory.timetracking", true  },
 			//{ "settings.autoreload.mutes",            true  }
 		};
 
@@ -506,7 +507,24 @@ namespace SCPDiscord
 
 		public static string GetMutesPath()
 		{
-			return GetRolesyncDir() + "mutes.json";
+			return GetMutesDir() + "mutes.json";
+		}
+
+		public static string GetTimeTrackingDir()
+		{
+			if (GetBool("settings.useglobaldirectory.timetracking"))
+			{
+				return Paths.GlobalPlugins.Plugins + "/SCPDiscord/";
+			}
+			else
+			{
+				return Paths.LocalPlugins.Plugins + "/SCPDiscord/";
+			}
+		}
+
+		public static string GetTimeTrackingPath()
+		{
+			return GetTimeTrackingDir() + "timetracking.json";
 		}
 
 		public static string GetReservedSlotDir()

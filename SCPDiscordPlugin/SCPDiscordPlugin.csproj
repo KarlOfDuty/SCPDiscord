@@ -127,6 +127,7 @@
     <Compile Include="ServerCommands\UnsyncCommand.cs" />
     <Compile Include="ServerCommands\ValidateCommand.cs" />
     <Compile Include="SynchronousExecutor.cs" />
+    <Compile Include="TimeTracking.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
