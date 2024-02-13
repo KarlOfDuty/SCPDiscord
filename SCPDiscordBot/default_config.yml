@@ -1,4 +1,7 @@
-﻿bot:
+﻿############# SCPDiscord bot configuration file #############
+
+
+bot:
     # The bot token from https://discord.com/developers/applications.
     token: "add-your-token-here"
 

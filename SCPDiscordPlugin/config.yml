@@ -1,5 +1,5 @@
 ﻿
-############# SCPDiscord configuration file #############
+############# SCPDiscord plugin configuration file #############
 
 
 # Connection settings, the port cannot be the same as the SCPSL server port.
@@ -52,6 +52,9 @@ settings:
 
     # Whether or not to use the rolesync system
     rolesync: true
+
+    # Whether or not to track players play time on the server, which can then be checked using the /playerinfo command
+    playtime: true
 
     # Whether files should be read from the global config directory or the local one (aka the server specific one).
     useglobaldirectory:

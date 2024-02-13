@@ -26,7 +26,7 @@ Individual events can be configured to post to different and multiple Discord ch
 ![channelList.png](docs/img/channelList.png)
 
 ### MultiAdmin servers
-Each sub-server of a MultiAdmin server can post to the same channel, different channels or even different Discord servers. They work just like individual SCPSL servers.
+Each sub-server of a MultiAdmin server can post to the same channel, different channels or even different Discord servers. They work just like individual SCP:SL servers.
 
 ### Running server commands
 You can use server and remote admin commands via the bot, with command permissions limited to specific roles of your choice.
@@ -36,14 +36,14 @@ You can use server and remote admin commands via the bot, with command permissio
 ![raCommandExample.png](docs%2Fimg%2FraCommandExample.png)
 
 ### Extra commands
-The bot also comes with a few extra commands such as improved ban/unban commands which will include information on which Discord user used the command.
+The bot also comes with a few extra commands such as playerinfo, improved ban/unban, and improved mute/unmute commands which all also work on offline players.
 
 More information about bot commands are available [here](docs/Commands.md).
 
 ![helpcommand.png](docs%2Fimg%2Fhelpcommand.png)
 
 ### Languages and messages
-There are several languages to choose from and every single individual message can also be edited separately from the language settings using the `overrides.yml` file. More info [here](docs/Languages.md).
+There are several languages to choose from and every single individual message can also be edited separately from the language settings using the `overrides.yml` and optionally `emote-overrides.yml` files. More info [here](docs/Languages.md).
 
 ### Bot activity info
 Player count is displayed in the bot activity field. The bot's status changes from red when the scp server is off but the bot server is on, yellow when there are no players on a server and green when a server has players.
@@ -53,6 +53,11 @@ The activity text can also be customised in the language or overrides file.
 ![botActivity.png](docs%2Fimg%2FbotActivity.png)
 
 ### Role and reserved slot syncing
-You can automatically sync ranks from Discord to the server, letting you automate things like supporter rewards and moderator positions.
+The role sync system lets you execute any command when a player joins depending on their current Discord role.
 
-You can also grant reserved slots automatically for specific Discord roles, and automatically remove them if they lose their role.
+You can grant reserved slots automatically for specific Discord roles, and automatically remove them if they lose their Discord role.
+
+The plugin also includes commands to grant temporary in-game server ranks, which handles automatically granting and revoking in-game ranks when they are granted and revoked in Discord.
+
+### Playtime tracking
+The plugin optionally tracks players play time on the servers which can be viewed using the `/playerinfo` command.

@@ -43,6 +43,7 @@ namespace SCPDiscord
 			{ "settings.emotes",                          true  },
 			{ "settings.regeneratelanguagefiles",         false },
 			{ "settings.rolesync",                        false },
+			{ "settings.playtime",                        true  },
 			{ "settings.useglobaldirectory.language",     true  },
 			{ "settings.useglobaldirectory.mutes",        true  },
 			{ "settings.useglobaldirectory.rolesync",     true  },

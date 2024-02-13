@@ -92,6 +92,13 @@ namespace SCPDiscord
 
         public static void WriteCacheToFile()
         {
+	        if (!Config.GetBool("settings.playtime"))
+	        {
+		        writeCache = new Dictionary<string, ulong>();
+		        joinTimes = new Dictionary<string, DateTime>();
+		        return;
+	        }
+
 	        lock (fileLock)
 	        {
 	            try

@@ -1,34 +1,30 @@
 # Installation
 
-----
+## Plugin Setup
 
-## 1. Download
+### Installing the plugin
 
-Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity/).
-
-### **Bot:**
-
-Extract the bot anywhere you wish outside of the server directory.
-
-### **Plugin:**
-
-**Download using the package manager:**
+**Option 1: Download using the localadmin package manager**
 
 `p install KarlOfDuty/SCPDiscord` and restart your server.
 
-**Manual download:**
+**Option 2: Manual download**
 
-Extract the plugin and dependencies directory into the `PluginAPI/plugins/<port>` directory:
+Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity/).
+Place the plugin library and dependencies directory in the `~/.config/SCP Secret Laboratory/PluginAPI/plugins/<port>` directory:
 ```
 plugins/
     <port>/
         dependencies/
             Google.Protobuf.dll
             Newtonsoft.Json.dll
-            YamlDotNet.dll
+            System.Memory.dll
         SCPDiscord.dll
 ```
-## 2. Plugin config
+
+----
+
+### 2. Plugin config
 
 The plugin config is automatically created for you the first time you run the plugin. The path is printed in the server console on startup so you know for sure where it is.
 
@@ -43,18 +39,21 @@ Simply change the bot ip in the plugin config to correspond with the other devic
 
 ----
 
-## 3. Bot setup and config:
+## Bot Setup:
 
-### Bot setup:
+### 1. Creating the Discord bot
 
 Set up your bot in the discord control panel according to the guide [here](CreateBot.md).
 
-### Config setup:
+### 2. Download the bot
 
-[Click here to view default config](https://github.com/KarlOfDuty/SCPDiscord/blob/master/SCPDiscordBot/default_config.yml)
+Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity/).
 
-The different options are described in the config. Get Discord IDs by turning on developer mode in Discord and right clicking on a server, role or user.
+There are two versions available, a self contained version which can run on its own and a smaller version which requires you to install dotnet-8.0 on the system first.
 
+Pick the one you want and extract it somewhere where your user has permission to read and write.
+
+### 4. Run the bot
 Run the bot using:
 ```yaml
 # Linux:
@@ -63,16 +62,25 @@ Run the bot using:
 ./SCPDiscordBot.exe
 ```
 
+This should now have generated the default config in your working directory.
+
 If you want to run several bots you can just enter the config you want to use for each instance as a command parameter:
 ```yaml
 ./SCPDiscordBot config1.yml
 ./SCPDiscordBot config2.yml
 ```
 
+If you are unable to run the bot make sure the file has correct permissions.
 
-If you are unable to run the bot make sure the file has correct permissions and try installing dotnet 7.0.
+### 4. Configure the bot
 
-### Command permissions
+[Click here to view default config](https://github.com/KarlOfDuty/SCPDiscord/blob/master/SCPDiscordBot/default_config.yml)
+
+The different options are described in the config. Get Discord IDs by turning on developer mode in Discord and right clicking on a server, role or user.
+
+Restart the bot to apply the changes.
+
+### 5. Set bot command permissions
 
 Make sure to restrict who is allowed to use the bot's commands in your Discord server settings:
 
@@ -98,7 +106,7 @@ This way your mods will not have to think about which bot they are executing the
 
 **The bot has no authorization of incoming connections**, this means you cannot allow the plugin's port through your firewall or anyone will be able to send fake messages to it.
 
-If you really need to run the SCP:SL server on one system and the bot on another connected over the internet you can try this:
+If you really need to run the SCP:SL server on one system and the bot on another connected over the internet you can try this (if your system uses ufw):
 
 ```bash
 sudo ufw allow from 111.111.111.111 to any port 8888

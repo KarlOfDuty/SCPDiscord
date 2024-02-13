@@ -50,6 +50,7 @@ namespace SCPDiscord
 				catch (Exception e)
 				{
 					Logger.Error("Could not read rolesync file '" + Config.GetRolesyncPath() + "', check the file formatting and try again.");
+					Logger.Debug("Error: " + e);
 					throw;
 				}
 			}
