@@ -72,8 +72,8 @@ namespace SCPDiscord
     public static class MuteSystem
     {
         public static string ignoreUserID = "";
-		private static Mutex muteFileMutex = new Mutex();
 		private static Utilities.FileWatcher fileWatcher;
+		private static object fileLock = new object();
 		private static ConcurrentDictionary<ulong, MuteEntry> muteCache = new ConcurrentDictionary<ulong, MuteEntry>();
 
 		private class MuteEntry
@@ -227,92 +227,69 @@ namespace SCPDiscord
 	        }
         }
 
-        public static void ReloadMutes()
+        public static void Reload()
         {
-	        if (!muteFileMutex.WaitOne(500))
+	        lock (fileLock)
 	        {
-		        Logger.Warn("Unable to open mute file to reload.");
-		        return;
-	        }
-	        fileWatcher?.Dispose();
+		        try
+		        {
+			        fileWatcher?.Dispose();
 
-	        if (!TryLoadMutes(out ConcurrentDictionary<ulong, MuteEntry> mutes))
-	        {
-		        Logger.Warn("Unable to open mute file to reload.");
-		        muteFileMutex.ReleaseMutex();
-		        return;
-	        }
+			        if (!Directory.Exists(Config.GetMutesDir()))
+			        {
+				        Directory.CreateDirectory(Config.GetMutesDir());
+			        }
 
-	        muteCache = mutes;
-	        muteFileMutex.ReleaseMutex();
+			        if (!File.Exists(Config.GetMutesPath()))
+			        {
+				        Logger.Info("Mute file " + Config.GetMutesPath() + "does not exist, creating...");
+				        File.WriteAllText(Config.GetMutesPath(), "{}");
+			        }
+			        fileWatcher = new Utilities.FileWatcher(Config.GetMutesDir(), "mutes.json", Reload);
+			        muteCache = JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, MuteEntry>>(File.ReadAllText(Config.GetMutesPath()));
+			        Logger.Debug("Successfully loaded '" + Config.GetMutesPath() + "'.");
+		        }
+		        catch (Exception e)
+		        {
+			        switch (e)
+			        {
+				        case DirectoryNotFoundException _:
+					        Logger.Error("Mute file directory not found.");
+					        break;
+				        case UnauthorizedAccessException _:
+					        Logger.Error("Mute file '" + Config.GetMutesPath() + "' access denied.");
+					        break;
+				        case FileNotFoundException _:
+					        Logger.Error("Mute file '" + Config.GetMutesPath() + "' was not found.");
+					        break;
+				        case JsonReaderException _:
+					        Logger.Error("Mute file '" + Config.GetMutesPath() + "' formatting error.");
+					        break;
+				        default:
+					        Logger.Error("Error reading mute file '" + Config.GetMutesPath() + "'.");
+					        break;
+			        }
+			        Logger.Error(e.ToString());
+		        }
+	        }
         }
 
         private static bool SaveMutes()
         {
-	        if (!muteFileMutex.WaitOne(500))
+	        lock (fileLock)
 	        {
-		        Logger.Error("Unable to lock mute system, could not write the mute file!");
-		        return false;
-	        }
-
-	        try
-	        {
-		        File.WriteAllText(Config.GetMutesPath(), JsonConvert.SerializeObject(muteCache, Formatting.Indented));
-		        muteFileMutex.ReleaseMutex();
-		        return true;
-	        }
-	        catch (Exception e)
-	        {
-		        Logger.Error("Failed writing to mute file '" + Config.GetMutesPath() + "'.");
-		        Logger.Error(e.ToString());
-		        muteFileMutex.ReleaseMutex();
-		        return false;
+		        try
+		        {
+			        File.WriteAllText(Config.GetMutesPath(), JsonConvert.SerializeObject(muteCache, Formatting.Indented));
+			        return true;
+		        }
+		        catch (Exception e)
+		        {
+			        Logger.Error("Failed writing to mute file '" + Config.GetMutesPath() + "'.");
+			        Logger.Error(e.ToString());
+			        return false;
+		        }
 	        }
         }
-
-	    private static bool TryLoadMutes(out ConcurrentDictionary<ulong, MuteEntry> muteEntries)
-	    {
-		    try
-		    {
-			    if (!Directory.Exists(Config.GetMutesDir()))
-			    {
-				    Directory.CreateDirectory(Config.GetMutesDir());
-			    }
-
-			    if (!File.Exists(Config.GetMutesPath()))
-			    {
-				    Logger.Info("Mute file " + Config.GetMutesPath() + "does not exist, creating...");
-				    File.WriteAllText(Config.GetMutesPath(), "{}");
-			    }
-			    fileWatcher = new Utilities.FileWatcher(Config.GetMutesDir(), "mutes.json", ReloadMutes);
-			    muteEntries = JsonConvert.DeserializeObject<ConcurrentDictionary<ulong, MuteEntry>>(File.ReadAllText(Config.GetMutesPath()));
-			    Logger.Debug("Successfully loaded '" + Config.GetMutesPath() + "'.");
-			    return true;
-		    }
-		    catch (Exception e)
-		    {
-			    switch (e)
-			    {
-				    case DirectoryNotFoundException _:
-					    Logger.Error("Mute file directory not found.");
-					    break;
-				    case UnauthorizedAccessException _:
-					    Logger.Error("Mute file '" + Config.GetMutesPath() + "' access denied.");
-					    break;
-				    case FileNotFoundException _:
-					    Logger.Error("Mute file '" + Config.GetMutesPath() + "' was not found.");
-					    break;
-				    case JsonReaderException _:
-					    Logger.Error("Mute file '" + Config.GetMutesPath() + "' formatting error.");
-					    break;
-				    default:
-					    Logger.Error("Error reading mute file '" + Config.GetMutesPath() + "'.");
-					    break;
-			    }
-			    Logger.Error(e.ToString());
-			    muteEntries = null;
-			    return false;
-		    }
-	    }
     }
 }

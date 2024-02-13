@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CentralAuth;
+using Newtonsoft.Json;
 using PluginAPI.Core;
 
 namespace SCPDiscord
@@ -29,28 +30,37 @@ namespace SCPDiscord
 			if (!File.Exists(Config.GetRolesyncPath()))
 			{
 				Logger.Info("Rolesync file " + Config.GetRolesyncPath() + " does not exist, creating...");
-				File.WriteAllText(Config.GetRolesyncPath(), "[]");
+				File.WriteAllText(Config.GetRolesyncPath(), "{}");
+			}
+
+			try
+			{
+				syncedPlayers = JsonConvert.DeserializeObject<Dictionary<string, ulong>>(File.ReadAllText(Config.GetRolesyncPath()));
+			}
+			catch (Exception)
+			{
+				try
+				{
+					Logger.Warn("Could not read rolesync file '" + Config.GetRolesyncPath() + "', attempting to convert file from old format...");
+					syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(
+						k => ((JObject)k).Properties().First().Name,
+						v => v.Values().First().Value<ulong>());
+					File.WriteAllText(Config.GetRolesyncPath(), JsonConvert.SerializeObject(syncedPlayers, Formatting.Indented));
+				}
+				catch (Exception e)
+				{
+					Logger.Error("Could not read rolesync file '" + Config.GetRolesyncPath() + "', check the file formatting and try again.");
+					throw;
+				}
 			}
 
 			fileWatcher = new Utilities.FileWatcher(Config.GetRolesyncDir(), "rolesync.json", Reload);
-
-			syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(
-				k => ((JObject)k).Properties().First().Name,
-				v => v.Values().First().Value<ulong>());
 			Logger.Debug("Successfully loaded '" + Config.GetRolesyncPath() + "'.");
 		}
 
 		private static void SavePlayers()
 		{
-			// Save the state to file
-			StringBuilder builder = new StringBuilder();
-			builder.Append("[\n");
-			foreach (KeyValuePair<string, ulong> player in syncedPlayers)
-			{
-				builder.Append("    {\"" + player.Key + "\": \"" + player.Value + "\"},\n");
-			}
-			builder.Append("]");
-			File.WriteAllText(Config.GetRolesyncDir() + "rolesync.json", builder.ToString());
+			File.WriteAllText(Config.GetRolesyncPath(), JsonConvert.SerializeObject(syncedPlayers, Formatting.Indented));
 		}
 
 		public static void SendRoleQuery(Player player)

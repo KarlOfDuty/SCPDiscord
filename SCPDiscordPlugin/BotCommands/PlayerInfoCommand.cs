@@ -85,7 +85,7 @@ namespace SCPDiscord.BotCommands
 					{ "mutereason",     muteReason },
 					{ "banstatus",      banStatus  },
 					{ "banreason",      banReason  },
-					{ "playtimehours",  TimeTracking.GetHours(command.SteamID) },
+					{ "playtimehours",  PlayTime.GetHours(command.SteamID) },
 				};
 				SCPDiscord.plugin.SendEmbedWithMessageByID(embed, "messages.playerinfo.offline", vars);
 			}

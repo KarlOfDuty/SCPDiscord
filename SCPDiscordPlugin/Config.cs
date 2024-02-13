@@ -46,7 +46,7 @@ namespace SCPDiscord
 			{ "settings.useglobaldirectory.language",     true  },
 			{ "settings.useglobaldirectory.mutes",        true  },
 			{ "settings.useglobaldirectory.rolesync",     true  },
-			{ "settings.useglobaldirectory.timetracking", true  },
+			{ "settings.useglobaldirectory.playtime",     true  },
 			//{ "settings.autoreload.mutes",            true  }
 		};
 
@@ -510,9 +510,9 @@ namespace SCPDiscord
 			return GetMutesDir() + "mutes.json";
 		}
 
-		public static string GetTimeTrackingDir()
+		public static string GetPlaytimeDir()
 		{
-			if (GetBool("settings.useglobaldirectory.timetracking"))
+			if (GetBool("settings.useglobaldirectory.playtime"))
 			{
 				return Paths.GlobalPlugins.Plugins + "/SCPDiscord/";
 			}
@@ -522,9 +522,9 @@ namespace SCPDiscord
 			}
 		}
 
-		public static string GetTimeTrackingPath()
+		public static string GetPlaytimePath()
 		{
-			return GetTimeTrackingDir() + "timetracking.json";
+			return GetPlaytimeDir() + "playtime.json";
 		}
 
 		public static string GetReservedSlotDir()

@@ -23,8 +23,6 @@ namespace SCPDiscord
 		private static JObject emotes;
 		private static JObject emoteOverrides;
 
-		private static string languagesPath = Config.GetLanguageDir();
-
 		// All default languages included in the .dll
 		private static readonly Dictionary<string, string> defaultLanguages = new Dictionary<string, string>
 		{
@@ -41,24 +39,21 @@ namespace SCPDiscord
 		public static void Reload()
 		{
 			ready = false;
-			languagesPath = Config.GetLanguageDir();
 
-			if (!Directory.Exists(languagesPath))
+			if (!Directory.Exists(Config.GetLanguageDir()))
 			{
-				Directory.CreateDirectory(languagesPath);
+				Directory.CreateDirectory(Config.GetLanguageDir());
 			}
 
 			// Save default language files
 			SaveDefaultLanguages();
 
 			// Read primary language file
-			Logger.Info("Loading primary language file...");
 			LoadLanguageFile(Config.GetString("settings.language"), "primary language", out primary);
 
 			// Read backup language file if not the same as the primary
 			if (Config.GetString("settings.language") != "english")
 			{
-				Logger.Info("Loading backup language file...");
 				LoadLanguageFile("english", "backup language", out backup);
 			}
 
@@ -227,20 +222,20 @@ namespace SCPDiscord
 		{
 			foreach (KeyValuePair<string, string> language in defaultLanguages)
 			{
-				if (!File.Exists(languagesPath + language.Key + ".yml") || (Config.GetBool("settings.regeneratelanguagefiles")
-				                                                            && language.Key != "overrides" && language.Key != "emote-overrides"))
+				if (!File.Exists(Config.GetLanguageDir() + language.Key + ".yml") || (Config.GetBool("settings.regeneratelanguagefiles")
+				                                                                      && language.Key != "overrides" && language.Key != "emote-overrides"))
 				{
-					Logger.Debug("Creating file " + languagesPath + language.Key + ".yml...");
+					Logger.Debug("Creating file " + Config.GetLanguageDir() + language.Key + ".yml...");
 					try
 					{
-						File.WriteAllText((languagesPath + language.Key + ".yml"), language.Value);
+						File.WriteAllText((Config.GetLanguageDir() + language.Key + ".yml"), language.Value);
 					}
 					catch (DirectoryNotFoundException)
 					{
 						Logger.Warn("Could not create language file: Language directory does not exist, attempting to create it... ");
-						Directory.CreateDirectory(languagesPath);
-						Logger.Info("Creating language file " + languagesPath + language.Key + ".yml...");
-						File.WriteAllText((languagesPath + language.Key + ".yml"), language.Value);
+						Directory.CreateDirectory(Config.GetLanguageDir());
+						Logger.Info("Creating language file " + Config.GetLanguageDir() + language.Key + ".yml...");
+						File.WriteAllText((Config.GetLanguageDir() + language.Key + ".yml"), language.Value);
 					}
 				}
 			}
@@ -254,8 +249,10 @@ namespace SCPDiscord
 		{
 			try
 			{
+				Logger.Info("Loading " + type + " file...");
+
 				// Reads file contents into FileStream
-                FileStream stream = File.OpenRead(languagesPath + language + ".yml");
+                FileStream stream = File.OpenRead(Config.GetLanguageDir() + language + ".yml");
 
                 // Converts the FileStream into a YAML Dictionary object
                 IDeserializer deserializer = new DeserializerBuilder().Build();
@@ -278,17 +275,17 @@ namespace SCPDiscord
 						Logger.Warn("Language directory not found.");
 						break;
 					case UnauthorizedAccessException _:
-						Logger.Warn("Language file '" + languagesPath + language + ".yml' access denied.");
+						Logger.Warn("Language file '" + Config.GetLanguageDir() + language + ".yml' access denied.");
 						break;
 					case FileNotFoundException _:
-						Logger.Warn("Language file '" + languagesPath + language + ".yml' was not found.");
+						Logger.Warn("Language file '" + Config.GetLanguageDir() + language + ".yml' was not found.");
 						break;
 					case JsonReaderException _:
 					case YamlException _:
-						Logger.Warn("Language file '" + languagesPath + language + ".yml' formatting error.");
+						Logger.Warn("Language file '" + Config.GetLanguageDir() + language + ".yml' formatting error.");
 						break;
 					default:
-						Logger.Warn("Error reading language file '" + languagesPath + language + ".yml'.");
+						Logger.Warn("Error reading language file '" + Config.GetLanguageDir() + language + ".yml'.");
 						break;
 				}
 				Logger.Error(e.ToString());

@@ -12,9 +12,7 @@ using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PluginAPI.Events;
-using VoiceChat;
 using YamlDotNet.Core;
-using Log = PluginAPI.Core.Log;
 
 namespace SCPDiscord
 {
@@ -67,18 +65,23 @@ namespace SCPDiscord
 			}
 			*/
 
-
-
 			if (Server.Port == Config.GetInt("bot.port"))
 			{
 				Logger.Error("ERROR: Server is running on the same port as the plugin, aborting...");
 				throw new Exception();
 			}
+
+			Logger.Info("Loading language system...");
 			Language.Reload();
+
+			Logger.Info("Loading rolesync system...");
 			RoleSync.Reload();
-			Logger.Info("RoleSync system loaded.");
-			MuteSystem.ReloadMutes();
-			Logger.Info("Mute system loaded.");
+
+			Logger.Info("Loading mute system...");
+			MuteSystem.Reload();
+
+			Logger.Info("Loading playtime system...");
+			PlayTime.Reload();
 
 			new Thread(() => new StartNetworkSystem()).Start();
 
@@ -98,7 +101,7 @@ namespace SCPDiscord
 				}
 				catch (Exception e)
 				{
-					Log.Error("Error occured when checking player for rolesync!\n" + e);
+					Logger.Error("Error occured when checking player for rolesync!\n" + e);
 				}
 			}
 		}
@@ -164,7 +167,7 @@ namespace SCPDiscord
 		{
 			shutdown = true;
 			NetworkSystem.Disconnect();
-			Log.Info("SCPDiscord disabled.");
+			Logger.Info("SCPDiscord disabled.");
 		}
 
 		public void SendStringByID(ulong channelID, string message)
