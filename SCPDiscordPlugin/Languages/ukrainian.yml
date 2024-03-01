@@ -1173,3 +1173,20 @@ messages:
       regex: []
     empty:
       message: "Немає гравців онлайн."
+   botactivity:
+    empty:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> онлайн"
+      regex: [ ]
+    active:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> онлайн"
+      regex: [ ]
+    full:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> онлайн"
+      regex: []
+      cancel_regex: []
