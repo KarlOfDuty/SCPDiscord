@@ -1064,7 +1064,7 @@ messages:
     # feedback - string
     message: "<var:feedback>"
     regex: []
-    
+
   list:
     default:
       title:
@@ -1124,7 +1124,7 @@ messages:
           # syncedplayers - int
           # page - int
           # pages - int
-          message: "<var:syncedplayers> синхронізованих гравців""
+          message: "<var:syncedplayers> синхронізованих гравців"
           regex: [ "1 сінхронізований гравців":"1 сінхронізований гравець" ]
           cancel_regex: []
       row:
@@ -1173,20 +1173,20 @@ messages:
       regex: []
     empty:
       message: "Немає гравців онлайн."
-   botactivity:
-    empty:
-      # players - int
-      # maxplayers - int
-      message: "<var:players> / <var:maxplayers> онлайн"
-      regex: [ ]
-    active:
-      # players - int
-      # maxplayers - int
-      message: "<var:players> / <var:maxplayers> онлайн"
-      regex: [ ]
-    full:
-      # players - int
-      # maxplayers - int
-      message: "<var:players> / <var:maxplayers> онлайн"
-      regex: []
-      cancel_regex: []
+  botactivity:
+   empty:
+     # players - int
+     # maxplayers - int
+     message: "<var:players> / <var:maxplayers> онлайн"
+     regex: [ ]
+   active:
+     # players - int
+     # maxplayers - int
+     message: "<var:players> / <var:maxplayers> онлайн"
+     regex: [ ]
+   full:
+     # players - int
+     # maxplayers - int
+     message: "<var:players> / <var:maxplayers> онлайн"
+     regex: []
+     cancel_regex: []
