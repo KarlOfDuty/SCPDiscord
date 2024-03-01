@@ -1116,7 +1116,7 @@ messages:
           # page - int
           # pages - int
           message: "<var:syncedplayers> / <var:maxplayers> синхронізованих гравців"
-          regex: [ "1 синхронізований гравців":"1 сінхронізований гравець" ]
+          regex: [ "1 синхронізований гравців":"1 синхронізований гравець" ]
           cancel_regex: []
         all:
           # players - int
@@ -1125,7 +1125,7 @@ messages:
           # page - int
           # pages - int
           message: "<var:syncedplayers> синхронізованих гравців"
-          regex: [ "1 сінхронізований гравців":"1 сінхронізований гравець" ]
+          regex: [ "1 синхронізований гравців":"1 синхронізований гравець" ]
           cancel_regex: []
       row:
         online-only:
