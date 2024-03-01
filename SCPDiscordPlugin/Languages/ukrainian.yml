@@ -931,6 +931,21 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) втік і став a <var:newrole>"
     regex: []
+  onplayercheaterreport:
+    # player - Player
+    # target - Player
+    # reason - string
+    message: "**<var:player-name> (<var:player-userid>) подав скаргу на <var:target-name> (<var:target-userid>) як чітер:**\n```<var:reason>```"
+    regex: []
+    cancel_regex: []
+
+  onplayerreport:
+    # player - Player
+    # target - Player
+    # reason - string
+    message: "**<var:player-name> (<var:player-userid>) подав скаргу на <var:target-name> (<var:target-userid>) за порушення правил серверу:**\n```<var:reason>```"
+    regex: []
+    cancel_regex: []
 
   #####################################################################################################################
   #                                                                                                                   #
@@ -994,6 +1009,50 @@ messages:
     message: "Усі записи зі SteamID/IP '<var:steamidorip>' видалено зі списка банів."
     regex: []
 
+  playermuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "<var:name> (<var:userid>) був зам'ючений по причині '<var:reason>' (Назавжди)."
+    regex: []
+    cancel_regex: []
+
+  playertempmuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "<var:name> (<var:userid>) був зам'ючений по причині '<var:reason>' (<var:duration>)."
+    regex: []
+    cancel_regex: []
+
+  mutefailed:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "Сталася помилка намагаючись зам'юитити гравця з SteamId  '<var:userid>', перевірте консоль для отримання додаткової інформації."
+    regex: []
+    cancel_regex: []
+
+  playerunmuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "<var:name> (<var:userid>) був розм'ючений."
+    regex: []
+    cancel_regex: []
+
   kickall:
     # reason - string
     # admintag - string
@@ -1005,6 +1064,95 @@ messages:
     # feedback - string
     message: "<var:feedback>"
     regex: []
+    
+  list:
+    default:
+      title:
+        # players - int
+        # maxplayers - int
+        # page - int
+        # pages - int
+        message: "<var:players> / <var:maxplayers> players"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-role>** | `<var:player-userid>` \n"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "Немає гравців онлайн."
+          regex: []
+          cancel_regex: []
+
+    ranked:
+      title:
+        # players - int
+        # rankedplayers - int
+        # maxplayers - int
+        # page - int
+        # pages - int
+        message: "<var:rankedplayers> / <var:players> ranked players"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-rank>** | `<var:player-userid>` \n"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "No ranked players online."
+          regex: []
+          cancel_regex: []
+
+    synced:
+      title:
+        online-only:
+          # players - int
+          # maxplayers - int
+          # syncedplayers - int
+          # page - int
+          # pages - int
+          message: "<var:syncedplayers> / <var:maxplayers> синхронізованих гравців"
+          regex: [ "1 синхронізований гравців":"1 сінхронізований гравець" ]
+          cancel_regex: []
+        all:
+          # players - int
+          # maxplayers - int
+          # syncedplayers - int
+          # page - int
+          # pages - int
+          message: "<var:syncedplayers> синхронізованих гравців""
+          regex: [ "1 сінхронізований гравців":"1 сінхронізований гравець" ]
+          cancel_regex: []
+      row:
+        online-only:
+          default:
+            # player - Player
+            # discordid - int
+            # discordmention - string
+            message: "**<var:player-name>** | <var:discordmention> | `<var:player-userid>`\n"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "Немає синхронізованих гравців онлайн."
+            regex: []
+            cancel_regex: []
+        all:
+          default:
+            # userid - string
+            # name - string
+            # discordid - int
+            # discordmention - string
+            message: "**<var:name>** | <var:discordmention> | `<var:userid>`\n"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "Немає синхронізованих гравців онлайн."
+            regex: []
+            cancel_regex: []
 
   botstatus:
     # players - int
