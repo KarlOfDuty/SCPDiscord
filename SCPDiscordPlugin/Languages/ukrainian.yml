@@ -1093,7 +1093,7 @@ messages:
         # maxplayers - int
         # page - int
         # pages - int
-        message: "<var:rankedplayers> / <var:players> ranked players"
+        message: "<var:rankedplayers> / <var:players> гравців з роллю"
         regex: []
         cancel_regex: []
       row:
@@ -1103,7 +1103,7 @@ messages:
           regex: []
           cancel_regex: []
         empty:
-          message: "No ranked players online."
+          message: "Немає гравців з роллю онлайн."
           regex: []
           cancel_regex: []
 
