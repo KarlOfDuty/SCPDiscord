@@ -218,6 +218,7 @@ namespace SCPDiscord.EventListeners
         		{ "activating", ev.Generator.Activating.ToString() },
         		{ "room",       ev.Generator.GetComponentInParent<RoomIdentifier>().Name.ToString() },
         	};
+			variables.AddPlayerVariables(ev.Player, "player");
         	plugin.SendMessage("messages.ongeneratordeactivated", variables);
         }
 	}
