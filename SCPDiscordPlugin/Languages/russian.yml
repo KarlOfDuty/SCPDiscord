@@ -49,6 +49,11 @@ global_regex: [
   "ChaosRepressor":"Повстанец Хаоса - Репрессор",
   "ChaosMarauder":"Повстанец Хаоса - Мародёр",
   #"Overwatch":"Овервотч",
+  #"Filmmaker": фильм мейкер"",
+  "Scp3114":"SCP-3114",
+  #"Flamingo":"",
+  "AlphaFlamingo":"Альфа фламинго",
+  "ZombieFlamingo":"зомби фламинго",
 
   # Elevators
   "GateA":"Ворота А",
@@ -931,6 +936,21 @@ messages:
     # player - Player
     message: "<var:player-name> (<var:player-userid>) сбежал и стал <var:newrole>"
     regex: []
+  onplayercheaterreport:
+    # player - Player
+    # target - Player
+    # reason - string
+    message: "**<var:player-name> (<var:player-userid>) сообщил <var:target-name> (<var:target-userid>) о читере:**\n```<var:reason>```"
+    regex: []
+    cancel_regex: []
+
+  onplayerreport:
+    # player - Player
+    # target - Player
+    # reason - string
+    message: "**<var:player-name> (<var:player-userid>) сообщил <var:target-name> (<var:target-userid>) о нарушении правил:**\n```<var:reason>```"
+    regex: []
+    cancel_regex: []
 
   ################################################################################################################################
   #                                                                                                                              #
@@ -942,35 +962,41 @@ messages:
   ################################################################################################################################
 
   connectedtobot:
-    message: "**SCP:SL сервер подсоединён.**"
+    message: "**SCP:SL сервер подключен.**"
     regex: []
+    cancel_regex: []
 
   invalidsteamid:
-    # steamid - string
-    message: "Неверный SteamID '<var:player-userid>'."
+    # userid - string
+    message: "неверный SteamID '<var:userid>'."
     regex: []
+    cancel_regex: []
 
   invalidsteamidorip:
     # steamidorip - string
-    message: "Неверный SteamID или IP '<var:steamidorip>'."
+    message: "неверный steamID или IP'<var:steamidorip>'."
     regex: []
+    cancel_regex: []
 
   invalidduration:
     # duration - string
-    message: "Неверный срок '<var:duration>'."
+    message: "неверная причина'<var:duration>'."
     regex: []
+    cancel_regex: []
 
   playernotfound:
-    # steamid - string
-    message: "Игрок с SteamID '<var:player-userid>' не найден."
+    # userid - string
+    message: "Игрок с SteamID '<var:userid>' небыл найлен."
     regex: []
+    cancel_regex: []
 
   playerkicked:
-    # name - string
-    # steamid - string
+    # player - Player
+    # reason - string
     # admintag - string
-    message: "'<var:player-name>' (<var:player-userid>) был кикнут с сервера <var:admintag>."
+    message: "'<var:player-name>' (<var:player-userid>) был кикнут <var:admintag> по причине: '<var:reason>'."
     regex: []
+    cancel_regex: []
 
   playerbanned:
     online:
@@ -978,50 +1004,258 @@ messages:
       # reason - string
       # duration - string
       # admintag - string
-      message: "'<var:player-name>' (<var:player-userid>) был забанен на сервере <var:admintag> по причине '<var:reason>' (<var:duration>) (+IP-ban)."
+      message: "'<var:player-name>' (<var:player-userid>) был забанен '<var:reason>' (<var:duration>) (+IP-ban)."
       regex: []
+      cancel_regex: []
     offline:
       # name - string
-      # steamid - string
+      # userid - string
       # reason - string
       # duration - string
       # admintag - string
-      message: "'<var:name>' (<var:userid>) был забанен на сервере <var:admintag> по причине '<var:reason>' (<var:duration>)."
+      message: "'<var:name>' (<var:userid>) был забанен по причине: '<var:reason>' (<var:duration>)."
       regex: []
+      cancel_regex: []
 
   playerunbanned:
     # steamidorip - string
-    message: "Все записи со SteamID/IP '<var:steamidorip>' были удалены из бан-листов."
+    message: "все внесённые SteamID/IP '<var:steamidorip>' были удалены из бан листа."
     regex: []
+    cancel_regex: []
+
+  playermuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "<var:name> (<var:userid>) был замучен по причине: '<var:reason>' (Permanently)."
+    regex: []
+    cancel_regex: []
+
+  playertempmuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "<var:name> (<var:userid>) был замучен по причине: '<var:reason>' (<var:duration>)."
+    regex: []
+    cancel_regex: []
+
+  mutefailed:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "При попытке замутить пользователя при помощи steamid произошла ошибка '<var:userid>', проверьте консоль для большей информации."
+    regex: []
+    cancel_regex: []
+
+  playerunmuted:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "<var:name> (<var:userid>) был размучен."
+    regex: []
+    cancel_regex: []
+
+  unmutefailed:
+    # name - string
+    # userid - string
+    # reason - string
+    # duration - string
+    # admintag - string
+    # adminid - long
+    message: "Произошла ошибка при попытке размута игрока через steamid '<var:userid>', проверьте консоль для большей информации."
+    regex: []
+    cancel_regex: []
 
   kickall:
     # reason - string
     # admintag - string
-    message: "Все игроки были кикнуты с сервера <var:admintag> по причине '<var:reason>'."
+    message: "Все игроки были кикнуты с сервера по причине: '<var:reason>'."
     regex: []
+    cancel_regex: []
 
   # The feedback from a console command, except the custom ones above. (Is not affected by global regex other than final_regex)
   consolecommandfeedback:
     # feedback - string
     message: "<var:feedback>"
     regex: []
+    cancel_regex: []
 
-  botstatus:
-    # players - int
-    # maxplayers - int
-    message: "<var:players> / <var:maxplayers>"
-    regex: []
-
-  listtitle:
-    # players
-    # maxplayers
-    message: "<var:players> / <var:maxplayers> игроков"
-    regex: []
-
-  listrow:
+  list:
     default:
+      title:
+        # players - int
+        # maxplayers - int
+        # page - int
+        # pages - int
+        message: "<var:players> / <var:maxplayers> игроков"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-role>** | `<var:player-userid>` \n"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "Игроки в онлайне отсутствуют."
+          regex: []
+          cancel_regex: []
+
+    ranked:
+      title:
+        # players - int
+        # rankedplayers - int
+        # maxplayers - int
+        # page - int
+        # pages - int
+        message: "<var:rankedplayers> / <var:players> игроков с ролью"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-rank>** | `<var:player-userid>` \n"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "Игроки с ролью отстутствуют."
+          regex: []
+          cancel_regex: []
+
+    synced:
+      title:
+        online-only:
+          # players - int
+          # maxplayers - int
+          # syncedplayers - int
+          # page - int
+          # pages - int
+          message: "<var:syncedplayers> / <var:maxplayers> игроков со синхронизацией"
+          regex: [ "1 synced players":"1 synced player" ]
+          cancel_regex: []
+        all:
+          # players - int
+          # maxplayers - int
+          # syncedplayers - int
+          # page - int
+          # pages - int
+          message: "<var:syncedplayers> синхронизиронизированых игроков"
+          regex: [ "1 synced players":"1 synced player" ]
+          cancel_regex: []
+      row:
+        online-only:
+          default:
+            # player - Player
+            # discordid - int
+            # discordmention - string
+            message: "**<var:player-name>** | <var:discordmention> | `<var:player-userid>`\n"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "."
+            regex: []
+            cancel_regex: []
+        all:
+          default:
+            # userid - string
+            # name - string
+            # discordid - int
+            # discordmention - string
+            message: "**<var:name>** | <var:discordmention> | `<var:userid>`\n"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "отстутсвтвуют игроки с синхронизацией."
+            regex: []
+            cancel_regex: []
+
+  playerinfo:
+    online:
       # player - Player
-      message: "**<var:player-name>** | **<var:player-role>** | <var:player-userid>\n"
-      regex: []
+      # discordid - int
+      # discordmention - string
+      # issynced - bool
+      # mutestatus - string
+      # mutereason - string
+      message: >+
+        **Информация от игроков - <var:discordmention>**
+        ```
+        Онлайн:          Yes\n
+        Ник:            <var:player-name>\n
+        SteamID:         <var:player-userid>\n
+        IP:              <var:player-ipaddress>\n
+        Время игрока:        <var:player-playtimehours> hours\n
+        \n
+        Роль:            <var:player-role>\n
+        HP:              <var:player-health>\n
+        Overwatch:       replaceOnOff<var:player-overwatchon>\n
+        Noclip:          replaceOnOff<var:player-noclipon>\n
+        Godmode:         replaceOnOff<var:player-godmodeon>\n
+        Bypass:          replaceOnOff<var:player-bypassenabled>\n
+        \n
+        Мут:           <var:mutestatus> (Reason: <var:mutereason>)\n
+        Бан:          No\n
+        Discord синхронизаиця:  replaceYesNo<var:issynced>\n
+        Доступ к RA панели:       replaceYesNo<var:player-hasremoteadminaccess>\n
+        Reserved Slot:   replaceYesNo<var:player-hasreservedslot>\n
+        Do Not Track:    replaceOnOff<var:player-donottrack>\n
+        Northwood персонал: replaceYesNo<var:player-isnortwoodstaff>
+        ```
+      regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
+      cancel_regex: []
+    offline:
+      # userid - int
+      # name - string
+      # discordid - int
+      # discordmention - int
+      # issynced - bool
+      # mutestatus - string
+      # mutereason - string
+      # banstatus - string
+      # banreason - string
+      # playtimehours - int
+      # hasreservedslot - bool
+      message: >+
+        **Информация об игроке - <var:discordmention>**
+        ```
+        Онлайн:         No\n
+        Ник:           <var:name>\n
+        SteamID:        <var:userid>\n
+        Время игрока:       <var:playtimehours> hours\n
+        Мут:          <var:mutestatus> (Reason: <var:mutereason>)\n
+        Бан:         <var:banstatus> (Reason: <var:banreason>)\n
+        Резервный слот:  replaceYesNo<var:hasreservedslot>\n
+        Дискорд синхронизация: replaceYesNo<var:issynced>
+        ```
+      regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
+      cancel_regex: []
+
+  botactivity:
     empty:
-      message: "Игроков онлайн нет."
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> Онлайн"
+      regex: [ ]
+    active:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> Онлайн"
+      regex: [ ]
+    full:
+      # players - int
+      # maxplayers - int
+      message: "<var:players> / <var:maxplayers> Онлайн"
+      regex: []
+      cancel_regex: []
