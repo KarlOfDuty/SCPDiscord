@@ -1192,26 +1192,26 @@ messages:
       message: >+
         **Информация от игроков - <var:discordmention>**
         ```
-        Онлайн:          Yes\n
-        Ник:            <var:player-name>\n
-        SteamID:         <var:player-userid>\n
-        IP:              <var:player-ipaddress>\n
-        Время игрока:        <var:player-playtimehours> hours\n
+        Онлайн:       Yes\n
+        Ник:          <var:player-name>\n
+        SteamID:      <var:player-userid>\n
+        IP:           <var:player-ipaddress>\n
+        Время игрока: <var:player-playtimehours> hours\n
         \n
-        Роль:            <var:player-role>\n
-        HP:              <var:player-health>\n
-        Overwatch:       replaceOnOff<var:player-overwatchon>\n
-        Noclip:          replaceOnOff<var:player-noclipon>\n
-        Godmode:         replaceOnOff<var:player-godmodeon>\n
-        Bypass:          replaceOnOff<var:player-bypassenabled>\n
+        Роль:         <var:player-role>\n
+        HP:           <var:player-health>\n
+        Overwatch:    replaceOnOff<var:player-overwatchon>\n
+        Noclip:       replaceOnOff<var:player-noclipon>\n
+        Godmode:      replaceOnOff<var:player-godmodeon>\n
+        Bypass:       replaceOnOff<var:player-bypassenabled>\n
         \n
-        Мут:           <var:mutestatus> (Reason: <var:mutereason>)\n
+        Мут:          <var:mutestatus> (Reason: <var:mutereason>)\n
         Бан:          No\n
         Discord синхронизаиця:  replaceYesNo<var:issynced>\n
-        Доступ к RA панели:       replaceYesNo<var:player-hasremoteadminaccess>\n
-        Reserved Slot:   replaceYesNo<var:player-hasreservedslot>\n
-        Do Not Track:    replaceOnOff<var:player-donottrack>\n
-        Northwood персонал: replaceYesNo<var:player-isnortwoodstaff>
+        Доступ к RA панели:     replaceYesNo<var:player-hasremoteadminaccess>\n
+        Reserved Slot:          replaceYesNo<var:player-hasreservedslot>\n
+        Do Not Track:           replaceOnOff<var:player-donottrack>\n
+        Northwood персонал:     replaceYesNo<var:player-isnortwoodstaff>
         ```
       regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
       cancel_regex: []
@@ -1230,13 +1230,13 @@ messages:
       message: >+
         **Информация об игроке - <var:discordmention>**
         ```
-        Онлайн:         No\n
-        Ник:           <var:name>\n
-        SteamID:        <var:userid>\n
-        Время игрока:       <var:playtimehours> hours\n
-        Мут:          <var:mutestatus> (Reason: <var:mutereason>)\n
-        Бан:         <var:banstatus> (Reason: <var:banreason>)\n
-        Резервный слот:  replaceYesNo<var:hasreservedslot>\n
+        Онлайн:                No\n
+        Ник:                   <var:name>\n
+        SteamID:               <var:userid>\n
+        Время игрока:          <var:playtimehours> hours\n
+        Мут:                   <var:mutestatus> (Reason: <var:mutereason>)\n
+        Бан:                   <var:banstatus> (Reason: <var:banreason>)\n
+        Резервный слот:        replaceYesNo<var:hasreservedslot>\n
         Дискорд синхронизация: replaceYesNo<var:issynced>
         ```
       regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
