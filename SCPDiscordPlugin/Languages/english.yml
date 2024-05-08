@@ -1086,6 +1086,110 @@ messages:
     regex: []
     cancel_regex: []
 
+  onmapgenerated:
+    message: "The Site was generated correctly!"
+    regex: []
+    cancel_regex: []
+
+  onitemspawned:
+    # item - ItemType
+    message: "An item (<var:item>) has been spawned."
+    regex: []
+    cancel_regex: []
+
+  onplayerinteractlocker:
+    # chamber - Structure
+    # room - RoomType
+    # canOpen - bool
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) interacted with <var:chamber> in <var:room>."
+    regex: []
+    cancel_regex: []
+
+  onplaceblood:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) was injured."
+    regex: []
+    cancel_regex: []
+
+  onplayerinteractshootingtarget:
+    # player - Player
+    # target - shootingTarget
+    message: "<var:player-name> (<var:player-userid>) interacted with <var:target>."
+    regex: []
+    cancel_regex: []
+
+  onplayeraim:
+    # player - Player
+    # weapon - WeaponType
+    # isAiming - bool
+    message: "<var:player-name> (<var:player-userid>) was aimwas<var:aimwas> with <var:wwapon>"
+    regex: ["aimwasTrue":"aiming","aimwasFalse":"not aiming"]
+    cancel_regex: []
+
+  onplayercancelusingitem:
+    # player - Player
+    # item - ItemType
+    message: "<var:player-name> (<var:player-userid>) cancelled the use of <var:item>."
+    regex: []
+    cancel_regex: []
+
+  onplayerchangeitem:
+    # player - Player
+    # oldItem - ItemType
+    # newItem - ItemType
+    message: "<var:player-name> (<var:player-userid>) changed its item from <var:oldItem> to <var:newItem>."
+    regex: []
+    cancel_regex: []
+
+  onplayerchangespectator:
+    # spectator - Player
+    # oldTarget - Player
+    # newTarget - Player
+    message: "<var:spectator-name> (<var:spectator-userid>) changed spectator from <var:oldTarget-name> to <var:newTarget-name>."
+    regex: []
+    cancel_regex: []
+
+  onplayerdamageshootingtarget:
+    # player - Player
+    # amount - float
+    # type - DamageType
+    # target - shootingTarget
+    message: "<var:player-name> (<var:player-userid>) damaged <var:target> using <var:type>, caused <var:amount> damage."
+    regex: []
+    cancel_regex: []
+
+  onplayerdamagewindow:
+    # player - Player
+    # amount - float
+    # type - DamageType
+    message: "<var:player-name> (<var:player-userid>) damaged a window by using <var:type> and causing <var:amount> damage."
+    regex: []
+    cancel_regex: []
+
+  onplayerdryfireweapon:
+    # player - Player
+    # weapon - Firearm
+    message: "<var:player-name> (<var:player-userid>) used <var:weapon>."
+    regex: []
+    cancel_regex: []
+
+  onplayerreceiveeffect:
+    # player - Player
+    # effect - string
+    # duration - float
+    # intensity - byte
+    message: "<var:player-name> (<var:player-userid>) received an effect: <var:effect>, for <var:duration> seconds at intensity <var:intensity>."
+    regex: []
+    cancel_regex: []
+
+  oninteract330:
+    # player - Player
+    # uses - int
+    message: "<var:player-name> (<var:player-userid>) used SCP-330 (<var:uses> uses)."
+    regex: []
+    cancel_regex: []
+
   #####################################################################################################################
   #                                                                                                                   #
   #                                                   DISCORD BOT                                                     #

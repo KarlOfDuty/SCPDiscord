@@ -36,6 +36,7 @@ namespace SCPDiscord.EventListeners
 		{
 			Dictionary<string, string> variables = new Dictionary<string, string> {};
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.on079teslagate", variables);
 		}
 
@@ -48,6 +49,7 @@ namespace SCPDiscord.EventListeners
 				{ "amount", ev.Amount.ToString() }
 			};
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.on079addexp", variables);
 		}
 
@@ -59,6 +61,7 @@ namespace SCPDiscord.EventListeners
 				{ "level", ev.Tier.ToString() }
 			};
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.on079levelup", variables);
 		}
 
@@ -70,6 +73,7 @@ namespace SCPDiscord.EventListeners
 				{ "doorname", ev.Door.name }
 			};
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.on079unlockdoor", variables);
 		}
 
@@ -81,6 +85,7 @@ namespace SCPDiscord.EventListeners
 				{ "room", ev.Room.name }
 			};
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.on079lockdown", variables);
 		}
 
@@ -92,6 +97,7 @@ namespace SCPDiscord.EventListeners
 				{ "room", ev.Room.name }
 			};
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.on079cancellockdown", variables);
 		}
 
@@ -101,7 +107,19 @@ namespace SCPDiscord.EventListeners
 			Dictionary<string, string> variables = new Dictionary<string, string> {};
 			variables.AddPlayerVariables(ev.Target, "target");
 			variables.AddPlayerVariables(ev.Player, "player");
+
 			plugin.SendMessage("messages.onrecallzombie", variables);
 		}
-	}
+
+        public void OnInteractScp330(PlayerInteractScp330Event ev)
+        {
+            Dictionary<string, string> variables = new Dictionary<string, string>
+			{
+				{ "uses", ev.Uses.ToString() }
+			};
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.oninteract330", variables);
+        }
+    }
 }

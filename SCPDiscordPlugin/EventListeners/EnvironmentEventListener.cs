@@ -221,5 +221,49 @@ namespace SCPDiscord.EventListeners
 			variables.AddPlayerVariables(ev.Player, "player");
         	plugin.SendMessage("messages.ongeneratordeactivated", variables);
         }
-	}
+
+        public void OnMapGenerate(MapGeneratedEvent _) => plugin.SendMessage("messages.onmapgenerate");
+
+        public void OnItemSpawned(ItemSpawnedEvent ev)
+		{
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "item", ev.Item.ToString() }
+            };
+
+            plugin.SendMessage("messages.onitemspawned", variables);
+        }
+
+        public void OnPlaceBlood(PlaceBloodEvent ev)
+        {
+            Dictionary<string, string> variables = new Dictionary<string, string> { };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplaceblood", variables);
+        }
+
+        public void OnPlayerInteractLocker(PlayerInteractLockerEvent ev)
+        {
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "chamber", ev.Chamber.ToString() },
+                { "room",    ev.Chamber.GetComponentInParent<RoomIdentifier>().Name.ToString() },
+				{ "canOpen", ev.CanOpen.ToString() }
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerinteractlocker", variables);
+        }
+
+        public void OnPlayerInteractShootingTarget(PlayerInteractShootingTargetEvent ev)
+        {
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "target", ev.ShootingTarget.ToString() },
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerinteractshootingtarget", variables);
+        }
+    }
 }

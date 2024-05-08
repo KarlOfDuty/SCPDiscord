@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using CustomPlayerEffects;
+using MapGeneration;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp939;
 using PlayerStatsSystem;
@@ -103,7 +105,8 @@ namespace SCPDiscord.EventListeners
 			}
 		}
 
-		[PluginEvent]
+
+        [PluginEvent]
 		public void OnPlayerHurt(PlayerDamageEvent ev)
 		{
 			if (ev.Target == null || ev.Target.Role == RoleTypeId.None || !(ev.DamageHandler is StandardDamageHandler stdHandler))
@@ -405,5 +408,100 @@ namespace SCPDiscord.EventListeners
 			variables.AddPlayerVariables(ev.Player, "player");
 			plugin.SendMessage("messages.onplayerescape", variables);
 		}
-	}
+
+		public void OnPlayerAim(PlayerAimWeaponEvent ev)
+		{
+            Dictionary<string, string> variables = new Dictionary<string, string>
+			{
+				{ "weapon",   ev.Firearm.ItemTypeId.ToString() },
+				{ "isAiming", ev.IsAiming.ToString() }
+			};
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayeraim", variables);
+        }
+
+        public void OnPlayerCancelUsingItem(PlayerCancelUsingItemEvent ev)
+		{
+            Dictionary<string, string> variables = new Dictionary<string, string>
+			{
+				{ "item", ev.Item.ItemTypeId.ToString() }
+			};
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayercancelusingitem", variables);
+        }
+
+        public void OnPlayerChanceItem(PlayerChangeItemEvent ev)
+		{
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "oldItem", ev.OldItem.ToString() },
+                { "newItem", ev.NewItem.ToString() },
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerchangeitem", variables);
+        }
+
+        public void OnPlayerChangeSpectator(PlayerChangeSpectatorEvent ev)
+        {
+			Dictionary<string, string> variables = new Dictionary<string, string> { };
+            variables.AddPlayerVariables(ev.OldTarget, "oldTarget");
+            variables.AddPlayerVariables(ev.NewTarget, "newTarget");
+            variables.AddPlayerVariables(ev.Player, "spectator");
+
+            plugin.SendMessage("messages.onplayerchangespectator", variables);
+        }
+
+        public void OnPlayerDamageShootingTarget(PlayerDamagedShootingTargetEvent ev)
+        {
+			Dictionary<string, string> variables = new Dictionary<string, string>
+			{
+				{ "amount", ev.DamageAmount.ToString("0.##") },
+				{ "type",   GetDamageType(ev.DamageHandler) },
+				{ "target", ev.ShootingTarget.ToString() }
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerdamageshootingtarget", variables);
+        }
+
+        public void OnPlayerDamageWindow(PlayerDamagedWindowEvent ev)
+        {
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "amount", ev.DamageAmount.ToString("0.##") },
+                { "type",   GetDamageType(ev.DamageHandler) },
+                //{ "window", ev.Window.ToString() }
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerdamagewindow", variables);
+        }
+
+		public void OnPlayerDryfireWeapon(PlayerDryfireWeaponEvent ev)
+		{
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "weapon", ev.Firearm.ItemTypeId.ToString() }
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerdryfireweapon", variables);
+        }
+
+        public void OnPlayerrReceiveEffect(PlayerReceiveEffectEvent ev)
+        {
+            Dictionary<string, string> variables = new Dictionary<string, string>
+            {
+                { "effect", ev.Effect.ToString() },
+                { "duration", ev.Duration.ToString() },
+                { "intensity", ev.Intensity.ToString() }
+            };
+            variables.AddPlayerVariables(ev.Player, "player");
+
+            plugin.SendMessage("messages.onplayerreceiveeffect", variables);
+        }
+    }
 }
