@@ -222,8 +222,10 @@ namespace SCPDiscord.EventListeners
         	plugin.SendMessage("messages.ongeneratordeactivated", variables);
         }
 
+		[PluginEvent]
         public void OnMapGenerate(MapGeneratedEvent _) => plugin.SendMessage("messages.onmapgenerate");
 
+		[PluginEvent]
         public void OnItemSpawned(ItemSpawnedEvent ev)
 		{
             Dictionary<string, string> variables = new Dictionary<string, string>
@@ -234,6 +236,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onitemspawned", variables);
         }
 
+		[PluginEvent]
         public void OnPlaceBlood(PlaceBloodEvent ev)
         {
             Dictionary<string, string> variables = new Dictionary<string, string> { };
@@ -242,6 +245,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplaceblood", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerInteractLocker(PlayerInteractLockerEvent ev)
         {
             Dictionary<string, string> variables = new Dictionary<string, string>
@@ -255,6 +259,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayerinteractlocker", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerInteractShootingTarget(PlayerInteractShootingTargetEvent ev)
         {
             Dictionary<string, string> variables = new Dictionary<string, string>

@@ -409,7 +409,8 @@ namespace SCPDiscord.EventListeners
 			plugin.SendMessage("messages.onplayerescape", variables);
 		}
 
-		public void OnPlayerAim(PlayerAimWeaponEvent ev)
+		[PluginEvent]
+        public void OnPlayerAim(PlayerAimWeaponEvent ev)
 		{
             Dictionary<string, string> variables = new Dictionary<string, string>
 			{
@@ -421,6 +422,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayeraim", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerCancelUsingItem(PlayerCancelUsingItemEvent ev)
 		{
             Dictionary<string, string> variables = new Dictionary<string, string>
@@ -432,6 +434,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayercancelusingitem", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerChanceItem(PlayerChangeItemEvent ev)
 		{
             Dictionary<string, string> variables = new Dictionary<string, string>
@@ -444,6 +447,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayerchangeitem", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerChangeSpectator(PlayerChangeSpectatorEvent ev)
         {
 			Dictionary<string, string> variables = new Dictionary<string, string> { };
@@ -454,6 +458,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayerchangespectator", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerDamageShootingTarget(PlayerDamagedShootingTargetEvent ev)
         {
 			Dictionary<string, string> variables = new Dictionary<string, string>
@@ -467,6 +472,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayerdamageshootingtarget", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerDamageWindow(PlayerDamagedWindowEvent ev)
         {
             Dictionary<string, string> variables = new Dictionary<string, string>
@@ -480,7 +486,8 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayerdamagewindow", variables);
         }
 
-		public void OnPlayerDryfireWeapon(PlayerDryfireWeaponEvent ev)
+		[PluginEvent]
+        public void OnPlayerDryfireWeapon(PlayerDryfireWeaponEvent ev)
 		{
             Dictionary<string, string> variables = new Dictionary<string, string>
             {
@@ -491,6 +498,7 @@ namespace SCPDiscord.EventListeners
             plugin.SendMessage("messages.onplayerdryfireweapon", variables);
         }
 
+		[PluginEvent]
         public void OnPlayerrReceiveEffect(PlayerReceiveEffectEvent ev)
         {
             Dictionary<string, string> variables = new Dictionary<string, string>

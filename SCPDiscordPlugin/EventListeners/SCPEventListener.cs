@@ -111,6 +111,7 @@ namespace SCPDiscord.EventListeners
 			plugin.SendMessage("messages.onrecallzombie", variables);
 		}
 
+		[PluginEvent]
         public void OnInteractScp330(PlayerInteractScp330Event ev)
         {
             Dictionary<string, string> variables = new Dictionary<string, string>
