@@ -1123,7 +1123,7 @@ messages:
     # player - Player
     # weapon - WeaponType
     # isAiming - bool
-    message: "<var:player-name> (<var:player-userid>) was aimwas<var:aimwas> with <var:wwapon>"
+    message: "<var:player-name> (<var:player-userid>) was aimwas<var:aimwas> with <var:wwapon>."
     regex: ["aimwasTrue":"aiming","aimwasFalse":"not aiming"]
     cancel_regex: []
 

@@ -223,7 +223,10 @@ namespace SCPDiscord.EventListeners
         }
 
 		[PluginEvent]
-        public void OnMapGenerate(MapGeneratedEvent _) => plugin.SendMessage("messages.onmapgenerate");
+        public void OnMapGenerated(MapGeneratedEvent ev) 
+		{ 
+			plugin.SendMessage("messages.onmapgenerated"); 
+		}
 
 		[PluginEvent]
         public void OnItemSpawned(ItemSpawnedEvent ev)
