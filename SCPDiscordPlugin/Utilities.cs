@@ -106,62 +106,57 @@ namespace SCPDiscord
 		}
 
 		public static DateTime ParseCompoundDuration(string duration, ref string humanReadableDuration, ref long durationSeconds)
-		{
-			//Check if the amount is a number
-			if (!int.TryParse(new string(duration.Where(char.IsDigit).ToArray()), out int amount))
-			{
-				return DateTime.MinValue;
-			}
+        {
+            TimeSpan timeSpanDuration = TimeSpan.Zero;
+            var matches = Regex.Matches(duration, @"(\d+)([smhdwMy])");
 
-			char unit = duration.Where(char.IsLetter).ToArray()[0];
-			TimeSpan timeSpanDuration = new TimeSpan();
+            foreach (Match match in matches)
+            {
+                int amount = int.Parse(match.Groups[1].Value);
+                char unit = match.Groups[2].Value[0];
 
-			// Parse time into a TimeSpan duration and string
-			if (unit == 's')
-			{
-				humanReadableDuration = amount + " second";
-				timeSpanDuration = new TimeSpan(0, 0, 0, amount);
-			}
-			else if (unit == 'm')
-			{
-				humanReadableDuration = amount + " minute";
-				timeSpanDuration = new TimeSpan(0, 0, amount, 0);
-			}
-			else if (unit == 'h')
-			{
-				humanReadableDuration = amount + " hour";
-				timeSpanDuration = new TimeSpan(0, amount, 0, 0);
-			}
-			else if (unit == 'd')
-			{
-				humanReadableDuration = amount + " day";
-				timeSpanDuration = new TimeSpan(amount, 0, 0, 0);
-			}
-			else if (unit == 'w')
-			{
-				humanReadableDuration = amount + " week";
-				timeSpanDuration = new TimeSpan(7 * amount, 0, 0, 0);
-			}
-			else if (unit == 'M')
-			{
-				humanReadableDuration = amount + " month";
-				timeSpanDuration = new TimeSpan(30 * amount, 0, 0, 0);
-			}
-			else if (unit == 'y')
-			{
-				humanReadableDuration = amount + " year";
-				timeSpanDuration = new TimeSpan(365 * amount, 0, 0, 0);
-			}
+                switch (unit)
+                {
+                    case 's':
+                        humanReadableDuration = amount + " second";
+                        timeSpanDuration += TimeSpan.FromSeconds(amount);
+                        break;
+                    case 'm':
+                        humanReadableDuration = amount + " minute";
+                        timeSpanDuration += TimeSpan.FromMinutes(amount);
+                        break;
+                    case 'h':
+                        humanReadableDuration = amount + " hour";
+                        timeSpanDuration += TimeSpan.FromHours(amount);
+                        break;
+                    case 'd':
+                        humanReadableDuration = amount + " day";
+                        timeSpanDuration += TimeSpan.FromDays(amount);
+                        break;
+                    case 'w':
+                        humanReadableDuration = amount + " week";
+                        timeSpanDuration += TimeSpan.FromDays(amount * 7);
+                        break;
+                    case 'M':
+                        humanReadableDuration = amount + " month";
+                        timeSpanDuration += TimeSpan.FromDays(amount * 30);
+                        break;
+                    case 'y':
+                        humanReadableDuration = amount + " year";
+                        timeSpanDuration += TimeSpan.FromDays(amount * 365);
+                        break;
+                }
 
-			// Pluralize string if needed
-			if (amount != 1)
-			{
-				humanReadableDuration += 's';
-			}
+                // Pluralize string if needed
+                if (amount != 1)
+                {
+                    humanReadableDuration += 's';
+                }
+            }
 
-			durationSeconds = (long)timeSpanDuration.TotalSeconds;
-			return DateTime.UtcNow.Add(timeSpanDuration);
-		}
+            durationSeconds = (long)timeSpanDuration.TotalSeconds;
+            return DateTime.UtcNow.Add(timeSpanDuration);
+        }
 
 		public static Interface.BotActivity.Types.Activity ParseBotActivity(string activity)
 		{
