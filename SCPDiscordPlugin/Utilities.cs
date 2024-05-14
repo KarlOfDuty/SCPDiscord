@@ -106,57 +106,62 @@ namespace SCPDiscord
 		}
 
 		public static DateTime ParseCompoundDuration(string duration, ref string humanReadableDuration, ref long durationSeconds)
-        {
-            TimeSpan timeSpanDuration = TimeSpan.Zero;
-            var matches = Regex.Matches(duration, @"(\d+)([smhdwMy])");
+		{
+			TimeSpan timeSpanDuration = TimeSpan.Zero;
+			MatchCollection matches = Regex.Matches(duration, @"(\d+)([smhdwMy])");
 
-            foreach (Match match in matches)
-            {
-                int amount = int.Parse(match.Groups[1].Value);
-                char unit = match.Groups[2].Value[0];
+			if (matches.Count == 0)
+			{
+				if (long.TryParse(duration, out long seconds))
+				{
+					humanReadableDuration = $"{seconds} seconds";
+					durationSeconds = seconds;
+					return DateTime.UtcNow.AddSeconds(seconds);
+				}
+				else
+				{
+					return DateTime.MinValue;
+				}
+			}
 
-                switch (unit)
-                {
-                    case 's':
-                        humanReadableDuration = amount + " second";
-                        timeSpanDuration += TimeSpan.FromSeconds(amount);
-                        break;
-                    case 'm':
-                        humanReadableDuration = amount + " minute";
-                        timeSpanDuration += TimeSpan.FromMinutes(amount);
-                        break;
-                    case 'h':
-                        humanReadableDuration = amount + " hour";
-                        timeSpanDuration += TimeSpan.FromHours(amount);
-                        break;
-                    case 'd':
-                        humanReadableDuration = amount + " day";
-                        timeSpanDuration += TimeSpan.FromDays(amount);
-                        break;
-                    case 'w':
-                        humanReadableDuration = amount + " week";
-                        timeSpanDuration += TimeSpan.FromDays(amount * 7);
-                        break;
-                    case 'M':
-                        humanReadableDuration = amount + " month";
-                        timeSpanDuration += TimeSpan.FromDays(amount * 30);
-                        break;
-                    case 'y':
-                        humanReadableDuration = amount + " year";
-                        timeSpanDuration += TimeSpan.FromDays(amount * 365);
-                        break;
-                }
+			Dictionary<char, (string name, int seconds)> timeUnits = new Dictionary<char, (string, int)>
+			{
+				{ 'y', ("year", 31536000) },
+				{ 'M', ("month", 2592000) },
+				{ 'w', ("week", 604800) },
+				{ 'd', ("day", 86400) },
+				{ 'h', ("hour", 3600) },
+				{ 'm', ("minute", 60) },
+				{ 's', ("second", 1) },
+			};
 
-                // Pluralize string if needed
-                if (amount != 1)
-                {
-                    humanReadableDuration += 's';
-                }
-            }
+			foreach (Match match in matches)
+			{
+				int amount = int.Parse(match.Groups[1].Value);
+				char unit = match.Groups[2].Value[0];
 
-            durationSeconds = (long)timeSpanDuration.TotalSeconds;
-            return DateTime.UtcNow.Add(timeSpanDuration);
-        }
+				if (timeUnits.ContainsKey(unit))
+				{
+					timeSpanDuration += TimeSpan.FromSeconds(amount * timeUnits[unit].seconds);
+				}
+			}
+
+			int totalSeconds = (int)timeSpanDuration.TotalSeconds;
+			humanReadableDuration = "";
+
+			foreach (var unit in timeUnits)
+			{
+				if (totalSeconds >= unit.Value.seconds)
+				{
+					int amount = totalSeconds / unit.Value.seconds;
+					humanReadableDuration += $"{amount} {unit.Value.name} ";
+					totalSeconds %= unit.Value.seconds;
+				}
+			}
+
+			durationSeconds = (long)timeSpanDuration.TotalSeconds;
+			return DateTime.UtcNow.Add(timeSpanDuration);
+		}
 
 		public static Interface.BotActivity.Types.Activity ParseBotActivity(string activity)
 		{
