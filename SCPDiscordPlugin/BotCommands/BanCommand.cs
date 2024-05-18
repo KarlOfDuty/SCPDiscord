@@ -30,13 +30,12 @@ namespace SCPDiscord.BotCommands
 			}
 
 			// Create duration timestamp.
-			string humanReadableDuration = "";
 			long durationSeconds = 0;
 			long issuanceTime = DateTime.UtcNow.Ticks;
 			DateTime endTime;
 			try
 			{
-				endTime = Utilities.ParseCompoundDuration(command.Duration, ref humanReadableDuration, ref durationSeconds);
+				endTime = Utilities.ParseCompoundDuration(command.Duration, ref durationSeconds);
 			}
 			catch (IndexOutOfRangeException)
 			{
@@ -61,9 +60,9 @@ namespace SCPDiscord.BotCommands
 
 			Dictionary<string, string> banVars = new Dictionary<string, string>
 			{
-				{ "reason",     command.Reason         },
-				{ "duration",   humanReadableDuration  },
-				{ "admintag",   command.AdminTag       }
+				{ "reason",   command.Reason },
+				{ "duration", Utilities.SecondsToCompoundTime(durationSeconds) },
+				{ "admintag", command.AdminTag }
 			};
 
 			if (!Utilities.TryGetPlayerName(command.SteamID, out string name))

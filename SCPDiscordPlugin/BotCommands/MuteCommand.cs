@@ -30,7 +30,6 @@ namespace SCPDiscord.BotCommands
 			}
 
 			// Create duration timestamp.
-			string humanReadableDuration = "";
 			long durationSeconds = 0;
 			DateTime endTime;
 
@@ -46,7 +45,7 @@ namespace SCPDiscord.BotCommands
 			{
 				try
 				{
-					endTime = Utilities.ParseCompoundDuration(command.Duration.Trim(), ref humanReadableDuration, ref durationSeconds);
+					endTime = Utilities.ParseCompoundDuration(command.Duration.Trim(), ref durationSeconds);
 				}
 				catch (IndexOutOfRangeException)
 				{
@@ -66,7 +65,7 @@ namespace SCPDiscord.BotCommands
 
 			if (endTime > DateTime.UtcNow)
 			{
-				MutePlayer(command, endTime, humanReadableDuration);
+				MutePlayer(command, endTime, Utilities.SecondsToCompoundTime(durationSeconds));
 			}
 			else
 			{

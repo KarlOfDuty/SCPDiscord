@@ -106,52 +106,58 @@ namespace SCPDiscord
 			return messages;
 		}
 
-		public static DateTime ParseCompoundDuration(string duration, ref string humanReadableDuration, ref long durationSeconds)
+		public static DateTime ParseCompoundDuration(string duration, ref long durationSeconds)
         {
             TimeSpan timeSpanDuration = TimeSpan.Zero;
             MatchCollection matches = Regex.Matches(duration, @"(\d+)([smhdwMy])");
 
 			// If no matches are found, try to parse the duration as a single number of minutes
-			if (matches.Count == 0 && int.TryParse(duration, out int minutes))
+			if (matches.Count == 0)
 			{
-				timeSpanDuration += TimeSpan.FromMinutes(minutes);
-			}
-			else
-			{
-				foreach (Match match in matches)
+				if (long.TryParse(duration, out long minutes))
 				{
-					int amount = int.Parse(match.Groups[1].Value);
-					char unit = match.Groups[2].Value[0];
+					durationSeconds = minutes * 60;
+					return DateTime.UtcNow.AddMinutes(minutes);
+				}
+				else
+				{
+					durationSeconds = 0;
+					return DateTime.MinValue;
+				}
+			}
 
-					switch (unit)
-					{
-						case 's':
-							timeSpanDuration += TimeSpan.FromSeconds(amount);
-							break;
-						case 'm':
-							timeSpanDuration += TimeSpan.FromMinutes(amount);
-							break;
-						case 'h':
-							timeSpanDuration += TimeSpan.FromHours(amount);
-							break;
-						case 'd':
-							timeSpanDuration += TimeSpan.FromDays(amount);
-							break;
-						case 'w':
-							timeSpanDuration += TimeSpan.FromDays(amount * 7);
-							break;
-						case 'M':
-							timeSpanDuration += TimeSpan.FromDays(amount * 31);
-							break;
-						case 'y':
-							timeSpanDuration += TimeSpan.FromDays(amount * 365);
-							break;
-					}
+			foreach (Match match in matches)
+			{
+				int amount = int.Parse(match.Groups[1].Value);
+				char unit = match.Groups[2].Value[0];
+
+				switch (unit)
+				{
+					case 's':
+						timeSpanDuration += TimeSpan.FromSeconds(amount);
+						break;
+					case 'm':
+						timeSpanDuration += TimeSpan.FromMinutes(amount);
+						break;
+					case 'h':
+						timeSpanDuration += TimeSpan.FromHours(amount);
+						break;
+					case 'd':
+						timeSpanDuration += TimeSpan.FromDays(amount);
+						break;
+					case 'w':
+						timeSpanDuration += TimeSpan.FromDays(amount * 7);
+						break;
+					case 'M':
+						timeSpanDuration += TimeSpan.FromDays(amount * 31);
+						break;
+					case 'y':
+						timeSpanDuration += TimeSpan.FromDays(amount * 365);
+						break;
 				}
 			}
 
             durationSeconds = (long)timeSpanDuration.TotalSeconds;
-            humanReadableDuration = SecondsToCompoundTime(durationSeconds);
             return DateTime.UtcNow.Add(timeSpanDuration);
         }
 
