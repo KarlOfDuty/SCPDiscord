@@ -231,11 +231,11 @@ namespace SCPDiscord
 			{
 				if (e.Status == WebExceptionStatus.ProtocolError)
 				{
-					Logger.Debug("Steam profile connection error: " + ((HttpWebResponse)e.Response).StatusCode);
+					Logger.Error("Steam profile connection error: " + ((HttpWebResponse)e.Response).StatusCode);
 				}
 				else
 				{
-					Logger.Debug("Steam profile connection error: " + e.Status);
+					Logger.Error("Steam profile connection error: " + e.Status);
 				}
 			}
 			finally
