@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -55,10 +55,10 @@ namespace SCPDiscord
                     return;
                 }
 
-                await DiscordAPI.Init();
 
                 new Thread(() => new StartNetworkSystem()).Start();
                 new Thread(() => new StartMessageScheduler()).Start();
+                await DiscordAPI.Init();
 
                 // Block this task until the program is closed.
                 await Task.Delay(-1);
