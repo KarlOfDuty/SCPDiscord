@@ -151,8 +151,8 @@ namespace SCPDiscord
 
 				foreach (Player player in matchingPlayers)
 				{
-					var cSteam = player.UserId;
-					if (!userInfo.RoleIDs.Intersect(Config.logicRoles.ProcessedRoleIds).Any()) continue;
+					// Check if the player has any of the roles that should trigger a command
+					if (!userInfo.RoleIDs.Intersect(Config.logicRoles.ProcessedRoleIds).Any()) { continue; }
 					Logger.Debug(
 						$"[DiscordMemberJoin] Roles in intersection with pending to grant roles for discordid: {userInfo.DiscordUserID}." +
 						$"\nRoles to trigger: {string.Join(", ", Config.logicRoles.ProcessedRoleIds)}" +

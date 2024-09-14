@@ -30,7 +30,7 @@ namespace SCPDiscord
 		{
 			return Type switch
 			{
-				LogicType.None => true,
+				LogicType.None => false,
 				LogicType.And => Roles.All(userRoles.Contains),
 				LogicType.Or => Roles.Any(userRoles.Contains),
 				LogicType.NotAnd => !Roles.All(userRoles.Contains),
@@ -72,7 +72,7 @@ namespace SCPDiscord
 				ProcessedRoleIds.Add(roleId);
 			}
 
-			if (role.Children == null) return;
+			if (role.Children == null) { return; }
 
 			foreach (var child in role.Children.Values)
 			{
@@ -87,7 +87,7 @@ namespace SCPDiscord
 			{
 				var role = _logicRoles[key];
 				var roleCommands = ProcessRole(role, userRoles);
-				if (!roleCommands.Any()) continue;
+				if (!roleCommands.Any()) { continue; }
 				commands.AddRange(roleCommands);
 				break;
 			}
@@ -98,13 +98,13 @@ namespace SCPDiscord
 		private List<string> ProcessRole(LogicRole role, List<ulong> userRoles)
 		{
 			var commands = new List<string>();
-			if (role.Type == LogicType.None) return commands;
+			if (role.Type == LogicType.None) { return commands; }
 
 			var hasRole = role.IsPermitted(userRoles);
-			if (!hasRole) return commands;
+			if (!hasRole) { return commands; }
 
 			if (role.Commands != null) commands.AddRange(role.Commands);
-			if (role.Children == null) return commands;
+			if (role.Children == null) { return commands; }
 			foreach (var child in role.Children.OrderBy(x => x.Key))
 			{
 				var childCommands = ProcessRole(child.Value, userRoles);
@@ -134,7 +134,7 @@ namespace SCPDiscord
 			var indent = new string(' ', indentLevel * 2);
 			sb.AppendLine($"{indent}Role: {string.Join(role.Type.ToString(), role.Roles)}");
 			sb.AppendLine($"{indent}Commands: {string.Join(", ", role.Commands ?? new List<string>())}");
-			if (role.Children == null) return;
+			if (role.Children == null) { return; }
 			foreach (var child in role.Children)
 			{
 				BuildRoleString(child.Value, sb, indentLevel + 1);
