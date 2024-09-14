@@ -83,6 +83,7 @@ settings:
 # Sets commands to run whenever someone with a synced Discord rank joins the server,
 # only the highest command in the list that matches the player is executed.
 # Turn on debug above to see console feedback when the commands are used.
+# The tree traversal proceeds sequentially according to the conditions specified. It does not enter parallel branches if one of the previously traversed branches has been successfully completed.
 # Valid variables:
 # player-userid
 # player-id
@@ -92,19 +93,53 @@ settings:
 # discord-username
 # discord-userid
 # There are some more player variables you can use here, but they are mostly irrelevant, check the list in APIExtensions.cs on GitHub for the full list.
-rolesync:
-    - "add-role-id-here":
+logicroles:
+    #order matters, the first one that matches conditions the player is executed
+    0:
+        # type can be:
+        # 0: None (disables logic for this role), disables entire section and we never go there
+        # 1: And
+        # 2: Or
+        # 3: Not And
+        # 4: Primary Only
+        # 5: Xor
+        # 6: Not Or
+        type: 1
+        roles:
+            - 111111111111111111
+            - 222222222222222222
+        commands:
         - "scpd grantvanillarank <var:player-userid> moderator"
         - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
         - "/pbc <var:player-id> 3 Moderator role synced from Discord."
-
-    - "add-another-role-id-here":
+        children:
+            0:
+                type: 1
+                roles:
+                    - 333333333333333333
+                    - 444444444444444444
+                commands:
+                - "/pbc <var:player-id> 3 Wow, you have extra roles, good!."
+                # children can be omitted if there are no children
+                children: {}
+            1:
+                # we don't go here if have passed through children of 0 (LINE 137)'
+                type: 1
+                roles:
+                    - 555555555555555555
+                    - 666666666666666666
+                commands:
+                # player have roles 111111111111111111 and 222222222222222222 and 555555555555555555 and 666666666666666666
+                - "scpd removereservedslot <var:player-userid>"
+    1:
+        type: 1
+        roles:
+            - 777777777777777777
+            - 888888888888888888
+        commands:
         - "scpd grantvanillarank <var:player-userid> donator"
         - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
         - "/pbc <var:player-id> 3 Donator role synced from Discord."
-
-    - "add-everyone-role-id-here":
-        - "scpd removereservedslot <var:player-userid>"
 
 # Name your channels here, this name is used in the channels section below.
 # The left value is a name of your choice and the right is a channel id you want it to represent in the lists below.

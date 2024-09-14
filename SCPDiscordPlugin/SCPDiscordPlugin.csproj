@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,6 +80,7 @@
     <Compile Include="Interface\MuteCommand.cs" />
     <Compile Include="Interface\PlayerInfoCommand.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="LogicRole.cs" />
     <Compile Include="MuteSystem.cs" />
     <Compile Include="ServerCommands\GrantVanillaRankCommand.cs" />
     <Compile Include="ServerCommands\RootCommand.cs" />

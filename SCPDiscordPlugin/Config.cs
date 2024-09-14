@@ -240,7 +240,7 @@ namespace SCPDiscord
 			{ "channels", new Dictionary<string, ulong>() }
 		};
 
-		internal static Dictionary<ulong, string[]> roleDictionary = new Dictionary<ulong, string[]>();
+		internal static RoleProcessor logicRoles;
 
 		internal static void Reload(SCPDiscord plugin)
 		{
@@ -370,12 +370,12 @@ namespace SCPDiscord
 			{
 				try
 				{
-					Logger.Debug("Reading rolesync");
-					roleDictionary = json.SelectToken("rolesync").Value<JArray>().ToDictionary(k => ulong.Parse(((JObject)k).Properties().First().Name), v => v.Values().First().Value<JArray>().Values<string>().ToArray());
+					Logger.Debug("Reading logicroles");
+					logicRoles = new RoleProcessor(json);
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
-					Logger.Error("The rolesync config list is invalid, rolesync disabled.");
+					Logger.Error($"The logicroles config is invalid. {e}");
 					SetBool("settings.rolesync", false);
 				}
 			}
@@ -596,14 +596,7 @@ namespace SCPDiscord
 			}
 
 			sb.Append("------------ Rolesync system ------------\n");
-			foreach (KeyValuePair<ulong, string[]> node in roleDictionary)
-			{
-				sb.Append(node.Key + ":\n");
-				foreach (string command in node.Value)
-				{
-					sb.Append("    " + command + "\n");
-				}
-			}
+			sb.Append(logicRoles + "\n");
 
 			sb.Append("|||||||||||| END OF CONFIG VALIDATION ||||||||||||");
 			Logger.Info(sb.ToString());

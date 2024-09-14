@@ -151,38 +151,37 @@ namespace SCPDiscord
 
 				foreach (Player player in matchingPlayers)
 				{
-					foreach (KeyValuePair<ulong, string[]> keyValuePair in Config.roleDictionary)
+					var cSteam = player.UserId;
+					if (!userInfo.RoleIDs.Intersect(Config.logicRoles.ProcessedRoleIds).Any()) continue;
+					Logger.Debug(
+						$"[DiscordMemberJoin] Roles in intersection with pending to grant roles for discordid: {userInfo.DiscordUserID}." +
+						$"\nRoles to trigger: {string.Join(", ", Config.logicRoles.ProcessedRoleIds)}" +
+						$"\nRoles after: {string.Join(", ", userInfo.RoleIDs)}"
+					);
+					var variables = new Dictionary<string, string>
 					{
-						Logger.Debug("User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
-						if (userInfo.RoleIDs.Contains(keyValuePair.Key))
+						{ "discord-displayname", userInfo.DiscordDisplayName   },
+						{ "discord-username",    userInfo.DiscordUsername      },
+						{ "discord-userid",      userInfo.DiscordUserID.ToString() },
+						// Old names
+						{ "discorddisplayname", userInfo.DiscordDisplayName   },
+						{ "discordusername",    userInfo.DiscordUsername      },
+						{ "discordid",      userInfo.DiscordUserID.ToString() }
+					};
+					variables.AddPlayerVariables(player, "player");
+
+					var rawCommands = Config.logicRoles.ProcessRoles(userInfo.RoleIDs.ToList());
+					foreach (var _command in rawCommands)
+					{
+						var command = _command;
+						// Variable insertion
+						foreach (var variable in variables)
 						{
-							Dictionary<string, string> variables = new Dictionary<string, string>
-							{
-								{ "discord-displayname", userInfo.DiscordDisplayName   },
-								{ "discord-username",    userInfo.DiscordUsername      },
-								{ "discord-userid",      userInfo.DiscordUserID.ToString() },
-								// Old names
-								{ "discorddisplayname", userInfo.DiscordDisplayName   },
-								{ "discordusername",    userInfo.DiscordUsername      },
-								{ "discordid",      userInfo.DiscordUserID.ToString() }
-							};
-							variables.AddPlayerVariables(player, "player");
-
-							foreach (string unparsedCommand in keyValuePair.Value)
-							{
-								string command = unparsedCommand;
-								// Variable insertion
-								foreach (KeyValuePair<string, string> variable in variables)
-								{
-									command = command.Replace("<var:" + variable.Key + ">", variable.Value);
-								}
-								Logger.Debug("Running rolesync command: " + command);
-								SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
-							}
-
-							Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
-							return;
+							command = command.Replace("<var:" + variable.Key + ">", variable.Value);
 						}
+
+						Logger.Debug("Running rolesync command: " + command);
+						SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
 					}
 				}
 			}
