@@ -133,15 +133,12 @@
     <EmbeddedResource Include="Languages/emote-overrides.yml" />
     <EmbeddedResource Include="Languages/emotes.yml" />
     <EmbeddedResource Include="Languages/english.yml" />
+    <EmbeddedResource Include="Languages/german.yml" />
     <EmbeddedResource Include="Languages/italian.yml" />
     <EmbeddedResource Include="Languages/overrides.yml" />
     <EmbeddedResource Include="Languages/russian.yml" />
     <EmbeddedResource Include="Languages/simplified-chinese.yml" />
     <EmbeddedResource Include="Languages/ukrainian.yml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Languages\brazilian-portuguese.yml" />
-    <Content Include="Languages\german.yml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
