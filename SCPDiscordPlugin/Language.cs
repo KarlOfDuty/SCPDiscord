@@ -28,6 +28,7 @@ namespace SCPDiscord
       { "emote-overrides",      Utilities.ReadManifestData("Languages.emote-overrides.yml")      },
       { "emotes",               Utilities.ReadManifestData("Languages.emotes.yml")               },
       { "english",              Utilities.ReadManifestData("Languages.english.yml")              },
+      { "german",               Utilities.ReadManifestData("Languages.german.yml")               },
       { "italian",              Utilities.ReadManifestData("Languages.italian.yml")              },
       { "overrides",            Utilities.ReadManifestData("Languages.overrides.yml")            },
       { "russian",              Utilities.ReadManifestData("Languages.russian.yml")              },
