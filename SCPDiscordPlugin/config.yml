@@ -33,6 +33,7 @@ settings:
     # simplified-chinese
     # italian
     # brazilian-portuguese
+    # german
 
     # If you want to override specific messages you can copy them to overrides.yml
     # and they will automatically replace the corresponding messages from the language selected below.
