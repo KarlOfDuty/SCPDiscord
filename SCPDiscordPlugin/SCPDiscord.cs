@@ -15,7 +15,6 @@ using PluginAPI.Enums;
 using PluginAPI.Events;
 using YamlDotNet.Core;
 
-// Remember to update version below as well
 [assembly:AssemblyVersion(SCPDiscord.SCPDiscord.VERSION)]
 [assembly:AssemblyTitle("SCP:SL Discord Plugin")]
 [assembly:AssemblyCompany("https://github.com/KarlOfDuty/SCPDiscord")]
@@ -26,7 +25,6 @@ namespace SCPDiscord
 {
   public class SCPDiscord
   {
-    // Remember to update version above as well
     public const string VERSION = "3.2.2";
 
     private readonly Stopwatch serverStartTime = new Stopwatch();
