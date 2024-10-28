@@ -9,6 +9,8 @@ There are several languages included in the plugin dll. The current languages ar
 - Russian
 - Simplified Chinese
 - Italian
+- Brazilian Portuguese
+- German
 
 You can choose which language you want to use by setting the config entry `settings.language` to the name of the language file in all lower-case. You can find the language files in `SCPDiscord/Languages` in your plugin directory.
 
