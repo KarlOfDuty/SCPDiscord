@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Languages\brazilian-portuguese.yml" />
+    <Content Include="Languages\german.yml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
