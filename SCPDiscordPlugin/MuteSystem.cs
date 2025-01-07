@@ -103,14 +103,14 @@ namespace SCPDiscord
 
     public static bool IsMuted(string userID, out DateTime endTime, out string reason)
     {
-      endTime = DateTime.Now;
+      endTime = DateTime.UtcNow;
       reason = "";
       if (!Utilities.IsPossibleSteamID(userID, out ulong steamID))
       {
         return false;
       }
 
-      if (muteCache.TryGetValue(steamID, out MuteEntry entry) && entry.endTime > DateTime.Now)
+      if (muteCache.TryGetValue(steamID, out MuteEntry entry) && entry.endTime > DateTime.UtcNow)
       {
         endTime = entry.endTime;
         reason = entry.reason;
