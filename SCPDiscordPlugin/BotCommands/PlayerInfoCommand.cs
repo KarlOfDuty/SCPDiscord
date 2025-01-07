@@ -74,7 +74,7 @@ namespace SCPDiscord.BotCommands
         string banStatus = "No";
         string banReason = "";
         KeyValuePair<BanDetails, BanDetails> pair = BanHandler.QueryBan(command.SteamID, null);
-        if (pair.Key != null && new DateTime(pair.Key.Expires) > DateTime.Now)
+        if (pair.Key != null && new DateTime(pair.Key.Expires) > DateTime.UtcNow)
         {
           banStatus = "Ends at " + new DateTime(pair.Key.Expires).ToString("yyyy-MM-dd HH:mm");
           banReason = pair.Key.Reason;
