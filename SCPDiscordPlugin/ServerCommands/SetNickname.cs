@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommandSystem;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 
 namespace SCPDiscord.Commands
 {
@@ -30,7 +30,7 @@ namespace SCPDiscord.Commands
       try
       {
         Logger.Debug("Looking for player with SteamID/PlayerID: " + steamIDOrPlayerID);
-        foreach (Player pl in Player.GetPlayers<Player>())
+        foreach (Player pl in Player.List)
         {
           Logger.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " PlayerID " + pl.PlayerId);
           if (pl.GetParsedUserID() == steamIDOrPlayerID)
@@ -55,7 +55,7 @@ namespace SCPDiscord.Commands
 
       foreach (Player matchingPlayer in matchingPlayers)
       {
-        matchingPlayer.DisplayNickname = string.Join(" ", arguments.Skip(1));
+        matchingPlayer.DisplayName = string.Join(" ", arguments.Skip(1));
       }
 
       response = "Player nickname updated.";

@@ -2,25 +2,23 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.CustomHandlers;
+using LabApi.Features.Wrappers;
 using Newtonsoft.Json;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Events;
 using VoiceChat;
 
 namespace SCPDiscord
 {
-  public class MuteEventListener
+  public class MuteEventListener : CustomEventsHandler
   {
-    [PluginEvent]
-    public void OnPlayerJoinMuteCheck(PlayerJoinedEvent ev)
+    public override void OnPlayerJoined(PlayerJoinedEventArgs ev)
     {
-      if (ev.Player.PlayerId == Server.Instance.PlayerId) return;
+      if (ev.Player.PlayerId == Player.Host?.PlayerId) return;
       MuteSystem.CheckMuteStatus(ev.Player);
     }
 
-    [PluginEvent]
-    public void OnPlayerMuted(PlayerMutedEvent ev)
+    public override void OnPlayerMuted(PlayerMutedEventArgs ev)
     {
       if (ev.IsIntercom || ev?.Player.UserId == null)
       {
@@ -39,13 +37,12 @@ namespace SCPDiscord
       string name = ev.Player.Nickname;
       MuteSystem.MutePlayer(ref name,
         ev.Player.UserId,
-        ev.Issuer.DisplayNickname + " (" + ev.Issuer.UserId + ")",
+        ev.Issuer.Nickname + " (" + ev.Issuer.UserId + ")",
         "Muted using remote admin mute command.",
         DateTime.MaxValue);
     }
 
-    [PluginEvent]
-    public void OnPlayerUnmuted(PlayerUnmutedEvent ev)
+    public override void OnPlayerUnmuted(PlayerUnmutedEventArgs ev)
     {
       if (ev.IsIntercom || ev?.Player.UserId == null)
       {
@@ -64,7 +61,7 @@ namespace SCPDiscord
       string name = ev.Player.Nickname;
       MuteSystem.UnmutePlayer(ref name,
         ev.Player.UserId,
-        ev.Issuer.DisplayNickname + " (" + ev.Issuer.UserId + ")");
+        ev.Issuer.Nickname + " (" + ev.Issuer.UserId + ")");
     }
   }
 

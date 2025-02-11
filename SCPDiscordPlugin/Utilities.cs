@@ -8,8 +8,8 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Xml;
+using LabApi.Features.Wrappers;
 using Newtonsoft.Json.Linq;
-using PluginAPI.Core;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -74,7 +74,7 @@ namespace SCPDiscord
 
     public static bool TryGetPlayer(string userID, out Player pl)
     {
-      foreach (Player player in Player.GetPlayers<Player>())
+      foreach (Player player in Player.List)
       {
         if (userID.Contains(player.GetParsedUserID()))
         {
@@ -89,7 +89,7 @@ namespace SCPDiscord
 
     public static bool TryGetPlayerName(string userID, out string name)
     {
-      foreach (Player player in Player.GetPlayers<Player>())
+      foreach (Player player in Player.List)
       {
         if (userID.Contains(player.GetParsedUserID()))
         {

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 using SCPDiscord.Interface;
 
 namespace SCPDiscord.BotCommands

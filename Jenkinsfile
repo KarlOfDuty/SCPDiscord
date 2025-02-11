@@ -10,7 +10,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 validate +quit'
+                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta labapi-beta validate +quit'
             }
         }
         stage('Download SCP:SL - Beta') {

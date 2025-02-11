@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using PluginAPI.Core;
 
 namespace SCPDiscord
 {
@@ -13,19 +12,19 @@ namespace SCPDiscord
 
     internal static void Info(string message)
     {
-      Log.Info(message);
+      LabApi.Features.Console.Logger.Info(message);
       LogToFile("INFO", message);
     }
 
     internal static void Warn(string message)
     {
-      Log.Warning(message);
+      LabApi.Features.Console.Logger.Warn(message);
       LogToFile("WARNING", message);
     }
 
     internal static void Error(string message)
     {
-      Log.Error(message);
+      LabApi.Features.Console.Logger.Error(message);
       LogToFile("ERROR", message);
     }
 
@@ -33,7 +32,7 @@ namespace SCPDiscord
     {
       if (Config.GetBool("settings.debug"))
       {
-        Log.Debug(message);
+        LabApi.Features.Console.Logger.Debug(message);
       }
 
       LogToFile("DEBUG", message);
@@ -67,7 +66,7 @@ namespace SCPDiscord
         }
         catch (Exception e)
         {
-          Log.Error("Error writing to log file:\n" + e);
+          LabApi.Features.Console.Logger.Error("Error writing to log file:\n" + e);
         }
       }
     }
@@ -89,11 +88,11 @@ namespace SCPDiscord
           try
           {
             logFileWriter = File.AppendText(Path.GetFullPath(path));
-            Log.Info("Opened log file \"" + Path.GetFullPath(path) + "\".");
+            LabApi.Features.Console.Logger.Info("Opened log file \"" + Path.GetFullPath(path) + "\".");
           }
           catch (Exception e)
           {
-            Log.Error("Error opening log file \"" + Path.GetFullPath(path) + "\":\n" + e);
+            LabApi.Features.Console.Logger.Error("Error opening log file \"" + Path.GetFullPath(path) + "\":\n" + e);
           }
         }
         else
@@ -104,17 +103,17 @@ namespace SCPDiscord
           }
           catch (Exception e)
           {
-            Log.Error("Error creating log file directory \"" + Path.GetDirectoryName(Path.GetFullPath(path)) + "\":\n" + e);
+            LabApi.Features.Console.Logger.Error("Error creating log file directory \"" + Path.GetDirectoryName(Path.GetFullPath(path)) + "\":\n" + e);
           }
 
           try
           {
             logFileWriter = File.CreateText(Path.GetFullPath(path));
-            Log.Info("Created log file \"" + Path.GetFullPath(path) + "\".");
+            LabApi.Features.Console.Logger.Info("Created log file \"" + Path.GetFullPath(path) + "\".");
           }
           catch (Exception e)
           {
-            Log.Error("Error creating log file \"" + Path.GetFullPath(path) + "\":\n" + e);
+            LabApi.Features.Console.Logger.Error("Error creating log file \"" + Path.GetFullPath(path) + "\":\n" + e);
           }
         }
 
@@ -131,7 +130,7 @@ namespace SCPDiscord
           }
           catch (Exception e)
           {
-            Log.Error("Error writing cache to log file:\n" + e);
+            LabApi.Features.Console.Logger.Error("Error writing cache to log file:\n" + e);
           }
 
           startupCache.Clear();

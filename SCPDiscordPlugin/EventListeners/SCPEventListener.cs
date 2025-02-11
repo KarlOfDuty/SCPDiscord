@@ -1,10 +1,12 @@
 using System.Collections.Generic;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Events;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.Scp049Events;
+using LabApi.Events.Arguments.Scp079Events;
+using LabApi.Events.CustomHandlers;
 
 namespace SCPDiscord.EventListeners
 {
-  public class SCPEventListener
+  public class SCPEventListener : CustomEventsHandler
   {
     private readonly SCPDiscord plugin;
 
@@ -13,31 +15,29 @@ namespace SCPDiscord.EventListeners
       plugin = pl;
     }
 
-    [PluginEvent]
-    public void On079Lock(Scp079LockDoorEvent ev)
+    // TODO: Check the information in these events
+    public override void OnScp079LockedDoor(Scp079LockedDoorEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "door", ev.Door.name }
+        { "door", ev.Door.Base.DoorName }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.on079lockdoor", variables);
     }
 
-    [PluginEvent]
-    public void On079TeslaGate(Scp079UseTeslaEvent ev)
+    public override void OnScp079UsedTesla(Scp079UsedTeslaEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>();
+      Dictionary<string, string> variables = new();
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.on079teslagate", variables);
     }
 
-    [PluginEvent]
-    public void On079LevelUp(Scp079LevelUpTierEvent ev)
+    public override void OnScp079LeveledUp(Scp079LeveledUpEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "level", ev.Tier.ToString() }
       };
@@ -46,56 +46,51 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.on079levelup", variables);
     }
 
-    [PluginEvent]
-    public void On079UnlockDoor(Scp079UnlockDoorEvent ev)
+    public override void OnScp079UnlockedDoor(Scp079UnlockedDoorEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "doorname", ev.Door.name }
+        { "doorname", ev.Door.Base.name }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.on079unlockdoor", variables);
     }
 
-    [PluginEvent]
-    public void On079Lockdown(Scp079LockdownRoomEvent ev)
+    public override void OnScp079LockedDownRoom(Scp079LockedDownRoomEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "room", ev.Room.name }
+        { "room", ev.Room.Base.name }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.on079lockdown", variables);
     }
 
-    [PluginEvent]
-    public void On079CancelLockdown(Scp079CancelRoomLockdownEvent ev)
+    public override void OnScp079CancelledRoomLockdown(Scp079CancelledRoomLockdownEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "room", ev.Room.name }
+        { "room", ev.Room.Base.name }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.on079cancellockdown", variables);
     }
 
-    [PluginEvent]
-    public void OnRecallZombie(Scp049ResurrectBodyEvent ev)
+    public override void OnScp049ResurrectedBody(Scp049ResurrectedBodyEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>();
+      Dictionary<string, string> variables = new();
       variables.AddPlayerVariables(ev.Target, "target");
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.onrecallzombie", variables);
     }
 
-    [PluginEvent]
-    public void OnInteractScp330(PlayerInteractScp330Event ev)
+    public override void OnPlayerInteractedScp330(PlayerInteractedScp330EventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "uses", ev.Uses.ToString() }
       };

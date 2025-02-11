@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Events;
-using RemoteAdmin;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Events.CustomHandlers;
+using LabApi.Features.Wrappers;
 
 namespace SCPDiscord.EventListeners
 {
-  internal class ServerEventListener
+  internal class ServerEventListener : CustomEventsHandler
   {
     private readonly SCPDiscord plugin;
 
@@ -16,17 +16,16 @@ namespace SCPDiscord.EventListeners
       this.plugin = plugin;
     }
 
-    [PluginEvent]
-    public void OnPlayerBanned(PlayerBannedEvent ev)
+    public override void OnPlayerBanned(PlayerBannedEventArgs ev)
     {
       if (!(ev.Player is Player player))
       {
         return;
       }
 
-      if (ev.Issuer != null)
+      if (ev.Issuer != null && ev.Issuer.PlayerId != Player.Host?.PlayerId)
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
           { "duration", Utilities.SecondsToCompoundTime(ev.Duration) },
           { "reason",   ev.Reason }
@@ -45,7 +44,7 @@ namespace SCPDiscord.EventListeners
       }
       else
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
           { "duration", Utilities.SecondsToCompoundTime(ev.Duration) },
           { "reason",   ev.Reason }
@@ -63,29 +62,27 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnPlayerKicked(PlayerKickedEvent ev)
+    public override void OnPlayerKicked(PlayerKickedEventArgs ev)
     {
       if (ev.Player == null)
       {
         return;
       }
 
-      if (ev.Issuer is PlayerCommandSender playerSender && Player.Get(playerSender.ReferenceHub) != null)
+      if (ev.Issuer != null && ev.Issuer.PlayerId != Player.Host?.PlayerId)
       {
-        Player issuer = Player.Get(playerSender.ReferenceHub);
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
           { "reason", ev.Reason}
         };
-        variables.AddPlayerVariables(issuer, "issuer");
+        variables.AddPlayerVariables(ev.Issuer, "issuer");
         variables.AddPlayerVariables(ev.Player, "player");
 
         SCPDiscord.SendMessage("messages.onkick.player", variables);
       }
       else
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
           { "reason", ev.Reason}
         };
@@ -95,10 +92,9 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnBanIssued(BanIssuedEvent ev)
+    public override void OnServerBanIssued(BanIssuedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "duration",    Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
         { "expirytime",  new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
@@ -120,10 +116,9 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnBanUpdated(BanUpdatedEvent ev)
+    public override void OnServerBanUpdated(BanUpdatedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "duration",    Utilities.TicksToCompoundTime(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime + 1000000) },
         { "expirytime",  new DateTime(ev.BanDetails.Expires).ToString("yyyy-MM-dd HH:mm:ss") },
@@ -146,38 +141,37 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnBanRevoked(BanRevokedEvent ev)
+    // TODO: Add more details
+    public override void OnServerBanRevoked(BanRevokedEventArgs ev)
     {
       if (ev.BanType == BanHandler.BanType.IP)
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
-          { "ip", ev.Id },
+          { "ip", ev.BanDetails.Id },
         };
         SCPDiscord.SendMessage("messages.onbanrevoked.ip", variables);
       }
       else
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
-          { "userid", ev.Id },
+          { "userid", ev.BanDetails.Id },
         };
         SCPDiscord.SendMessage("messages.onbanrevoked.userid", variables);
       }
     }
 
-    [PluginEvent]
-    public void OnPlayerMuted(PlayerMutedEvent ev)
+    public override void OnPlayerMuted(PlayerMutedEventArgs ev)
     {
       if (ev?.Player.UserId == null)
       {
         return;
       }
 
-      if (ev.Issuer != null)
+      if (ev.Issuer != null && ev.Issuer.PlayerId != Player.Host?.PlayerId)
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>();
+        Dictionary<string, string> variables = new();
         variables.AddPlayerVariables(ev.Player, "player");
         variables.AddPlayerVariables(ev.Issuer, "issuer");
 
@@ -186,7 +180,7 @@ namespace SCPDiscord.EventListeners
       }
       else
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>();
+        Dictionary<string, string> variables = new();
         variables.AddPlayerVariables(ev.Player, "player");
 
         SCPDiscord.SendMessage(ev.IsIntercom ? "messages.onplayermuted.server.intercom"
@@ -194,17 +188,16 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnPlayerUnmuted(PlayerUnmutedEvent ev)
+    public override void OnPlayerUnmuted(PlayerUnmutedEventArgs ev)
     {
       if (ev.Player == null)
       {
         return;
       }
 
-      if (ev.Issuer != null)
+      if (ev.Issuer != null && ev.Issuer.PlayerId != Player.Host?.PlayerId)
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>();
+        Dictionary<string, string> variables = new();
         variables.AddPlayerVariables(ev.Issuer, "issuer");
         variables.AddPlayerVariables(ev.Player, "player");
 
@@ -213,7 +206,7 @@ namespace SCPDiscord.EventListeners
       }
       else
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>();
+        Dictionary<string, string> variables = new();
         variables.AddPlayerVariables(ev.Player, "player");
 
         SCPDiscord.SendMessage(ev.IsIntercom ? "messages.onplayerunmuted.server.intercom"
@@ -221,8 +214,8 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnRemoteAdminCommand(RemoteAdminCommandExecutedEvent ev)
+    // TODO: Seem to be merged into one
+    /*public void OnRemoteAdminCommand(RemoteAdminResponse ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
@@ -242,7 +235,6 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
     public void OnGameConsoleCommand(PlayerGameConsoleCommandExecutedEvent ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
@@ -262,7 +254,6 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
     public void OnConsoleCommand(ConsoleCommandExecutedEvent ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
@@ -283,7 +274,6 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
     public void OnRemoteAdminCommand(RemoteAdminCommandEvent ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
@@ -302,7 +292,6 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
     public void OnGameConsoleCommand(PlayerGameConsoleCommandEvent ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
@@ -321,7 +310,6 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
     public void OnConsoleCommand(ConsoleCommandEvent ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
@@ -338,78 +326,72 @@ namespace SCPDiscord.EventListeners
       {
         SCPDiscord.SendMessage("messages.oncallcommand.console.server", variables);
       }
-    }
+    }*/
 
-    [PluginEvent]
-    public void OnRoundStart(RoundStartEvent ev)
+    public override void OnServerRoundStarted()
     {
       SCPDiscord.SendMessage("messages.onroundstart");
       plugin.roundStarted = true;
     }
 
-    [PluginEvent]
-    public void OnConnect(PlayerPreauthEvent ev)
+    public override void OnPlayerPreAuthenticated(PlayerPreAuthenticatedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "ipaddress", ev.IpAddress                    },
         { "userid",    ev.UserId.Replace("@steam", "") },
-        { "jointype",  ev.CentralFlags.ToString()      },
+        { "jointype",  ev.Flags.ToString()             }, // TODO: This cant be right
         { "region",    ev.Region                       }
       };
       SCPDiscord.SendMessage("messages.onconnect", variables);
     }
 
-    [PluginEvent]
-    public void OnRoundEnd(RoundEndEvent ev)
+    /*public override void OnServerRoundEnded(RoundEndedEventArgs ev)
     {
-      if (plugin.roundStarted && new TimeSpan(DateTime.Now.Ticks - Statistics.CurrentRound.StartTimestamp.Ticks).TotalSeconds > 60)
+      if (plugin.roundStarted && RoundStart.RoundLength.TotalSeconds > 60)
       {
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
-          { "duration",          (new TimeSpan(DateTime.Now.Ticks - Statistics.CurrentRound.StartTimestamp.Ticks).TotalSeconds / 60).ToString("0") },
+          { "duration",          (RoundStart.RoundLength.TotalSeconds / 60).ToString("0") },
           { "leadingteam",        ev.LeadingTeam.ToString()                            },
           { "dclassalive",        Statistics.CurrentRound.ClassDAlive.ToString()       },
           { "dclassdead",         Statistics.CurrentRound.ClassDDead.ToString()        },
-          { "dclassescaped",      Statistics.CurrentRound.ClassDEscaped.ToString()     },
+          { "dclassescaped",      RoundSummary.EscapedClassD.ToString()                },
           { "dclassstart",        Statistics.CurrentRound.ClassDStart.ToString()       },
           { "mtfalive",           Statistics.CurrentRound.MtfAndGuardsAlive.ToString() },
           { "mtfdead",            Statistics.CurrentRound.MtfAndGuardsDead.ToString()  },
           { "mtfstart",           Statistics.CurrentRound.MtfAndGuardsStart.ToString() },
           { "scientistsalive",    Statistics.CurrentRound.ScientistsAlive.ToString()   },
           { "scientistsdead",     Statistics.CurrentRound.ScientistsDead.ToString()    },
-          { "scientistsescaped",  Statistics.CurrentRound.ScientistsEscaped.ToString() },
+          { "scientistsescaped",  RoundSummary.EscapedScientists.ToString()            },
           { "scientistsstart",    Statistics.CurrentRound.ScientistsStart.ToString()   },
-          { "scpalive",           Statistics.CurrentRound.ScpsAlive.ToString()         },
+          { "scpalive",           RoundSummary.SurvivingSCPs.ToString()                },
           { "scpdead",            Statistics.CurrentRound.ScpsDead.ToString()          },
-          { "scpkills",           Statistics.CurrentRound.TotalScpKills.ToString()     },
+          { "scpkills",           RoundSummary.KilledBySCPs.ToString()                 },
           { "scpstart",           Statistics.CurrentRound.ScpsStart.ToString()         },
-          { "warheaddetonated",   Statistics.CurrentRound.WarheadDetonated.ToString()  },
+          { "warheaddetonated",   Warhead.IsDetonated.ToString()                       },
           { "warheadkills",       Statistics.CurrentRound.WarheadKills.ToString()      },
           { "zombiesalive",       Statistics.CurrentRound.ZombiesAlive.ToString()      },
-          { "zombieschanged",     Statistics.CurrentRound.ZombiesChanged.ToString()    }
+          { "zombieschanged",     RoundSummary.ChangedIntoZombies.ToString()           }
         };
         SCPDiscord.SendMessage("messages.onroundend", variables);
       }
       plugin.roundStarted = false;
-    }
+    }*/
 
-    [PluginEvent]
-    public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+    public override void OnServerWaitingForPlayers()
     {
       SCPDiscord.SendMessage("messages.onwaitingforplayers");
     }
 
-    [PluginEvent]
-    public void OnRoundRestart(RoundRestartEvent ev)
+    public override void OnServerRoundRestarted()
     {
       SCPDiscord.SendMessage("messages.onroundrestart");
     }
 
-    [PluginEvent]
-    public void OnPlayerCheaterReport(PlayerCheaterReportEvent ev)
+    public override void OnPlayerReportedCheater(PlayerReportedCheaterEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "reason", ev.Reason }
       };
@@ -418,10 +400,9 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onplayercheaterreport", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerReport(PlayerReportEvent ev)
+    public override void OnPlayerReportedPlayer(PlayerReportedPlayerEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "reason", ev.Reason }
       };

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
-using PluginAPI.Core;
-using PluginAPI.Events;
+using LabApi.Events;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Handlers;
+using LabApi.Features.Wrappers;
 using SCPDiscord.Interface;
 
 namespace SCPDiscord.BotCommands
@@ -81,7 +83,10 @@ namespace SCPDiscord.BotCommands
       if (Utilities.TryGetPlayer(userID, out Player player))
       {
         MuteSystem.ignoreUserID = userID;
-        if (!EventManager.ExecuteEvent(new PlayerMutedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, false)))
+
+        PlayerMutingEventArgs mutedEventArgs = new PlayerMutingEventArgs(player.ReferenceHub, Player.Host?.ReferenceHub, false);
+        PlayerEvents.OnMuting(mutedEventArgs);
+        if (mutedEventArgs.IsAllowed)
         {
           EmbedMessage embed = new EmbedMessage
           {
@@ -174,7 +179,9 @@ namespace SCPDiscord.BotCommands
       if (Utilities.TryGetPlayer(userID, out Player player))
       {
         MuteSystem.ignoreUserID = userID;
-        if (!EventManager.ExecuteEvent(new PlayerUnmutedEvent(player.ReferenceHub, Server.Instance.ReferenceHub, false)))
+        PlayerUnmutingEventArgs unmutingEventArgs = new PlayerUnmutingEventArgs(player.ReferenceHub, Player.Host?.ReferenceHub, false);
+        PlayerEvents.OnUnmuting(unmutingEventArgs);
+        if (unmutingEventArgs.IsAllowed)
         {
           EmbedMessage embed = new EmbedMessage
           {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using LabApi.Features.Wrappers;
 using PlayerRoles;
-using PluginAPI.Core;
 
 namespace SCPDiscord
 {
@@ -32,7 +32,14 @@ namespace SCPDiscord
 
       if (group != null)
       {
-        player.ReferenceHub.serverRoles.SetGroup(ServerStatic.GetPermissionsHandler().GetGroup(group), false);
+        if (ServerStatic.PermissionsHandler.Groups.TryGetValue(group, out UserGroup handlerGroup))
+        {
+          player.ReferenceHub.serverRoles.SetGroup(handlerGroup, false);
+        }
+        else
+        {
+          Logger.Warn("Tried to assign " + player.DisplayName + " the group " + group + " but it does not exist.");
+        }
       }
 
       if (color != null)
@@ -49,9 +56,9 @@ namespace SCPDiscord
     public static bool TryGetRank(this Player player, out string rank)
     {
       // TODO: Update this when fixed by northwood
-      if (!string.IsNullOrWhiteSpace(ServerStatic.GetPermissionsHandler()?.GetUserGroup(player.UserId)?.BadgeText))
+      if (!string.IsNullOrWhiteSpace(ServerStatic.PermissionsHandler?.GetUserGroup(player.UserId)?.BadgeText))
       {
-        rank = ServerStatic.GetPermissionsHandler().GetUserGroup(player.UserId).BadgeText;
+        rank = ServerStatic.PermissionsHandler.GetUserGroup(player.UserId).BadgeText;
         return true;
       }
 

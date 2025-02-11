@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 using SCPDiscord.Interface;
 
 namespace SCPDiscord.BotCommands
@@ -105,7 +105,7 @@ namespace SCPDiscord.BotCommands
     private static List<string> GetOnlineSyncedPlayers(ulong channelID)
     {
       List<string> rows = new List<string>();
-      foreach (Player player in Player.GetPlayers())
+      foreach (Player player in Player.List)
       {
         if (!RoleSync.IsPlayerSynced(player.UserId, out ulong discordID))
         {

@@ -1,4 +1,4 @@
-[![Downloads](https://img.shields.io/github/downloads/KarlOfDuty/SCPDiscord/total.svg)](https://github.com/KarlOfDuty/SCPDiscord/releases) [![Release](https://img.shields.io/github/release/KarlofDuty/SCPDiscord.svg)](https://github.com/KarlOfDuty/SCPDiscord/releases) ![GitHub commits since latest release](https://img.shields.io/github/commits-since/karlofduty/scpdiscord/latest) [![Discord Server](https://img.shields.io/discord/430468637183442945.svg?label=discord)](https://discord.gg/C5qMvkj) [![Build Status](https://jenkins.karlofduty.com/job/NWAPI/job/SCPDiscord/job/main/badge/icon)](https://jenkins.karlofduty.com/blue/organizations/jenkins/NWAPI%2FSCPDiscord/activity) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ac66145c080446898df41f137bdb9370)](https://app.codacy.com/gh/KarlOfDuty/SCPDiscord/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) ![GitHub License](https://img.shields.io/github/license/karlofduty/scpdiscord)
+[![Downloads](https://img.shields.io/github/downloads/KarlOfDuty/SCPDiscord-LabAPI/total.svg)](https://github.com/KarlOfDuty/SCPDiscord/releases) [![Release](https://img.shields.io/github/release/KarlofDuty/SCPDiscord-LabAPI.svg)](https://github.com/KarlOfDuty/SCPDiscord-LabAPI/releases) ![GitHub commits since latest release](https://img.shields.io/github/commits-since/karlofduty/scpdiscord-labapi/latest) [![Discord Server](https://img.shields.io/discord/430468637183442945.svg?label=discord)](https://discord.gg/C5qMvkj) [![Build Status](https://jenkins.karlofduty.com/job/LabAPI/job/SCPDiscord/job/main/badge/icon)](https://jenkins.karlofduty.com/blue/organizations/jenkins/LabAPI%2FSCPDiscord/activity) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bfbb7dd85d824e9998cb7174e3679ce7)](https://app.codacy.com/gh/KarlOfDuty/SCPDiscord-LabAPI/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) ![GitHub License](https://img.shields.io/github/license/karlofduty/scpdiscord-labapi)
 
 # SCPDiscord
 
@@ -6,7 +6,7 @@ SCPDiscord is a very customisable Discord bot + SCP:SL plugin combo which lets y
 
 ## Download
 
-You can download the latest release [here](https://github.com/KarlOfDuty/SCPDiscord/releases) or the latest dev build [here](https://jenkins.karlofduty.com/blue/organizations/jenkins/NWAPI%2FSCPDiscord/activity).
+You can download the latest release [here](https://github.com/KarlOfDuty/SCPDiscord-LabAPI/releases) or the latest dev build [here](https://jenkins.karlofduty.com/blue/organizations/jenkins/LabAPI%2FSCPDiscord/activity).
 
 ## Guides
 

@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
-using InventorySystem.Items.Firearms.Modules;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Events.CustomHandlers;
+using LabApi.Features.Wrappers;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp3114;
 using PlayerRoles.PlayableScps.Scp939;
 using PlayerStatsSystem;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Events;
-using Respawning;
 
 namespace SCPDiscord.EventListeners
 {
-  internal class PlayerEventListener
+  internal class PlayerEventListener : CustomEventsHandler
   {
     private readonly SCPDiscord plugin;
 
@@ -115,8 +114,7 @@ namespace SCPDiscord.EventListeners
     }
 
 
-    [PluginEvent]
-    public void OnPlayerHurt(PlayerDamageEvent ev)
+    public override void OnPlayerHurt(PlayerHurtEventArgs ev)
     {
       if (ev.Target == null || ev.Target.Role == RoleTypeId.None || !(ev.DamageHandler is StandardDamageHandler stdHandler))
       {
@@ -150,8 +148,7 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnPlayerDie(PlayerDyingEvent ev)
+    public override void OnPlayerDeath(PlayerDeathEventArgs ev)
     {
       if (ev.Player == null || ev.Player.Role == RoleTypeId.None || !(ev.DamageHandler is StandardDamageHandler))
       {
@@ -184,75 +181,68 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnPlayerPickupAmmo(PlayerPickupAmmoEvent ev)
+    public override void OnPlayerPickedUpAmmo(PlayerPickedUpAmmoEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "ammo", ev.Item.Info.ItemId.ToString() }
+        { "ammo", ev.AmmoType.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.onplayerpickupammo", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerPickupArmor(PlayerPickupArmorEvent ev)
+    public override void OnPlayerPickedUpArmor(PlayerPickedUpArmorEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "armor", ev.Item.Info.ItemId.ToString() }
+        { "armor", ev.Item?.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerpickuparmor", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerPickupSCP330(PlayerPickupScp330Event ev)
+    public override void OnPlayerPickedUpScp330(PlayerPickedUpScp330EventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>();
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerpickupscp330", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerPickupItem(PlayerSearchedPickupEvent ev)
+    public override void OnPlayerPickedUpItem(PlayerPickedUpItemEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "item", ev.Item.Info.ItemId.ToString() }
+        { "item", ev.Item.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerpickupitem", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerDropAmmo(PlayerDropAmmoEvent ev)
+    public override void OnPlayerDroppedAmmo(PlayerDroppedAmmoEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "ammo",   ev.Item.ToString()   },
+        { "ammo",   ev.Type.ToString()   },
         { "amount", ev.Amount.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerdropammo", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerDropItem(PlayerDropItemEvent ev)
+    public override void OnPlayerDroppedItem(PlayerDroppedItemEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "item", ev.Item.ItemTypeId.ToString() }
+        { "item", ev.Pickup.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerdropitem", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerJoin(PlayerJoinedEvent ev)
+    public override void OnPlayerJoined(PlayerJoinedEventArgs ev)
     {
-      if (ev.Player.PlayerId == Server.Instance.PlayerId)
+      if (ev.Player.PlayerId == Player.Host?.PlayerId)
       {
         return;
       }
@@ -262,10 +252,9 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onplayerjoin", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerLeave(PlayerLeftEvent ev)
+    public override void OnPlayerLeft(PlayerLeftEventArgs ev)
     {
-      if (ev.Player?.PlayerId == Server.Instance.PlayerId || ev.Player?.UserId == null)
+      if (ev.Player?.PlayerId == Player.Host?.PlayerId || ev.Player?.UserId == null)
       {
         return;
       }
@@ -275,15 +264,13 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onplayerleave", variables);
     }
 
-    [PluginEvent]
-    public void OnSpawn(PlayerSpawnEvent ev)
+    public override void OnPlayerSpawned(PlayerSpawnedEventArgs ev)
     {
-      if (ev.Player == null
-          || ev.Player.UserId == "server"
-          || ev.Player.UserId == null
-          || ev.Role == RoleTypeId.None
-          || ev.Role == RoleTypeId.Spectator
-          || ev.Role == RoleTypeId.Overwatch)
+      if (ev.Player?.UserId == null
+          || ev.Player.UserId == Player.Host?.UserId
+          || ev.Role.RoleTypeId == RoleTypeId.None
+          || ev.Role.RoleTypeId == RoleTypeId.Spectator
+          || ev.Role.RoleTypeId == RoleTypeId.Overwatch)
       {
         return;
       }
@@ -293,43 +280,39 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onspawn", variables);
     }
 
-    [PluginEvent]
-    public void OnTeamRespawn(TeamRespawnEvent ev)
+    public override void OnServerWaveRespawned(WaveRespawnedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
         { "players", ev.Players.Select(x => x.Nickname).ToString() }
       };
-      SCPDiscord.SendMessage(ev.Team == Faction.FoundationEnemy ? "messages.onteamrespawn.ci" : "messages.onteamrespawn.mtf", variables);
+      SCPDiscord.SendMessage(ev.Team == Team.ChaosInsurgency ? "messages.onteamrespawn.ci" : "messages.onteamrespawn.mtf", variables);
     }
 
-    [PluginEvent]
-    public void OnThrowProjectile(PlayerThrowProjectileEvent ev)
+    public override void OnPlayerThrewProjectile(PlayerThrewProjectileEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
         { "type", ev.Item.ItemTypeId.ToString() }
       };
-      variables.AddPlayerVariables(ev.Thrower, "player");
+      variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onthrowprojectile", variables);
     }
 
-    [PluginEvent]
-    public void OnItemUse(PlayerUsedItemEvent ev)
+    public override void OnPlayerUsedItem(PlayerUsedItemEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "item", ev.Item.ItemTypeId.ToString() }
+        { "item", ev.Item.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onitemuse", variables);
     }
 
-    [PluginEvent]
-    public void OnHandcuffed(PlayerHandcuffEvent ev)
+    public override void OnPlayerCuffed(PlayerCuffedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>();
-      if (ev.Player == null)
+      if (ev.Player == null || ev.Player.PlayerId == Player.Host?.PlayerId)
       {
         variables.AddPlayerVariables(ev.Target, "target");
         SCPDiscord.SendMessage("messages.onhandcuff.nootherplayer", variables);
@@ -342,11 +325,10 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnHandcuffsRemoved(PlayerRemoveHandcuffsEvent ev)
+    public override void OnPlayerUncuffed(PlayerUncuffedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>();
-      if (ev.Player != null)
+      if (ev.Player != null && ev.Player.PlayerId == Player.Host?.PlayerId)
       {
         variables.AddPlayerVariables(ev.Target, "target");
         variables.AddPlayerVariables(ev.Player, "disarmer");
@@ -359,36 +341,36 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnReload(PlayerReloadWeaponEvent ev)
+    // TODO: Check variables
+    /*
+    public override void OnPlayerReloadedWeapon(PlayerReloadedWeaponEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "weapon",      ev.Firearm.ItemTypeId.ToString()                },
-        { "maxclipsize", ev.Firearm.GetTotalMaxAmmo().ToString() }
+        { "weapon",      ev.Weapon.Type.ToString()                },
+        { "maxclipsize", ev.Weapon.GetTotalMaxAmmo().ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onreload", variables);
     }
+    */
 
-    [PluginEvent]
-    public void OnGrenadeExplosion(GrenadeExplodedEvent ev)
+    public override void OnServerGrenadeExploded(GrenadeExplodedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
         { "type", ev?.Grenade.Info.ItemId.ToString() }
       };
 
-      if (ev?.Thrower.Hub != null)
+      if (ev?.Player != null)
       {
-        variables.AddPlayerVariables(new Player(ev.Thrower.Hub), "player");
+        variables.AddPlayerVariables(ev.Player, "player");
       }
 
       SCPDiscord.SendMessage("messages.ongrenadeexplosion", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerEscape(PlayerEscapeEvent ev)
+    public override void OnPlayerEscaped(PlayerEscapedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
@@ -398,8 +380,7 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onplayerescape", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerReceiveEffect(PlayerReceiveEffectEvent ev)
+    public override void OnPlayerReceivedEffect(PlayerReceivedEffectEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GameCore;
-using PluginAPI.Helpers;
+using LabApi.Loader.Features.Paths;
 
 namespace SCPDiscord
 {
@@ -420,9 +420,11 @@ namespace SCPDiscord
       configDicts[key] = value;
     }
 
+    // TODO: Update paths with local/global paths
+
     public static string GetSCPSLConfigDir()
     {
-      return Paths.SecretLab + "/";
+      return PathManager.SecretLab + "/";
     }
 
     public static string GetUserIDBansFile()
@@ -437,7 +439,7 @@ namespace SCPDiscord
 
     public static string GetConfigDir()
     {
-      return Paths.LocalPlugins.Plugins + "/SCPDiscord/";
+      return PathManager.Plugins + "/SCPDiscord/";
     }
 
     public static string GetConfigPath()
@@ -449,11 +451,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.language"))
       {
-        return Paths.GlobalPlugins.Plugins + "/SCPDiscord/Languages/";
+        return PathManager.Plugins + "/SCPDiscord/Languages/";
       }
       else
       {
-        return Paths.LocalPlugins.Plugins + "/SCPDiscord/Languages/";
+        return PathManager.Plugins + "/SCPDiscord/Languages/";
       }
     }
 
@@ -461,11 +463,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.rolesync"))
       {
-        return Paths.GlobalPlugins.Plugins + "/SCPDiscord/";
+        return PathManager.Plugins + "/SCPDiscord/";
       }
       else
       {
-        return Paths.LocalPlugins.Plugins + "/SCPDiscord/";
+        return PathManager.Plugins + "/SCPDiscord/";
       }
     }
 
@@ -478,11 +480,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.mutes"))
       {
-        return Paths.GlobalPlugins.Plugins + "/SCPDiscord/";
+        return PathManager.Plugins + "/SCPDiscord/";
       }
       else
       {
-        return Paths.LocalPlugins.Plugins + "/SCPDiscord/";
+        return PathManager.Plugins + "/SCPDiscord/";
       }
     }
 
@@ -495,11 +497,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.playtime"))
       {
-        return Paths.GlobalPlugins.Plugins + "/SCPDiscord/";
+        return PathManager.Plugins + "/SCPDiscord/";
       }
       else
       {
-        return Paths.LocalPlugins.Plugins + "/SCPDiscord/";
+        return PathManager.Plugins + "/SCPDiscord/";
       }
     }
 

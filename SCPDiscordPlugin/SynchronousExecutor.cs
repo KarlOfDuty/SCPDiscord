@@ -1,9 +1,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using PluginAPI.Core;
 using SCPDiscord.Interface;
 using UnityEngine;
 using System.Linq;
+using LabApi.Events.CustomHandlers;
+using LabApi.Features.Wrappers;
 
 namespace SCPDiscord
 {

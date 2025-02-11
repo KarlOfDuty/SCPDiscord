@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -651,7 +651,7 @@ namespace SCPDiscord
     {
       bool filterIPs = ShouldFilterIP(channelID);
       bool filterSteamIDs = ShouldFilterSteamID(channelID);
-      foreach (Player player in Player.GetPlayers())
+      foreach (Player player in Player.List)
       {
         if (filterIPs && !string.IsNullOrWhiteSpace(player.IpAddress))
         {

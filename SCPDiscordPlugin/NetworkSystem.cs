@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 
 namespace SCPDiscord
 {

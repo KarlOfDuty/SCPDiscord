@@ -8,11 +8,13 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using GameCore;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.CustomHandlers;
+using LabApi.Features;
+using LabApi.Features.Wrappers;
+using LabApi.Loader.Features.Plugins;
+using LabApi.Loader.Features.Plugins.Enums;
 using Mirror.LiteNetLib4Mirror;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using PluginAPI.Events;
 using YamlDotNet.Core;
 
 [assembly:AssemblyVersion(SCPDiscord.SCPDiscord.VERSION)]
@@ -23,9 +25,9 @@ using YamlDotNet.Core;
 
 namespace SCPDiscord
 {
-  public class SCPDiscord
+  public class SCPDiscord : Plugin
   {
-    public const string VERSION = "3.2.4";
+    public const string VERSION = "3.3.0";
 
     private readonly Stopwatch serverStartTime = new Stopwatch();
 
@@ -39,11 +41,25 @@ namespace SCPDiscord
 
     private Utilities.FileWatcher reservedSlotsWatcher;
 
+    public override string Name => "SCPDiscord";
+    public override string Description => "SCP:SL - Discord bridge.";
+    public override string Author => "Karl Essinger";
+    public override System.Version Version { get; } = new(3, 3, 0, 0);
+    public override System.Version RequiredApiVersion { get; } = new(LabApiProperties.CompiledVersion);
+    public override LoadPriority Priority => LoadPriority.Lowest;
+
     //private Utilities.FileWatcher vanillaMutesWatcher;
     private Utilities.FileWatcher whitelistWatcher;
 
-    [PluginEntryPoint("SCPDiscord", VERSION, "SCP:SL - Discord bridge.", "Karl Essinger")]
-    public void Start()
+    private MuteEventListener muteEventListener;
+    private TimeTrackingListener timeTrackingListener;
+    private SyncPlayerRole syncPlayerRole;
+    private PlayerEventListener playerEventListener;
+    private ServerEventListener serverEventListener;
+    private EnvironmentEventListener environmentEventListener;
+    private SCPEventListener scpEventListener;
+
+    public override void Enable()
     {
       plugin = this;
 
@@ -55,14 +71,22 @@ namespace SCPDiscord
       LiteNetLib4MirrorNetworkManager.singleton.gameObject.AddComponent<SynchronousExecutor>();
       sync = LiteNetLib4MirrorNetworkManager.singleton.gameObject.GetComponent<SynchronousExecutor>();
 
+      muteEventListener = new MuteEventListener();
+      timeTrackingListener = new TimeTrackingListener();
+      syncPlayerRole = new SyncPlayerRole();
+      playerEventListener = new PlayerEventListener(this);
+      serverEventListener = new ServerEventListener(this);
+      environmentEventListener = new EnvironmentEventListener(this);
+      scpEventListener = new SCPEventListener(this);
+
       // Event handlers
-      EventManager.RegisterEvents(this, sync);
-      EventManager.RegisterEvents(this, new MuteEventListener());
-      EventManager.RegisterEvents(this, new TimeTrackingListener());
-      EventManager.RegisterEvents(this, new SyncPlayerRole());
-      EventManager.RegisterEvents(this, new PlayerEventListener(this));
-      EventManager.RegisterEvents(this, new ServerEventListener(this));
-      EventManager.RegisterEvents(this, new EnvironmentEventListener(this));
+      CustomHandlersManager.RegisterEventsHandler(muteEventListener);
+      CustomHandlersManager.RegisterEventsHandler(timeTrackingListener);
+      CustomHandlersManager.RegisterEventsHandler(syncPlayerRole);
+      CustomHandlersManager.RegisterEventsHandler(playerEventListener);
+      CustomHandlersManager.RegisterEventsHandler(serverEventListener);
+      CustomHandlersManager.RegisterEventsHandler(environmentEventListener);
+      CustomHandlersManager.RegisterEventsHandler(scpEventListener);
 
       if (Server.Port == Config.GetInt("bot.port"))
       {
@@ -87,16 +111,15 @@ namespace SCPDiscord
       Logger.Info("SCPDiscord " + VERSION + " enabled.");
     }
 
-    private class SyncPlayerRole
+    private class SyncPlayerRole : CustomEventsHandler
     {
-      [PluginEvent(ServerEventType.PlayerJoined)]
-      public void OnPlayerJoin(Player player)
+      public void OnPlayerJoin(PlayerJoinedEventArgs ev)
       {
-        if (player == null || !Config.GetBool("settings.rolesync")) return;
+        if (ev.Player == null || !Config.GetBool("settings.rolesync")) return;
 
         try
         {
-          RoleSync.SendRoleQuery(player);
+          RoleSync.SendRoleQuery(ev.Player);
         }
         catch (Exception e)
         {
@@ -163,10 +186,11 @@ namespace SCPDiscord
       return false;
     }
 
-    public void OnDisable()
+    public override void Disable()
     {
       shutdown = true;
       NetworkSystem.Disconnect();
+      CustomHandlersManager.UnregisterEventsHandler(new SyncPlayerRole());
       Logger.Info("SCPDiscord disabled.");
     }
 

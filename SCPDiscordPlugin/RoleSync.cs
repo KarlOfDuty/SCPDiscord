@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CentralAuth;
+using LabApi.Features.Wrappers;
 using Newtonsoft.Json;
-using PluginAPI.Core;
 
 namespace SCPDiscord
 {
@@ -122,7 +121,7 @@ namespace SCPDiscord
         try
         {
           Logger.Debug("Looking for player with SteamID/IP: " + userInfo.SteamIDOrIP);
-          foreach (Player pl in Player.GetPlayers<Player>())
+          foreach (Player pl in Player.List)
           {
             Logger.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " IP " + pl.IpAddress);
             if (pl.UserId == userInfo.SteamIDOrIP)

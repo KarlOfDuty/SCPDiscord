@@ -1,6 +1,5 @@
 using System;
 using CommandSystem;
-using PluginAPI.Core;
 
 namespace SCPDiscord.Commands
 {

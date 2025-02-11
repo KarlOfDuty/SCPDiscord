@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.Arguments.Scp914Events;
+using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Events.Arguments.WarheadEvents;
+using LabApi.Events.CustomHandlers;
+using LabApi.Features.Wrappers;
 using MapGeneration;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Events;
 
 namespace SCPDiscord.EventListeners
 {
-  internal class EnvironmentEventListener
+  internal class EnvironmentEventListener : CustomEventsHandler
   {
     private readonly SCPDiscord plugin;
 
@@ -15,10 +18,9 @@ namespace SCPDiscord.EventListeners
       plugin = pl;
     }
 
-    [PluginEvent]
-    public void OnPocketDimensionExit(PlayerExitPocketDimensionEvent ev)
+    public override void OnPlayerLeftPocketDimension(PlayerLeftPocketDimensionEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "successful", ev.IsSuccessful.ToString() }
       };
@@ -26,19 +28,17 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onpocketdimensionexit", variables);
     }
 
-    [PluginEvent]
-    public void OnPocketDimensionEnter(Scp106TeleportPlayerEvent ev)
+    public override void OnPlayerEnteredPocketDimension(PlayerEnteredPocketDimensionEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>();
-      variables.AddPlayerVariables(ev.Target, "target");
-      variables.AddPlayerVariables(ev.Player, "attacker");
+      Dictionary<string, string> variables = new();
+      variables.AddPlayerVariables(ev.Player, "target");
+      //variables.AddPlayerVariables(ev.Attacker, "attacker"); // TODO: Fix
       SCPDiscord.SendMessage("messages.onpocketdimensionenter", variables);
     }
 
-    [PluginEvent]
-    public void OnSCP914Activate(Scp914ActivateEvent ev)
+    public override void OnScp914Activated(Scp914ActivatedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "knobsetting", ev.KnobSetting.ToString() }
       };
@@ -46,20 +46,19 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onscp914activate", variables);
     }
 
-    [PluginEvent]
-    public void OnElevatorUse(PlayerInteractElevatorEvent ev)
+    public override void OnPlayerInteractedElevator(PlayerInteractedElevatorEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "elevatorname", ev.Elevator.AssignedGroup.ToString() }
+        { "elevatorname", ev.Elevator.Group.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
       SCPDiscord.SendMessage("messages.onelevatoruse", variables);
     }
 
-    [PluginEvent]
-    public void OnStartCountdown(WarheadStartEvent ev)
+    // TODO: Can I still check if it is resumed
+    public override void OnWarheadStarted(WarheadStartedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
@@ -68,25 +67,25 @@ namespace SCPDiscord.EventListeners
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
-      if (ev.Player == null || ev.Player.PlayerId == Server.Instance.PlayerId)
+      // TODO: Add deadmans switch message
+      if (ev.Player == null || ev.Player.PlayerId == Player.Host?.PlayerId)
       {
-        SCPDiscord.SendMessage(ev.IsResumed ? "messages.onstartcountdown.server.resumed" : "messages.onstartcountdown.server.initiated", variables);
+        SCPDiscord.SendMessage(ev.WarheadState.ScenarioType == WarheadScenarioType.Resume ? "messages.onstartcountdown.server.resumed" : "messages.onstartcountdown.server.initiated", variables);
       }
       else
       {
-        SCPDiscord.SendMessage(ev.IsResumed ? "messages.onstartcountdown.player.resumed" : "messages.onstartcountdown.player.initiated", variables);
+        SCPDiscord.SendMessage(ev.WarheadState.ScenarioType == WarheadScenarioType.Resume ? "messages.onstartcountdown.player.resumed" : "messages.onstartcountdown.player.initiated", variables);
       }
     }
 
-    [PluginEvent]
-    public void OnStopCountdown(WarheadStopEvent ev)
+    public override void OnWarheadStopped(WarheadStoppedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "timeleft", Warhead.DetonationTime.ToString("0.##") }
       };
 
-      if (ev.Player == null || ev.Player.PlayerId == Server.Instance.PlayerId)
+      if (ev.Player == null || ev.Player.PlayerId == Player.Host?.PlayerId)
       {
         SCPDiscord.SendMessage("messages.onstopcountdown.noplayer", variables);
       }
@@ -97,30 +96,27 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    [PluginEvent]
-    public void OnDetonate(WarheadDetonationEvent ev)
+    public override void OnWarheadDetonated(WarheadDetonatedEventArgs ev)
     {
       SCPDiscord.SendMessage("messages.ondetonate");
     }
 
-    [PluginEvent]
-    public void OnDecontaminate(LczDecontaminationStartEvent ev)
+    public override void OnServerLczDecontaminationStarted()
     {
       SCPDiscord.SendMessage("messages.ondecontaminate");
     }
 
-    [PluginEvent]
-    public void OnGeneratorFinish(GeneratorActivatedEvent ev)
+    public override void OnServerGeneratorActivated(GeneratorActivatedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "room", ev.Generator?.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
+        { "room", ev.Generator.Room?.Name.ToString() },
       };
       SCPDiscord.SendMessage("messages.ongeneratorfinish", variables);
     }
 
-    [PluginEvent]
-    public void OnPlayerUnlockGenerator(PlayerUnlockGeneratorEvent ev)
+    // TODO: Doesn't seem to exist anymore
+    /*public override void OnPlayerUnlockGenerator(PlayerUnlockGeneratorEvent ev)
     {
           if (ev.Player == null) return;
           Dictionary<string, string> variables = new Dictionary<string, string>
@@ -131,85 +127,79 @@ namespace SCPDiscord.EventListeners
           };
           variables.AddPlayerVariables(ev.Player, "player");
           SCPDiscord.SendMessage("messages.ongeneratorunlock", variables);
-    }
+    }*/
 
-    [PluginEvent]
-    public void OnPlayerOpenGenerator(PlayerOpenGeneratorEvent ev)
-    {
-          if (ev.Player == null) return;
-          Dictionary<string, string> variables = new Dictionary<string, string>
-          {
-            { "engaged",    ev.Generator?.Engaged.ToString() },
-            { "activating", ev.Generator?.Activating.ToString() },
-            { "room",       ev.Generator?.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
-          };
-          variables.AddPlayerVariables(ev.Player, "player");
-          SCPDiscord.SendMessage("messages.ongeneratoropen", variables);
-    }
-
-    [PluginEvent]
-    public void OnPlayerCloseGenerator(PlayerCloseGeneratorEvent ev)
+    public override void OnPlayerOpenedGenerator(PlayerOpenedGeneratorEventArgs ev)
     {
       if (ev.Player == null) return;
-
-          Dictionary<string, string> variables = new Dictionary<string, string>
-          {
-            { "engaged",    ev.Generator?.Engaged.ToString() },
-            { "activating", ev.Generator?.Activating.ToString() },
-            { "room",       ev.Generator?.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
-          };
-          variables.AddPlayerVariables(ev.Player, "player");
-          SCPDiscord.SendMessage("messages.ongeneratorclose", variables);
-    }
-
-    [PluginEvent]
-    public void OnPlayerActivateGenerator(PlayerActivateGeneratorEvent ev)
-    {
-      if (ev.Player == null) return;
-
-          Dictionary<string, string> variables = new Dictionary<string, string>
-          {
-            { "engaged",    ev.Generator?.Engaged.ToString() },
-            { "activating", ev.Generator?.Activating.ToString() },
-            { "room",       ev.Generator?.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
-          };
-          variables.AddPlayerVariables(ev.Player, "player");
-          SCPDiscord.SendMessage("messages.ongeneratoractivated", variables);
-    }
-
-    [PluginEvent]
-    public void OnPlayerDeactivatedGenerator(PlayerDeactivatedGeneratorEvent ev)
-    {
-      if (ev.Player == null) return;
-
-          Dictionary<string, string> variables = new Dictionary<string, string>
-          {
-            { "engaged",    ev.Generator?.Engaged.ToString() },
-            { "activating", ev.Generator?.Activating.ToString() },
-            { "room",       ev.Generator?.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
-          };
+      Dictionary<string, string> variables = new()
+      {
+        { "engaged",    ev.Generator?.Engaged.ToString() },
+        { "activating", ev.Generator?.Activating.ToString() },
+        { "room",       ev.Generator?.Room?.Name.ToString() },
+      };
       variables.AddPlayerVariables(ev.Player, "player");
-          SCPDiscord.SendMessage("messages.ongeneratordeactivated", variables);
+      SCPDiscord.SendMessage("messages.ongeneratoropen", variables);
     }
 
-    [PluginEvent]
-    public void OnMapGenerated(MapGeneratedEvent ev)
+    public override void OnPlayerClosedGenerator(PlayerClosedGeneratorEventArgs ev)
+    {
+      if (ev.Player == null) return;
+
+      Dictionary<string, string> variables = new()
+      {
+        { "engaged",    ev.Generator?.Engaged.ToString() },
+        { "activating", ev.Generator?.Activating.ToString() },
+        { "room",       ev.Generator?.Room?.Name.ToString() },
+      };
+      variables.AddPlayerVariables(ev.Player, "player");
+      SCPDiscord.SendMessage("messages.ongeneratorclose", variables);
+    }
+
+    public override void OnPlayerActivatedGenerator(PlayerActivatedGeneratorEventArgs ev)
+    {
+      if (ev.Player == null) return;
+
+      Dictionary<string, string> variables = new()
+      {
+        { "engaged",    ev.Generator?.Engaged.ToString() },
+        { "activating", ev.Generator?.Activating.ToString() },
+        { "room",       ev.Generator?.Room?.Name.ToString() },
+      };
+      variables.AddPlayerVariables(ev.Player, "player");
+      SCPDiscord.SendMessage("messages.ongeneratoractivated", variables);
+    }
+
+    public override void OnPlayerDeactivatedGenerator(PlayerDeactivatedGeneratorEventArgs ev)
+    {
+      if (ev.Player == null) return;
+
+      Dictionary<string, string> variables = new()
+      {
+        { "engaged",    ev.Generator?.Engaged.ToString() },
+        { "activating", ev.Generator?.Activating.ToString() },
+        { "room",       ev.Generator?.Room?.Name.ToString() },
+      };
+      variables.AddPlayerVariables(ev.Player, "player");
+      SCPDiscord.SendMessage("messages.ongeneratordeactivated", variables);
+    }
+
+    public override void OnServerMapGenerated(MapGeneratedEventArgs ev)
     {
       SCPDiscord.SendMessage("messages.onmapgenerated");
     }
 
-    [PluginEvent]
-    public void OnPlayerInteractLocker(PlayerInteractLockerEvent ev)
+    public override void OnPlayerInteractedLocker(PlayerInteractedLockerEventArgs ev)
     {
       if (ev.Player == null) return;
 
-            Dictionary<string, string> variables = new Dictionary<string, string>
-            {
-                { "chamber", ev.Chamber?.ToString() },
-                { "room",    ev.Chamber?.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
-        { "canopen", ev.CanOpen.ToString() }
-            };
-            variables.AddPlayerVariables(ev.Player, "player");
+      Dictionary<string, string> variables = new()
+      {
+          { "chamber", ev.Chamber?.ToString() },
+          { "room",    ev.Chamber?.Base.GetComponentInParent<RoomIdentifier>()?.Name.ToString() },
+          { "canopen", ev.CanOpen.ToString() }
+      };
+      variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerinteractlocker", variables);
     }
   }
