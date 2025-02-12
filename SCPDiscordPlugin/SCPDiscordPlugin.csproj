@@ -1,145 +1,65 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0952A53A-A70E-4DAA-86A6-6560F2F3607B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SCPDiscord</RootNamespace>
-    <AssemblyName>SCPDiscord</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <LangVersion>default</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\.scpsl_libs\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="CommandSystem.Core">
-      <HintPath>..\.scpsl_libs\CommandSystem.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="LabApi">
-      <HintPath>..\.scpsl_libs\LabApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Mirror">
-      <HintPath>..\.scpsl_libs\Mirror.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\.scpsl_libs\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\.scpsl_libs\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet">
-      <HintPath>..\.scpsl_libs\YamlDotNet.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BotCommands\BanCommand.cs" />
-    <Compile Include="BotCommands\KickallCommand.cs" />
-    <Compile Include="BotCommands\KickCommand.cs" />
-    <Compile Include="BotCommands\ListCommand.cs" />
-    <Compile Include="BotCommands\ListRankedCommand.cs" />
-    <Compile Include="BotCommands\ListSyncedCommand.cs" />
-    <Compile Include="BotCommands\MuteCommand.cs" />
-    <Compile Include="BotCommands\PlayerInfoCommand.cs" />
-    <Compile Include="BotCommands\UnbanCommand.cs" />
-    <Compile Include="Interface\ListRankedCommand.cs" />
-    <Compile Include="Interface\ListSyncedCommand.cs" />
-    <Compile Include="Interface\MuteCommand.cs" />
-    <Compile Include="Interface\PlayerInfoCommand.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="MuteSystem.cs" />
-    <Compile Include="ServerCommands\GrantVanillaRankCommand.cs" />
-    <Compile Include="ServerCommands\RootCommand.cs" />
-    <Compile Include="ServerCommands\SendMessageCommand.cs" />
-    <Compile Include="ServerCommands\SetNickname.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="ServerCommands\DebugCommand.cs" />
-    <Compile Include="EventListeners\ServerEventListener.cs" />
-    <Compile Include="BotListener.cs" />
-    <Compile Include="EventListeners\EnvironmentEventListener.cs" />
-    <Compile Include="EventListeners\PlayerEventListener.cs" />
-    <Compile Include="ServerCommands\GrantReservedSlotCommand.cs" />
-    <Compile Include="EventListeners\SCPEventListener.cs" />
-    <Compile Include="Interface\BanCommand.cs" />
-    <Compile Include="Interface\BotActivity.cs" />
-    <Compile Include="Interface\ChatMessage.cs" />
-    <Compile Include="Interface\ConsoleCommand.cs" />
-    <Compile Include="Interface\EmbedMessage.cs" />
-    <Compile Include="Interface\KickallCommand.cs" />
-    <Compile Include="Interface\KickCommand.cs" />
-    <Compile Include="Interface\ListCommand.cs" />
-    <Compile Include="Interface\MessageWrapper.cs" />
-    <Compile Include="Interface\PaginatedMessage.cs" />
-    <Compile Include="Interface\SyncRoleCommand.cs" />
-    <Compile Include="Interface\UnbanCommand.cs" />
-    <Compile Include="Interface\UnsyncRoleCommand.cs" />
-    <Compile Include="Interface\UserInfo.cs" />
-    <Compile Include="Interface\UserQuery.cs" />
-    <Compile Include="Language.cs" />
-    <Compile Include="NetworkSystem.cs" />
-    <Compile Include="APIExtensions.cs" />
-    <Compile Include="ServerCommands\ReconnectCommand.cs" />
-    <Compile Include="ServerCommands\ReloadCommand.cs" />
-    <Compile Include="ServerCommands\RemoveReservedSlotCommand.cs" />
-    <Compile Include="RoleSync.cs" />
-    <Compile Include="SCPDiscord.cs" />
-    <Compile Include="ServerCommands\UnsyncCommand.cs" />
-    <Compile Include="ServerCommands\ValidateCommand.cs" />
-    <Compile Include="SynchronousExecutor.cs" />
-    <Compile Include="PlayTime.cs" />
-    <Compile Include="Utilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.Memory" Version="4.5.3" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="config.yml" />
-    <EmbeddedResource Include="Languages/brazilian-portuguese.yml" />
-    <EmbeddedResource Include="Languages/emote-overrides.yml" />
-    <EmbeddedResource Include="Languages/emotes.yml" />
-    <EmbeddedResource Include="Languages/english.yml" />
-    <EmbeddedResource Include="Languages/german.yml" />
-    <EmbeddedResource Include="Languages/italian.yml" />
-    <EmbeddedResource Include="Languages/overrides.yml" />
-    <EmbeddedResource Include="Languages/russian.yml" />
-    <EmbeddedResource Include="Languages/simplified-chinese.yml" />
-    <EmbeddedResource Include="Languages/ukrainian.yml" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <AssemblyName>SCPDiscord</AssemblyName>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <FileAlignment>512</FileAlignment>
+        <LangVersion>12</LangVersion>
+        <TargetFramework>net48</TargetFramework>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+        <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+        <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Optimize>true</Optimize>
+        <PlatformTarget>x64</PlatformTarget>
+
+        <Version>3.2.4</Version>
+        <PackageVersion>3.2.4</PackageVersion>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+        <LangVersion>default</LangVersion>
+        <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+        <Company>https://github.com/KarlOfDuty/SCPDiscord</Company>
+        <Copyright>© 2018-2024 Karl Essinger and contributors - licenced under GPLv3"</Copyright>
+        <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/KarlOfDuty/SCPDiscord</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageIconUrl>./icon.ico</PackageIconUrl>
+        <NeutralLanguage>en</NeutralLanguage>
+        <PublishSingleFile>true</PublishSingleFile>
+        <TrimMode>partial</TrimMode>
+        <Product>SCPDiscord</Product>
+        <AssemblyTitle>Connects an SCPDiscord plugin to the Discord API</AssemblyTitle>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/KarlOfDuty/SCPDiscord/main/LICENSE</PackageLicenseUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+          <HintPath>..\.scpsl_libs\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="CommandSystem.Core">
+          <HintPath>..\.scpsl_libs\CommandSystem.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="LabApi">
+          <HintPath>..\.scpsl_libs\LabApi.dll</HintPath>
+        </Reference>
+        <Reference Include="Mirror">
+          <HintPath>..\.scpsl_libs\Mirror.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+          <HintPath>..\.scpsl_libs\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+          <HintPath>..\.scpsl_libs\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="YamlDotNet">
+          <HintPath>..\.scpsl_libs\YamlDotNet.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 </Project>
