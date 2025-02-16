@@ -32,7 +32,9 @@ pipeline {
             parallel {
                 stage('Plugin') {
                     steps {
-                        sh 'msbuild SCPDiscordPlugin/SCPDiscordPlugin.csproj -restore'
+                        dir(path: 'SCPDiscordPlugin') {
+                            sh 'dotnet build --output ./bin'
+                        }
                     }
                 }
                 stage('Bot - Small') {
