@@ -235,8 +235,7 @@ public class DiscordAPI
       {
         if (MessageScheduler.TryUncacheInteraction(interactionID, out SlashCommandContext interaction))
         {
-          await interaction.Interaction.SendPaginatedResponseAsync(false, interaction.User, message, default,
-            default, default, true);
+          await interaction.Interaction.SendPaginatedResponseAsync(false, interaction.User, message);
         }
         else
         {
