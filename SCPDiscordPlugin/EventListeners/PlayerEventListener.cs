@@ -380,7 +380,7 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onplayerescape", variables);
     }
 
-    public override void OnPlayerReceivedEffect(PlayerReceivedEffectEventArgs ev)
+    public override void OnPlayerUpdatedEffect(PlayerEffectUpdatedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {

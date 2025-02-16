@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <AssemblyName>SCPDiscord</AssemblyName>
@@ -61,5 +61,19 @@
     <ItemGroup>
       <PackageReference Include="Google.Protobuf" Version="3.25.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="config.yml" />
+        <EmbeddedResource Include="Languages/brazilian-portuguese.yml" />
+        <EmbeddedResource Include="Languages/emote-overrides.yml" />
+        <EmbeddedResource Include="Languages/emotes.yml" />
+        <EmbeddedResource Include="Languages/english.yml" />
+        <EmbeddedResource Include="Languages/german.yml" />
+        <EmbeddedResource Include="Languages/italian.yml" />
+        <EmbeddedResource Include="Languages/overrides.yml" />
+        <EmbeddedResource Include="Languages/russian.yml" />
+        <EmbeddedResource Include="Languages/simplified-chinese.yml" />
+        <EmbeddedResource Include="Languages/ukrainian.yml" />
     </ItemGroup>
 </Project>

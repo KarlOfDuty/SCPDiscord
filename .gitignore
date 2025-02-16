@@ -336,5 +336,7 @@ SCPDiscordBot/config\.yml
 SCPDiscordBot_Old/config.yml
 
 .scpsl_libs
-current_config.yml
 .dictionary
+
+SCPDiscordPlugin/current_labapi_config.yml
+SCPDiscordPlugin/current_nwapi_config.yml

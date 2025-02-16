@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using LabApi.Features.Wrappers;
@@ -296,38 +297,16 @@ namespace SCPDiscord
     public static string ReadManifestData(string embeddedFileName)
     {
       Assembly assembly = Assembly.GetExecutingAssembly();
-      string resourceName;
-      try
-      {
-        resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFileName, StringComparison.CurrentCultureIgnoreCase));
-      }
-      catch (Exception e)
-      {
-        throw new InvalidOperationException("Could not load file (" + embeddedFileName + ") from manifest: " + e);
-      }
+      string resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFileName, StringComparison.CurrentCultureIgnoreCase));
 
-      Stream stream;
-      try
-      {
-        stream = assembly.GetManifestResourceStream(resourceName);
-      }
-      catch (Exception e)
-      {
-        throw new InvalidOperationException("Could not load file (" + embeddedFileName + ") from manifest: " + e);
-      }
-
+      using Stream stream = assembly.GetManifestResourceStream(resourceName);
       if (stream == null)
       {
         throw new InvalidOperationException("Could not load manifest resource stream.");
       }
 
-      StreamReader reader = new StreamReader(stream);
-      string fileContents = reader.ReadToEnd();
-
-      reader.Dispose();
-      stream.Dispose();
-
-      return fileContents;
+      using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+      return reader.ReadToEnd();
     }
 
     /// <summary>

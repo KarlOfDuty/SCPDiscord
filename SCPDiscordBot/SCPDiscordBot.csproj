@@ -32,10 +32,7 @@
     <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02454" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02454" />
     <PackageReference Include="EmbeddedBuildTime" Version="1.0.3" />
-    <PackageReference Include="GitInfo" Version="3.3.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="GitInfo" Version="2.3.0" />
     <PackageReference Include="Google.Protobuf" Version="3.25.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="YamlDotNet" Version="16.3.0" />

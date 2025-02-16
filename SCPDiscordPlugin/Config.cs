@@ -439,7 +439,7 @@ namespace SCPDiscord
 
     public static string GetConfigDir()
     {
-      return PathManager.Plugins + "/SCPDiscord/";
+      return PathManager.Configs + "/SCPDiscord/";
     }
 
     public static string GetConfigPath()
@@ -451,11 +451,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.language"))
       {
-        return PathManager.Plugins + "/SCPDiscord/Languages/";
+        return PathManager.Configs + "/SCPDiscord/Languages/";
       }
       else
       {
-        return PathManager.Plugins + "/SCPDiscord/Languages/";
+        return PathManager.Configs + "/SCPDiscord/Languages/";
       }
     }
 
@@ -463,11 +463,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.rolesync"))
       {
-        return PathManager.Plugins + "/SCPDiscord/";
+        return PathManager.Configs + "/SCPDiscord/";
       }
       else
       {
-        return PathManager.Plugins + "/SCPDiscord/";
+        return PathManager.Configs + "/SCPDiscord/";
       }
     }
 
@@ -480,11 +480,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.mutes"))
       {
-        return PathManager.Plugins + "/SCPDiscord/";
+        return PathManager.Configs + "/SCPDiscord/";
       }
       else
       {
-        return PathManager.Plugins + "/SCPDiscord/";
+        return PathManager.Configs + "/SCPDiscord/";
       }
     }
 
@@ -497,11 +497,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.playtime"))
       {
-        return PathManager.Plugins + "/SCPDiscord/";
+        return PathManager.Configs + "/SCPDiscord/";
       }
       else
       {
-        return PathManager.Plugins + "/SCPDiscord/";
+        return PathManager.Configs + "/SCPDiscord/";
       }
     }
 

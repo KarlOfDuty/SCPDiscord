@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using SCPDiscord.Interface;
@@ -135,7 +136,7 @@ public static class Utilities
       throw new InvalidOperationException("Could not load manifest resource stream.");
     }
 
-    using StreamReader reader = new StreamReader(stream);
+    using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
     return reader.ReadToEnd();
   }
 

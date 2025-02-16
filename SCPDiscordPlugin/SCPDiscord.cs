@@ -113,7 +113,7 @@ namespace SCPDiscord
 
     private class SyncPlayerRole : CustomEventsHandler
     {
-      public void OnPlayerJoin(PlayerJoinedEventArgs ev)
+      public override void OnPlayerJoined(PlayerJoinedEventArgs ev)
       {
         if (ev.Player == null || !Config.GetBool("settings.rolesync")) return;
 
@@ -190,7 +190,13 @@ namespace SCPDiscord
     {
       shutdown = true;
       NetworkSystem.Disconnect();
-      CustomHandlersManager.UnregisterEventsHandler(new SyncPlayerRole());
+      CustomHandlersManager.UnregisterEventsHandler(muteEventListener);
+      CustomHandlersManager.UnregisterEventsHandler(timeTrackingListener);
+      CustomHandlersManager.UnregisterEventsHandler(syncPlayerRole);
+      CustomHandlersManager.UnregisterEventsHandler(playerEventListener);
+      CustomHandlersManager.UnregisterEventsHandler(serverEventListener);
+      CustomHandlersManager.UnregisterEventsHandler(environmentEventListener);
+      CustomHandlersManager.UnregisterEventsHandler(scpEventListener);
       Logger.Info("SCPDiscord disabled.");
     }
 
