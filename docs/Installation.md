@@ -4,9 +4,9 @@
 
 ### Installing the plugin
 
-#### Option 1: Download using the localadmin package manager
+#### Option 1: Download using the localadmin package manager (recommended)
 
-`p install KarlOfDuty/SCPDiscord` and restart your server.
+`p install KarlOfDuty/SCPDiscord` in the server console and restart your server.
 
 #### Option 2: Manual download
 
