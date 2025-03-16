@@ -22,7 +22,7 @@ You can download the latest release [here](https://github.com/KarlOfDuty/SCPDisc
 
 ### Event logging
 
-Northwood API events such as round starting, player kills, admin commands and many more can be logged to a Discord channel. All are optional and can be toggled individually.
+LabAPI events such as round starting, player kills, admin commands and many more can be logged to a Discord channel. All are optional and can be toggled individually.
 
 ![eventExample.png](docs%2Fimg%2FeventExamples.png)
 
