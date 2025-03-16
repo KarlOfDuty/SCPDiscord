@@ -30,7 +30,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <TrimMode>partial</TrimMode>
         <Product>SCPDiscord</Product>
-        <AssemblyTitle>Connects an SCPDiscord plugin to the Discord API</AssemblyTitle>
+        <AssemblyTitle>SCPDiscordPlugin</AssemblyTitle>
         <PackageLicenseUrl>https://raw.githubusercontent.com/KarlOfDuty/SCPDiscord/main/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
 
