@@ -2,42 +2,41 @@
 
 ## Dependencies
 
-- dotnet-sdk (8.0)
-- mono
+- dotnet-sdk (9.0)
 - protobuf
 
-## Building the plugin
+## Building the plugin and bot
 
 ### Via Rider or Visual Studio
 
-Load the SCPDiscordPlugin project and build using the controls in the IDE.
-
-Note: Rider doesn't support mixing mono and dotnet projects in the same solution so you have to open the projects individually, not the solution.
+Open the SCPDiscord solution and build using the controls in the IDE.
 
 ### Manually
 
 Enter the SCPDiscord plugin directory and use the following command in order to build the plugin:
 ```bash
-msbuild SCPDiscordPlugin.csproj -restore
+dotnet build --output ../bin/plugin
 ```
-
-## Building the bot
-
-### Via Rider or Visual Studio
-
-Load the SCPDiscordBot project and build using the controls in the IDE.
-
-### Manually
 
 Enter the SCPDiscord bot directory and use the following commands:
 ```bash
-dotnet build --output bin/linux-x64 --configuration Release --runtime linux-x64
-dotnet build --output bin/win-x64 --configuration Release --runtime win-x64
+# Normal build
+dotnet build --output ../bin/linux-bot --configuration Release --runtime linux-x64
+dotnet build --output ../bin/win-bot --configuration Release --runtime win-x64
+
+# Build release versions
+dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained false --output ../bin/win-bot-release
+dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained true -p:PublishTrimmed=true --output ../bin/win-bot-release-sc
+dotnet publish -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output ../bin/linux-bot-release
+dotnet publish -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained true -p:PublishTrimmed=true --output ../bin/linux-bot-release-sc
 ```
+
+The plugin and bot should now be built in the `bin` directory in the root of the repo.
 
 ## Generating the network interface
 
-**This section is only needed if you need to edit the network traffic between the plugin and bot.**
+> [!NOTE]
+> This section is only needed if you need to edit the network traffic between the plugin and bot.**
 
 The bot and plugin communicate using protobuf messages. These messages are constructed from protobuf schemas located in the schema directory which are then generated into the bot and plugin's interface directories.
 
