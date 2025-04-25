@@ -13,19 +13,19 @@ namespace SCPDiscord
 
     internal static void Info(string message)
     {
-      Log.Info(message);
+      Log.Info(message.Replace("<", "<\0"));
       LogToFile("INFO", message);
     }
 
     internal static void Warn(string message)
     {
-      Log.Warning(message);
+      Log.Warning(message.Replace("<", "<\0"));
       LogToFile("WARNING", message);
     }
 
     internal static void Error(string message)
     {
-      Log.Error(message);
+      Log.Error(message.Replace("<", "<\0"));
       LogToFile("ERROR", message);
     }
 
@@ -33,7 +33,7 @@ namespace SCPDiscord
     {
       if (Config.GetBool("settings.debug"))
       {
-        Log.Debug(message);
+        Log.Debug(message.Replace("<", "<\0"));
       }
 
       LogToFile("DEBUG", message);
