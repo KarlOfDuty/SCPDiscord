@@ -282,11 +282,14 @@ namespace SCPDiscord.EventListeners
 
     public override void OnServerWaveRespawned(WaveRespawnedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
         { "players", ev.Players.Select(x => x.Nickname).ToString() }
       };
-      SCPDiscord.SendMessage(ev.Team == Team.ChaosInsurgency ? "messages.onteamrespawn.ci" : "messages.onteamrespawn.mtf", variables);
+      SCPDiscord.SendMessage(ev.Wave.Faction == Faction.FoundationEnemy
+                               ? "messages.onteamrespawn.ci"
+                               : "messages.onteamrespawn.mtf",
+                             variables);
     }
 
     public override void OnPlayerThrewProjectile(PlayerThrewProjectileEventArgs ev)
@@ -355,11 +358,11 @@ namespace SCPDiscord.EventListeners
     }
     */
 
-    public override void OnServerGrenadeExploded(GrenadeExplodedEventArgs ev)
+    public override void OnServerExplosionSpawned(ExplosionSpawnedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "type", ev?.Grenade.Info.ItemId.ToString() }
+        { "type", ev?.ExplosionType.ToString() }
       };
 
       if (ev?.Player != null)
