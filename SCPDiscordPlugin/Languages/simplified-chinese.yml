@@ -760,12 +760,7 @@ messages:
     server:
       # duration - int
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**玩家 <var:player-name> (<var:player-userid>) 被服务器封禁 `<var:duration>`. 原因: <var:reason>**"
       regex: []
 
@@ -872,12 +867,7 @@ messages:
       regex: [ ]
     server:
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**玩家 <var:player-name> (<var:player-userid>) 被服务器踢出. 原因: <var:reason>**"
       regex: []
 

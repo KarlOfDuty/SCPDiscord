@@ -1,9 +1,9 @@
 #####################################################################################################################
 #                                                                                                                   #
-#                                                ANÚNCIO DE TRADUÇÃO                                                #   
+#                                                ANÚNCIO DE TRADUÇÃO                                                #
 #                                                                                                                   #
 #     Traduzido por: Firething  Discord: firething                                                                  #
-#     Caso haja algum problema com a tradução, fale comigo. Todo feedback é bem-vindo!                              #                                                                               
+#     Caso haja algum problema com a tradução, fale comigo. Todo feedback é bem-vindo!                              #
 #                                                                                                                   #
 #####################################################################################################################
 
@@ -405,12 +405,7 @@ messages:
     # damage - float
     # damagetype - DamageType
     # attacker - Player
-    # player-ip - string
-    # player-name - string
-    # player-id - int
-    # player-userid - string
-    # playerclass - Role
-    # playerteam - Team
+    # player - Player
     default:
       message: "<var:target-name> (<var:target-userid>) foi ferido por <var:attacker-name> (<var:attacker-userid>) usando <var:damagetype> (<var:damage> hp)."
       regex: ["using UNKNOWN":"usando meios desconhecidos", "-1 de dano":"dano imenso"]
@@ -424,12 +419,7 @@ messages:
   onplayerdie:
     # damagetype - DamageType
     # attacker - Player
-    # player-ip - string
-    # player-name - string
-    # player-id - int
-    # player-userid - string
-    # playerclass - Role
-    # playerteam - Team
+    # player - Player
     default:
       message: "<var:target-name> (<var:target-userid>) foi morto por <var:attacker-name> (<var:attacker-userid>) usando <var:damagetype>."
       regex: ["using UNKNOWN":"usando meios desconhecidos"]
@@ -880,12 +870,7 @@ messages:
     server:
       # duration - int
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Jogador <var:player-name> (<var:player-userid>) foi banido pelo servidor por `<var:duration>`. Razão: <var:reason>**"
       regex: []
       cancel_regex: []
@@ -999,12 +984,7 @@ messages:
       regex: [ ]
     server:
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Jogador <var:player-name> (<var:player-userid>) foi expulso pelo servidor. Razão: <var:reason>**"
       regex: []
       cancel_regex: []
