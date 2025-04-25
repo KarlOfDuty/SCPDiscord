@@ -44,7 +44,7 @@ namespace SCPDiscord
     public override string Name => "SCPDiscord";
     public override string Description => "SCP:SL - Discord bridge.";
     public override string Author => "Karl Essinger";
-    public override System.Version Version { get; } = new(3, 3, 0, 0);
+    public override System.Version Version { get; } = new(3, 3, 0, 1);
     public override System.Version RequiredApiVersion { get; } = new(LabApiProperties.CompiledVersion);
     public override LoadPriority Priority => LoadPriority.Lowest;
 
@@ -107,8 +107,6 @@ namespace SCPDiscord
       PlayTime.Reload();
 
       new Thread(() => new StartNetworkSystem()).Start();
-
-      Logger.Info("SCPDiscord " + VERSION + " enabled.");
     }
 
     private class SyncPlayerRole : CustomEventsHandler
