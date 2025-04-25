@@ -2,21 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Download SCP:SL') {
-            when
-            {
-                expression {
-                    return env.BRANCH_NAME != 'beta';
-                }
-            }
+        stage('Download SCP:SL - NWAPI') {
             steps {
-                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 validate +quit'
-            }
-        }
-        stage('Download SCP:SL - Beta') {
-            when { branch 'beta' }
-            steps {
-                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta experimental validate +quit'
+                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta public validate +quit'
             }
         }
         stage('Set Up Directory Structure') {
