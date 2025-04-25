@@ -395,12 +395,7 @@ messages:
     # damage - float
     # damagetype - DamageType
     # attacker - Player
-    # player-ip - string
-    # player-name - string
-    # player-id - int
-    # player-userid - string
-    # playerclass - Role
-    # playerteam - Team
+    # player - Player
     default:
       message: "<var:target-name> (<var:target-userid>) wurde von <var:attacker-name> (<var:attacker-userid>) mit <var:damagetype> (<var:damage> hp) verletzt."
       regex: ["using UNKNOWN":"mit unbekannten Mitteln", "-1 damage":"immensen Schaden"]
@@ -414,12 +409,7 @@ messages:
   onplayerdie:
     # damagetype - DamageType
     # attacker - Player
-    # player-ip - string
-    # player-name - string
-    # player-id - int
-    # player-userid - string
-    # playerclass - Role
-    # playerteam - Team
+    # player - Player
     default:
       message: "<var:target-name> (<var:target-userid>) wurde von <var:attacker-name> (<var:attacker-userid>) mit <var:damagetype> getötet."
       regex: ["using UNKNOWN":"mit unbekannten Mitteln"]
@@ -783,12 +773,7 @@ messages:
     server:
       # duration - int
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Spieler <var:player-name> (<var:player-userid>) wurde vom Server für `<var:duration>` gesperrt. Grund: <var:reason>**"
       regex: []
       cancel_regex: []
@@ -902,12 +887,7 @@ messages:
       regex: [ ]
     server:
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Spieler <var:player-name> (<var:player-userid>) wurde vom Server gekickt. Grund: <var:reason>**"
       regex: []
       cancel_regex: []

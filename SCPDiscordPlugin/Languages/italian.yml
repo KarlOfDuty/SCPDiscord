@@ -332,12 +332,7 @@ messages:
     # damage - float
     # damagetype - DamageType
     # attacker - Player
-    # player-ip - string
-    # player-name - string
-    # player-id - int
-    # player-userid - string
-    # playerclass - Role
-    # playerteam - Team
+    # player - Player
     default:
       message: "<var:target-name> (<var:target-userid>) � stato danneggiato da <var:attacker-name> (<var:attacker-userid>) utilizzando <var:damagetype> (<var:damage> HP)."
       regex: ["using UNKNOWN":"utilizzando mezzi sconosciuti", "-1 damage":"danni immensi"]
@@ -351,12 +346,7 @@ messages:
   onplayerdie:
     # damagetype - DamageType
     # attacker - Player
-    # player-ip - string
-    # player-name - string
-    # player-id - int
-    # player-userid - string
-    # playerclass - Role
-    # playerteam - Team
+    # player - Player
     default:
       message: "<var:target-name> (<var:target-userid>) � stato ucciso da <var:attacker-name> (<var:attacker-userid>) utilizzando <var:damagetype>."
       regex: ["using UNKNOWN":"utilizzando mezzi sconosciuti"]
@@ -780,12 +770,7 @@ messages:
     server:
       # duration - int
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Il giocatore <var:player-name> (<var:player-userid>) � stato bannato dal server per la durata di: `<var:duration>`. Motivazione: <var:reason>**"
       regex: []
 
@@ -892,12 +877,7 @@ messages:
       regex: []
     server:
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Il giocatore <var:player-name> (<var:player-userid>) � stato kickato dal server. Motivazione: <var:reason>**"
       regex: []
 

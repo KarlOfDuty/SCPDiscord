@@ -751,12 +751,7 @@ messages:
     server:
       # duration - int
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "Player <var:player-name> (<var:player-userid>) був забанений сервером на `<var:duration>`. Причина: <var:reason>"
       regex: []
 
@@ -863,12 +858,7 @@ messages:
       regex: [ ]
     server:
       # reason - string
-      # player-ip - string
-      # player-name - string
-      # player-id - int
-      # player-userid - string
-      # playerclass - Role
-      # playerteam - Team
+      # player - Player
       message: "**Player <var:player-name> (<var:player-userid>) був кікнутий сервером. Причина: <var:reason>**"
       regex: []
 
