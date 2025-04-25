@@ -12,19 +12,19 @@ namespace SCPDiscord
 
     internal static void Info(string message)
     {
-      LabApi.Features.Console.Logger.Info(message);
+      LabApi.Features.Console.Logger.Info(message.Replace("<", "<\0"));
       LogToFile("INFO", message);
     }
 
     internal static void Warn(string message)
     {
-      LabApi.Features.Console.Logger.Warn(message);
+      LabApi.Features.Console.Logger.Warn(message.Replace("<", "<\0"));
       LogToFile("WARNING", message);
     }
 
     internal static void Error(string message)
     {
-      LabApi.Features.Console.Logger.Error(message);
+      LabApi.Features.Console.Logger.Error(message.Replace("<", "<\0"));
       LogToFile("ERROR", message);
     }
 
@@ -32,7 +32,7 @@ namespace SCPDiscord
     {
       if (Config.GetBool("settings.debug"))
       {
-        LabApi.Features.Console.Logger.Debug(message);
+        LabApi.Features.Console.Logger.Debug(message.Replace("<", "<\0"));
       }
 
       LogToFile("DEBUG", message);
