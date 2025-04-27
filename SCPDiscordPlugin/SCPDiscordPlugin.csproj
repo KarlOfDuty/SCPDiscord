@@ -14,8 +14,8 @@
         <Optimize>true</Optimize>
         <PlatformTarget>x64</PlatformTarget>
 
-        <Version>3.2.4</Version>
-        <PackageVersion>3.2.4</PackageVersion>
+        <Version>3.3.0</Version>
+        <PackageVersion>3.3.0</PackageVersion>
         <ApplicationIcon>icon.ico</ApplicationIcon>
         <LangVersion>default</LangVersion>
         <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
