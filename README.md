@@ -2,6 +2,7 @@
 
 > [!IMPORTANT]
 > If you are using NWAPI you should use the latest release, if you are using LabAPI you should use the latest pre-release.
+> 
 > In the LocalAdmin package manager this means you should use the command as usual in NWAPI but have to specify the plugin version for LabAPI (Check the git tag on the release).
 
 # SCPDiscord
