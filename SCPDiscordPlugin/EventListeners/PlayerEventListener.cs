@@ -116,7 +116,7 @@ namespace SCPDiscord.EventListeners
 
     public override void OnPlayerHurt(PlayerHurtEventArgs ev)
     {
-      if (ev.Target == null || ev.Target.Role == RoleTypeId.None || !(ev.DamageHandler is StandardDamageHandler stdHandler))
+      if (ev.Player == null || ev.Player.Role == RoleTypeId.None || !(ev.DamageHandler is StandardDamageHandler stdHandler))
       {
         return;
       }
@@ -127,18 +127,18 @@ namespace SCPDiscord.EventListeners
         { "damagetype", GetDamageType(ev.DamageHandler)    }
       };
 
-      if (ev.Player == null || ev.Target.PlayerId == ev.Player.PlayerId)
+      if (ev.Attacker == null || ev.Player.PlayerId == ev.Attacker.PlayerId)
       {
-        variables.AddPlayerVariables(ev.Target, "target");
+        variables.AddPlayerVariables(ev.Player, "target");
 
         SCPDiscord.SendMessage("messages.onplayerhurt.noattacker", variables);
       }
       else
       {
-        variables.AddPlayerVariables(ev.Target, "target");
-        variables.AddPlayerVariables(ev.Player, "attacker");
+        variables.AddPlayerVariables(ev.Player, "target");
+        variables.AddPlayerVariables(ev.Attacker, "attacker");
 
-        if (IsTeamDamage(ev.Player.ReferenceHub.GetTeam(), ev.Target.ReferenceHub.GetTeam()))
+        if (IsTeamDamage(ev.Attacker.ReferenceHub.GetTeam(), ev.Player.ReferenceHub.GetTeam()))
         {
           SCPDiscord.SendMessage("messages.onplayerhurt.friendlyfire", variables);
           return;
@@ -196,7 +196,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "armor", ev.Item?.Type.ToString() }
+        { "armor", ev.BodyArmorItem?.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerpickuparmor", variables);
@@ -296,7 +296,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "type", ev.Item.ItemTypeId.ToString() }
+        { "type", ev.ThrowableItem.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onthrowprojectile", variables);
@@ -306,7 +306,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "item", ev.Item.Type.ToString() }
+        { "item", ev.UsableItem.Type.ToString() }
       };
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onitemuse", variables);
