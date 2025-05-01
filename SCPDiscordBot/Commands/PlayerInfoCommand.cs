@@ -13,7 +13,7 @@ namespace SCPDiscord.Commands
     [Command("playerinfo")]
     [Description("Shows general information about a player.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("SteamID")] [Description("Steam ID of the user to show.")] string steamID)
+      [Parameter("steam-id")] [Description("Steam ID of the user to show.")] string steamID)
     {
       if (!Utilities.IsPossibleSteamID(steamID, out ulong parsedSteamID))
       {

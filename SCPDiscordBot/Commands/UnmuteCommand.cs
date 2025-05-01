@@ -13,7 +13,7 @@ public class UnmuteCommand
   [Command("unmute")]
   [Description("Unmutes a player from the server")]
   public async Task OnExecute(SlashCommandContext command,
-    [Parameter("SteamID")] [Description("Steam ID of the user to unmute.")] string steamID)
+    [Parameter("steam-id")] [Description("Steam ID of the user to unmute.")] string steamID)
   {
     if (!Utilities.IsPossibleSteamID(steamID, out ulong parsedSteamID))
     {

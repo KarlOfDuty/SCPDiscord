@@ -13,8 +13,8 @@ namespace SCPDiscord.Commands
     [Command("kick")]
     [Description("Kicks a player from the server.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("SteamID")] [Description("Steam ID of the user to kick.")] string steamID,
-      [Parameter("Reason")] [Description("Reason for the kick.")] string reason = "")
+      [Parameter("steam-id")] [Description("Steam ID of the user to kick.")] string steamID,
+      [Parameter("reason")] [Description("Reason for the kick.")] string reason = "")
     {
       if (!Utilities.IsPossibleSteamID(steamID, out ulong parsedSteamID))
       {

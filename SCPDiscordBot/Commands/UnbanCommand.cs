@@ -12,7 +12,7 @@ namespace SCPDiscord.Commands
     [Command("unban")]
     [Description("Unbans a player from the server")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("SteamIDorIP")] [Description("Steam ID or IP of the user to unban.")] string steamIDOrIP)
+      [Parameter("steam-id-or-ip")] [Description("Steam ID or IP of the user to unban.")] string steamIDOrIP)
     {
       await command.DeferResponseAsync();
       Interface.MessageWrapper message = new Interface.MessageWrapper
