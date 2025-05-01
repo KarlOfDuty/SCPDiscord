@@ -2,6 +2,7 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <AssemblyName>SCPDiscord</AssemblyName>
+        <DebugType>embedded</DebugType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <FileAlignment>512</FileAlignment>
         <LangVersion>12</LangVersion>
