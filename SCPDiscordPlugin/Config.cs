@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GameCore;
+using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Paths;
 
 namespace SCPDiscord
@@ -441,7 +442,7 @@ namespace SCPDiscord
 
     public static string GetConfigDir()
     {
-      return PathManager.Configs + "/SCPDiscord/";
+      return $"{PathManager.Configs}/{Server.Port}/SCPDiscord/";
     }
 
     public static string GetConfigPath()
@@ -453,11 +454,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.language"))
       {
-        return PathManager.Configs + "/SCPDiscord/Languages/";
+        return $"{PathManager.Configs}/global/SCPDiscord/Languages/";
       }
       else
       {
-        return PathManager.Configs + "/SCPDiscord/Languages/";
+        return $"{PathManager.Configs}/{Server.Port}/SCPDiscord/Languages/";
       }
     }
 
@@ -465,11 +466,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.rolesync"))
       {
-        return PathManager.Configs + "/SCPDiscord/";
+        return $"{PathManager.Configs}/global/SCPDiscord/";
       }
       else
       {
-        return PathManager.Configs + "/SCPDiscord/";
+        return $"{PathManager.Configs}/{Server.Port}/SCPDiscord/";
       }
     }
 
@@ -482,11 +483,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.mutes"))
       {
-        return PathManager.Configs + "/SCPDiscord/";
+        return $"{PathManager.Configs}/global/SCPDiscord/";
       }
       else
       {
-        return PathManager.Configs + "/SCPDiscord/";
+        return $"{PathManager.Configs}/{Server.Port}/SCPDiscord/";
       }
     }
 
@@ -499,11 +500,11 @@ namespace SCPDiscord
     {
       if (GetBool("settings.useglobaldirectory.playtime"))
       {
-        return PathManager.Configs + "/SCPDiscord/";
+        return $"{PathManager.Configs}/global/SCPDiscord/";
       }
       else
       {
-        return PathManager.Configs + "/SCPDiscord/";
+        return $"{PathManager.Configs}/{Server.Port}/SCPDiscord/";
       }
     }
 
