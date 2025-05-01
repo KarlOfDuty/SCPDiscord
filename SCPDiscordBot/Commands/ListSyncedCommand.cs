@@ -12,7 +12,7 @@ namespace SCPDiscord.Commands
     [Command("listsynced")]
     [Description("Lists players synced to Discord.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("IncludeOffline")] [Description("List all synced players, even offline.")] bool includeOffline = false)
+      [Parameter("include-offline")] [Description("List all synced players, even offline.")] bool includeOffline = false)
     {
       await command.DeferResponseAsync();
       Interface.MessageWrapper message = new Interface.MessageWrapper

@@ -13,7 +13,7 @@ namespace SCPDiscord.Commands
     [Command("ra")]
     [Description("Runs a remote admin command.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("Command")] [Description("Remote admin command to run.")] string serverCommand)
+      [Parameter("command")] [Description("Remote admin command to run.")] string serverCommand)
     {
       if (!ConfigParser.HasPermission(command.Member, serverCommand))
       {

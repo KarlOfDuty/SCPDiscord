@@ -13,7 +13,7 @@ namespace SCPDiscord.Commands
     [Command("unsyncplayer")]
     [Description("Unsyncs a player's Discord account from the SCP:SL server.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("Player")] [Description("Player to unsync.")] DiscordUser user)
+      [Parameter("player")] [Description("Player to unsync.")] DiscordUser user)
     {
       await command.DeferResponseAsync();
       Interface.MessageWrapper message = new Interface.MessageWrapper

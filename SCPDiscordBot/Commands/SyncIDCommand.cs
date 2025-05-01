@@ -13,7 +13,7 @@ namespace SCPDiscord.Commands
     [Command("syncid")]
     [Description("Syncs your Discord role to the server using your SteamID.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("SteamID")] [Description("Your Steam ID.")] string steamID)
+      [Parameter("steam-id")] [Description("Your Steam ID.")] string steamID)
     {
       if (!Utilities.IsPossibleSteamID(steamID, out ulong parsedSteamID))
       {

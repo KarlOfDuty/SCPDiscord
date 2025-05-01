@@ -13,7 +13,7 @@ namespace SCPDiscord.Commands
     [Command("server")]
     [Description("Runs a server console command.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("Command")] [Description("Server console command to run.")] string serverCommand)
+      [Parameter("command")] [Description("Server console command to run.")] string serverCommand)
     {
       if (!ConfigParser.HasPermission(command.Member, serverCommand))
       {

@@ -16,7 +16,7 @@ namespace SCPDiscord.Commands
     [Command("syncip")]
     [Description("Syncs your Discord role to the server using your IP (non-northwood servers only)")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("IP")] [Description("Your IP address (IPv4 only).")] string ip)
+      [Parameter("ip")] [Description("Your IP address (IPv4 only).")] string ip)
     {
       if (!Regex.IsMatch(ip, IPV4_PATTERN))
       {

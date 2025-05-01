@@ -13,9 +13,9 @@ namespace SCPDiscord.Commands
     [Command("ban")]
     [Description("Bans a player from the server")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("SteamID")] [Description("Steam ID of the player to ban.")] string steamID,
-      [Parameter("Duration")] [Description("Ban duration (ex: 2d is 2 days).")] string duration,
-      [Parameter("Reason")] [Description("Reason for the ban.")] string reason)
+      [Parameter("steam-id")] [Description("Steam ID of the player to ban.")] string steamID,
+      [Parameter("duration")] [Description("Ban duration (ex: 2d is 2 days).")] string duration,
+      [Parameter("reason")] [Description("Reason for the ban.")] string reason)
     {
       if (!Utilities.IsPossibleSteamID(steamID, out ulong parsedSteamID))
       {

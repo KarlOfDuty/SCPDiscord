@@ -13,9 +13,9 @@ public class MuteCommand
   [Command("mute")]
   [Description("Mutes a player on the server")]
   public async Task OnExecute(SlashCommandContext command,
-    [Parameter("SteamID")] [Description("Steam ID of the player to mute.")] string steamID,
-    [Parameter("Duration")] [Description("Mute duration (ex: 2d is 2 days).")] string duration,
-    [Parameter("Reason")] [Description("Reason for the mute.")] string reason)
+    [Parameter("steam-id")] [Description("Steam ID of the player to mute.")] string steamID,
+    [Parameter("duration")] [Description("Mute duration (ex: 2d is 2 days).")] string duration,
+    [Parameter("reason")] [Description("Reason for the mute.")] string reason)
   {
     if (!Utilities.IsPossibleSteamID(steamID, out ulong parsedSteamID))
     {

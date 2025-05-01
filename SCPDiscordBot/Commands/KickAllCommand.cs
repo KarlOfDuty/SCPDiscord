@@ -12,7 +12,7 @@ namespace SCPDiscord.Commands
     [Command("kickall")]
     [Description("Kicks all players on the server.")]
     public async Task OnExecute(SlashCommandContext command,
-      [Parameter("Reason")] [Description("Kick reason.")] string kickReason = "")
+      [Parameter("reason")] [Description("Kick reason.")] string kickReason = "")
     {
       await command.DeferResponseAsync();
       Interface.MessageWrapper message = new Interface.MessageWrapper
