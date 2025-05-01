@@ -256,7 +256,7 @@ namespace SCPDiscord
       }
       catch (Exception e)
       {
-        Logger.Error($"Web request error: {e.GetType().Name}: {e.Message}\n{e.StackTrace}");
+        Logger.Error($"Web request error (https://steamcommunity.com/profiles/{userIDRaw}?xml=1): {e.GetType().Name}: {e.Message}\n{e.StackTrace}");
       }
       finally
       {
