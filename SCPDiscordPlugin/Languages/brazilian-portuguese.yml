@@ -636,38 +636,6 @@ messages:
     regex: []
     cancel_regex: []
 
-  oncallcommand:
-    remoteadmin:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) usou o comando '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "Servidor usou o comando '<var:command>'."
-        regex: [ ]
-    game:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) usou o comando '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "Servidor usou o comando '<var:command>'."
-        regex: [ ]
-    console:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) usou o comando '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "Servidor usou o comando '<var:command>'."
-        regex: [ ]
-
   onexecutedcommand:
     remoteadmin:
       player:
@@ -683,7 +651,7 @@ messages:
         # returnmessage
         message: "Servidor usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
-    game:
+    client:
       player:
         # command
         # result

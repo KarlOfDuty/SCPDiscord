@@ -165,21 +165,11 @@ messages:
         server:
             intercom: [ "default", "staff" ]
             standard: [ "default", "staff" ]
-    oncallcommand:
-        remoteadmin:
-            player: []
-            server: []
-        game:
-            player: []
-            server: []
-        console:
-            player: []
-            server: []
     onexecutedcommand:
         remoteadmin:
             player: [ "staff" ]
             server: [ "staff" ]
-        game:
+        client:
             player: [ "staff" ]
             server: [ "staff" ]
         console:

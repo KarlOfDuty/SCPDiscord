@@ -56,14 +56,19 @@ namespace SCPDiscord
       { "bot.port", 8888 }
     };
 
+    // ///////////////////////////////////////////////////////////
     // The message arrays have to be entered separately as they are used in the language files as well
+    // ///////////////////////////////////////////////////////////
+
+    // These ones are only used in the config, not language files
     private static readonly Dictionary<string, string[]> generalConfigArrays = new Dictionary<string, string[]>
     {
       { "channelsettings.filterips",      new string[]{} },
       { "channelsettings.filtersteamids", new string[]{} }
     };
 
-    // The following four are a bit messed up but the language and config systems need slightly different versions of this list so it had to be this way
+    // This is shared between the config and language files, however the language system needs a list of strings like this one here,
+    // but the config system needs a dictionary of arrays where the entries in this list are the keys so it gets converted further down.
     private static readonly IReadOnlyList<string> configMessageArrays = new List<string>
     {
       "messages.connectedtobot",
@@ -81,20 +86,14 @@ namespace SCPDiscord
       "messages.onbanrevoked.userid",
       "messages.onbanupdated.ip",
       "messages.onbanupdated.userid",
-      "messages.oncallcommand.console.player",
-      "messages.oncallcommand.console.server",
-      "messages.oncallcommand.game.player",
-      "messages.oncallcommand.game.server",
-      "messages.oncallcommand.remoteadmin.player",
-      "messages.oncallcommand.remoteadmin.server",
       "messages.onconnect",
       "messages.ondecontaminate",
       "messages.ondetonate",
       "messages.onelevatoruse",
       "messages.onexecutedcommand.console.player",
       "messages.onexecutedcommand.console.server",
-      "messages.onexecutedcommand.game.player",
-      "messages.onexecutedcommand.game.server",
+      "messages.onexecutedcommand.client.player",
+      "messages.onexecutedcommand.client.server",
       "messages.onexecutedcommand.remoteadmin.player",
       "messages.onexecutedcommand.remoteadmin.server",
       "messages.ongeneratoractivated",
@@ -166,6 +165,7 @@ namespace SCPDiscord
       "messages.onwaitingforplayers",
     };
 
+    // Same as above but these are only used in language files.
     private static readonly IReadOnlyList<string> languageOnlyNodes = new List<string>
     {
       "messages.botactivity.active",
@@ -198,9 +198,11 @@ namespace SCPDiscord
       "messages.playerunmuted",
     };
 
+    // This is the final list of all language file message nodes, combining the above lists.
     internal static readonly IReadOnlyList<string> languageNodes = configMessageArrays.Concat(languageOnlyNodes).ToList();
 
-    // Convert message nodes to a dictionary and combine it with the other config arrays, I am aware this is jank af
+    // This is the janky part, this is a dictionary of all arrays used in the config file which has to convert the
+    // configMessageArrays list to a dictionary of arrays and then add the other config arrays.
     private static readonly Dictionary<string, string[]> configArrays =
       // Convert the config message array to a dictionary of arrays
       configMessageArrays.Zip(new string[configMessageArrays.Count][], (name, emptyArray) => (name: name, emptyArray: emptyArray))

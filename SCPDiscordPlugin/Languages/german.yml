@@ -547,38 +547,6 @@ messages:
     regex: []
     cancel_regex: []
 
-  oncallcommand:
-    remoteadmin:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) hat den Befehl '<var:command>' ausgeführt."
-        regex: [ ]
-      server:
-        # command
-        message: "Server hat den Befehl '<var:command>' ausgeführt."
-        regex: [ ]
-    game:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) hat den Befehl '<var:command>' ausgeführt."
-        regex: [ ]
-      server:
-        # command
-        message: "Server hat den Befehl '<var:command>' ausgeführt."
-        regex: [ ]
-    console:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) hat den Befehl '<var:command>' ausgeführt."
-        regex: [ ]
-      server:
-        # command
-        message: "Server hat den Befehl '<var:command>' ausgeführt."
-        regex: [ ]
-
   onexecutedcommand:
     remoteadmin:
       player:
@@ -594,7 +562,7 @@ messages:
         # returnmessage
         message: "Server hat den Befehl `<var:command>`:\n```<var:returnmessage>``` ausgeführt."
         regex: [ ]
-    game:
+    client:
       player:
         # command
         # result

@@ -71,21 +71,11 @@ messages:
   onscp914changeknob: ":control_knobs: "
   onplayerradioswitch: ":radio: "
   onrecallzombie: ":arrows_counterclockwise: "
-  oncallcommand:
-    remoteadmin:
-      player: ":keyboard: "
-      server: ":keyboard: "
-    game:
-      player: ":keyboard: "
-      server: ":keyboard: "
-    console:
-      player: ":keyboard: "
-      server: ":keyboard: "
   onexecutedcommand:
     remoteadmin:
       player: ":keyboard: "
       server: ":keyboard: "
-    game:
+    client:
       player: ":keyboard: "
       server: ":keyboard: "
     console:

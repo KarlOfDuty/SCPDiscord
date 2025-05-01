@@ -537,38 +537,6 @@ messages:
     message: "<var:target-name> (<var:target-userid>) � stato curato da SCP-049 (<var:player-name> (<var:player-userid>))."
     regex: []
 
-  oncallcommand:
-    remoteadmin:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) ha utilizzo il comando `<var:command>`."
-        regex: []
-      server:
-        # command
-        message: "Il server ha utilizzato il comando `<var:command>`."
-        regex: []
-    game:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) ha utilizzo il comando `<var:command>`."
-        regex: []
-      server:
-        # command
-        message: "Il server ha utilizzato il comando `<var:command>`."
-        regex: []
-    console:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) ha utilizzo il comando `<var:command>`."
-        regex: []
-      server:
-        # command
-        message: "Il server ha utilizzato il comando `<var:command>`."
-        regex: []
-
   onexecutedcommand:
     remoteadmin:
       player:
@@ -584,7 +552,7 @@ messages:
         # returnmessage
         message: "Il server ha utilizzato il comando `<var:command>`:\n```<var:returnmessage>```"
         regex: []
-    game:
+    client:
       player:
         # command
         # result

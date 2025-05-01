@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.CustomHandlers;
+using LabApi.Features.Enums;
 using LabApi.Features.Wrappers;
+using RemoteAdmin;
 
 namespace SCPDiscord.EventListeners
 {
@@ -214,119 +216,38 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    // TODO: Seem to be merged into one
-    /*public void OnRemoteAdminCommand(RemoteAdminResponse ev)
+    public override void OnServerCommandExecuted(CommandExecutedEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      Dictionary<string, string> variables = new()
       {
-        { "command",       (ev.Command + " " + string.Join(" ", ev.Arguments)).Trim() },
-        { "result",        ev.Result.ToString() },
+        { "command",       (ev.Command.Command + " " + string.Join(" ", ev.Arguments)).Trim() },
+        { "result",        ev.ExecutedSuccessfully.ToString() },
         { "returnmessage", ev.Response }
       };
 
+      string senderType = "server";
       if (ev.Sender is PlayerCommandSender playerSender && Player.Get(playerSender.ReferenceHub) != null)
       {
         variables.AddPlayerVariables(Player.Get(playerSender.ReferenceHub), "player");
-        SCPDiscord.SendMessage("messages.onexecutedcommand.remoteadmin.player", variables);
+        senderType = "player";
       }
-      else
+
+      switch (ev.CommandType)
       {
-        SCPDiscord.SendMessage("messages.onexecutedcommand.remoteadmin.server", variables);
+        case CommandType.Console:
+          SCPDiscord.SendMessage($"messages.onexecutedcommand.console.{senderType}", variables);
+          break;
+        case CommandType.RemoteAdmin:
+          SCPDiscord.SendMessage($"messages.onexecutedcommand.remoteadmin.{senderType}", variables);
+          break;
+        case CommandType.Client:
+          SCPDiscord.SendMessage($"messages.onexecutedcommand.client.{senderType}", variables);
+          break;
+        default:
+          Logger.Error($"OnServerCommandExecuted: Unknown command type: {ev.CommandType}");
+          break;
       }
     }
-
-    public void OnGameConsoleCommand(PlayerGameConsoleCommandExecutedEvent ev)
-    {
-      Dictionary<string, string> variables = new Dictionary<string, string>
-      {
-        { "command",      (ev.Command + " " + string.Join(" ", ev.Arguments)).Trim() },
-        { "returnmessage", ev.Response }
-      };
-
-      if (ev.Player != null && ev.Player.PlayerId != Server.Instance.PlayerId)
-      {
-        variables.AddPlayerVariables(ev.Player, "player");
-        SCPDiscord.SendMessage("messages.onexecutedcommand.game.player", variables);
-      }
-      else
-      {
-        SCPDiscord.SendMessage("messages.onexecutedcommand.game.server", variables);
-      }
-    }
-
-    public void OnConsoleCommand(ConsoleCommandExecutedEvent ev)
-    {
-      Dictionary<string, string> variables = new Dictionary<string, string>
-            {
-              { "command",      (ev.Command + " " + string.Join(" ", ev.Arguments)).Trim() },
-              { "result",        ev.Result.ToString()                        },
-              { "returnmessage", ev.Response                                 }
-            };
-
-      if (ev.Sender is PlayerCommandSender playerSender && Player.Get(playerSender.ReferenceHub) != null)
-      {
-        variables.AddPlayerVariables(Player.Get(playerSender.ReferenceHub), "player");
-        SCPDiscord.SendMessage("messages.onexecutedcommand.console.player", variables);
-      }
-      else
-      {
-        SCPDiscord.SendMessage("messages.onexecutedcommand.console.server", variables);
-      }
-    }
-
-    public void OnRemoteAdminCommand(RemoteAdminCommandEvent ev)
-    {
-      Dictionary<string, string> variables = new Dictionary<string, string>
-      {
-        { "command", (ev.Command + " " + string.Join(" ", ev.Arguments)).Trim() }
-      };
-
-      if (ev.Sender is PlayerCommandSender playerSender && Player.Get(playerSender.ReferenceHub) != null)
-      {
-        variables.AddPlayerVariables(Player.Get(playerSender.ReferenceHub), "player");
-        SCPDiscord.SendMessage("messages.oncallcommand.remoteadmin.player", variables);
-      }
-      else
-      {
-        SCPDiscord.SendMessage("messages.oncallcommand.remoteadmin.server", variables);
-      }
-    }
-
-    public void OnGameConsoleCommand(PlayerGameConsoleCommandEvent ev)
-    {
-      Dictionary<string, string> variables = new Dictionary<string, string>
-      {
-        { "command", (ev.Command + " " + string.Join(" ", ev.Arguments)).Trim() }
-      };
-
-      if (ev.Player != null && ev.Player.PlayerId != Server.Instance.PlayerId)
-      {
-        variables.AddPlayerVariables(ev.Player, "player");
-        SCPDiscord.SendMessage("messages.oncallcommand.game.player", variables);
-      }
-      else
-      {
-        SCPDiscord.SendMessage("messages.oncallcommand.game.server", variables);
-      }
-    }
-
-    public void OnConsoleCommand(ConsoleCommandEvent ev)
-    {
-      Dictionary<string, string> variables = new Dictionary<string, string>
-      {
-        { "command", (ev.Command + " " + string.Join(" ", ev.Arguments)).Trim() },
-      };
-
-      if (ev.Sender is PlayerCommandSender playerSender && Player.Get(playerSender.ReferenceHub) != null)
-      {
-        variables.AddPlayerVariables(Player.Get(playerSender.ReferenceHub), "player");
-        SCPDiscord.SendMessage("messages.oncallcommand.console.player", variables);
-      }
-      else
-      {
-        SCPDiscord.SendMessage("messages.oncallcommand.console.server", variables);
-      }
-    }*/
 
     public override void OnServerRoundStarted()
     {

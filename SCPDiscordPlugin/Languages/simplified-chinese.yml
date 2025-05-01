@@ -534,38 +534,6 @@ messages:
     message: "<var:target-name> (<var:target-userid>) 成为新的SCP-049-2 <var:player-name> (<var:player-userid>)"
     regex: []
 
-  oncallcommand:
-    remoteadmin:
-      player:
-        # command
-        # player - Player
-        message: "管理员 <var:player-name> (<var:player-userid>) 使用了命令 '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "服务器使用了命令 '<var:command>'."
-        regex: [ ]
-    game:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) 在控制台使用了命令 '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "服务器使用了命令 '<var:command>'."
-        regex: [ ]
-    console:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) 使用了服务端后台命令 '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "服务器使用了命令 '<var:command>'."
-        regex: [ ]
-
   onexecutedcommand:
     remoteadmin:
       player:
@@ -581,7 +549,7 @@ messages:
         # returnmessage
         message: "服务器使用了命令 '<var:command>'. 返回: '<var:returnmessage>'"
         regex: [ ]
-    game:
+    client:
       player:
         # command
         # result

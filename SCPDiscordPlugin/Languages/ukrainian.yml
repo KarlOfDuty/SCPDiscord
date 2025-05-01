@@ -525,38 +525,6 @@ messages:
     message: "<var:target-name> (<var:target-userid>) був відроджений за SCP-049-2 гравцем <var:player-name> (<var:player-userid>)"
     regex: []
 
-  oncallcommand:
-    remoteadmin:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) використав команду '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "Сервер використав команду '<var:command>'."
-        regex: [ ]
-    game:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) використав команду '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "Сервер використав команду '<var:command>'."
-        regex: [ ]
-    console:
-      player:
-        # command
-        # player - Player
-        message: "<var:player-name> (<var:player-userid>) використав команду '<var:command>'."
-        regex: [ ]
-      server:
-        # command
-        message: "Сервер використав команду '<var:command>'."
-        regex: [ ]
-
   onexecutedcommand:
     remoteadmin:
       player:
@@ -572,7 +540,7 @@ messages:
         # returnmessage
         message: "Сервер використав команду '<var:command>'. Результат: '<var:returnmessage>'"
         regex: [ ]
-    game:
+    client:
       player:
         # command
         # result
