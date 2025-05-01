@@ -211,18 +211,16 @@ namespace SCPDiscord
     public static bool TryGetSteamName(string userID, out string steamName)
     {
       steamName = null;
-      if (!IsPossibleSteamID(userID, out ulong _))
+      if (!IsPossibleSteamID(userID, out ulong userIDRaw))
       {
         return false;
       }
-
-      userID = userID.Replace("@steam", "");
 
       HttpWebResponse response = null;
       ServicePointManager.ServerCertificateValidationCallback = SSLValidation;
       try
       {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://steamcommunity.com/profiles/" + userID + "?xml=1");
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://steamcommunity.com/profiles/{userIDRaw}?xml=1");
         request.Method = "GET";
 
         response = (HttpWebResponse)request.GetResponse();
@@ -235,7 +233,7 @@ namespace SCPDiscord
 
         string xmlResponse = new StreamReader(responseStream).ReadToEnd();
 
-        XmlDocument xml = new XmlDocument
+        XmlDocument xml = new()
         {
           XmlResolver = null
         };
@@ -255,6 +253,10 @@ namespace SCPDiscord
         {
           Logger.Error("Steam profile connection error: " + e.Status);
         }
+      }
+      catch (Exception e)
+      {
+        Logger.Error($"Web request error: {e.GetType().Name}: {e.Message}\n{e.StackTrace}");
       }
       finally
       {
