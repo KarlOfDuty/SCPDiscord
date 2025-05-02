@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Net.Http;
 using LabApi.Features.Wrappers;
 using Newtonsoft.Json.Linq;
 using YamlDotNet.Core;
@@ -18,6 +19,8 @@ namespace SCPDiscord
 {
   public static class Utilities
   {
+    private static readonly HttpClient client = new HttpClient();
+
     public class FileWatcher : IDisposable
     {
       private readonly FileSystemWatcher watcher;
@@ -216,23 +219,10 @@ namespace SCPDiscord
         return false;
       }
 
-      HttpWebResponse response = null;
-      ServicePointManager.ServerCertificateValidationCallback = SSLValidation;
+      string url = $"https://steamcommunity.com/profiles/{userIDRaw}?xml=1";
       try
       {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://steamcommunity.com/profiles/{userIDRaw}?xml=1");
-        request.Method = "GET";
-
-        response = (HttpWebResponse)request.GetResponse();
-        Stream responseStream = response.GetResponseStream();
-
-        if (responseStream == null)
-        {
-          return false;
-        }
-
-        string xmlResponse = new StreamReader(responseStream).ReadToEnd();
-
+        string xmlResponse = client.GetStringAsync(url).Result;
         XmlDocument xml = new()
         {
           XmlResolver = null
@@ -240,7 +230,6 @@ namespace SCPDiscord
         xml.LoadXml(xmlResponse);
         steamName = xml.DocumentElement?.SelectSingleNode("/profile/steamID")?.InnerText;
 
-        response.Close();
         return !string.IsNullOrWhiteSpace(steamName);
       }
       catch (WebException e)
@@ -256,44 +245,10 @@ namespace SCPDiscord
       }
       catch (Exception e)
       {
-        Logger.Error($"Web request error (https://steamcommunity.com/profiles/{userIDRaw}?xml=1): {e.GetType().Name}: {e.Message}\n{e.StackTrace}");
-      }
-      finally
-      {
-        response?.Close();
+        Logger.Error($"Web request error ({url}): {e.GetType().Name}: {e.Message}\n{e.StackTrace}");
       }
 
       return false;
-    }
-
-    private static bool SSLValidation(object _, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-    {
-      if (sslPolicyErrors == SslPolicyErrors.None)
-      {
-        return true;
-      }
-
-      // If there are errors in the certificate chain, look at each error to determine the cause.
-      foreach (X509ChainStatus certChainStatus in chain.ChainStatus)
-      {
-        if (certChainStatus.Status == X509ChainStatusFlags.RevocationStatusUnknown)
-        {
-          continue;
-        }
-
-        chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
-        chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-        chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 1, 0);
-        chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllFlags;
-
-        // chain.Build returns false if the certificate chain is invalid
-        if (!chain.Build((X509Certificate2)certificate))
-        {
-          return false;
-        }
-      }
-
-      return true;
     }
 
     public static string ReadManifestData(string embeddedFileName)
