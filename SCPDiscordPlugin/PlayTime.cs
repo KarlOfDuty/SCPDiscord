@@ -109,7 +109,7 @@ namespace SCPDiscord
       Logger.Debug("Player " + userID + " left after " + seconds + " seconds.");
 
       // Only remove the player from the list if they don't have several connections
-      if (Player.List.Count(p => p.UserId == userID) < 2)
+      if (Player.ReadyList.Count(p => p.UserId == userID) < 2)
       {
         joinTimes.Remove(userID);
       }

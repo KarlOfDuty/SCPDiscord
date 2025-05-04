@@ -651,7 +651,7 @@ namespace SCPDiscord
     {
       bool filterIPs = ShouldFilterIP(channelID);
       bool filterSteamIDs = ShouldFilterSteamID(channelID);
-      foreach (Player player in Player.List)
+      foreach (Player player in Player.ReadyList)
       {
         if (filterIPs && !string.IsNullOrWhiteSpace(player.IpAddress))
         {

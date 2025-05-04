@@ -30,7 +30,7 @@ namespace SCPDiscord.Commands
       try
       {
         Logger.Debug("Looking for player with SteamID/PlayerID: " + steamIDOrPlayerID);
-        foreach (Player pl in Player.List)
+        foreach (Player pl in Player.ReadyList)
         {
           Logger.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " PlayerID " + pl.PlayerId);
           if (pl.GetParsedUserID() == steamIDOrPlayerID)

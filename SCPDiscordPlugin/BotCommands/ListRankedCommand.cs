@@ -10,7 +10,7 @@ namespace SCPDiscord.BotCommands
     public static void Execute(Interface.ListRankedCommand command)
     {
       List<string> listItems = new List<string>();
-      foreach (Player player in Player.List)
+      foreach (Player player in Player.ReadyList)
       {
         if (!player.TryGetRank(out string _))
         {
