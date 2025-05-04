@@ -111,9 +111,14 @@ namespace SCPDiscord
       {
         wrapper = MessageWrapper.Parser.ParseDelimitedFrom(networkStream);
       }
-      catch (Exception)
+      catch (InvalidProtocolBufferException e)
       {
-        Logger.Error("Couldn't parse incoming packet!");
+        Logger.Error("Incoming packet was not in the required format!", e, true);
+        return;
+      }
+      catch (Exception e)
+      {
+        Logger.Error("Couldn't parse incoming packet!", e, true);
         return;
       }
 
@@ -151,7 +156,7 @@ namespace SCPDiscord
         case MessageWrapper.MessageOneofCase.UserQuery:
           try
           {
-            Task _ = DiscordAPI.GetPlayerRoles(wrapper.UserQuery.DiscordID, wrapper.UserQuery.SteamIDOrIP);
+            await DiscordAPI.GetPlayerRoles(wrapper.UserQuery.DiscordID, wrapper.UserQuery.SteamIDOrIP);
           }
           catch (Exception)
           {

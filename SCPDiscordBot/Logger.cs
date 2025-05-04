@@ -196,7 +196,7 @@ public class Logger : ILogger
             }
             Console.WriteLine(message);
 
-            if (exception != null && (!exceptionOnDebugOnly || logLevel == LogLevel.Debug))
+            if (exception != null && (!exceptionOnDebugOnly || IsEnabled(LogLevel.Debug)))
             {
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine($"{exception} : {exception.Message}\n{exception.StackTrace}");
