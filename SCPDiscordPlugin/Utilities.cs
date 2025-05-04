@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -78,7 +78,7 @@ namespace SCPDiscord
 
     public static bool TryGetPlayer(string userID, out Player pl)
     {
-      foreach (Player player in Player.List)
+      foreach (Player player in Player.ReadyList)
       {
         if (userID.Contains(player.GetParsedUserID()))
         {
@@ -93,9 +93,14 @@ namespace SCPDiscord
 
     public static bool TryGetPlayerName(string userID, out string name)
     {
-      foreach (Player player in Player.List)
+      foreach (Player player in Player.ReadyList)
       {
-        if (userID.Contains(player.GetParsedUserID()))
+				var parsedUserID = player.GetParsedUserID();
+				if (parsedUserID == null)
+				{
+					continue;
+				}
+				if (userID.Contains(parsedUserID))
         {
           name = player.Nickname;
           return true;

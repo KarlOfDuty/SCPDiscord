@@ -105,7 +105,7 @@ namespace SCPDiscord.BotCommands
     private static List<string> GetOnlineSyncedPlayers(ulong channelID)
     {
       List<string> rows = new List<string>();
-      foreach (Player player in Player.List)
+      foreach (Player player in Player.ReadyList)
       {
         if (!RoleSync.IsPlayerSynced(player.UserId, out ulong discordID))
         {
