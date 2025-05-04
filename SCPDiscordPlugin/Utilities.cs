@@ -95,12 +95,13 @@ namespace SCPDiscord
     {
       foreach (Player player in Player.ReadyList)
       {
-				var parsedUserID = player.GetParsedUserID();
-				if (parsedUserID == null)
-				{
-					continue;
-				}
-				if (userID.Contains(parsedUserID))
+        string parsedUserID = player.GetParsedUserID();
+        if (parsedUserID == null)
+        {
+          continue;
+        }
+
+        if (userID.Contains(parsedUserID))
         {
           name = player.Nickname;
           return true;
