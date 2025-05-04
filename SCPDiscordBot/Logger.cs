@@ -2,6 +2,7 @@
 using System;
 using DSharpPlus;
 using DSharpPlus.Exceptions;
+using Microsoft.Extensions.Hosting.Systemd;
 
 namespace SCPDiscord;
 
@@ -20,6 +21,7 @@ public class Logger : ILogger
     public static Logger instance { get; } = new Logger();
 
     private static LogLevel minimumLogLevel = LogLevel.Trace;
+    private static readonly EventId botEventID = new(420, "BOT");
     private readonly object @lock = new();
 
     internal static void SetLogLevel(LogLevel level)
@@ -27,29 +29,29 @@ public class Logger : ILogger
         minimumLogLevel = level;
     }
 
-    internal static void Debug(string message, Exception exception = null)
+    internal static void Debug(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        instance.Log(LogLevel.Debug, new EventId(420, "BOT"), exception, message);
+        instance.Log(LogLevel.Debug, botEventID, exception, message, exceptionOnDebugOnly);
     }
 
-    internal static void Log(string message, Exception exception = null)
+    internal static void Log(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        instance.Log(LogLevel.Information, new EventId(420, "BOT"), exception, message);
+        instance.Log(LogLevel.Information, botEventID, exception, message, exceptionOnDebugOnly);
     }
 
-    internal static void Warn(string message, Exception exception = null)
+    internal static void Warn(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        instance.Log(LogLevel.Warning, new EventId(420, "BOT"), exception, message);
+        instance.Log(LogLevel.Warning, botEventID, exception, message, exceptionOnDebugOnly);
     }
 
-    internal static void Error(string message, Exception exception = null)
+    internal static void Error(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        instance.Log(LogLevel.Error, new EventId(420, "BOT"), exception, message);
+        instance.Log(LogLevel.Error, botEventID, exception, message, exceptionOnDebugOnly);
     }
 
-    internal static void Fatal(string message, Exception exception = null)
+    internal static void Fatal(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        instance.Log(LogLevel.Critical, new EventId(420, "BOT"), exception, message);
+        instance.Log(LogLevel.Critical, botEventID, exception, message, exceptionOnDebugOnly);
     }
 
     public bool IsEnabled(LogLevel logLevel)
@@ -74,13 +76,13 @@ public class Logger : ILogger
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
     {
-        if (!IsEnabled(logLevel))
-        {
-            return;
-        }
+        Log(logLevel, eventId, exception, formatter(state, exception), false);
+    }
 
+    private void Log(LogLevel logLevel, EventId eventId, Exception exception, string message, bool exceptionOnDebugOnly)
+    {
         // Ratelimit messages are usually warnings, but they are unimportant in this case so downgrade them to debug.
-        if (formatter(state, exception).StartsWith("Hit Discord ratelimit on route ") && logLevel == LogLevel.Warning)
+        if (message.StartsWith("Hit Discord ratelimit on route ") && logLevel == LogLevel.Warning)
         {
             logLevel = LogLevel.Debug;
         }
@@ -90,12 +92,50 @@ public class Logger : ILogger
             logLevel = LogLevel.Debug;
         }
         // I haven't found any way to catch this issue so I guess I will just look for the log message?
-        else if (formatter(state, exception).StartsWith("An attempt to reconnect upon error code 4014 failed."))
+        else if (message.StartsWith("An attempt to reconnect upon error code 4014 failed."))
         {
             Fatal("Bot intents are not set up correctly. Fix this and then restart the bot.");
             Environment.Exit(14);
         }
 
+        if (!IsEnabled(logLevel))
+        {
+            return;
+        }
+
+        if (SystemdHelpers.IsSystemdService())
+        {
+            SystemdLog(logLevel, eventId, exception, message, exceptionOnDebugOnly);
+        }
+        else
+        {
+            ConsoleLog(logLevel, eventId, exception, message, exceptionOnDebugOnly);
+        }
+    }
+
+    private void SystemdLog(LogLevel logLevel, EventId eventId, Exception exception, string message, bool exceptionOnDebugOnly)
+    {
+        // TODO: Replace with logging directly to systemd using correct log levels.
+        string logLevelTag = logLevel switch
+        {
+            LogLevel.Trace       => "[Trace] ",
+            LogLevel.Debug       => "[Debug] ",
+            LogLevel.Information => " [Info] ",
+            LogLevel.Warning     => " [Warn] ",
+            LogLevel.Error       => "[Error] ",
+            LogLevel.Critical    => " [\u001b[1mCrit\u001b[0m] ",
+            _                    => " [None] ",
+        };
+
+        Console.WriteLine(logLevelTag + message);
+        if (exception != null && (!exceptionOnDebugOnly || logLevel == LogLevel.Debug))
+        {
+            Console.WriteLine($"{exception} : {exception.Message}\n{exception.StackTrace}");
+        }
+    }
+
+    private void ConsoleLog(LogLevel logLevel, EventId eventId, Exception exception, string message, bool exceptionOnDebugOnly)
+    {
         string[] logLevelParts = logLevel switch
         {
             LogLevel.Trace       => ["[", "Trace", "] "],
@@ -154,9 +194,9 @@ public class Logger : ILogger
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
-            Console.WriteLine(formatter(state, exception));
+            Console.WriteLine(message);
 
-            if (exception != null)
+            if (exception != null && (!exceptionOnDebugOnly || logLevel == LogLevel.Debug))
             {
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine($"{exception} : {exception.Message}\n{exception.StackTrace}");
