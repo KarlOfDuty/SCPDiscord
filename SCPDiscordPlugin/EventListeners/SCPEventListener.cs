@@ -20,7 +20,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new()
       {
-        { "door", ev.Door.Base.DoorName }
+        { "door", ev.Door?.Base?.DoorName ?? "" }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
@@ -50,7 +50,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new()
       {
-        { "doorname", ev.Door.Base.name }
+        { "doorname", ev.Door?.Base?.name ?? "" }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
@@ -61,7 +61,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new()
       {
-        { "room", ev.Room.Base.name }
+        { "room", ev.Room?.Base?.name ?? "" }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
@@ -72,7 +72,7 @@ namespace SCPDiscord.EventListeners
     {
       Dictionary<string, string> variables = new()
       {
-        { "room", ev.Room.Base.name }
+        { "room", ev.Room?.Base?.name ?? "" }
       };
       variables.AddPlayerVariables(ev.Player, "player");
 
