@@ -55,10 +55,9 @@ namespace SCPDiscord
 
     public static bool TryGetRank(this Player player, out string rank)
     {
-      // TODO: Update this when fixed by northwood
-      if (!string.IsNullOrWhiteSpace(ServerStatic.PermissionsHandler?.GetUserGroup(player.UserId)?.BadgeText))
+      if (player?.UserGroup != null)
       {
-        rank = ServerStatic.PermissionsHandler.GetUserGroup(player.UserId).BadgeText;
+        rank = player.UserGroup.BadgeText;
         return true;
       }
 
@@ -68,7 +67,7 @@ namespace SCPDiscord
 
     public static string GetRank(this Player player)
     {
-      return TryGetRank(player, out string rank) ? rank : "";
+      return player?.UserGroup?.BadgeText ?? "";
     }
 
     public static void AddPlayerVariables(this Dictionary<string, string> variables, Player player, string prefix, bool includeDisarmer = true)
