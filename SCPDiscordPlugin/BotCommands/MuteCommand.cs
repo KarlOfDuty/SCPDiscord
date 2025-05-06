@@ -86,7 +86,7 @@ namespace SCPDiscord.BotCommands
 
         PlayerMutingEventArgs mutedEventArgs = new PlayerMutingEventArgs(player.ReferenceHub, Player.Host?.ReferenceHub, false);
         PlayerEvents.OnMuting(mutedEventArgs);
-        if (mutedEventArgs.IsAllowed)
+        if (!mutedEventArgs.IsAllowed)
         {
           EmbedMessage embed = new EmbedMessage
           {
@@ -181,7 +181,7 @@ namespace SCPDiscord.BotCommands
         MuteSystem.ignoreUserID = userID;
         PlayerUnmutingEventArgs unmutingEventArgs = new PlayerUnmutingEventArgs(player.ReferenceHub, Player.Host?.ReferenceHub, false);
         PlayerEvents.OnUnmuting(unmutingEventArgs);
-        if (unmutingEventArgs.IsAllowed)
+        if (!unmutingEventArgs.IsAllowed)
         {
           EmbedMessage embed = new EmbedMessage
           {
