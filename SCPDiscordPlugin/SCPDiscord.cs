@@ -121,7 +121,7 @@ namespace SCPDiscord
         }
         catch (Exception e)
         {
-          Logger.Error("Error occured when checking player for rolesync!\n" + e);
+          Logger.Error("Error occurred when checking player for rolesync!\n" + e);
         }
       }
     }

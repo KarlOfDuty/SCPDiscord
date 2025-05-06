@@ -1099,7 +1099,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Error occured trying to mute player with steamid '<var:userid>', check the console for more info."
+    message: "Error occurred trying to mute player with steamid '<var:userid>', check the console for more info."
     regex: []
     cancel_regex: []
 
@@ -1123,7 +1123,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Error occured trying to unmute player with steamid '<var:userid>', check the console for more info."
+    message: "Error occurred trying to unmute player with steamid '<var:userid>', check the console for more info."
     regex: []
     cancel_regex: []
 

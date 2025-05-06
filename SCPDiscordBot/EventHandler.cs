@@ -80,18 +80,18 @@ public static class EventHandler
 
       case BadRequestException ex:
       {
-        Logger.Error("Command exception occured:\n" + e.Exception);
+        Logger.Error("Command exception occurred:\n" + e.Exception);
         Logger.Error("JSON Message: " + ex.JsonMessage);
         return;
       }
 
       default:
       {
-        Logger.Error("Exception occured.", e.Exception);
+        Logger.Error("Exception occurred.", e.Exception);
         await e.Context.Channel.SendMessageAsync(new DiscordEmbedBuilder
         {
           Color = DiscordColor.Red,
-          Description = "Internal error occured, please report this to the developer."
+          Description = "Internal error occurred, please report this to the developer."
         });
         return;
       }
@@ -103,7 +103,7 @@ internal class ErrorHandler : IClientErrorHandler
 {
   public ValueTask HandleEventHandlerError(string name, Exception exception, Delegate invokedDelegate, object sender, object args)
   {
-    Logger.Error("Client exception occured:\n" + exception);
+    Logger.Error("Client exception occurred:\n" + exception);
     if (exception is BadRequestException ex)
     {
       Logger.Error("JSON Message: " + ex.JsonMessage);
@@ -114,7 +114,7 @@ internal class ErrorHandler : IClientErrorHandler
 
   public ValueTask HandleGatewayError(Exception exception)
   {
-    Logger.Error("A gateway error occured:\n" + exception);
+    Logger.Error("A gateway error occurred:\n" + exception);
     return ValueTask.FromException(exception);
   }
 }

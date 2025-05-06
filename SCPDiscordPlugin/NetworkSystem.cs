@@ -224,7 +224,7 @@ namespace SCPDiscord
       }
       catch (SocketException e)
       {
-        Logger.Error("Error occured while connecting to discord bot server: " + e.Message.Trim());
+        Logger.Error("Error occurred while connecting to discord bot server: " + e.Message.Trim());
         Logger.Debug(e.ToString());
         Thread.Sleep(4000);
       }
