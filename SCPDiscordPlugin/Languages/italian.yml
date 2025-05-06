@@ -825,16 +825,16 @@ messages:
         Motivazione:  <var:reason>
         ```
       regex: []
-
-  onbanrevoked:
-    # ip
-    ip:
-      message: "**Ban per IP revocato: <var:ip>.**"
-      regex: []
-    # userid
-    userid:
-      message: "**Ban per UserID revocato: <var:userid>.**"
-      regex: []
+# Outdated
+#  onbanrevoked:
+#    # ip
+#    ip:
+#      message: "**Ban per IP revocato: <var:ip>.**"
+#      regex: []
+#    # userid
+#    userid:
+#      message: "**Ban per UserID revocato: <var:userid>.**"
+#      regex: []
 
   onkick:
     player:

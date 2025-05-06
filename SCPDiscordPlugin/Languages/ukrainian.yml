@@ -806,16 +806,16 @@ messages:
         Причина:  <var:reason>
         ```
       regex: []
-
-  onbanrevoked:
-    # ip
-    ip:
-      message: "**IP-бан '<var:ip>' скасовано.**"
-      regex: []
-    # userid
-    userid:
-      message: "**UserID-бан '<var:userid>' скасовано.**"
-      regex: []
+# Outdated
+#  onbanrevoked:
+#    # ip
+#    ip:
+#      message: "**IP-бан '<var:ip>' скасовано.**"
+#      regex: []
+#    # userid
+#    userid:
+#      message: "**UserID-бан '<var:userid>' скасовано.**"
+#      regex: []
 
   onkick:
     player:

@@ -811,16 +811,16 @@ messages:
         Причина:         <var:reason>
         ```
       regex: []
-
-  onbanrevoked:
-    # ip
-    ip:
-      message: "**Бан по IP '<var:ip>' был снят снят.**"
-      regex: []
-    # userid
-    userid:
-      message: "**Бан по UserID '<var:userid>' был снят.**"
-      regex: []
+# Outdated
+#  onbanrevoked:
+#    # ip
+#    ip:
+#      message: "**Бан по IP '<var:ip>' был снят снят.**"
+#      regex: []
+#    # userid
+#    userid:
+#      message: "**Бан по UserID '<var:userid>' был снят.**"
+#      regex: []
 
   onkick:
     player:

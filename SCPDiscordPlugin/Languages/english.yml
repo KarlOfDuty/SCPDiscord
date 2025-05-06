@@ -835,14 +835,22 @@ messages:
       cancel_regex: []
 
   onbanrevoked:
-    # ip
     ip:
-      message: "**IP-ban '<var:ip>' revoked.**"
+      # ip - string
+      # duration - string
+      # name - string
+      # issuer - string
+      # reason - string
+      message: "**IP-ban for <var:name> (<var:ip>) revoked. Originally banned by <var:issuer> for <var:duration>.**"
       regex: []
       cancel_regex: []
-    # userid
     userid:
-      message: "**UserID-ban '<var:userid>' revoked.**"
+      # userid - int
+      # duration - string
+      # name - string
+      # issuer - string
+      # reason - string
+      message: "**UserID-ban for <var:name> (<var:userid>) revoked. Originally banned by <var:issuer> for <var:duration>.**"
       regex: []
       cancel_regex: []
 

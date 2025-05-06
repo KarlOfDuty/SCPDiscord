@@ -833,18 +833,18 @@ messages:
         ```
       regex: []
       cancel_regex: []
-
-  onbanrevoked:
-    # ip
-    ip:
-      message: "**IP Ban '<var:ip>' entfernt.**"
-      regex: []
-      cancel_regex: []
-    # userid
-    userid:
-      message: "**User ID Ban '<var:userid>' entfernt.**"
-      regex: []
-      cancel_regex: []
+# Outdated
+#  onbanrevoked:
+#    # ip
+#    ip:
+#      message: "**IP Ban '<var:ip>' entfernt.**"
+#      regex: []
+#      cancel_regex: []
+#    # userid
+#    userid:
+#      message: "**User ID Ban '<var:userid>' entfernt.**"
+#      regex: []
+#      cancel_regex: []
 
   onkick:
     player:

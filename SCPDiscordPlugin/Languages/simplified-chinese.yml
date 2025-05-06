@@ -815,16 +815,16 @@ messages:
         原因:    <var:reason>
         ```
       regex: []
-
-  onbanrevoked:
-    # ip
-    ip:
-      message: "**IP-封禁 '<var:ip>' 已经取消.**"
-      regex: []
-    # userid
-    userid:
-      message: "**用户-封禁 '<var:userid>' 已经取消.**"
-      regex: []
+# Outdated
+#  onbanrevoked:
+#    # ip
+#    ip:
+#      message: "**IP-封禁 '<var:ip>' 已经取消.**"
+#      regex: []
+#    # userid
+#    userid:
+#      message: "**用户-封禁 '<var:userid>' 已经取消.**"
+#      regex: []
 
   onkick:
     player:

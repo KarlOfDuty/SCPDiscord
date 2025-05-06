@@ -143,23 +143,29 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    // TODO: Add more details
     public override void OnServerBanRevoked(BanRevokedEventArgs ev)
     {
+      Dictionary<string, string> variables = new()
+      {
+        { "name",     ev.BanDetails.OriginalName },
+        { "issuer",   ev.BanDetails.Issuer },
+        { "reason",   ev.BanDetails.Reason },
+        { "duration", Utilities.TicksToCompoundTime(Math.Min(ev.BanDetails.Expires - ev.BanDetails.IssuanceTime, 0)) }
+      };
+
       if (ev.BanType == BanHandler.BanType.IP)
       {
-        Dictionary<string, string> variables = new()
-        {
-          { "ip", ev.BanDetails.Id },
-        };
+        variables.Add("ip", ev.BanDetails.Id);
         SCPDiscord.SendMessage("messages.onbanrevoked.ip", variables);
+      }
+      else if(Utilities.IsPossibleSteamID(ev.BanDetails.Id, out ulong id))
+      {
+        variables.Add("userid", id.ToString());
+        SCPDiscord.SendMessage("messages.onbanrevoked.userid", variables);
       }
       else
       {
-        Dictionary<string, string> variables = new()
-        {
-          { "userid", ev.BanDetails.Id },
-        };
+        variables.Add("userid", ev.BanDetails.Id);
         SCPDiscord.SendMessage("messages.onbanrevoked.userid", variables);
       }
     }

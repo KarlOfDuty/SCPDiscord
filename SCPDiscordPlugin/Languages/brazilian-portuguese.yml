@@ -930,18 +930,18 @@ messages:
         ```
       regex: []
       cancel_regex: []
-
-  onbanrevoked:
-    # ip
-    ip:
-      message: "**Banimento por IP '<var:ip>' revogado.**"
-      regex: []
-      cancel_regex: []
-    # userid
-    userid:
-      message: "**Banimento por ID de Usuário '<var:userid>' revogado.**"
-      regex: []
-      cancel_regex: []
+# Outdated
+#  onbanrevoked:
+#    # ip
+#    ip:
+#      message: "**Banimento por IP '<var:ip>' revogado.**"
+#      regex: []
+#      cancel_regex: []
+#    # userid
+#    userid:
+#      message: "**Banimento por ID de Usuário '<var:userid>' revogado.**"
+#      regex: []
+#      cancel_regex: []
 
   onkick:
     player:
