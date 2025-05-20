@@ -806,16 +806,6 @@ messages:
         Причина:  <var:reason>
         ```
       regex: []
-# Outdated
-#  onbanrevoked:
-#    # ip
-#    ip:
-#      message: "**IP-бан '<var:ip>' скасовано.**"
-#      regex: []
-#    # userid
-#    userid:
-#      message: "**UserID-бан '<var:userid>' скасовано.**"
-#      regex: []
 
   onkick:
     player:
@@ -1148,3 +1138,53 @@ messages:
      message: "<var:players> / <var:maxplayers> онлайн"
      regex: []
      cancel_regex: []
+
+  onbanrevoked:
+    ip:
+      # ip - string
+      # duration - string
+      # name - string
+      # issuer - string
+      # reason - string
+      message: "**IP-бан для <var:name> (<var:ip>) скасовано. Спочатку був забанений <var:issuer> на <var:duration>.**"
+      regex: []
+      cancel_regex: []
+    userid:
+      # userid - int
+      # duration - string
+      # name - string
+      # issuer - string
+      # reason - string
+      message: "**UserID-бан для <var:name> (<var:userid>) скасовано. Спочатку був забанений <var:issuer> на <var:duration>.**"
+      regex: []
+      cancel_regex: []
+
+  oninteract330:
+    # player - Player
+    # uses - int
+    message: "<var:player-name> (<var:player-userid>) використав SCP-330 (<var:uses> використань)."
+    regex: []
+    cancel_regex: []
+
+  onmapgenerated:
+      message: "Ділянка фонда була успішно згенерована!"
+      regex: []
+      cancel_regex: []
+
+  onplayerinteractlocker:
+    # chamber - Structure
+    # room - RoomType
+    # canopen - bool
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) провів взаємодію з <var:chamber> в <var:room>."
+    regex: []
+    cancel_regex: []
+
+  onplayerreceiveeffect:
+    # player - Player
+    # effect - string
+    # duration - float
+    # intensity - byte
+    message: "<var:player-name> (<var:player-userid>) отримав ефект: <var:effect>, на <var:duration> секунд з інтенсивністю <var:intensity>."
+    regex: []
+    cancel_regex: []
