@@ -1,0 +1,3 @@
+[submodule "ci-utilities"]
+	path = ci-utilities
+	url = ../ci-utilities.git
