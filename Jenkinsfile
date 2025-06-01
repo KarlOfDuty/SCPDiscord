@@ -141,9 +141,12 @@ pipeline
         {
           steps
           {
-            sh 'dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output windows-x64/'
-            sh 'mv windows-x64/scpdiscord.exe windows-x64/scpdiscord-sc.exe'
-            sh 'dotnet publish -r win-x64 -c Release --self-contained false --no-restore --output windows-x64/'
+            dir(path: 'SCPDiscordBot')
+            {
+              sh 'dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output windows-x64/'
+              sh 'mv windows-x64/scpdiscord.exe windows-x64/scpdiscord-sc.exe'
+              sh 'dotnet publish -r win-x64 -c Release --self-contained false --no-restore --output windows-x64/'
+            }
             archiveArtifacts(artifacts: 'SCPDiscordBot/windows-x64/scpdiscord.exe', caseSensitive: true)
             archiveArtifacts(artifacts: 'SCPDiscordBot/windows-x64/scpdiscord-sc.exe', caseSensitive: true)
             script
