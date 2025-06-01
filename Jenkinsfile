@@ -15,7 +15,7 @@ pipeline
       {
         script
         {
-          env.DOTNET_CLI_HOME = "/tmp/.dotnet"
+          env.DOTNET_CLI_HOME = "/tmp/.dotnet-bot"
           env.DEBEMAIL="xkaess22@gmail.com"
           env.DEBFULLNAME="Karl Essinger"
           env.AUR_GIT_PACKAGE="scpdiscord-git"
@@ -98,10 +98,10 @@ pipeline
         {
           sh 'dotnet build --output ./bin'
           sh 'mkdir dependencies'
-          sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
-          sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
-          sh 'mv SCPDiscordPlugin/bin/Google.Protobuf.dll dependencies'
-          sh 'mv SCPDiscordPlugin/bin/Newtonsoft.Json.dll dependencies'
+          sh 'mv bin/SCPDiscord.dll ./'
+          sh 'mv bin/System.Memory.dll dependencies'
+          sh 'mv bin/Google.Protobuf.dll dependencies'
+          sh 'mv bin/Newtonsoft.Json.dll dependencies'
           sh 'zip -r dependencies.zip dependencies'
         }
         archiveArtifacts(artifacts: 'SCPDiscordPlugin/dependencies.zip', onlyIfSuccessful: true)
@@ -120,10 +120,6 @@ pipeline
       {
         stage('Basic Linux')
         {
-          environment
-          {
-            DOTNET_CLI_HOME = "/tmp/.dotnet-bot"
-          }
           steps
           {
             dir(path: 'SCPDiscordBot')
@@ -143,10 +139,6 @@ pipeline
         }
         stage('Basic Windows')
         {
-          environment
-          {
-            DOTNET_CLI_HOME = "/tmp/.dotnet-bot"
-          }
           steps
           {
             sh 'dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output windows-x64/'
