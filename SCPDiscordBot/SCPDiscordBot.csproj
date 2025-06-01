@@ -22,7 +22,7 @@
 
     <AssemblyName>scpdiscord</AssemblyName>
     <Product>SCPDiscord</Product>
-    <AssemblyTitle>SCPDiscordBot</AssemblyTitle>
+    <AssemblyTitle>SCPDiscord</AssemblyTitle>
     <Company>https://github.com/KarlOfDuty/SCPDiscord</Company>
     <Copyright>© 2018-2025 Karl Essinger and contributors - licenced under GPLv3"</Copyright>
     <RepositoryType>Git</RepositoryType>

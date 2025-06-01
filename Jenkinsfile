@@ -1,129 +1,178 @@
-pipeline {
-    agent any
+pipeline
+{
+  agent any
 
-    stages {
-        stage('Download SCP:SL') {
-            when
-            {
-                expression {
-                    return env.BRANCH_NAME != 'beta';
-                }
-            }
-            steps {
-                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta labapi-beta validate +quit'
-            }
+  parameters
+  {
+    choice(name: 'BUILD_TYPE', choices: ['dev', 'pre-release', 'release'], description: 'Choose build type')
+    string(name: 'RELEASE_VERSION', defaultValue: '', description: 'Enter the git tag name to create for a (pre-)release')
+  }
+  stages
+  {
+    stage('Initialize Environment')
+    {
+      steps
+      {
+        script
+        {
+          env.DOTNET_CLI_HOME = "/tmp/.dotnet"
+          env.DEBEMAIL="xkaess22@gmail.com"
+          env.DEBFULLNAME="Karl Essinger"
+          env.AUR_GIT_PACKAGE="scpdiscord-git"
+          env.DEV_BUILD = params.BUILD_TYPE == 'dev' ? "true" : "false"
+          env.PACKAGE_NAME = params.BUILD_TYPE == 'dev' ? "scpdiscord-dev" : "scpdiscord"
+          env.RPMBUILD_ARGS = params.BUILD_TYPE == 'dev' ? "--define 'dev_build true'" : ""
+
+          common = load("${env.WORKSPACE}/ci-utilities/scripts/common.groovy")
+          common.prepare_gpg_key()
+
+          sh 'dotnet restore'
         }
-        stage('Download SCP:SL - Beta') {
-            when { branch 'beta' }
-            steps {
-                sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta experimental validate +quit'
-            }
-        }
-        stage('Set Up Directory Structure') {
-            steps {
-                sh 'ln -s "\$HOME/scpsl/SCPSL_Data/Managed" ".scpsl_libs"'
-                sh 'cp -r "SCPDiscordBot" "SMALL"'
-                sh 'cp -r "SCPDiscordBot" "SC"'
-                sh 'cp -r "SCPDiscordBot" "SMALL_Win"'
-                sh 'mv    "SCPDiscordBot" "SC_Win"'
-           }
-        }
-        stage('Build') {
-            parallel {
-                stage('Plugin') {
-                    steps {
-                        dir(path: 'SCPDiscordPlugin') {
-                            sh 'dotnet build --output ./bin'
-                        }
-                    }
-                }
-                stage('Bot - Small') {
-                    steps {
-                        dir(path: 'SMALL') {
-                            sh '''dotnet publish\\
-                            -p:PublishSingleFile=true\\
-                            -r linux-x64\\
-                            -c Release\\
-                            --self-contained false\\
-                            --output ./out
-                            '''
-                        }
-                    }
-                }
-                stage('Bot - Self Contained') {
-                    steps {
-                        dir(path: 'SC') {
-                            sh '''dotnet publish\\
-                            -p:PublishSingleFile=true\\
-                            -p:PublishTrimmed=true\\
-                            -r linux-x64\\
-                            -c Release\\
-                            --self-contained true\\
-                            --output ./out
-                            '''
-                        }
-                    }
-                }
-                stage('Bot - Small (Windows)') {
-                    steps {
-                        dir(path: 'SMALL_Win') {
-                            sh '''dotnet publish\\
-                            -p:PublishSingleFile=true\\
-                            -r win-x64\\
-                            -c Release\\
-                            --self-contained false\\
-                            --output ./out
-                            '''
-                        }
-                    }
-                }
-                stage('Bot - Self Contained (Windows)') {
-                    steps {
-                        dir(path: 'SC_Win') {
-                            sh '''dotnet publish\\
-                            -p:PublishSingleFile=true\\
-                            -p:PublishTrimmed=true\\
-                            -r win-x64\\
-                            -c Release\\
-                            --self-contained true\\
-                            --output ./out
-                            '''
-                        }
-                    }
-                }
-            }
-        }
-        stage('Package') {
-            parallel {
-                stage('Plugin') {
-                    steps {
-                        sh 'mkdir dependencies'
-                        sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
-                        sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
-                        sh 'mv SCPDiscordPlugin/bin/Google.Protobuf.dll dependencies'
-                        sh 'mv SCPDiscordPlugin/bin/Newtonsoft.Json.dll dependencies'
-                    }
-                }
-                stage('Bot') {
-                    steps {
-                       sh 'mv SMALL/out/SCPDiscordBot ./SCPDiscordBot_Linux'
-                       sh 'mv SC/out/SCPDiscordBot ./SCPDiscordBot_Linux_SC'
-                       sh 'mv SMALL_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows.exe'
-                       sh 'mv SC_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_SC.exe'
-                    }
-                }
-            }
-        }
-        stage('Archive') {
-            steps {
-                sh 'zip -r dependencies.zip dependencies'
-                archiveArtifacts(artifacts: 'dependencies.zip', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscord.dll', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Linux', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Windows.exe', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Linux_SC', onlyIfSuccessful: true)
-                archiveArtifacts(artifacts: 'SCPDiscordBot_Windows_SC.exe', onlyIfSuccessful: true)
-            }
-        }
+      }
     }
+    stage('Release Pre-Checks')
+    {
+      when
+      {
+        expression { params.BUILD_TYPE != 'dev'; }
+      }
+      steps
+      {
+        script
+        {
+          common.verify_release_does_not_exist("KarlOfDuty/SCPDiscord", params.RELEASE_VERSION)
+        }
+      }
+    }
+    //stage('Update AUR Version')
+    //{
+    //  when
+    //  {
+    //    expression
+    //    {
+    //      def remoteBranch = sh(
+    //        script: "curl -s 'https://aur.archlinux.org/cgit/aur.git/plain/.git_branch?h=${env.AUR_GIT_PACKAGE}'",
+    //        returnStdout: true
+    //      ).trim()
+    //      return remoteBranch == env.BRANCH_NAME && params.BUILD_TYPE == 'dev'
+    //    }
+    //  }
+    //  steps
+    //  {
+    //    script
+    //    {
+    //      common.update_aur_git_package(env.AUR_GIT_PACKAGE, "packaging/${env.AUR_GIT_PACKAGE}.pkgbuild", "packaging/scpdiscord.install")
+    //    }
+    //  }
+    //}
+    stage('Update SCP:SL')
+    {
+      steps
+      {
+        script
+        {
+          if (env.BRANCH_NAME == 'beta')
+          {
+            sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta experimental validate +quit'
+          }
+          else
+          {
+            sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta public validate +quit'
+          }
+          sh 'ln -s "\$HOME/scpsl/SCPSL_Data/Managed" ".scpsl_libs"'
+        }
+      }
+    }
+    stage('Build / Package')
+    {
+      parallel
+      {
+        stage('Plugin')
+        {
+          steps
+          {
+            dir(path: 'SCPDiscordPlugin')
+            {
+              sh 'dotnet build --output ./bin'
+            }
+          }
+        }
+        stage('Basic Linux')
+        {
+          steps
+          {
+            dir(path: 'SCPDiscordBot')
+            {
+              sh 'dotnet publish -r linux-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output linux-x64/'
+              sh 'mv linux-x64/scpdiscord linux-x64/scpdiscord-sc'
+              sh 'dotnet publish -r linux-x64 -c Release --self-contained false --no-restore --output linux-x64/'
+            }
+            archiveArtifacts(artifacts: 'SCPDiscordBot/linux-x64/scpdiscord', caseSensitive: true)
+            archiveArtifacts(artifacts: 'SCPDiscordBot/linux-x64/scpdiscord-sc', caseSensitive: true)
+            script
+            {
+              env.BASIC_LINUX_PATH = 'SCPDiscordBot/linux-x64/scpdiscord'
+              env.BASIC_LINUX_SC_PATH = 'SCPDiscordBot/linux-x64/scpdiscord-sc'
+            }
+          }
+        }
+        stage('Basic Windows')
+        {
+          steps
+          {
+            sh 'dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output windows-x64/'
+            sh 'mv windows-x64/scpdiscord.exe windows-x64/scpdiscord-sc.exe'
+            sh 'dotnet publish -r win-x64 -c Release --self-contained false --no-restore --output windows-x64/'
+          }
+          archiveArtifacts(artifacts: 'SCPDiscordBot/windows-x64/scpdiscord.exe', caseSensitive: true)
+          archiveArtifacts(artifacts: 'SCPDiscordBot/windows-x64/scpdiscord-sc.exe', caseSensitive: true)
+          script
+          {
+            env.BASIC_WINDOWS_PATH = 'SCPDiscordBot/windows-x64/scpdiscord.exe'
+            env.BASIC_WINDOWS_SC_PATH = 'SCPDiscordBot/windows-x64/scpdiscord-sc.exe'
+          }
+        }
+      }
+    }
+    stage('Package')
+    {
+      parallel
+      {
+        stage('Plugin')
+        {
+          steps
+          {
+            sh 'mkdir dependencies'
+            sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
+            sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
+            sh 'mv SCPDiscordPlugin/bin/Google.Protobuf.dll dependencies'
+            sh 'mv SCPDiscordPlugin/bin/Newtonsoft.Json.dll dependencies'
+          }
+        }
+        stage('Bot')
+        {
+          steps
+          {
+            sh 'mv SMALL/out/SCPDiscordBot ./SCPDiscordBot_Linux'
+            sh 'mv SC/out/SCPDiscordBot ./SCPDiscordBot_Linux_SC'
+            sh 'mv SMALL_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows.exe'
+            sh 'mv SC_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_SC.exe'
+          }
+        }
+      }
+    }
+    stage('Archive')
+    {
+      steps
+      {
+        sh 'zip -r dependencies.zip dependencies'
+        archiveArtifacts(artifacts: 'dependencies.zip', onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'SCPDiscord.dll', onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'SCPDiscordBot_Linux', onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'SCPDiscordBot_Windows.exe', onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'SCPDiscordBot_Linux_SC', onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'SCPDiscordBot_Windows_SC.exe', onlyIfSuccessful: true)
+      }
+    }
+  }
 }
