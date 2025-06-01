@@ -88,11 +88,15 @@ pipeline
     }
     stage('Build Plugin')
     {
+      environment
+      {
+        DOTNET_CLI_HOME = "/tmp/.dotnet-plugin"
+      }
       steps
       {
         dir(path: 'SCPDiscordPlugin')
         {
-          sh 'dotnet build --restore --output ./bin'
+          sh 'dotnet build --output ./bin'
           sh 'mkdir dependencies'
           sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
           sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
@@ -116,6 +120,10 @@ pipeline
       {
         stage('Basic Linux')
         {
+          environment
+          {
+            DOTNET_CLI_HOME = "/tmp/.dotnet-bot"
+          }
           steps
           {
             dir(path: 'SCPDiscordBot')
@@ -135,6 +143,10 @@ pipeline
         }
         stage('Basic Windows')
         {
+          environment
+          {
+            DOTNET_CLI_HOME = "/tmp/.dotnet-bot"
+          }
           steps
           {
             sh 'dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output windows-x64/'
