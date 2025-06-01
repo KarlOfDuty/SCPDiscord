@@ -25,8 +25,6 @@ pipeline
 
           common = load("${env.WORKSPACE}/ci-utilities/scripts/common.groovy")
           common.prepare_gpg_key()
-
-          sh 'dotnet restore'
         }
       }
     }
@@ -65,7 +63,7 @@ pipeline
     //    }
     //  }
     //}
-    stage('Update SCP:SL')
+    stage('Get Dependencies')
     {
       steps
       {
@@ -80,6 +78,11 @@ pipeline
             sh 'steamcmd +force_install_dir \$HOME/scpsl +login anonymous +app_update 996560 -beta public validate +quit'
           }
           sh 'ln -s "\$HOME/scpsl/SCPSL_Data/Managed" ".scpsl_libs"'
+
+          dir(path: 'SCPDiscordBot')
+          {
+            sh 'dotnet restore'
+          }
         }
       }
     }
