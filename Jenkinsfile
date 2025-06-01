@@ -92,7 +92,7 @@ pipeline
       {
         dir(path: 'SCPDiscordPlugin')
         {
-          sh 'dotnet build --output ./bin'
+          sh 'dotnet build --restore --output ./bin'
           sh 'mkdir dependencies'
           sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
           sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
@@ -149,46 +149,6 @@ pipeline
             }
           }
         }
-      }
-    }
-    stage('Package')
-    {
-      parallel
-      {
-        stage('Plugin')
-        {
-          steps
-          {
-            sh 'mkdir dependencies'
-            sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
-            sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
-            sh 'mv SCPDiscordPlugin/bin/Google.Protobuf.dll dependencies'
-            sh 'mv SCPDiscordPlugin/bin/Newtonsoft.Json.dll dependencies'
-          }
-        }
-        stage('Bot')
-        {
-          steps
-          {
-            sh 'mv SMALL/out/SCPDiscordBot ./SCPDiscordBot_Linux'
-            sh 'mv SC/out/SCPDiscordBot ./SCPDiscordBot_Linux_SC'
-            sh 'mv SMALL_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows.exe'
-            sh 'mv SC_Win/out/SCPDiscordBot.exe ./SCPDiscordBot_Windows_SC.exe'
-          }
-        }
-      }
-    }
-    stage('Archive')
-    {
-      steps
-      {
-        sh 'zip -r dependencies.zip dependencies'
-        archiveArtifacts(artifacts: 'dependencies.zip', onlyIfSuccessful: true)
-        archiveArtifacts(artifacts: 'SCPDiscord.dll', onlyIfSuccessful: true)
-        archiveArtifacts(artifacts: 'SCPDiscordBot_Linux', onlyIfSuccessful: true)
-        archiveArtifacts(artifacts: 'SCPDiscordBot_Windows.exe', onlyIfSuccessful: true)
-        archiveArtifacts(artifacts: 'SCPDiscordBot_Linux_SC', onlyIfSuccessful: true)
-        archiveArtifacts(artifacts: 'SCPDiscordBot_Windows_SC.exe', onlyIfSuccessful: true)
       }
     }
   }
