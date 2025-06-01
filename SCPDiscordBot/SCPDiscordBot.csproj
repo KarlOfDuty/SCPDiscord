@@ -2,28 +2,33 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
-    <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <Version>3.3.0</Version>
-    <PackageVersion>3.3.0</PackageVersion>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+
+    <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
+    <TargetFramework>net9.0</TargetFramework>
     <LangVersion>default</LangVersion>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
-    <Company>https://github.com/KarlOfDuty/SCPDiscord</Company>
-    <Copyright>© 2018-2024 Karl Essinger and contributors - licenced under GPLv3"</Copyright>
-    <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/KarlOfDuty/SCPDiscord</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageIconUrl>./icon.ico</PackageIconUrl>
-    <NeutralLanguage>en</NeutralLanguage>
     <PublishSingleFile>true</PublishSingleFile>
     <TrimMode>partial</TrimMode>
-    <Product>SCPDiscord</Product>
-    <AssemblyTitle>SCPDiscordBot</AssemblyTitle>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/KarlOfDuty/SCPDiscord/main/LICENSE</PackageLicenseUrl>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <GitVersion>false</GitVersion>
+    <DebugType>embedded</DebugType>
+
+    <PackageVersion>3.3.0</PackageVersion>
+    <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIconUrl>./icon.ico</PackageIconUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/KarlOfDuty/SCPDiscord/main/LICENSE</PackageLicenseUrl>
+
+    <AssemblyName>scpdiscord</AssemblyName>
+    <Product>SCPDiscord</Product>
+    <AssemblyTitle>SCPDiscordBot</AssemblyTitle>
+    <Company>https://github.com/KarlOfDuty/SCPDiscord</Company>
+    <Copyright>© 2018-2025 Karl Essinger and contributors - licenced under GPLv3"</Copyright>
+    <RepositoryType>Git</RepositoryType>
+    <RepositoryUrl>https://github.com/KarlOfDuty/SCPDiscord</RepositoryUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
