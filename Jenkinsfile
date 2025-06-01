@@ -83,20 +83,34 @@ pipeline
         }
       }
     }
-    stage('Build / Package')
+    stage('Build Plugin')
+    {
+      steps
+      {
+        dir(path: 'SCPDiscordPlugin')
+        {
+          sh 'dotnet build --output ./bin'
+          sh 'mkdir dependencies'
+          sh 'mv SCPDiscordPlugin/bin/SCPDiscord.dll ./'
+          sh 'mv SCPDiscordPlugin/bin/System.Memory.dll dependencies'
+          sh 'mv SCPDiscordPlugin/bin/Google.Protobuf.dll dependencies'
+          sh 'mv SCPDiscordPlugin/bin/Newtonsoft.Json.dll dependencies'
+          sh 'zip -r dependencies.zip dependencies'
+        }
+        archiveArtifacts(artifacts: 'SCPDiscordPlugin/dependencies.zip', onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'SCPDiscordPlugin/SCPDiscord.dll', onlyIfSuccessful: true)
+        script
+        {
+          env.PLUGIN_PATH = 'SCPDiscordPlugin/SCPDiscord.dll'
+          env.DEPENDENCIES_PATH = 'SCPDiscordPlugin/dependencies'
+        }
+        stash(includes: "${env.PLUGIN_PATH}, ${env.DEPENDENCIES_PATH}", name: "plugin-files")
+      }
+    }
+    stage('Build Bot / Package')
     {
       parallel
       {
-        stage('Plugin')
-        {
-          steps
-          {
-            dir(path: 'SCPDiscordPlugin')
-            {
-              sh 'dotnet build --output ./bin'
-            }
-          }
-        }
         stage('Basic Linux')
         {
           steps
