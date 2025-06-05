@@ -47,7 +47,7 @@ fi
 %{__install} -d %{buildroot}/etc/scpdiscord/
 %{__install} -m 600 %{repo_root}/SCPDiscordBot/default_config.yml %{buildroot}/etc/scpdiscord/config.yml
 
-%{__install} -d %{buildroot}/var/lib/supportboi
+%{__install} -d %{buildroot}/var/lib/scpdiscord
 %{__install} -d %{buildroot}/var/log/scpdiscord
 
 %pre
