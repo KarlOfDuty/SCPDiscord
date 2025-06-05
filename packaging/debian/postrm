@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for supportboi.
+# postrm script for scpdiscord.
 #
 # See: dh_installdeb(1).
 

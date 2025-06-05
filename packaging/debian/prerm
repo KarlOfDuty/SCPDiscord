@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for supportboi.
+# prerm script for scpdiscord.
 #
 # See: dh_installdeb(1).
 
