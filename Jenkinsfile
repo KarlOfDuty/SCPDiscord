@@ -236,5 +236,123 @@ pipeline
         }
       }
     }
+    stage('Sign')
+    {
+      parallel
+      {
+        stage('RHEL')
+        {
+          steps
+          {
+            unstash(name: 'rhel-rpm')
+            script
+            {
+              common.sign_rpm_package(env.RHEL_RPM_PATH)
+              common.sign_rpm_package(env.RHEL_SRPM_PATH)
+            }
+            archiveArtifacts(artifacts: "${env.RHEL_RPM_PATH}, ${env.RHEL_SRPM_PATH}", caseSensitive: true)
+          }
+        }
+        stage('Fedora')
+        {
+          steps
+          {
+            unstash(name: 'fedora-rpm')
+            script
+            {
+              common.sign_rpm_package(env.FEDORA_RPM_PATH)
+              common.sign_rpm_package(env.FEDORA_SRPM_PATH)
+            }
+            archiveArtifacts(artifacts: "${env.FEDORA_RPM_PATH}, ${env.FEDORA_SRPM_PATH}", caseSensitive: true)
+          }
+        }
+        stage('Debian')
+        {
+          steps
+          {
+            unstash(name: "debian-deb")
+            script { common.sign_deb_package(env.DEBIAN_DEB_PATH, env.DEBIAN_DSC_PATH) }
+            archiveArtifacts(artifacts: "${env.DEBIAN_DEB_PATH}, ${env.DEBIAN_SRC_PATH}", caseSensitive: true)
+          }
+        }
+        stage('Ubuntu')
+        {
+          steps
+          {
+            unstash(name: "ubuntu-deb")
+            script { common.sign_deb_package(env.UBUNTU_DEB_PATH, env.UBUNTU_DSC_PATH) }
+            archiveArtifacts(artifacts: "${env.UBUNTU_DEB_PATH}, ${env.UBUNTU_SRC_PATH}", caseSensitive: true)
+          }
+        }
+      }
+    }
+    stage('Deploy')
+    {
+      parallel
+      {
+        stage('RHEL')
+        {
+          when
+          {
+            expression { return env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'beta' || params.BUILD_TYPE != 'dev'; }
+          }
+          steps
+          {
+            script
+            {
+              common.publish_rpm_package("rhel/el8", env.RHEL_RPM_PATH, env.RHEL_SRPM_PATH, env.PACKAGE_NAME)
+              common.publish_rpm_package("rhel/el9", env.RHEL_RPM_PATH, env.RHEL_SRPM_PATH, env.PACKAGE_NAME)
+              common.publish_rpm_package("rhel/el10", env.RHEL_RPM_PATH, env.RHEL_SRPM_PATH, env.PACKAGE_NAME)
+            }
+          }
+        }
+        stage('Fedora')
+        {
+          when
+          {
+            expression { return env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'beta' || params.BUILD_TYPE != 'dev'; }
+          }
+          steps
+          {
+            script
+            {
+              common.publish_rpm_package("fedora", env.FEDORA_RPM_PATH, env.FEDORA_SRPM_PATH, env.PACKAGE_NAME)
+            }
+          }
+        }
+        stage('Debian')
+        {
+          when
+          {
+            expression { return env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'beta' || params.BUILD_TYPE != 'dev'; }
+          }
+          environment { DISTRO="debian"; COMPONENT="main" }
+          steps
+          {
+            script
+            {
+              common.publish_deb_package(env.DISTRO, env.PACKAGE_NAME, env.PACKAGE_NAME, "${WORKSPACE}/${env.DISTRO}", env.COMPONENT)
+              common.generate_debian_release_file("${WORKSPACE}/ci-utilities", env.DISTRO)
+            }
+          }
+        }
+        stage('Ubuntu')
+        {
+          when
+          {
+            expression { return env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'beta' || params.BUILD_TYPE != 'dev'; }
+          }
+          environment { DISTRO="ubuntu"; COMPONENT="main" }
+          steps
+          {
+            script
+            {
+              common.publish_deb_package(env.DISTRO, env.PACKAGE_NAME, env.PACKAGE_NAME, "${WORKSPACE}/${env.DISTRO}", env.COMPONENT)
+              common.generate_debian_release_file("${WORKSPACE}/ci-utilities", env.DISTRO)
+            }
+          }
+        }
+      }
+    }
   }
 }
