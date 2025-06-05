@@ -42,27 +42,27 @@ pipeline
         }
       }
     }
-    //stage('Update AUR Version')
-    //{
-    //  when
-    //  {
-    //    expression
-    //    {
-    //      def remoteBranch = sh(
-    //        script: "curl -s 'https://aur.archlinux.org/cgit/aur.git/plain/.git_branch?h=${env.AUR_GIT_PACKAGE}'",
-    //        returnStdout: true
-    //      ).trim()
-    //      return remoteBranch == env.BRANCH_NAME && params.BUILD_TYPE == 'dev'
-    //    }
-    //  }
-    //  steps
-    //  {
-    //    script
-    //    {
-    //      common.update_aur_git_package(env.AUR_GIT_PACKAGE, "packaging/${env.AUR_GIT_PACKAGE}.pkgbuild", "packaging/scpdiscord.install")
-    //    }
-    //  }
-    //}
+    stage('Update AUR Version')
+    {
+      when
+      {
+        expression
+        {
+          def remoteBranch = sh(
+            script: "curl -s 'https://aur.archlinux.org/cgit/aur.git/plain/.git_branch?h=${env.AUR_GIT_PACKAGE}'",
+            returnStdout: true
+          ).trim()
+          return remoteBranch == env.BRANCH_NAME && params.BUILD_TYPE == 'dev'
+        }
+      }
+      steps
+      {
+        script
+        {
+          common.update_aur_git_package(env.AUR_GIT_PACKAGE, "packaging/${env.AUR_GIT_PACKAGE}.pkgbuild", "packaging/scpdiscord.install")
+        }
+      }
+    }
     stage('Get Dependencies')
     {
       steps
