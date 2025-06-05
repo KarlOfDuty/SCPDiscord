@@ -1,0 +1,22 @@
+[Unit]
+Description=SCPDiscord Discord Bot
+Documentation=https://github.com/KarlOfDuty/SCPDiscord
+After=network.target
+Wants=network.target
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
+[Service]
+User=scpdiscord
+Type=notify-reload
+Restart=on-failure
+NotifyAccess=main
+RestartSec=5
+RestartPreventExitStatus=1
+
+ExecStart=/usr/bin/scpdiscord --config /etc/scpdiscord/config.yml --log-file /var/log/scpdiscord/scpdiscord.log
+ExecReload=/bin/kill -HUP $MAINPID
+
+
+[Install]
+WantedBy=multi-user.target

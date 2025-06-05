@@ -156,6 +156,84 @@ pipeline
             stash(includes: "${env.PLUGIN_PATH}, ${env.DEPENDENCIES_PATH}", name: "plugin-files")
           }
         }
+        stage('RHEL')
+        {
+          agent { dockerfile { filename 'ci-utilities/docker/RHEL8.Dockerfile' } }
+          environment{ DISTRO="rhel" }
+          steps
+          {
+            script
+            {
+              common.build_rpm_package(env.DISTRO, "packaging/scpdiscord.spec", env.PACKAGE_NAME, env.RPMBUILD_ARGS)
+              env.RHEL_RPM_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}-*.x86_64.rpm", returnStdout: true).trim()
+              env.RHEL_RPM_PATH = "${env.DISTRO}/${env.RHEL_RPM_NAME}"
+              env.RHEL_SRPM_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}-*.src.rpm", returnStdout: true).trim()
+              env.RHEL_SRPM_PATH = "${env.DISTRO}/${env.RHEL_SRPM_NAME}"
+            }
+            stash(includes: "${env.RHEL_RPM_PATH}, ${env.RHEL_SRPM_PATH}", name: "${env.DISTRO}-rpm")
+          }
+        }
+        stage('Fedora')
+        {
+          agent { dockerfile { filename 'ci-utilities/docker/Fedora42.Dockerfile' } }
+          environment { DISTRO="fedora" }
+          steps
+          {
+            script
+            {
+              common.build_rpm_package(env.DISTRO, "packaging/scpdiscord.spec", env.PACKAGE_NAME, env.RPMBUILD_ARGS)
+              env.FEDORA_RPM_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}-*.x86_64.rpm", returnStdout: true).trim()
+              env.FEDORA_RPM_PATH = "${env.DISTRO}/${env.FEDORA_RPM_NAME}"
+              env.FEDORA_SRPM_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}-*.src.rpm", returnStdout: true).trim()
+              env.FEDORA_SRPM_PATH = "${env.DISTRO}/${env.FEDORA_SRPM_NAME}"
+            }
+            stash(includes: "${env.FEDORA_RPM_PATH}, ${env.FEDORA_SRPM_PATH}", name: "${env.DISTRO}-rpm")
+          }
+        }
+        stage('Debian')
+        {
+          agent
+          {
+            dockerfile { filename 'ci-utilities/docker/Debian12.Dockerfile' }
+          }
+          environment { DISTRO="debian"; PACKAGE_ROOT="${WORKSPACE}/debian" }
+          steps
+          {
+            sh './packaging/generate-deb.sh'
+            script
+            {
+              env.DEBIAN_DEB_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}_*_amd64.deb", returnStdout: true).trim()
+              env.DEBIAN_DEB_PATH = "${env.DISTRO}/${env.DEBIAN_DEB_NAME}"
+              env.DEBIAN_DSC_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}_*.dsc", returnStdout: true).trim()
+              env.DEBIAN_DSC_PATH = "${env.DISTRO}/${env.DEBIAN_DSC_NAME}"
+              env.DEBIAN_SRC_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}_*.tar.xz", returnStdout: true).trim()
+              env.DEBIAN_SRC_PATH = "${env.DISTRO}/${env.DEBIAN_SRC_NAME}"
+            }
+            stash(includes: "${env.DEBIAN_DEB_PATH}, ${env.DEBIAN_SRC_PATH}, ${env.DEBIAN_DSC_PATH}", name: "${env.DISTRO}-deb")
+          }
+        }
+        stage('Ubuntu')
+        {
+          agent
+          {
+            dockerfile { filename 'ci-utilities/docker/Ubuntu24.04.Dockerfile' }
+          }
+          environment { DISTRO="ubuntu"; PACKAGE_ROOT="${WORKSPACE}/ubuntu" }
+          steps
+          {
+            sh './packaging/generate-deb.sh'
+            script
+            {
+              env.UBUNTU_DEB_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}_*_amd64.deb", returnStdout: true).trim()
+              env.UBUNTU_DEB_PATH = "${env.DISTRO}/${env.UBUNTU_DEB_NAME}"
+              env.UBUNTU_DSC_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}_*.dsc", returnStdout: true).trim()
+              env.UBUNTU_DSC_PATH = "${env.DISTRO}/${env.UBUNTU_DSC_NAME}"
+              env.UBUNTU_SRC_NAME = sh(script: "cd ${env.DISTRO} && ls ${env.PACKAGE_NAME}_*.tar.xz", returnStdout: true).trim()
+              env.UBUNTU_SRC_PATH = "${env.DISTRO}/${env.UBUNTU_SRC_NAME}"
+            }
+            stash(includes: "${env.UBUNTU_DEB_PATH}, ${env.UBUNTU_SRC_PATH}, ${env.UBUNTU_DSC_PATH}", name: "${env.DISTRO}-deb")
+          }
+        }
       }
     }
   }

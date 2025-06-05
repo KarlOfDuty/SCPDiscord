@@ -1,0 +1,3 @@
+d /var/lib/scpdiscord 0700 scpdiscord scpdiscord -
+f /etc/scpdiscord/config.yml 0600 scpdiscord scpdiscord -
+d /var/log/scpdiscord 0755 scpdiscord scpdiscord -

@@ -1,0 +1,9 @@
+# Example file for upstream/metadata.
+# See https://wiki.debian.org/UpstreamMetadata for more info/fields.
+# Below an example based on a github project.
+
+Bug-Database: https://github.com/KarlofDuty/SCPDiscord/issues
+Bug-Submit: https://github.com/KarlofDuty/SCPDiscord/issues/new
+Documentation: https://github.com/KarlofDuty/SCPDiscord
+Repository-Browse: https://github.com/KarlofDuty/SCPDiscord
+Repository: https://github.com/KarlofDuty/SCPDiscord.git
