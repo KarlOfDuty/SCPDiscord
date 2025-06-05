@@ -1,6 +1,6 @@
 # Maintainer: Karl Essinger <xkaess22@gmail.com>
 pkgname=scpdiscord-git
-pkgver=3.3.0
+pkgver=3.3.0.RC5.19.git7935034
 pkgrel=1
 pkgdesc="A very customisable Discord bot + SCP:SL plugin combo. Dev build."
 arch=("x86_64")
@@ -30,7 +30,7 @@ sha512sums=("SKIP")
 #validpgpkeys=()
 backup=(etc/scpdiscord/config.yml)
 
-_srcdir="SCPDiscord/SCPDiscordBot"
+_srcdir="SCPDiscord"
 
 pkgver() {
   cd "$_srcdir"
@@ -44,7 +44,7 @@ prepare() {
 
 build() {
   cd "$_srcdir"
-  dotnet publish SCPDiscordBot.csproj -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output out
+  dotnet publish SCPDiscordBot/SCPDiscordBot.csproj -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output out
 }
 
 package() {
@@ -57,7 +57,7 @@ package() {
   install -Dm 644 packaging/scpdiscord.service "${pkgdir}/usr/lib/systemd/system/"
 
   install -d "${pkgdir}/etc/scpdiscord/"
-  install -Dm 600 default_config.yml "${pkgdir}/etc/scpdiscord/config.yml"
+  install -Dm 600 SCPDiscordBot/default_config.yml "${pkgdir}/etc/scpdiscord/config.yml"
 
   install -d "${pkgdir}/usr/lib/sysusers.d/"
   install -Dm 644 "packaging/scpdiscord.sysusers" "${pkgdir}/usr/lib/sysusers.d/scpdiscord.conf"
@@ -65,3 +65,4 @@ package() {
   install -d "${pkgdir}/usr/lib/tmpfiles.d/"
   install -Dm 644 "packaging/scpdiscord.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/scpdiscord.conf"
 }
+
