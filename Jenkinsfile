@@ -86,35 +86,7 @@ pipeline
         }
       }
     }
-    stage('Build Plugin')
-    {
-      environment
-      {
-        DOTNET_CLI_HOME = "/tmp/.dotnet-plugin"
-      }
-      steps
-      {
-        dir(path: 'SCPDiscordPlugin')
-        {
-          sh 'dotnet build --output ./bin'
-          sh 'mkdir dependencies'
-          sh 'mv bin/SCPDiscord.dll ./'
-          sh 'mv bin/System.Memory.dll dependencies'
-          sh 'mv bin/Google.Protobuf.dll dependencies'
-          sh 'mv bin/Newtonsoft.Json.dll dependencies'
-          sh 'zip -r dependencies.zip dependencies'
-        }
-        archiveArtifacts(artifacts: 'SCPDiscordPlugin/dependencies.zip', onlyIfSuccessful: true)
-        archiveArtifacts(artifacts: 'SCPDiscordPlugin/SCPDiscord.dll', onlyIfSuccessful: true)
-        script
-        {
-          env.PLUGIN_PATH = 'SCPDiscordPlugin/SCPDiscord.dll'
-          env.DEPENDENCIES_PATH = 'SCPDiscordPlugin/dependencies'
-        }
-        stash(includes: "${env.PLUGIN_PATH}, ${env.DEPENDENCIES_PATH}", name: "plugin-files")
-      }
-    }
-    stage('Build Bot / Package')
+    stage('Build / Package')
     {
       parallel
       {
@@ -154,6 +126,34 @@ pipeline
               env.BASIC_WINDOWS_PATH = 'SCPDiscordBot/windows-x64/scpdiscord.exe'
               env.BASIC_WINDOWS_SC_PATH = 'SCPDiscordBot/windows-x64/scpdiscord-sc.exe'
             }
+          }
+        }
+        stage('Plugin')
+        {
+          environment
+          {
+            DOTNET_CLI_HOME = "/tmp/.dotnet-plugin"
+          }
+          steps
+          {
+            dir(path: 'SCPDiscordPlugin')
+            {
+              sh 'dotnet build --output ./bin'
+              sh 'mkdir dependencies'
+              sh 'mv bin/SCPDiscord.dll ./'
+              sh 'mv bin/System.Memory.dll dependencies'
+              sh 'mv bin/Google.Protobuf.dll dependencies'
+              sh 'mv bin/Newtonsoft.Json.dll dependencies'
+              sh 'zip -r dependencies.zip dependencies'
+            }
+            archiveArtifacts(artifacts: 'SCPDiscordPlugin/dependencies.zip', onlyIfSuccessful: true)
+            archiveArtifacts(artifacts: 'SCPDiscordPlugin/SCPDiscord.dll', onlyIfSuccessful: true)
+            script
+            {
+              env.PLUGIN_PATH = 'SCPDiscordPlugin/SCPDiscord.dll'
+              env.DEPENDENCIES_PATH = 'SCPDiscordPlugin/dependencies'
+            }
+            stash(includes: "${env.PLUGIN_PATH}, ${env.DEPENDENCIES_PATH}", name: "plugin-files")
           }
         }
       }
