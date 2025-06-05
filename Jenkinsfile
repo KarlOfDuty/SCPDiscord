@@ -153,7 +153,6 @@ pipeline
               env.PLUGIN_PATH = 'SCPDiscordPlugin/SCPDiscord.dll'
               env.DEPENDENCIES_PATH = 'SCPDiscordPlugin/dependencies'
             }
-            stash(includes: "${env.PLUGIN_PATH}, ${env.DEPENDENCIES_PATH}", name: "plugin-files")
           }
         }
         stage('RHEL')
@@ -351,6 +350,41 @@ pipeline
               common.generate_debian_release_file("${WORKSPACE}/ci-utilities", env.DISTRO)
             }
           }
+        }
+      }
+    }
+    stage('Release')
+    {
+      when
+      {
+        expression { params.BUILD_TYPE != 'dev'; }
+      }
+      steps
+      {
+        script
+        {
+          def artifacts = [
+            env.BASIC_LINUX_PATH,
+            env.BASIC_LINUX_SC_PATH,
+            env.BASIC_WINDOWS_PATH,
+            env.BASIC_WINDOWS_SC_PATH,
+            env.PLUGIN_PATH,
+            env.DEPENDENCIES_PATH,
+            env.RHEL_RPM_PATH,
+            //env.RHEL_SRPM_PATH,
+            env.FEDORA_RPM_PATH,
+            //env.FEDORA_SRPM_PATH,
+            env.DEBIAN_DEB_PATH,
+            //env.DEBIAN_SRC_PATH,
+            env.UBUNTU_DEB_PATH,
+            //env.UBUNTU_SRC_PATH
+          ]
+
+          currentBuild.description = params.BUILD_TYPE == 'pre-release' ? "Pre-release ${env.RELEASE_VERSION}" : "Release ${env.RELEASE_VERSION}"
+          common.create_github_release("KarlOfDuty/SCPDiscord", params.RELEASE_VERSION, artifacts, params.BUILD_TYPE == 'pre-release')
+
+          // Update AUR version after the tag is created
+          common.update_aur_git_package(env.AUR_GIT_PACKAGE, "packaging/${env.AUR_GIT_PACKAGE}.pkgbuild", "packaging/scpdiscord.install")
         }
       }
     }
