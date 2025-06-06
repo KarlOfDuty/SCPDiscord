@@ -21,6 +21,8 @@ namespace SCPDiscord
       public string presenceType { get; private set; } = "Watching";
       public string presenceText { get; private set; } = "for server startup...";
       public bool disableCommands { get; private set; } = false;
+
+      public string logFile { get; private set; } = "";
     }
 
     public Bot bot { get; private set; }
@@ -38,17 +40,17 @@ namespace SCPDiscord
 
   public static class ConfigParser
   {
-    public static bool loaded { get; private set; } = false;
+    public static bool Loaded { get; private set; } = false;
 
-    public static Config config { get; private set; }
+    public static Config Config { get; private set; }
 
     private static string configPath = "config.yml";
 
     public static void LoadConfig()
     {
-      if (!string.IsNullOrEmpty(SCPDiscordBot.commandLineArgs.configPath))
+      if (!string.IsNullOrEmpty(SCPDiscordBot.commandLineArgs.ConfigPath))
       {
-        configPath = SCPDiscordBot.commandLineArgs.configPath;
+        configPath = SCPDiscordBot.commandLineArgs.ConfigPath;
       }
 
       Logger.Log("Loading config \"" + Path.GetFullPath(configPath) + "\"");
@@ -64,16 +66,16 @@ namespace SCPDiscord
 
       // Converts the FileStream into a YAML object
       IDeserializer deserializer = new DeserializerBuilder().WithNamingConvention(HyphenatedNamingConvention.Instance).Build();
-      config = deserializer.Deserialize<Config>(new StreamReader(stream));
+      Config = deserializer.Deserialize<Config>(new StreamReader(stream));
 
-      if (!Enum.TryParse(config.bot.logLevel, true, out LogLevel logLevel))
+      if (!Enum.TryParse(Config.bot.logLevel, true, out LogLevel logLevel))
       {
         logLevel = LogLevel.Information;
-        Logger.Warn("Log level '" + config.bot.logLevel + "' is invalid, using 'Information' instead.");
+        Logger.Warn("Log level '" + Config.bot.logLevel + "' is invalid, using 'Information' instead.");
       }
       Logger.SetLogLevel(logLevel);
-
-      loaded = true;
+      Logger.SetupLogfile();
+      Loaded = true;
     }
 
     public static void PrintConfig()
@@ -81,14 +83,14 @@ namespace SCPDiscord
       Logger.Debug("######### Config #########");
       Logger.Debug("bot:");
       Logger.Debug("  token:            HIDDEN");
-      Logger.Debug("  server-id:        " + config.bot.serverId);
-      Logger.Debug("  log-level:        " + config.bot.logLevel);
-      Logger.Debug("  presence-type:    " + config.bot.presenceType);
-      Logger.Debug("  presence-text:    " + config.bot.presenceText);
-      Logger.Debug("  disable-commands: " + config.bot.disableCommands);
+      Logger.Debug("  server-id:        " + Config.bot.serverId);
+      Logger.Debug("  log-level:        " + Config.bot.logLevel);
+      Logger.Debug("  presence-type:    " + Config.bot.presenceType);
+      Logger.Debug("  presence-text:    " + Config.bot.presenceText);
+      Logger.Debug("  disable-commands: " + Config.bot.disableCommands);
       Logger.Debug("");
       Logger.Debug("permissions:");
-      foreach (KeyValuePair<ulong, string[]> node in config.permissions)
+      foreach (KeyValuePair<ulong, string[]> node in Config.permissions)
       {
         Logger.Debug("  " + node.Key + ":");
         foreach (string command in node.Value)
@@ -99,8 +101,8 @@ namespace SCPDiscord
 
       Logger.Debug("");
       Logger.Debug("plugin:");
-      Logger.Debug("  address: " + config.plugin.address);
-      Logger.Debug("  port:    " + config.plugin.port);
+      Logger.Debug("  address: " + Config.plugin.address);
+      Logger.Debug("  port:    " + Config.plugin.port);
     }
 
     public static bool HasPermission(DiscordMember member, string command)
@@ -108,7 +110,7 @@ namespace SCPDiscord
       foreach (DiscordRole role in member.Roles)
       {
         Logger.Debug("Checking role '" + role.Id + "' for command permissions...");
-        if (config.permissions.TryGetValue(role.Id, out string[] permissions))
+        if (Config.permissions.TryGetValue(role.Id, out string[] permissions))
         {
           Logger.Debug("Found role '" + role.Id + "' in config...");
           if (permissions.Any(s => Regex.IsMatch(command, "^" + s)))
@@ -120,7 +122,7 @@ namespace SCPDiscord
       }
 
       Logger.Debug("Checking @everyone role...");
-      if (config.permissions.TryGetValue(0, out string[] everyonePermissions))
+      if (Config.permissions.TryGetValue(0, out string[] everyonePermissions))
       {
         Logger.Debug("Found @everyone role in config...");
         if (everyonePermissions.Any(s => Regex.IsMatch(command, "^" + s)))

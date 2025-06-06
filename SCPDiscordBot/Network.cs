@@ -41,28 +41,28 @@ namespace SCPDiscord
         clientSocket.Close();
       }
 
-      while (!ConfigParser.loaded)
+      while (!ConfigParser.Loaded)
       {
         Thread.Sleep(1000);
       }
 
       IPAddress ipAddress;
 
-      if (ConfigParser.config.plugin.address == "0.0.0.0")
+      if (ConfigParser.Config.plugin.address == "0.0.0.0")
       {
         ipAddress = IPAddress.Any;
       }
-      else if (ConfigParser.config.plugin.address == "::0")
+      else if (ConfigParser.Config.plugin.address == "::0")
       {
         ipAddress = IPAddress.IPv6Any;
       }
-      else if (IPAddress.TryParse(ConfigParser.config.plugin.address, out IPAddress parsedIP))
+      else if (IPAddress.TryParse(ConfigParser.Config.plugin.address, out IPAddress parsedIP))
       {
         ipAddress = parsedIP;
       }
       else
       {
-        IPHostEntry ipHostInfo = Dns.GetHostEntry(ConfigParser.config.plugin.address);
+        IPHostEntry ipHostInfo = Dns.GetHostEntry(ConfigParser.Config.plugin.address);
 
         // Use an IPv4 address if available
         if (ipHostInfo.AddressList.Any(ip => ip.AddressFamily == AddressFamily.InterNetwork))
@@ -75,7 +75,7 @@ namespace SCPDiscord
         }
       }
 
-      IPEndPoint listenerEndpoint = new IPEndPoint(ipAddress, ConfigParser.config.plugin.port);
+      IPEndPoint listenerEndpoint = new IPEndPoint(ipAddress, ConfigParser.Config.plugin.port);
       listenerSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
       listenerSocket.Bind(listenerEndpoint);
       listenerSocket.Listen(10);
@@ -91,7 +91,7 @@ namespace SCPDiscord
           else
           {
             DiscordAPI.SetDisconnectedActivity();
-            Logger.Log("Listening on " + ipAddress + ":" + ConfigParser.config.plugin.port);
+            Logger.Log("Listening on " + ipAddress + ":" + ConfigParser.Config.plugin.port);
             clientSocket = listenerSocket.Accept();
             networkStream = new NetworkStream(clientSocket, true);
             Logger.Log("Plugin connected.");

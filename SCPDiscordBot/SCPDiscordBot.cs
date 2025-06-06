@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using CommandLine;
+using Microsoft.Extensions.Hosting.Systemd;
+using Tmds.Systemd;
+using ServiceState = Tmds.Systemd.ServiceState;
 
 namespace SCPDiscord
 {
@@ -19,7 +25,14 @@ namespace SCPDiscord
         HelpText = "Select a config file to use.",
         Default = "config.yml",
         MetaValue = "PATH")]
-      public string configPath { get; set; }
+      public string ConfigPath { get; set; }
+
+      [Option('l',
+        "log-file",
+        Required = false,
+        HelpText = "Select log file to write bot logs to.",
+        MetaValue = "PATH")]
+      public string LogFilePath { get; set; }
 
       [Option(
         "leave",
@@ -29,13 +42,33 @@ namespace SCPDiscord
         MetaValue = "ID,ID,ID...",
         Separator = ','
       )]
-      public IEnumerable<ulong> serversToLeave { get; set; }
+      public IEnumerable<ulong> ServersToLeave { get; set; }
     }
 
     internal static CommandLineArguments commandLineArgs;
 
-    private static void Main(string[] args)
+    private static readonly Channel<PosixSignal> signalChannel = Channel.CreateUnbounded<PosixSignal>();
+
+    // ServiceManager will steal this variable later so we have to copy it while we have the chance.
+    private static readonly string systemdSocket = Environment.GetEnvironmentVariable("NOTIFY_SOCKET");
+
+    private static void HandleSignal(PosixSignalContext context)
     {
+      context.Cancel = true;
+      signalChannel.Writer.TryWrite(context.Signal);
+    }
+
+    private static async Task<int> Main(string[] args)
+    {
+      if (SystemdHelpers.IsSystemdService())
+      {
+        Journal.SyslogIdentifier = Assembly.GetEntryAssembly()?.GetName().Name;
+        PosixSignalRegistration.Create(PosixSignal.SIGHUP, HandleSignal);
+      }
+
+      PosixSignalRegistration.Create(PosixSignal.SIGTERM, HandleSignal);
+      PosixSignalRegistration.Create(PosixSignal.SIGINT, HandleSignal);
+
       StringWriter sw = new StringWriter();
       commandLineArgs = new Parser(settings =>
       {
@@ -52,22 +85,17 @@ namespace SCPDiscord
 
       if (args.Contains("--help"))
       {
-        return;
+        return 0;
       }
 
       if (args.Contains("--version"))
       {
         Console.WriteLine(Assembly.GetEntryAssembly()?.GetName().Name + ' ' + GetVersion());
         Console.WriteLine("Build time: " + BuildInfo.BuildTimeUTC.ToString("yyyy-MM-dd HH:mm:ss") + " UTC");
-        return;
+        return 0;
       }
 
-      new SCPDiscordBot().MainAsync().GetAwaiter().GetResult();
-    }
-
-    private async Task MainAsync()
-    {
-      Logger.Log("Starting SCPDiscord version " + GetVersion() + "...");
+      Logger.Log("Starting " + Assembly.GetEntryAssembly()?.GetName().Name + " version " + GetVersion() + "...");
       try
       {
         try
@@ -77,7 +105,7 @@ namespace SCPDiscord
         catch (Exception e)
         {
           Logger.Fatal("Error loading config!", e);
-          return;
+          return 1;
         }
 
         await DiscordAPI.Init();
@@ -85,14 +113,53 @@ namespace SCPDiscord
         new Thread(() => new StartNetworkSystem()).Start();
         new Thread(() => new StartMessageScheduler()).Start();
 
-        // Block this task until the program is closed.
-        await Task.Delay(-1);
+        ServiceManager.Notify(ServiceState.Ready);
+
+        // Loop here until application closes, handle any signals received
+        while (await signalChannel.Reader.WaitToReadAsync())
+        {
+          while (signalChannel.Reader.TryRead(out PosixSignal signal))
+          {
+            switch (signal)
+            {
+              case PosixSignal.SIGHUP:
+                // Tmds.Systemd.ServiceManager doesn't support the notify-reload service type so we have to send the reloading message manually.
+                // According to the documentation this shouldn't be the right way to calculate MONOTONIC_USEC, but it works for some reason.
+                byte[] data = System.Text.Encoding.UTF8.GetBytes($"RELOADING=1\nMONOTONIC_USEC={DateTimeOffset.UtcNow.ToUnixTimeMicroseconds()}\n");
+                UnixDomainSocketEndPoint ep = new(systemdSocket);
+                using (Socket cl = new(AddressFamily.Unix, SocketType.Dgram, ProtocolType.Unspecified))
+                {
+                  await cl.ConnectAsync(ep);
+                  cl.Send(data);
+                }
+
+                // TODO: Restart the network system
+                ConfigParser.LoadConfig();
+                ServiceManager.Notify(ServiceState.Ready);
+                break;
+              case PosixSignal.SIGTERM:
+                Logger.Log("Shutting down...");
+                ServiceManager.Notify(ServiceState.Stopping);
+                // TODO: Stop Discord client, network connection
+                return 0;
+              case PosixSignal.SIGINT:
+                Logger.Warn("Received interrupt signal, shutting down...");
+                ServiceManager.Notify(ServiceState.Stopping);
+                // TODO: Stop Discord client, network connection
+                return 0;
+              default:
+                break;
+            }
+          }
+        }
       }
       catch (Exception e)
       {
-        Logger.Fatal("Fatal error:", e);
-        Console.ReadLine();
+          Logger.Fatal("Fatal error.", e);
+          return 3;
       }
+
+      return 0;
     }
 
     public static string GetVersion()

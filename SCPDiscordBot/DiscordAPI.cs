@@ -32,13 +32,13 @@ public class DiscordAPI
       instance = new DiscordAPI();
 
       // Check if token is unset
-      if (ConfigParser.config.bot.token == "add-your-token-here" || ConfigParser.config.bot.token == "")
+      if (ConfigParser.Config.bot.token == "add-your-token-here" || ConfigParser.Config.bot.token == "")
       {
         Logger.Fatal("You need to set your bot token in the config and start the bot again.");
         throw new ArgumentException("Discord bot token has not been set in config");
       }
 
-      DiscordClientBuilder clientBuilder = DiscordClientBuilder.CreateDefault(ConfigParser.config.bot.token, DiscordIntents.All).SetReconnectOnFatalGatewayErrors();
+      DiscordClientBuilder clientBuilder = DiscordClientBuilder.CreateDefault(ConfigParser.Config.bot.token, DiscordIntents.All).SetReconnectOnFatalGatewayErrors();
 
         clientBuilder.ConfigureServices(configure =>
         {
@@ -96,7 +96,7 @@ public class DiscordAPI
 
         clientBuilder.ConfigureLogging(config =>
         {
-            config.AddProvider(new LogTestFactory());
+            config.AddProvider(new LoggerProvider());
         });
 
         client = clientBuilder.Build();
@@ -104,7 +104,7 @@ public class DiscordAPI
         Logger.Log("Connecting to Discord...");
         await client.ConnectAsync();
 
-        if (ConfigParser.config.bot.disableCommands)
+        if (ConfigParser.Config.bot.disableCommands)
         {
           await client.BulkOverwriteGlobalApplicationCommandsAsync([]);
         }
@@ -117,19 +117,19 @@ public class DiscordAPI
 
   public static void SetDisconnectedActivity()
   {
-    if (!Enum.TryParse(ConfigParser.config.bot.presenceType, true, out DiscordActivityType activityType))
+    if (!Enum.TryParse(ConfigParser.Config.bot.presenceType, true, out DiscordActivityType activityType))
     {
-      Logger.Warn("Activity type '" + ConfigParser.config.bot.presenceType + "' invalid, using 'Playing' instead.");
+      Logger.Warn("Activity type '" + ConfigParser.Config.bot.presenceType + "' invalid, using 'Playing' instead.");
       activityType = DiscordActivityType.Playing;
     }
 
-    if (!Enum.TryParse(ConfigParser.config.bot.statusType, true, out DiscordUserStatus statusType))
+    if (!Enum.TryParse(ConfigParser.Config.bot.statusType, true, out DiscordUserStatus statusType))
     {
-      Logger.Warn("Status type '" + ConfigParser.config.bot.statusType + "' invalid, using 'DoNotDisturb' instead.");
+      Logger.Warn("Status type '" + ConfigParser.Config.bot.statusType + "' invalid, using 'DoNotDisturb' instead.");
       statusType = DiscordUserStatus.DoNotDisturb;
     }
 
-    SetActivity(ConfigParser.config.bot.presenceText, activityType, statusType);
+    SetActivity(ConfigParser.Config.bot.presenceText, activityType, statusType);
   }
 
   public static void SetActivity(string activityText, DiscordActivityType activityType, DiscordUserStatus status)
@@ -288,7 +288,7 @@ public class DiscordAPI
       return;
     }
 
-    if (ConfigParser.config.bot.serverId == 0)
+    if (ConfigParser.Config.bot.serverId == 0)
     {
       Logger.Warn("Plugin attempted to use role sync, but no server ID was set in the config. Ignoring request...");
       return;
@@ -296,7 +296,7 @@ public class DiscordAPI
 
     try
     {
-      DiscordGuild guild = await client.GetGuildAsync(ConfigParser.config.bot.serverId);
+      DiscordGuild guild = await client.GetGuildAsync(ConfigParser.Config.bot.serverId);
       DiscordMember member = await guild.GetMemberAsync(userID);
 
       Interface.MessageWrapper message = new Interface.MessageWrapper

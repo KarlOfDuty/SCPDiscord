@@ -10,6 +10,19 @@ using SCPDiscord.Interface;
 
 namespace SCPDiscord;
 
+public static class Extensions
+{
+  private static readonly DateTimeOffset UnixEpoch =
+    new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+  public static long ToUnixTimeMicroseconds(this DateTimeOffset timestamp)
+  {
+    TimeSpan duration = timestamp - UnixEpoch;
+    // There are 10 ticks per microsecond.
+    return duration.Ticks / 10;
+  }
+}
+
 public static class Utilities
 {
   public static DiscordEmbed GetDiscordEmbed(EmbedMessage embedMessage)

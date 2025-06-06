@@ -35,7 +35,7 @@ public static class EventHandler
 
     Logger.Log("Found Discord server: " + e.Guild.Name + " (" + e.Guild.Id + ")");
 
-    if (SCPDiscordBot.commandLineArgs.serversToLeave.Contains(e.Guild.Id))
+    if (SCPDiscordBot.commandLineArgs.ServersToLeave.Contains(e.Guild.Id))
     {
       Logger.Warn("LEAVING DISCORD SERVER AS REQUESTED: " + e.Guild.Name + " (" + e.Guild.Id + ")");
       await e.Guild.LeaveAsync();
