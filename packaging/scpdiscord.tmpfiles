@@ -1,3 +1,6 @@
-d /var/lib/scpdiscord 0700 scpdiscord scpdiscord -
-f /etc/scpdiscord/config.yml 0600 scpdiscord scpdiscord -
+d /var/lib/scpdiscord 0770 scpdiscord scpdiscord -
+d /etc/scpdiscord 0770 scpdiscord scpdiscord -
 d /var/log/scpdiscord 0755 scpdiscord scpdiscord -
+d /usr/share/scpdiscord 0755 scpdiscord scpdiscord -
+
+f /usr/share/scpdiscord/default_config.yml 0644 scpdiscord scpdiscord -

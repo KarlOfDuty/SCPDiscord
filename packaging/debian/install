@@ -1,3 +1,3 @@
 linux-x64/scpdiscord usr/bin/
-config.yml etc/scpdiscord/
-packaging/scpdiscord.service usr/lib/systemd/system/
+SCPDiscordBot/default_config.yml usr/share/scpdiscord/
+packaging/scpdiscord@.service usr/lib/systemd/system/

@@ -1,5 +1,5 @@
 [Unit]
-Description=SCPDiscord Discord Bot
+Description=SCPDiscord Discord Bot (%i)
 Documentation=https://github.com/KarlOfDuty/SCPDiscord
 After=network.target
 Wants=network.target
@@ -14,9 +14,8 @@ NotifyAccess=main
 RestartSec=5
 RestartPreventExitStatus=1
 
-ExecStart=/usr/bin/scpdiscord --config /etc/scpdiscord/config.yml --log-file /var/log/scpdiscord/scpdiscord.log
+ExecStart=/usr/bin/scpdiscord --config /etc/scpdiscord/config_%i.yml --log-file /var/log/scpdiscord/scpdiscord_%i.log
 ExecReload=/bin/kill -HUP $MAINPID
-
 
 [Install]
 WantedBy=multi-user.target

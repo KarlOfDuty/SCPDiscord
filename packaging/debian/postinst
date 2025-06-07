@@ -22,24 +22,21 @@ case "$1" in
   configure)
     getent group scpdiscord > /dev/null || groupadd scpdiscord
     getent passwd scpdiscord > /dev/null || useradd -r -m -d /var/lib/scpdiscord -s /sbin/nologin -g scpdiscord scpdiscord
-    chmod 400 /etc/scpdiscord/config.yml
-    chmod 555 /usr/bin/scpdiscord
-    chown scpdiscord:scpdiscord /etc/scpdiscord/config.yml
-    chown scpdiscord:scpdiscord /usr/bin/scpdiscord
-    install -m 700 -o scpdiscord -g scpdiscord -d /var/lib/scpdiscord
+
+    install -m 770 -o scpdiscord -g scpdiscord -d /var/lib/scpdiscord
     install -m 755 -o scpdiscord -g scpdiscord -d /var/log/scpdiscord
+    install -m 770 -o scpdiscord -g scpdiscord -d /etc/scpdiscord
+
+    install -m 644 -o root -g root /usr/share/scpdiscord/default_config.yml
+    install -m 755 -o root -g root /usr/bin/scpdiscord
 
     SYSTEMD_VERSION=$(systemctl --version | awk '{if($1=="systemd" && $2~"^[0-9]"){print $2}}' | head -n 1)
-    if [ "$SYSTEMD_VERSION" -lt 253 ]; then
+    if [ -n "$SYSTEMD_VERSION" ] && [ "$SYSTEMD_VERSION" -lt 253 ]; then
         echo "Systemd version is lower than 253 ($SYSTEMD_VERSION); using legacy service type 'notify' instead of 'notify-reload'"
-        sed -i 's/^Type=notify-reload$/Type=notify/' "/usr/lib/systemd/system/scpdiscord.service"
+        sed -i 's/^Type=notify-reload$/Type=notify/' "/usr/lib/systemd/system/scpdiscord@.service"
     fi
 
     systemctl daemon-reload
-    if [ -f "/tmp/.scpdiscord-upgrade-stopped-service" ]; then
-      systemctl start scpdiscord.service
-      rm "/tmp/.scpdiscord-upgrade-stopped-service"
-    fi
   ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)

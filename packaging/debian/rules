@@ -23,11 +23,6 @@ override_dh_auto_build:
 
 	dh_auto_build
 
-override_dh_install:
-	mkdir -p "debian/tmp"
-	cp "SCPDiscordBot/default_config.yml" "debian/tmp/config.yml"
-	dh_install
-
 override_dh_strip:
 	# Skip binary strip as it breaks dotnet binaries
 

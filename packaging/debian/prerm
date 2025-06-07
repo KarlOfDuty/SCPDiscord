@@ -18,24 +18,8 @@ set -e
 
 
 case "$1" in
-  upgrade|deconfigure)
-    if systemctl -q is-active scpdiscord.service; then
-      systemctl stop scpdiscord.service
-      touch "/tmp/.scpdiscord-upgrade-stopped-service"
-    fi
-  ;;
-
-  remove)
-    if systemctl -q is-enabled scpdiscord.service; then
-      systemctl disable scpdiscord.service
-    fi
-
-    if systemctl -q is-active scpdiscord.service; then
-      systemctl stop scpdiscord.service
-    fi
-  ;;
-
-  failed-upgrade)
+  upgrade|deconfigure|remove|failed-upgrade)
+    systemctl daemon-reload
   ;;
 
   *)

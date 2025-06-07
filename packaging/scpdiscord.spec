@@ -41,14 +41,15 @@ fi
 # rpmbuild post-processing using the strip command breaks dotnet binaries, remove the executable bit to avoid it
 %{__install} -m 644 %{_builddir}/out/scpdiscord %{buildroot}/usr/bin/scpdiscord
 
-%{__install} -d %{buildroot}/usr/lib/systemd/system
-%{__install} -m 644 %{repo_root}/packaging/scpdiscord.service %{buildroot}/usr/lib/systemd/system/
+%{__install} -d %{buildroot}/usr/lib/systemd/system/
+%{__install} -m 644 %{repo_root}/packaging/scpdiscord@.service %{buildroot}/usr/lib/systemd/system/
 
+%{__install} -d %{buildroot}/usr/share/scpdiscord/
+%{__install} -m 644 %{repo_root}/SCPDiscordBot/default_config.yml %{buildroot}/usr/share/scpdiscord/
+
+%{__install} -d %{buildroot}/var/lib/scpdiscord/
+%{__install} -d %{buildroot}/var/log/scpdiscord/
 %{__install} -d %{buildroot}/etc/scpdiscord/
-%{__install} -m 600 %{repo_root}/SCPDiscordBot/default_config.yml %{buildroot}/etc/scpdiscord/config.yml
-
-%{__install} -d %{buildroot}/var/lib/scpdiscord
-%{__install} -d %{buildroot}/var/log/scpdiscord
 
 %pre
 getent group scpdiscord > /dev/null || groupadd scpdiscord
@@ -56,21 +57,21 @@ getent passwd scpdiscord > /dev/null || useradd -r -m -d /var/lib/scpdiscord -s 
 
 %post
 SYSTEMD_VERSION=$(systemctl --version | awk '{if($1=="systemd" && $2~"^[0-9]"){print $2}}' | head -n 1)
-if (( $SYSTEMD_VERSION < 253 )); then
+if [ -n "$SYSTEMD_VERSION" ] && [ "$SYSTEMD_VERSION" -lt 253 ]; then
     echo "Systemd version is lower than 253 ($SYSTEMD_VERSION); using legacy service type 'notify' instead of 'notify-reload'"
-    sed -i 's/^Type=notify-reload$/Type=notify/' "/usr/lib/systemd/system/scpdiscord.service"
+    sed -i 's/^Type=notify-reload$/Type=notify/' "/usr/lib/systemd/system/scpdiscord@.service"
 fi
-%systemd_post scpdiscord.service
-
-%preun
-%systemd_preun scpdiscord.service
+%systemd_postun_without_restart
 
 %postun
-%systemd_postun_with_restart scpdiscord.service
+%systemd_postun_without_restart
 
 %files
+%dir %attr(0770, scpdiscord, scpdiscord) /etc/scpdiscord/
+%dir %attr(0770, scpdiscord, scpdiscord) /var/lib/scpdiscord/
+%dir %attr(0755, scpdiscord, scpdiscord) /var/log/scpdiscord/
+%dir %attr(0755, scpdiscord, scpdiscord) /usr/share/scpdiscord/
+
 %attr(0755,root,root) /usr/bin/scpdiscord
-%attr(0644,root,root) /usr/lib/systemd/system/scpdiscord.service
-%config %attr(0600, scpdiscord, scpdiscord) /etc/scpdiscord/config.yml
-%dir %attr(0700, scpdiscord, scpdiscord) /var/lib/scpdiscord
-%dir %attr(0755, scpdiscord, scpdiscord) /var/log/scpdiscord
+%attr(0644,root,root) /usr/lib/systemd/system/scpdiscord@.service
+%attr(0644, scpdiscord, scpdiscord) /usr/share/scpdiscord/default_config.yml
