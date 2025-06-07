@@ -14,7 +14,7 @@ NotifyAccess=main
 RestartSec=5
 RestartPreventExitStatus=1
 
-ExecStart=/usr/bin/scpdiscord --config /etc/scpdiscord/config_%i.yml --log-file /var/log/scpdiscord/scpdiscord_%i.log
+ExecStart=/usr/bin/scpdiscord --config /etc/scpdiscord/config-%i.yml --log-file /var/log/scpdiscord/scpdiscord-%i.log
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
