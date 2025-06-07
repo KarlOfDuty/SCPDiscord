@@ -1,5 +1,5 @@
 linux-x64/scpdiscord usr/bin/
 SCPDiscordBot/default_config.yml usr/share/scpdiscord/
 packaging/scpdiscord@.service usr/lib/systemd/system/
-packaging/scpdiscord.sysusers etc/sysusers.d/scpdiscord.conf
-packaging/scpdiscord.tmpfiles etc/tmpfiles.d/scpdiscord.conf
+sysusers/scpdiscord.conf /usr/lib/sysusers.d/
+tmpfiles/scpdiscord.conf /usr/lib/tmpfiles.d/

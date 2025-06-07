@@ -20,8 +20,14 @@
 
 override_dh_auto_build:
 	dotnet publish SCPDiscordBot/SCPDiscordBot.csproj -r linux-x64 -c Release --self-contained false --restore --output linux-x64/
-
 	dh_auto_build
+
+override_dh_install:
+	mkdir -p "debian/tmp/sysusers"
+	mkdir -p "debian/tmp/tmpfiles"
+	cp "packaging/scpdiscord.sysusers" "debian/tmp/sysusers/scpdiscord.conf"
+	cp "packaging/scpdiscord.tmpfiles" "debian/tmp/tmpfiles/scpdiscord.conf"
+	dh_install
 
 override_dh_strip:
 	# Skip binary strip as it breaks dotnet binaries
