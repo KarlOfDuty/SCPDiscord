@@ -31,13 +31,6 @@ public class DiscordAPI
 
       instance = new DiscordAPI();
 
-      // Check if token is unset
-      if (ConfigParser.Config.bot.token == "add-your-token-here" || ConfigParser.Config.bot.token == "")
-      {
-        Logger.Fatal("You need to set your bot token in the config and start the bot again.");
-        throw new ArgumentException("Discord bot token has not been set in config");
-      }
-
       DiscordClientBuilder clientBuilder = DiscordClientBuilder.CreateDefault(ConfigParser.Config.bot.token, DiscordIntents.All).SetReconnectOnFatalGatewayErrors();
 
         clientBuilder.ConfigureServices(configure =>

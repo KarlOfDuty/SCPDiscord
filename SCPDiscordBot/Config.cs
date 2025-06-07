@@ -76,6 +76,13 @@ namespace SCPDiscord
       Logger.SetLogLevel(logLevel);
       Logger.SetupLogfile();
       Loaded = true;
+
+      // Throw exception if bot token is not set
+      if (Config.bot.token is "add-your-token-here" or "")
+      {
+        Logger.Fatal("You need to set your bot token in the config and start the bot again.");
+        throw new ArgumentException("Discord bot token has not been set in config");
+      }
     }
 
     public static void PrintConfig()
