@@ -26,6 +26,11 @@ bot:
     # Disable and delete all existing commands for this bot.
     disable-commands: false
 
+    # Log all console output to a file, can be overridden using command line arguments. Set to "" to disable.
+    # When running the bot as a service this will be set to "/var/log/scpdiscord/scpdiscord*.log" by the service.
+    # The log file will still log all log levels regardless of the console log level setting.
+    log-file: ""
+
 # Sets command permissions for roles, affects the /server and /ra commands.
 # The permissions use regex matching, which you can use for more advanced configuration.
 # You can use 0 as the id for the @everyone role.
