@@ -1,4 +1,4 @@
-d /var/lib/scpdiscord 0770 scpdiscord scpdiscord -
-d /etc/scpdiscord 0770 scpdiscord scpdiscord -
+d /var/lib/scpdiscord 0700 scpdiscord scpdiscord -
+d /etc/scpdiscord 0700 scpdiscord scpdiscord -
 d /var/log/scpdiscord 0755 scpdiscord scpdiscord -
 d /usr/share/scpdiscord 0755 scpdiscord scpdiscord -

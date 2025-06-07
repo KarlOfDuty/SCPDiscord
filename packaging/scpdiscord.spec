@@ -47,13 +47,8 @@ fi
 %{__install} -d %{buildroot}/usr/share/scpdiscord/
 %{__install} -m 644 %{repo_root}/SCPDiscordBot/default_config.yml %{buildroot}/usr/share/scpdiscord/
 
-%{__install} -d %{buildroot}/var/lib/scpdiscord/
-%{__install} -d %{buildroot}/var/log/scpdiscord/
-%{__install} -d %{buildroot}/etc/scpdiscord/
-
-%pre
-getent group scpdiscord > /dev/null || groupadd scpdiscord
-getent passwd scpdiscord > /dev/null || useradd -r -m -d /var/lib/scpdiscord -s /sbin/nologin -g scpdiscord scpdiscord
+%{__install} -D -m 644 %{repo_root}/packaging/scpdiscord.sysusers %{buildroot}%{_sysusersdir}/scpdiscord.conf
+%{__install} -D -m 644 %{repo_root}/packaging/scpdiscord.tmpfiles %{buildroot}%{_tmpfilesdir}/scpdiscord.conf
 
 %post
 SYSTEMD_VERSION=$(systemctl --version | awk '{if($1=="systemd" && $2~"^[0-9]"){print $2}}' | head -n 1)
@@ -61,17 +56,20 @@ if [ -n "$SYSTEMD_VERSION" ] && [ "$SYSTEMD_VERSION" -lt 253 ]; then
     echo "Systemd version is lower than 253 ($SYSTEMD_VERSION); using legacy service type 'notify' instead of 'notify-reload'"
     sed -i 's/^Type=notify-reload$/Type=notify/' "/usr/lib/systemd/system/scpdiscord@.service"
 fi
-%systemd_postun_without_restart
+%sysusers_create_compat %{_sysusersdir}/scpdiscord.conf
+%tmpfiles_create %{_tmpfilesdir}/scpdiscord.conf
+%systemd_post scpdiscord@.service
+
+%preun
+%systemd_preun scpdiscord@.service
 
 %postun
-%systemd_postun_without_restart
+%systemd_postun scpdiscord@.service
 
 %files
-%dir %attr(0770, scpdiscord, scpdiscord) /etc/scpdiscord/
-%dir %attr(0770, scpdiscord, scpdiscord) /var/lib/scpdiscord/
-%dir %attr(0755, scpdiscord, scpdiscord) /var/log/scpdiscord/
-%dir %attr(0755, scpdiscord, scpdiscord) /usr/share/scpdiscord/
+%{_sysusersdir}/scpdiscord.conf
+%{_tmpfilesdir}/scpdiscord.conf
 
 %attr(0755,root,root) /usr/bin/scpdiscord
-%attr(0644,root,root) /usr/lib/systemd/system/scpdiscord@.service
-%attr(0644, scpdiscord, scpdiscord) /usr/share/scpdiscord/default_config.yml
+/usr/lib/systemd/system/scpdiscord@.service
+/usr/share/scpdiscord/default_config.yml

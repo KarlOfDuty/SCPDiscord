@@ -20,15 +20,8 @@ set -e
 
 case "$1" in
   configure)
-    getent group scpdiscord > /dev/null || groupadd scpdiscord
-    getent passwd scpdiscord > /dev/null || useradd -r -m -d /var/lib/scpdiscord -s /sbin/nologin -g scpdiscord scpdiscord
-
-    install -m 770 -o scpdiscord -g scpdiscord -d /var/lib/scpdiscord
-    install -m 755 -o scpdiscord -g scpdiscord -d /var/log/scpdiscord
-    install -m 770 -o scpdiscord -g scpdiscord -d /etc/scpdiscord
-
-    install -m 644 -o root -g root /usr/share/scpdiscord/default_config.yml
-    install -m 755 -o root -g root /usr/bin/scpdiscord
+    systemd-sysusers /etc/sysusers.d/scpdiscord.conf
+    systemd-tmpfiles --create /etc/tmpfiles.d/scpdiscord.conf
 
     SYSTEMD_VERSION=$(systemctl --version | awk '{if($1=="systemd" && $2~"^[0-9]"){print $2}}' | head -n 1)
     if [ -n "$SYSTEMD_VERSION" ] && [ "$SYSTEMD_VERSION" -lt 253 ]; then
