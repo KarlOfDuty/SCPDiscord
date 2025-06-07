@@ -43,7 +43,7 @@ package() {
   install -d "${pkgdir}/usr/lib/systemd/system/"
   install -Dm 644 packaging/scpdiscord@.service "${pkgdir}/usr/lib/systemd/system/"
 
-  install -d "${pkgdir}/etc/scpdiscord/"
+  install -d "${pkgdir}/usr/share/scpdiscord/"
   install -Dm 644 SCPDiscordBot/default_config.yml "${pkgdir}/usr/share/scpdiscord/"
 
   install -d "${pkgdir}/usr/lib/sysusers.d/"
