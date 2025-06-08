@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using DSharpPlus;
@@ -40,27 +40,27 @@ public class Logger(string logCategory) : ILogger
 
     internal static void Debug(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        Instance.Log(LogLevel.Debug, exception, message, exceptionOnDebugOnly);
+        Instance.FilterAndLog(LogLevel.Debug, botEventId, exception, message, exceptionOnDebugOnly);
     }
 
     internal static void Log(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        Instance.Log(LogLevel.Information, exception, message, exceptionOnDebugOnly);
+        Instance.FilterAndLog(LogLevel.Information, botEventId, exception, message, exceptionOnDebugOnly);
     }
 
     internal static void Warn(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        Instance.Log(LogLevel.Warning, exception, message, exceptionOnDebugOnly);
+        Instance.FilterAndLog(LogLevel.Warning, botEventId, exception, message, exceptionOnDebugOnly);
     }
 
     internal static void Error(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        Instance.Log(LogLevel.Error, exception, message, exceptionOnDebugOnly);
+        Instance.FilterAndLog(LogLevel.Error, botEventId, exception, message, exceptionOnDebugOnly);
     }
 
     internal static void Fatal(string message, Exception exception = null, bool exceptionOnDebugOnly = false)
     {
-        Instance.Log(LogLevel.Critical, exception, message, exceptionOnDebugOnly);
+        Instance.FilterAndLog(LogLevel.Critical, botEventId, exception, message, exceptionOnDebugOnly);
     }
 
     public bool IsEnabled(LogLevel logLevel)
@@ -85,10 +85,10 @@ public class Logger(string logCategory) : ILogger
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
     {
-        Log(logLevel, eventId, exception, formatter(state, exception), false);
+        FilterAndLog(logLevel, eventId, exception, formatter(state, exception), false);
     }
 
-    private void Log(LogLevel logLevel, EventId eventId, Exception exception, string message, bool exceptionOnDebugOnly)
+    private void FilterAndLog(LogLevel logLevel, EventId eventId, Exception exception, string message, bool exceptionOnDebugOnly)
     {
         // Ratelimit messages are usually warnings, but they are unimportant in this case so downgrade them to debug.
         if (message.StartsWith("Hit Discord ratelimit on route ") && logLevel == LogLevel.Warning)
