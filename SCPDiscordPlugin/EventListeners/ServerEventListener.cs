@@ -283,14 +283,14 @@ namespace SCPDiscord.EventListeners
         {
           { "duration",         (RoundStart.RoundLength.TotalSeconds / 60).ToString("0") },
           { "leadingteam",       ev.LeadingTeam.ToString() },
-          { "dclassalive",       Utilities.GetNumberOfPlayers(Team.ClassD).ToString() },
+          { "dclassalive",       RoundSummary.singleton.CountTeam(Team.ClassD).ToString() },
           { "dclassdead",        "-" }, //Statistics.CurrentRound.ClassDDead.ToString() },
           { "dclassescaped",     RoundSummary.EscapedClassD.ToString() },
           { "dclassstart",       RoundSummary.singleton.classlistStart.class_ds.ToString() },
-          { "mtfalive",          Utilities.GetNumberOfPlayers(Team.FoundationForces).ToString() },
+          { "mtfalive",          RoundSummary.singleton.CountTeam(Team.FoundationForces).ToString() },
           { "mtfdead",           "-" }, //Statistics.CurrentRound.MtfAndGuardsDead.ToString()  },
           { "mtfstart",          RoundSummary.singleton.classlistStart.mtf_and_guards.ToString() },
-          { "scientistsalive",   Utilities.GetNumberOfPlayers(Team.Scientists).ToString()   },
+          { "scientistsalive",   RoundSummary.singleton.CountTeam(Team.Scientists).ToString()   },
           { "scientistsdead",    "-" }, //Statistics.CurrentRound.ScientistsDead.ToString() },
           { "scientistsescaped", RoundSummary.EscapedScientists.ToString() },
           { "scientistsstart",   RoundSummary.singleton.classlistStart.scientists.ToString()   },
@@ -300,7 +300,7 @@ namespace SCPDiscord.EventListeners
           { "scpstart",          RoundSummary.singleton.classlistStart.scps_except_zombies.ToString() },
           { "warheaddetonated",  Warhead.IsDetonated.ToString() },
           { "warheadkills",      AlphaWarheadController.Singleton.WarheadKills.ToString() },
-          { "zombiesalive",      Utilities.GetNumberOfPlayers(RoleTypeId.Scp0492).ToString() },
+          { "zombiesalive",      RoundSummary.singleton.CountRole(RoleTypeId.Scp0492).ToString() },
           { "zombieschanged",    RoundSummary.ChangedIntoZombies.ToString() }
         };
         SCPDiscord.SendMessage("messages.onroundend", variables);

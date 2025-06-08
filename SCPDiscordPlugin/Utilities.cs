@@ -117,21 +117,6 @@ namespace SCPDiscord
       return false;
     }
 
-    public static int GetNumberOfPlayers()
-    {
-      return Player.ReadyList.Count();
-    }
-
-    public static int GetNumberOfPlayers(params Team[] teams)
-    {
-      return Player.ReadyList.Count(player => teams.Contains(player.Team));
-    }
-
-    public static int GetNumberOfPlayers(params RoleTypeId[] roles)
-    {
-      return Player.ReadyList.Count(player => roles.Contains(player.Role));
-    }
-
     public static bool IsPossibleSteamID(string steamID, out ulong id)
     {
       id = 0;
