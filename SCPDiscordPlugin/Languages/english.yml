@@ -296,7 +296,7 @@ messages:
     # zombiesalive - int
     # zombieschanged - int
     message: >+
-      **Round ended after <var:duration> minutes.**
+      **Round ended after <var:duration> minutes. Winner: <var:leadingteam>.**
       ```
       Escaped D-class:            <var:dclassescaped>/<var:dclassstart>\n
       Rescued Scientists:         <var:scientistsescaped>/<var:scientistsstart>\n

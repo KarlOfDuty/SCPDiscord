@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Security;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Net.Http;
 using LabApi.Features.Wrappers;
 using Newtonsoft.Json.Linq;
+using PlayerRoles;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -80,6 +79,12 @@ namespace SCPDiscord
     {
       foreach (Player player in Player.ReadyList)
       {
+        string parsedUserID = player.GetParsedUserID();
+        if (parsedUserID == null)
+        {
+          continue;
+        }
+
         if (userID.Contains(player.GetParsedUserID()))
         {
           pl = player;
@@ -110,6 +115,21 @@ namespace SCPDiscord
 
       name = "";
       return false;
+    }
+
+    public static int GetNumberOfPlayers()
+    {
+      return Player.ReadyList.Count();
+    }
+
+    public static int GetNumberOfPlayers(params Team[] teams)
+    {
+      return Player.ReadyList.Count(player => teams.Contains(player.Team));
+    }
+
+    public static int GetNumberOfPlayers(params RoleTypeId[] roles)
+    {
+      return Player.ReadyList.Count(player => roles.Contains(player.Role));
     }
 
     public static bool IsPossibleSteamID(string steamID, out ulong id)

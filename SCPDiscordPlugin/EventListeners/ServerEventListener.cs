@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using GameCore;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.ServerEvents;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Enums;
 using LabApi.Features.Wrappers;
+using PlayerRoles;
 using RemoteAdmin;
 
 namespace SCPDiscord.EventListeners
@@ -273,38 +275,39 @@ namespace SCPDiscord.EventListeners
       SCPDiscord.SendMessage("messages.onconnect", variables);
     }
 
-    /*public override void OnServerRoundEnded(RoundEndedEventArgs ev)
+    public override void OnServerRoundEnded(RoundEndedEventArgs ev)
     {
       if (plugin.roundStarted && RoundStart.RoundLength.TotalSeconds > 60)
       {
         Dictionary<string, string> variables = new()
         {
-          { "duration",          (RoundStart.RoundLength.TotalSeconds / 60).ToString("0") },
-          { "leadingteam",        ev.LeadingTeam.ToString()                            },
-          { "dclassalive",        Statistics.CurrentRound.ClassDAlive.ToString()       },
-          { "dclassdead",         Statistics.CurrentRound.ClassDDead.ToString()        },
-          { "dclassescaped",      RoundSummary.EscapedClassD.ToString()                },
-          { "dclassstart",        Statistics.CurrentRound.ClassDStart.ToString()       },
-          { "mtfalive",           Statistics.CurrentRound.MtfAndGuardsAlive.ToString() },
-          { "mtfdead",            Statistics.CurrentRound.MtfAndGuardsDead.ToString()  },
-          { "mtfstart",           Statistics.CurrentRound.MtfAndGuardsStart.ToString() },
-          { "scientistsalive",    Statistics.CurrentRound.ScientistsAlive.ToString()   },
-          { "scientistsdead",     Statistics.CurrentRound.ScientistsDead.ToString()    },
-          { "scientistsescaped",  RoundSummary.EscapedScientists.ToString()            },
-          { "scientistsstart",    Statistics.CurrentRound.ScientistsStart.ToString()   },
-          { "scpalive",           RoundSummary.SurvivingSCPs.ToString()                },
-          { "scpdead",            Statistics.CurrentRound.ScpsDead.ToString()          },
-          { "scpkills",           RoundSummary.KilledBySCPs.ToString()                 },
-          { "scpstart",           Statistics.CurrentRound.ScpsStart.ToString()         },
-          { "warheaddetonated",   Warhead.IsDetonated.ToString()                       },
-          { "warheadkills",       Statistics.CurrentRound.WarheadKills.ToString()      },
-          { "zombiesalive",       Statistics.CurrentRound.ZombiesAlive.ToString()      },
-          { "zombieschanged",     RoundSummary.ChangedIntoZombies.ToString()           }
+          { "duration",         (RoundStart.RoundLength.TotalSeconds / 60).ToString("0") },
+          { "leadingteam",       ev.LeadingTeam.ToString() },
+          { "dclassalive",       Utilities.GetNumberOfPlayers(Team.ClassD).ToString() },
+          { "dclassdead",        "-" }, //Statistics.CurrentRound.ClassDDead.ToString() },
+          { "dclassescaped",     RoundSummary.EscapedClassD.ToString() },
+          { "dclassstart",       RoundSummary.singleton.classlistStart.class_ds.ToString() },
+          { "mtfalive",          Utilities.GetNumberOfPlayers(Team.FoundationForces).ToString() },
+          { "mtfdead",           "-" }, //Statistics.CurrentRound.MtfAndGuardsDead.ToString()  },
+          { "mtfstart",          RoundSummary.singleton.classlistStart.mtf_and_guards.ToString() },
+          { "scientistsalive",   Utilities.GetNumberOfPlayers(Team.Scientists).ToString()   },
+          { "scientistsdead",    "-" }, //Statistics.CurrentRound.ScientistsDead.ToString() },
+          { "scientistsescaped", RoundSummary.EscapedScientists.ToString() },
+          { "scientistsstart",   RoundSummary.singleton.classlistStart.scientists.ToString()   },
+          { "scpalive",          RoundSummary.SurvivingSCPs.ToString() },
+          { "scpdead",           "-" }, //Statistics.CurrentRound.ScpsDead.ToString() },
+          { "scpkills",          RoundSummary.KilledBySCPs.ToString() },
+          { "scpstart",          RoundSummary.singleton.classlistStart.scps_except_zombies.ToString() },
+          { "warheaddetonated",  Warhead.IsDetonated.ToString() },
+          { "warheadkills",      AlphaWarheadController.Singleton.WarheadKills.ToString() },
+          { "zombiesalive",      Utilities.GetNumberOfPlayers(RoleTypeId.Scp0492).ToString() },
+          { "zombieschanged",    RoundSummary.ChangedIntoZombies.ToString() }
         };
         SCPDiscord.SendMessage("messages.onroundend", variables);
       }
+
       plugin.roundStarted = false;
-    }*/
+    }
 
     public override void OnServerWaitingForPlayers()
     {
