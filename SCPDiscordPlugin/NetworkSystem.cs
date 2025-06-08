@@ -333,7 +333,7 @@ namespace SCPDiscord
       if (activityUpdateTimer.Elapsed < TimeSpan.FromSeconds(10) && activityUpdateTimer.IsRunning) return;
 
       // Skip if the player count hasn't changed
-      if (previousActivityPlayerCount == Player.Count && activityUpdateTimer.Elapsed < TimeSpan.FromMinutes(5))
+      if (previousActivityPlayerCount == Player.Count && activityUpdateTimer.Elapsed < TimeSpan.FromMinutes(1))
       {
         return;
       }
