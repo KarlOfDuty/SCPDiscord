@@ -78,7 +78,7 @@ namespace SCPDiscord.EventListeners
       }
     }
 
-    public override void OnWarheadStopped(WarheadStoppedEventArgs ev)
+    public override void OnWarheadStopping(WarheadStoppingEventArgs ev)
     {
       Dictionary<string, string> variables = new()
       {
