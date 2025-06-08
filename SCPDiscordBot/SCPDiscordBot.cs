@@ -95,7 +95,7 @@ namespace SCPDiscord
         return 0;
       }
 
-      Logger.Log("Starting " + Assembly.GetEntryAssembly()?.GetName().Name + " version " + GetVersion() + "...");
+      Logger.Log("Starting SCPDiscord version " + GetVersion() + "...");
       try
       {
         try
