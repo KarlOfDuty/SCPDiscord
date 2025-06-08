@@ -116,7 +116,10 @@ namespace SCPDiscord.EventListeners
 
     public override void OnPlayerHurt(PlayerHurtEventArgs ev)
     {
-      if (ev.Player == null || ev.Player.Role == RoleTypeId.None || !(ev.DamageHandler is StandardDamageHandler stdHandler))
+      if (ev.Player == null
+          || ev.Player.Role == RoleTypeId.None
+          || !(ev.DamageHandler is StandardDamageHandler stdHandler)
+          || stdHandler.Damage < 0.1f)
       {
         return;
       }
