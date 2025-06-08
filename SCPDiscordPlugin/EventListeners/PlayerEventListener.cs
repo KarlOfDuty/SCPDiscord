@@ -334,7 +334,7 @@ namespace SCPDiscord.EventListeners
     public override void OnPlayerUncuffed(PlayerUncuffedEventArgs ev)
     {
       Dictionary<string, string> variables = new Dictionary<string, string>();
-      if (ev.Player != null && ev.Player.PlayerId == Player.Host?.PlayerId)
+      if (ev.Player != null && ev.Player.PlayerId != Player.Host?.PlayerId)
       {
         variables.AddPlayerVariables(ev.Target, "target");
         variables.AddPlayerVariables(ev.Player, "disarmer");
