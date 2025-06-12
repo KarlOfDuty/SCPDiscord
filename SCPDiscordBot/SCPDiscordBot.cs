@@ -43,6 +43,11 @@ namespace SCPDiscord
         Separator = ','
       )]
       public IEnumerable<ulong> ServersToLeave { get; set; }
+
+      [Option("print-default-config",
+        Required = false,
+        HelpText = "Print the default config.")]
+      public bool PrintDefaultConfig { get; set; }
     }
 
     internal static CommandLineArguments commandLineArgs;
@@ -92,6 +97,12 @@ namespace SCPDiscord
       {
         Console.WriteLine(Assembly.GetEntryAssembly()?.GetName().Name + ' ' + GetVersion());
         Console.WriteLine("Build time: " + BuildInfo.BuildTimeUTC.ToString("yyyy-MM-dd HH:mm:ss") + " UTC");
+        return 0;
+      }
+
+      if (commandLineArgs.PrintDefaultConfig)
+      {
+        Console.Write(Utilities.ReadManifestData("default_config.yml"));
         return 0;
       }
 
