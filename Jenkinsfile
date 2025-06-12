@@ -151,7 +151,7 @@ pipeline
             script
             {
               env.PLUGIN_PATH = 'SCPDiscordPlugin/SCPDiscord.dll'
-              env.DEPENDENCIES_PATH = 'SCPDiscordPlugin/dependencies'
+              env.DEPENDENCIES_PATH = 'SCPDiscordPlugin/dependencies.zip'
             }
           }
         }
