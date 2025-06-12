@@ -37,11 +37,6 @@ pkgver() {
   git describe --long --tags 2>/dev/null | sed 's/^v//;s/-/./g;s/g/git/' || echo "r$(git rev-list --count HEAD).git$(git rev-parse --short HEAD)"
 }
 
-prepare() {
-  cd "$_srcdir"
-  dotnet restore
-}
-
 build() {
   cd "$_srcdir"
   dotnet publish SCPDiscordBot/SCPDiscordBot.csproj -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output out

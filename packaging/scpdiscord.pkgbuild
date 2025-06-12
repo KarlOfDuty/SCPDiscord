@@ -24,11 +24,6 @@ backup=(etc/scpdiscord/config.yml)
 
 _srcdir="SCPDiscord"
 
-prepare() {
-  cd "$_srcdir"
-  dotnet restore
-}
-
 build() {
   cd "$_srcdir"
   dotnet publish SCPDiscordBot/SCPDiscordBot.csproj -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output out
