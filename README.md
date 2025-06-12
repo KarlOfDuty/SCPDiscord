@@ -1,17 +1,12 @@
 [![Downloads](https://img.shields.io/github/downloads/KarlOfDuty/SCPDiscord/total.svg)](https://github.com/KarlOfDuty/SCPDiscord/releases) [![Release](https://img.shields.io/github/release/KarlofDuty/SCPDiscord.svg)](https://github.com/KarlOfDuty/SCPDiscord/releases) ![GitHub commits since latest release](https://img.shields.io/github/commits-since/karlofduty/scpdiscord/latest) [![Discord Server](https://img.shields.io/discord/430468637183442945.svg?label=discord)](https://discord.gg/C5qMvkj) [![Build Status](https://jenkins.karlofduty.com/job/SCPDiscord/job/main/badge/icon)](https://jenkins.karlofduty.com/blue/organizations/jenkins/SCPDiscord/activity) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ac66145c080446898df41f137bdb9370)](https://app.codacy.com/gh/KarlOfDuty/SCPDiscord/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) ![GitHub License](https://img.shields.io/github/license/karlofduty/scpdiscord)
 
-> [!IMPORTANT]
-> If you are using NWAPI you should use the latest release, if you are using LabAPI you should use the latest pre-release.
-> 
-> In the LocalAdmin package manager this means you should use the command as usual in NWAPI but have to specify the plugin version for LabAPI (Check the git tag on the release).
-
 # SCPDiscord
 
 SCPDiscord is a very customisable Discord bot + SCP:SL plugin combo which lets you monitor and manage your SCP:SL servers from Discord.
 
 ## Download
 
-You can download the latest release [here](https://github.com/KarlOfDuty/SCPDiscord/releases) or the latest dev build [here](https://jenkins.karlofduty.com/blue/organizations/jenkins/NWAPI%2FSCPDiscord/activity).
+You can download the latest release [here](https://github.com/KarlOfDuty/SCPDiscord/releases) or the latest dev build [here](https://jenkins.karlofduty.com/blue/organizations/jenkins/SCPDiscord/activity).
 
 ## Guides
 
