@@ -202,7 +202,7 @@ public class Logger(string logCategory) : ILogger
         {
             Console.BackgroundColor = ConsoleColor.DarkRed;
         }
-        Console.Write($"{DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")}");
+        Console.Write($"{DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
         Console.ResetColor();
 
         Console.ForegroundColor = ConsoleColor.Gray;
