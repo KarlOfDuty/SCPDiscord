@@ -5,19 +5,26 @@
 #### Option 1 (recommended): Install using the localadmin package manager
 
 Use `p install KarlOfDuty/SCPDiscord` in the server console and restart your server.
+> [!Warning]
+> LocalAdmin doesn't currently install to the LabAPI directory.
 
 #### Option 2: Manual installation
 
 Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity/).
-Place the plugin library and dependencies directory in the `~/.config/SCP Secret Laboratory/PluginAPI/plugins/<port>` directory:
+Place the plugin and dependencies directory in the following directories:
 ```
-plugins/
-    <port>/
+.config/
+
+    LabAPI/
+        plugins/
+            <port>/
+                SCPDiscord.dll
+        
         dependencies/
-            Google.Protobuf.dll
-            Newtonsoft.Json.dll
-            System.Memory.dll
-        SCPDiscord.dll
+            <port>/
+                Google.Protobuf.dll
+                Newtonsoft.Json.dll
+                System.Memory.dll
 ```
 
 ## 2. Plugin config
