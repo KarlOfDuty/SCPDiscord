@@ -12,38 +12,70 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace SCPDiscord
 {
-  // Separate class to run the thread
-  public class StartNetworkSystem
-  {
-    public StartNetworkSystem()
-    {
-      NetworkSystem.Init();
-    }
-  }
-
   public static class NetworkSystem
   {
+    // Network stuff
     private static Socket clientSocket = null;
     private static Socket listenerSocket = null;
     private static NetworkStream networkStream = null;
 
-    public static void Init()
+    // Thread stuff
+    private static CancellationTokenSource threadCTS;
+    private static Task networkThread;
+
+    public static void Start()
     {
-      if (listenerSocket != null)
+      if (networkThread != null && !networkThread.IsCompleted)
       {
-        listenerSocket.Shutdown(SocketShutdown.Both);
-        listenerSocket.Close();
+        return;
       }
 
-      if (clientSocket != null)
+      threadCTS = new CancellationTokenSource();
+      networkThread = Task.Run(() => Init(threadCTS.Token), threadCTS.Token);
+    }
+
+    public static async Task Stop()
+    {
+      if (threadCTS == null)
       {
-        clientSocket.Shutdown(SocketShutdown.Both);
-        clientSocket.Close();
+        return;
       }
 
+      await threadCTS.CancelAsync();
+      try
+      {
+        await networkThread;
+      }
+      catch (Exception ex)
+      {
+        Logger.Error("Exception in network thread: " + ex);
+      }
+
+      if (networkStream != null)
+      {
+        networkStream.Close();
+        await networkStream.DisposeAsync();
+        networkStream = null;
+      }
+
+      try { clientSocket?.Shutdown(SocketShutdown.Both); } catch { /* Already shut down */ }
+      clientSocket?.Close();
+      clientSocket = null;
+
+      try { listenerSocket?.Shutdown(SocketShutdown.Both); } catch { /* Already shut down */ }
+      listenerSocket?.Close();
+      listenerSocket = null;
+
+      networkThread = null;
+      threadCTS.Dispose();
+      threadCTS = null;
+    }
+
+    private static async Task Init(CancellationToken cancellationToken)
+    {
       while (!ConfigParser.Loaded)
       {
-        Thread.Sleep(1000);
+         await Task.Delay(1000, cancellationToken);
       }
 
       IPAddress ipAddress;
@@ -62,7 +94,7 @@ namespace SCPDiscord
       }
       else
       {
-        IPHostEntry ipHostInfo = Dns.GetHostEntry(ConfigParser.Config.plugin.address);
+        IPHostEntry ipHostInfo = await Dns.GetHostEntryAsync(ConfigParser.Config.plugin.address, cancellationToken);
 
         // Use an IPv4 address if available
         if (ipHostInfo.AddressList.Any(ip => ip.AddressFamily == AddressFamily.InterNetwork))
@@ -80,22 +112,27 @@ namespace SCPDiscord
       listenerSocket.Bind(listenerEndpoint);
       listenerSocket.Listen(10);
 
-      while (true)
+      while (!cancellationToken.IsCancellationRequested)
       {
         try
         {
           if (IsConnected())
           {
-            Task _ = Update();
+            await Update();
           }
           else
           {
             DiscordAPI.SetDisconnectedActivity();
             Logger.Log("Listening on " + ipAddress + ":" + ConfigParser.Config.plugin.port);
-            clientSocket = listenerSocket.Accept();
+            clientSocket = await listenerSocket.AcceptAsync(cancellationToken);
             networkStream = new NetworkStream(clientSocket, true);
             Logger.Log("Plugin connected.");
           }
+        }
+        catch (OperationCanceledException)
+        {
+          // Expected when task is cancelled
+          return;
         }
         catch (Exception e)
         {

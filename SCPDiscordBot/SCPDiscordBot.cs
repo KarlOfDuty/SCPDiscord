@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using CommandLine;
@@ -95,7 +94,7 @@ namespace SCPDiscord
 
       if (args.Contains("--version"))
       {
-        Console.WriteLine(Assembly.GetEntryAssembly()?.GetName().Name + ' ' + GetVersion());
+        Console.WriteLine("SCPDiscord " + GetVersion());
         Console.WriteLine("Build time: " + BuildInfo.BuildTimeUTC.ToString("yyyy-MM-dd HH:mm:ss") + " UTC");
         return 0;
       }
@@ -121,8 +120,8 @@ namespace SCPDiscord
 
         await DiscordAPI.Init();
 
-        new Thread(() => new StartNetworkSystem()).Start();
-        new Thread(() => new StartMessageScheduler()).Start();
+        NetworkSystem.Start();
+        MessageScheduler.Start();
 
         ServiceManager.Notify(ServiceState.Ready);
 
@@ -145,17 +144,23 @@ namespace SCPDiscord
                 }
 
                 // TODO: Restart the network system
+                await NetworkSystem.Stop();
                 ConfigParser.LoadConfig();
+                NetworkSystem.Start();
                 ServiceManager.Notify(ServiceState.Ready);
                 break;
               case PosixSignal.SIGTERM:
                 Logger.Log("Shutting down...");
                 ServiceManager.Notify(ServiceState.Stopping);
+                await NetworkSystem.Stop();
+                await MessageScheduler.Stop();
                 // TODO: Stop Discord client, network connection
                 return 0;
               case PosixSignal.SIGINT:
                 Logger.Warn("Received interrupt signal, shutting down...");
                 ServiceManager.Notify(ServiceState.Stopping);
+                await NetworkSystem.Stop();
+                await MessageScheduler.Stop();
                 // TODO: Stop Discord client, network connection
                 return 0;
               default:

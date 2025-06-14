@@ -10,36 +10,77 @@ using DSharpPlus.Commands.Processors.SlashCommands;
 
 namespace SCPDiscord;
 
-// Separate class to run the thread
-public class StartMessageScheduler
-{
-  public StartMessageScheduler()
-  {
-    Task _ = MessageScheduler.Init();
-  }
-}
-
 public static class MessageScheduler
 {
   private static ConcurrentDictionary<ulong, ConcurrentQueue<string>> messageQueues = new ConcurrentDictionary<ulong, ConcurrentQueue<string>>();
   private static List<SlashCommandContext> interactionCache = new List<SlashCommandContext>();
+  private static Lock interactionCacheLock = new Lock();
 
-  public static async Task Init()
+  private static Lock startStopLock = new Lock();
+  private static CancellationTokenSource threadCTS;
+  private static Task schedulerThread;
+
+  public static void Start()
   {
-    while (true)
+    using (startStopLock.EnterScope())
     {
-      Thread.Sleep(1000);
-
-      // If we haven't connected to discord yet wait until we do
-      if (!DiscordAPI.instance?.connected ?? false)
+      if (schedulerThread != null && !schedulerThread.IsCompleted)
       {
-        continue;
+        return;
       }
 
+      threadCTS = new CancellationTokenSource();
+      schedulerThread = Init(threadCTS.Token);
+    }
+  }
+
+  public static async Task Stop()
+  {
+    using (startStopLock.EnterScope())
+    {
+      if (threadCTS == null)
+      {
+        return;
+      }
+    }
+
+    await threadCTS.CancelAsync();
+    try
+    {
+      await schedulerThread;
+    }
+    catch (Exception ex)
+    {
+      Logger.Error("Exception in message scheduler thread: " + ex);
+    }
+
+    using (startStopLock.EnterScope())
+    {
+      schedulerThread = null;
+      threadCTS.Dispose();
+      threadCTS = null;
+    }
+  }
+
+  private static async Task Init(CancellationToken cancellationToken)
+  {
+    while (!cancellationToken.IsCancellationRequested)
+    {
       try
       {
+        await Task.Delay(1000, cancellationToken);
+
+        // If we haven't connected to discord yet wait until we do
+        if (!DiscordAPI.instance?.connected ?? false)
+        {
+          continue;
+        }
+
         // Clean old interactions from cache
-        interactionCache.RemoveAll(x => x.Interaction.Id.GetSnowflakeTime() < DateTimeOffset.Now - TimeSpan.FromSeconds(30));
+        using (interactionCacheLock.EnterScope())
+        {
+          interactionCache.RemoveAll(x => x.Interaction.Id.GetSnowflakeTime() < DateTimeOffset.Now - TimeSpan.FromSeconds(30));
+        }
 
         foreach (KeyValuePair<ulong, ConcurrentQueue<string>> channelQueue in messageQueues)
         {
@@ -75,6 +116,11 @@ public static class MessageScheduler
           await DiscordAPI.SendMessage(channelQueue.Key, finalMessageStr);
         }
       }
+      catch (OperationCanceledException)
+      {
+        // Expected when task is cancelled
+        break;
+      }
       catch (Exception e)
       {
         Logger.Error("Message scheduler error: ", e);
@@ -90,12 +136,18 @@ public static class MessageScheduler
 
   public static bool TryUncacheInteraction(ulong interactionID, out SlashCommandContext interaction)
   {
-    interaction = interactionCache.FirstOrDefault(x => x.Interaction.Id == interactionID);
-    return interactionCache.Remove(interaction);
+    using (interactionCacheLock.EnterScope())
+    {
+      interaction = interactionCache.FirstOrDefault(x => x.Interaction.Id == interactionID);
+      return interactionCache.Remove(interaction);
+    }
   }
 
   public static void CacheInteraction(SlashCommandContext interaction)
   {
-    interactionCache.Add(interaction);
+    using (interactionCacheLock.EnterScope())
+    {
+      interactionCache.Add(interaction);
+    }
   }
 }
