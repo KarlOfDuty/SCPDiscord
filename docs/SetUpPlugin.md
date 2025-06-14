@@ -11,7 +11,7 @@
 
 ### Option 2: Manual installation
 
-Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity/).
+Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/SCPDiscord/activity/).
 Place the plugin and dependencies directory in the following directories:
 ```
 .config/
