@@ -30,7 +30,7 @@ Place the plugin and dependencies directory in the following directories:
 
 The plugin config is automatically created for you the first time you run the plugin. The path is printed in the server console on startup so you know for sure where it is.
 
-[Click here to view default config](https://github.com/KarlOfDuty/SCPDiscord/blob/master/SCPDiscordPlugin/config.yml)
+[Click here to view default config](https://github.com/KarlOfDuty/SCPDiscord/blob/main/SCPDiscordPlugin/config.yml)
 
 > [!IMPORTANT]
 > Keeping the bot and plugin on different devices is not recommended but is possible, you will have to deal with the issues this may result in yourself if you choose to do so.
