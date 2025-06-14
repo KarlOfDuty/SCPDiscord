@@ -38,7 +38,7 @@
     <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02516" />
     <PackageReference Include="EmbeddedBuildTime" Version="1.0.3" />
     <PackageReference Include="GitInfo" Version="2.3.0" />
-    <PackageReference Include="Google.Protobuf" Version="3.25.2" />
+    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="9.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Tmds.Systemd" Version="0.8.0" />
