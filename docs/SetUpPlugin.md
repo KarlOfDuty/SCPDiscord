@@ -2,24 +2,23 @@
 
 ## 1. Installing the plugin
 
-#### Option 1 (recommended): Install using the localadmin package manager
+### Option 1 (recommended): Install using the localadmin package manager
 
-Use `p install KarlOfDuty/SCPDiscord` in the server console and restart your server.
-> [!Warning]
-> LocalAdmin doesn't currently install to the LabAPI directory.
+> [!Caution]
+> The LocalAdmin package manager doesn't work since the switch to LabAPI. You cannot currently use this method as it installs the plugin to the wrong directory.
 
-#### Option 2: Manual installation
+~Use `p install KarlOfDuty/SCPDiscord` in the server console and restart your server.~
+
+### Option 2: Manual installation
 
 Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord/releases) or [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/CI%2FSCPDiscord/activity/).
 Place the plugin and dependencies directory in the following directories:
 ```
 .config/
-
     LabAPI/
         plugins/
             <port>/
                 SCPDiscord.dll
-        
         dependencies/
             <port>/
                 Google.Protobuf.dll
