@@ -15,15 +15,16 @@ Download SCPDiscord, either a [release](https://github.com/KarlOfDuty/SCPDiscord
 Place the plugin and dependencies directory in the following directories:
 ```
 .config/
-    LabAPI/
-        plugins/
-            <port>/
-                SCPDiscord.dll
-        dependencies/
-            <port>/
-                Google.Protobuf.dll
-                Newtonsoft.Json.dll
-                System.Memory.dll
+    SCP Secret Laboratory/
+        LabAPI/
+            plugins/
+                <port>/
+                    SCPDiscord.dll
+            dependencies/
+                <port>/
+                    Google.Protobuf.dll
+                    Newtonsoft.Json.dll
+                    System.Memory.dll
 ```
 
 ## 2. Plugin config
