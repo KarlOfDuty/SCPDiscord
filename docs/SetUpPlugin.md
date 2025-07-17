@@ -31,7 +31,7 @@ Place the plugin and dependencies directory in the following directories:
 
 The plugin config is automatically created for you the first time you run the plugin. The path is printed in the server console on startup so you know for sure where it is.
 
-Open the plugin config and edit it as you wish.
+Open the plugin config and edit it as you wish, then restart the server. In the future you can also use the ´scpd reload´ command, but that requures that the plugin started up correctly first.
 
 [You can click here to view default config](https://github.com/KarlOfDuty/SCPDiscord/blob/main/SCPDiscordPlugin/config.yml)
 
