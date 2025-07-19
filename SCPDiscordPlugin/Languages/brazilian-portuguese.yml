@@ -25,13 +25,13 @@
 #  quantidade de variáveis que contêm diferentes informações sobre o jogador. Você pode ver uma lista atualizada dessas variáveis
 #  no arquivo APIExtensions.cs do repositório do Git.
 #
-#  Usage example:
-#  If an event has an "attacker" variable of the Player type this means you can use <var:attacker-name> to get
-#  their username. It works the same way for all player subvariables, except for the disarmer variable.
-#  The disarmer variable is also a player type, so if the "attacker" player from before was disarmed you could
-#  get the name of the disarming player using <var:attacker-disarmer-name>.
+#  Exemplo de uso:
+#  Se um evento tem uma variável "attacker" do tipo Player, isso significa que você pode usar <var:attacker-name> para conseguir
+#  seu usuário. Isso funciona da mesma forma para todas subvariáveis de jogador, exceto para a variável de desarmador.
+#  A variável de desarmador também é do tipo Player, então se o jogador 'attacker' de antes for desarmado, você poderia
+#  conseguir o nome do desarmador usando <var:attacker-disarmer-name>.
 #
-#  List of Player sub-variables:
+#  Lista de subvariáveis de Player:
 #  -ipaddress
 #  -name
 #  -id
