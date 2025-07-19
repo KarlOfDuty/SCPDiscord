@@ -306,7 +306,7 @@ messages:
     # zombiesalive - int
     # zombieschanged - int
     message: >+
-      **Partida terminou após <var:duration> minutos.**
+      **Partida terminou após <var:duration> minutos. Vencedor: <var:leadingteam>.**
       ```
       Classe-D que escaparam:            <var:dclassescaped>/<var:dclassstart>\n
       Cientistas Resgatados:         <var:scientistsescaped>/<var:scientistsstart>\n
