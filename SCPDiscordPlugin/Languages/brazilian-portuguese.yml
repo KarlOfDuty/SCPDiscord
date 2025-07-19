@@ -77,12 +77,12 @@ global_regex: [
 
   # Teams
   #"SCPs":"",
-  "FoundationForces":"MTF",
-  "ChaosInsurgency":"Chaos Insurgency",
+  "FoundationForces":"FTM",
+  "ChaosInsurgency":"Insurgência do Caos",
   #"Scientists":"",
-  "ClassD":"D-Class",
+  "ClassD":"Classe-D",
   #"Dead":"",
-  "OtherAlive":"Other Team",
+  "OtherAlive":"Outra Equipe",
 
   # Roles
   #"None":"",
@@ -90,141 +90,141 @@ global_regex: [
   #"ClassD":"",
   #"Spectator":"",
   "Scp106":"SCP-106",
-  "NtfSpecialist":"MTF Specialist",
+  "NtfSpecialist":"Especialista da FTM",
   "Scp049":"SCP-049",
   #"Scientist":"",
   "Scp079":"SCP-079",
-  "ChaosConscript":"Chaos Conscript",
+  "ChaosConscript":"Recruta do Caos",
   "Scp096":"SCP-096",
   "SCP-0492":"SCP-049-2",
-  "NtfSergeant":"MTF Sergeant",
-  "NtfCaptain":"MTF Captain",
-  "NtfPrivate":"MTF Private",
+  "NtfSergeant":"Sargento da FTM",
+  "NtfCaptain":"Capitão da FTM",
+  "NtfPrivate":"Cabo da FTM",
   #"Tutorial":"",
-  "FacilityGuard":"Facility Guard",
+  "FacilityGuard":"Guarda da Instalação",
   "Scp939":"SCP-939",
   #"CustomRole":"",
-  "ChaosRifleman":"Chaos Rifleman",
-  "ChaosRepressor":"Chaos Repressor",
-  "ChaosMarauder":"Chaos Marauder",
+  "ChaosRifleman":"Fuzileiro do Caos",
+  "ChaosRepressor":"Repressor do Caos",
+  "ChaosMarauder":"Saqueador do Caos",
   #"Overwatch":"",
   #"Filmmaker":"",
   "Scp3114":"SCP-3114",
   #"Flamingo":"",
-  "AlphaFlamingo":"Alpha Flamingo",
-  "ZombieFlamingo":"Zombie Flamingo",
+  "AlphaFlamingo":"Flamingo Alfa",
+  "ZombieFlamingo":"Flamingo Zumbi",
 
   # Elevators
-  "GateA":"gate A",
-  "GateB":"gate B",
-  "LczA01":"LCZ A1",
-  "LczA02":"LCZ A2",
-  "LczB01":"LCZ B1",
-  "LczB02":"LCZ B2",
-  "Nuke":"alpha warhead",
+  "GateA":"portão A",
+  "GateB":"portão B",
+  "LczA01":"Light A1",
+  "LczA02":"Light A2",
+  "LczB01":"Light B1",
+  "LczB02":"Light B2",
+  "Nuke":"ogiva alfa",
   #"Scp049":"",
 
   # Room names
-  "Unnamed":"an unnamed room",
-  "LczClassDSpawn":"D-class cells",
-  "LczComputerRoom":"the LCZ computer room",
-  "LczCheckpointA":"checkpoint A",
-  "LczCheckpointB":"checkpoint B",
-  "LczToilets":"the LCZ toilets",
-  "LczArmory":"the LCZ armory",
-  "Lcz173":"SCP-173 containment",
-  "LczGlassroom":"SCP-372 containment",
-  "Lcz330":"SCP-330 containment",
-  "Lcz914":"SCP-914 containment",
-  "LczGreenhouse":"the LCZ greenhouse",
-  "LczAirlock":"a LCZ airlock",
-  "HczCheckpointToEntranceZone":"entrance zone checkpoint",
-  "HczCheckpointA":"HCZ checkpoint A",
-  "HczCheckpointB":"HCZ checkpoint B",
-  "HczWarhead":"the warhead silo",
-  "Hcz049":"SCP-049 containment",
-  "Hcz079":"SCP-079 containment",
-  "Hcz096":"SCP-096 containment",
-  "Hcz106":"SCP-106 containment",
-  "Hcz939":"SCP-939 containment",
-  "HczMicroHID":"the Micro-HID armory",
-  "HczArmory":"the HCZ armory",
-  "HczServers":"the server room",
-  "HczTesla":"a tesla gate corridor",
-  "EzCollapsedTunnel":"a collapsed entrance zone tunnel",
-  "EzGateA":"gate A",
-  "EzGateB":"gate B",
-  "EzRedroom":"a locked gate room",
-  "EzEvacShelter":"the evac shelter",
-  "EzIntercom":"the intercom",
-  "EzOfficeStoried":"an office",
-  "EzOfficeLarge":"an office",
-  "EzOfficeSmall":"an office",
-  "Outside":"the outside area",
-  "Pocket":"the pocket dimension",
-  "HczTestroom":"the HCZ test room",
+  "Unnamed":"sala não nomeada",
+  "LczClassDSpawn":"celas de Classe-D",
+  "LczComputerRoom":"sala de computadores da Light",
+  "LczCheckpointA":"posto de controle A",
+  "LczCheckpointB":"posto de controle B",
+  "LczToilets":"banheiro da Light",
+  "LczArmory":"arsenal da Light",
+  "Lcz173":"contenção do SCP-173",
+  "LczGlassroom":"contenção do SCP-372 (GR-18)",
+  "Lcz330":"contenção do SCP-330",
+  "Lcz914":"contenção do SCP-914",
+  "LczGreenhouse":"estufa da Light",
+  "LczAirlock":"câmara de descompressão da Light",
+  "HczCheckpointToEntranceZone":"posto de controle da zona de entrada",
+  "HczCheckpointA":"posto de controle A da Heavy",
+  "HczCheckpointB":"posto de controle B da Heavy",
+  "HczWarhead":"silo da ogiva",
+  "Hcz049":"contenção do SCP-049",
+  "Hcz079":"contenção do SCP-079",
+  "Hcz096":"contenção do SCP-096",
+  "Hcz106":"contenção do SCP-106",
+  "Hcz939":"contenção do SCP-939",
+  "HczMicroHID":"arsenal da Micro-HID",
+  "HczArmory":"arsenal da Heavy",
+  "HczServers":"sala do servidor",
+  "HczTesla":"corredor do portão de tesla",
+  "EzCollapsedTunnel":"túnel desmoronado da zona de entrada",
+  "EzGateA":"portão A",
+  "EzGateB":"portão B",
+  "EzRedroom":"sala vermelha do portão trancado",
+  "EzEvacShelter":"abrigo de evacuação",
+  "EzIntercom":"interfone",
+  "EzOfficeStoried":"escritório",
+  "EzOfficeLarge":"escritório",
+  "EzOfficeSmall":"escritório",
+  "Outside":"área de fora",
+  "Pocket":"dimensão portátil",
+  "HczTestroom":"sala de teste da Heavy",
 
   # Items
   #"None":"",
-  "KeycardJanitor":"Janitor keycard",
-  "KeycardScientist":"Scientist keycard",
-  "KeycardResearchCoordinator":"Research Coordinator keycard",
-  "KeycardZoneManager":"Zone Manager keycard",
-  "KeycardGuard":"Guard keycard",
-  "KeycardMTFPrivate":"MTF Private keycard",
-  "KeycardContainmentEngineer":"Containment Engineer keycard",
-  "KeycardMTFOperative":"MTF Operative keycard",
-  "KeycardMTFCaptain":"MTF Captain keycard",
-  "KeycardFacilityManager":"Facility Manager keycard",
-  "KeycardChaosInsurgency":"Chaos Insurgency device",
-  "KeycardO5":"O5 keycard",
-  "Radio":"radio",
+  "KeycardJanitor":"Cartão de Zelador",
+  "KeycardScientist":"Cartão de Cientista",
+  "KeycardResearchCoordinator":"Cartão de Supervisor de Pesquisa",
+  "KeycardZoneManager":"Cartão de Diretor de Zona",
+  "KeycardGuard":"Cartão de Guarda",
+  "KeycardMTFPrivate":"Cartão de Cabo da FTM",
+  "KeycardContainmentEngineer":"Cartão de Engenheiro de Contenção",
+  "KeycardMTFOperative":"Cartão de Agente da FTM",
+  "KeycardMTFCaptain":"Cartão de Capitão da FTM",
+  "KeycardFacilityManager":"Cartão de Diretor da Instalação",
+  "KeycardChaosInsurgency":"Dispositivo Hijacker da Insurgência",
+  "KeycardO5":"Cartão nível-O5",
+  "Radio":"rádio",
   "GunCOM15":"COM-15",
-  "Medkit":"medkit",
-  "Flashlight":"flashlight",
+  "Medkit":"kit médico",
+  "Flashlight":"lanterna",
   "MicroHID":"Micro-H.I.D.",
   "SCP500":"SCP-500",
   "SCP207":"SCP-207",
-  "Ammo12gauge":"12 gauge ammo",
+  "Ammo12gauge":"munição de calibre 12",
   "GunE11SR":"Epsilon-11 SR",
   "GunCrossvec":"Crossvec",
-  "Ammo556x45":"5.56mm ammo",
+  "Ammo556x45":"munição 5.56mm",
   "GunFSP9":"FSP-9",
   "GunLogicer":"Logicer",
-  "GrenadeHE":"grenade",
-  "GrenadeFlash":"flashbang",
-  "Ammo44cal":"44 cal ammo",
-  "Ammo762x39":"7.62mm ammo",
-  "Ammo9x19":"9mm ammo",
+  "GrenadeHE":"granada explosiva",
+  "GrenadeFlash":"granada de luz",
+  "Ammo44cal":"munição de calibre 44",
+  "Ammo762x39":"munição de calibre 7.62",
+  "Ammo9x19":"munição 9mm",
   "GunCOM18":"COM-18",
   "SCP018":"SCP-018",
   "SCP268":"SCP-268",
-  "Adrenaline":"adrenaline",
-  "Painkillers":"painkillers",
-  "Coin":"coin",
-  "ArmorLight":"light armor",
-  "ArmorCombat":"combat armor",
-  "ArmorHeavy":"heavy armor",
-  "GunRevolver":"revolver",
+  "Adrenaline":"adrenalina",
+  "Painkillers":"analgésicos",
+  "Coin":"moeda",
+  "ArmorLight":"colete leve",
+  "ArmorCombat":"colete de combate",
+  "ArmorHeavy":"colete pesado",
+  "GunRevolver":"revólver",
   "GunAK":"AK",
-  "GunShotgun":"shotgun",
+  "GunShotgun":"espingarda",
   "SCP330":"SCP-330",
   "SCP2176":"SCP-2176",
   "SCP244a":"SCP-244-A",
   "SCP244b":"SCP-244-B",
   "SCP1853":"SCP-1853",
-  "ParticleDisruptor":"particle disruptor",
+  "ParticleDisruptor":"disruptor de partículas",
   "GunCom45":"COM-45",
   "SCP1576":"SCP-1576",
   "Jailbird":"jailbird",
   "AntiSCP207":"SCP-207?",
   "GunFRMG0":"FR-MG-0",
   "GunA7":"A7",
-  "Lantern":"lantern",
-  "Snowball":"snowball",
-  "Coal":"coal",
-  "SpecialCoal":"coal?",
-  "Tape":"tape",
+  "Lantern":"lamparina",
+  "Snowball":"bola de neve",
+  "Coal":"carvão",
+  "SpecialCoal":"carvão?",
+  "Tape":"toca-fitas",
 
   # 914 settings
   "Rough":"rough",
@@ -236,20 +236,20 @@ global_regex: [
   # KeycardPermissions
   #"None":"",
   #"Checkpoints":"",
-  "ExitGates":"exit gates",
+  "ExitGates":"portões de saída",
   #"Intercom":"",
-  "AlphaWarhead":"Alpha warhead",
-  "ContainmentLevelOne":"Containment level 1",
-  "ContainmentLevelTwo":"Containment level 2",
-  "ContainmentLevelThree":"Containment level 3",
-  "ArmoryLevelOne":"Armory level one",
-  "ArmoryLevelTwo":"Armory level two",
-  "ArmoryLevelThree":"Armory level three",
+  "AlphaWarhead":"Ogiva Alfa",
+  "ContainmentLevelOne":"Contenção nível 1",
+  "ContainmentLevelTwo":"Contenção nível 2",
+  "ContainmentLevelThree":"Contenção nível 3",
+  "ArmoryLevelOne":"Arsenal nível um",
+  "ArmoryLevelTwo":"Arsenal nível dois",
+  "ArmoryLevelThree":"Arsenal nível três",
   "ScpOverride":"SCP-override",
 
   # Some door things
-  "PortallessBreakableDoor":"door",
-  "BreakableDoor":"door",
+  "PortallessBreakableDoor":"porta",
+  "BreakableDoor":"porta",
   "\\(Clone\\)":""
 ]
 
@@ -261,7 +261,7 @@ final_regex: ["discord\\.gg":"","discord\\.com":"","http://":"","https://":""]
 
 messages:
   onroundstart:
-    message: "**Round started.**"
+    message: "**Partida começou.**"
     regex: []
     cancel_regex: []
 
@@ -270,7 +270,7 @@ messages:
     # userid - string
     # jointype - CentralAuthPreauthFlags
     # region - string
-    message: "Player (<var:userid>) attempting connection..."
+    message: "Jogador (<var:userid>) tentando conectar..."
     regex: []
     cancel_regex: []
 
@@ -279,7 +279,7 @@ messages:
     # playerid - int
     # steamid - string
     # name - string
-    message: "**<var:player-name> (<var:player-userid>) left the game.**"
+    message: "**<var:player-name> (<var:player-userid>) saiu do jogo.**"
     regex: []
     cancel_regex: []
 
@@ -306,36 +306,36 @@ messages:
     # zombiesalive - int
     # zombieschanged - int
     message: >+
-      **Round ended after <var:duration> minutes. Winner: <var:leadingteam>.**
+      **Partida acabou após <var:duration> minutos. Vencedor: <var:leadingteam>.**
       ```
-      Escaped D-class:            <var:dclassescaped>/<var:dclassstart>\n
-      Rescued Scientists:         <var:scientistsescaped>/<var:scientistsstart>\n
-      Contained SCPs:             <var:scpdead>/<var:scpstart>\n
-      Killed by SCP:              <var:scpkills>\n
-      Warhead switchwas<var:warheaddetonated> detonated.
+      Classe-Ds que escaparam:            <var:dclassescaped>/<var:dclassstart>\n
+      Cientistas Resgatados:         <var:scientistsescaped>/<var:scientistsstart>\n
+      SCPs Contidos:             <var:scpdead>/<var:scpstart>\n
+      Mortos por SCPs:              <var:scpkills>\n
+      Ogiva switchwas<var:warheaddetonated> detonada.
       ```
-    regex: ["switchwasTrue":"was","switchwasFalse":"was not"]
+    regex: ["switchwasTrue":"foi","switchwasFalse":"não foi"]
 
   onwaitingforplayers:
-    message: "**Server is ready and waiting for players.**"
+    message: "**Servidor está pronto e esperando por jogadores.**"
     regex: []
     cancel_regex: []
 
   onroundrestart:
-    message: "**Round is restarting...**"
+    message: "**Partida está reiniciando...**"
     regex: []
     cancel_regex: []
 
   onsetservername:
     # servername - string
-    message: "**Server name: <var:servername>.**"
+    message: "**Nome do servidor: <var:servername>.**"
     regex: []
     cancel_regex: []
 
   onscp914activate:
     # knobsetting - KnobSetting
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) activated SCP-914 on the setting <var:knobsetting>."
+    message: "<var:player-name> (<var:player-userid>) ativou a SCP-914 na configuração <var:knobsetting>."
     regex: []
     cancel_regex: []
 
@@ -345,20 +345,20 @@ messages:
       # timeleft - float
       # player - Player
       initiated:
-        message: "**The alpha warhead has been activated by <var:player-name> (<var:player-userid>), <var:timeleft> seconds until detonation. All personnel must evacuate immediately.**"
+        message: "**A ogiva alfa foi ativada por <var:player-name> (<var:player-userid>), <var:timeleft> segundos até a detonação. Todos os funcionários devem evacuar imediatamente.**"
         regex: [ ]
       resumed:
-        message: "**The alpha  warhead countdown has been resumed by <var:player-name> (<var:player-userid>), <var:timeleft> seconds until detonation.**"
+        message: "**A contagem regressiva da ogiva alfa foi retomada por <var:player-name> (<var:player-userid>), <var:timeleft> segundos até a detonação.**"
         regex: [ ]
     server:
       # isAutomatic - bool
       # timeleft - float
       initiated:
-        message: "**The alpha warhead has been remotely activated by order of the O5 Council. All personnel must evacuate immediately.**"
+        message: "**A ogiva alfa foi remotamente ativada por ordem do Conselho O5. Todos os funcionários devem evacuar imediatamente.**"
         regex: []
         cancel_regex: []
       resumed:
-        message: "**The alpha warhead countdown has been remotely resumed by order of the O5 Council. <var:timeleft> seconds left until detonation.**"
+        message: "**A contagem regressiva da ogiva alfa foi retomada por ordem do Conselho O5. <var:timeleft> segundos restantes até a detonação.**"
         regex: []
         cancel_regex: []
 
