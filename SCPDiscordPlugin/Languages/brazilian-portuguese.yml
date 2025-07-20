@@ -421,46 +421,46 @@ messages:
     # attacker - Player
     # target - Player
     default:
-      message: "<var:target-name> (<var:target-userid>) was killed by <var:attacker-name> (<var:attacker-userid>) using <var:damagetype>."
-      regex: ["using UNKNOWN":"using unknown means"]
+      message: "<var:target-name> (<var:target-userid>) foi morto por <var:attacker-name> (<var:attacker-userid>) usando <var:damagetype>."
+      regex: ["using UNKNOWN":"usando meios desconhecidos"]
     friendlyfire:
-      message: "**<var:target-team> <var:target-name> (<var:target-userid>) was teamkilled by <var:attacker-team> <var:attacker-name> (<var:attacker-userid>) using <var:damagetype>.**"
-      regex: ["using UNKNOWN":"using unknown means"]
+      message: "**<var:target-team> <var:target-name> (<var:target-userid>) foi morto pelo aliado <var:attacker-team> <var:attacker-name> (<var:attacker-userid>) usando <var:damagetype>.**"
+      regex: ["using UNKNOWN":"usando meios desconhecidos"]
     nokiller:
-      message: "<var:target-name> (<var:target-userid>) died by <var:damagetype>."
-      regex: ["died by UNKNOWN":"died in an unknown way"]
+      message: "<var:target-name> (<var:target-userid>) morreu por <var:damagetype>."
+      regex: ["died by UNKNOWN":"morreu de forma desconhecida"]
 
   onplayerpickupitem:
     # item - Item
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) picked up <var:item>."
+    message: "<var:player-name> (<var:player-userid>) pegou <var:item>."
     regex: []
     cancel_regex: []
 
   onplayerpickupammo:
     # ammo - Item
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) picked up <var:ammo>."
+    message: "<var:player-name> (<var:player-userid>) pegou <var:ammo>."
     regex: []
     cancel_regex: []
 
   onplayerpickuparmor:
     # item - Item
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) picked up <var:armor>."
+    message: "<var:player-name> (<var:player-userid>) pegou <var:armor>."
     regex: []
     cancel_regex: []
 
   onplayerpickupscp330:
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) picked up SCP-330."
+    message: "<var:player-name> (<var:player-userid>) pegou SCP-330."
     regex: []
     cancel_regex: []
 
   onplayerdropitem:
     # item - Item
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) dropped <var:item>."
+    message: "<var:player-name> (<var:player-userid>) largou <var:item>."
     regex: []
     cancel_regex: []
 
@@ -468,60 +468,60 @@ messages:
     # ammo - Item
     # amount - int
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) dropped <var:amount> <var:ammo>."
+    message: "<var:player-name> (<var:player-userid>) largou <var:amount> <var:ammo>."
     regex: []
     cancel_regex: []
 
   onplayerjoin:
     # player - Player
-    message: "**<var:player-name> (<var:player-userid>) joined the game.**"
+    message: "**<var:player-name> (<var:player-userid>) entrou no jogo.**"
     regex: []
     cancel_regex: []
 
   onnicknameset:
     # nickname - string
     # player - Player
-    message: "Player '<var:player-name> (<var:player-userid>)' set their nickname to <var:nickname>."
+    message: "Jogador '<var:player-name> (<var:player-userid>)' definiu seu apelido para <var:nickname>."
     regex: []
     cancel_regex: []
 
   onspawn:
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) spawned as <var:player-role>."
+    message: "<var:player-name> (<var:player-userid>) nasceu como <var:player-role>."
     regex: []
     cancel_regex: []
 
   onpocketdimensionexit:
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) escaped the SCP-106 pocket dimension."
+    message: "<var:player-name> (<var:player-userid>) escapou da dimensão portátil do SCP-106."
     regex: []
     cancel_regex: []
 
   onpocketdimensionenter:
     # attacker - Player
     # target - Player
-    message: "<var:target-name> (<var:target-userid>) was taken into the SCP-106 pocket dimension by <var:attacker-name> (<var:attacker-userid>)."
+    message: "<var:target-name> (<var:target-userid>) foi levado à dimensão portátil do SCP-106 por <var:attacker-name> (<var:attacker-userid>)."
     regex: []
     cancel_regex: []
 
   onthrowprojectile:
     # type - GrenadeType
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) threw a <var:type>."
+    message: "<var:player-name> (<var:player-userid>) jogou um <var:type>."
     regex: []
     cancel_regex: []
 
   onitemuse:
     # item - string
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) used <var:item>."
+    message: "<var:player-name> (<var:player-userid>) usou <var:item>."
     regex: []
     cancel_regex: []
 
   onelevatoruse:
     # elevatorname - ElevatorType
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) called the <var:elevatorname> elevator."
+    message: "<var:player-name> (<var:player-userid>) chamou o elevador do(a) <var:elevatorname>."
     regex: []
     cancel_regex: []
 
@@ -529,12 +529,12 @@ messages:
     # target - Player
     # disarmer - Player
     default:
-      message: "<var:target-role> <var:target-name> (<var:target-userid>) was handcuffed by <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>)."
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) foi preso por <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>)."
       regex: []
       cancel_regex: []
     nootherplayer:
       # target - Player
-      message: "<var:target-role> <var:target-name> (<var:target-userid>) was handcuffed."
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) foi preso."
       regex: []
       cancel_regex: []
 
@@ -542,18 +542,18 @@ messages:
     # target - Player
     # disarmer - Player
     default:
-      message: "<var:target-role> <var:target-name> (<var:target-userid>) was released by <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>)."
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) foi solto por <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>)."
       regex: []
       cancel_regex: []
     nootherplayer:
-      message: "<var:target-role> <var:target-name> (<var:target-userid>) was released."
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) foi solto."
       regex: []
       cancel_regex: []
 
   onrecallzombie:
     # target - Player
     # player - Player
-    message: "<var:target-name> (<var:target-userid>) was revived as an SCP-049-2 instance by <var:player-name> (<var:player-userid>)"
+    message: "<var:target-name> (<var:target-userid>) foi revivido como uma instância de SCP-049-2 por <var:player-name> (<var:player-userid>)"
     regex: []
     cancel_regex: []
 
@@ -564,13 +564,13 @@ messages:
         # result
         # returnmessage
         # player - Player
-        message: "<var:player-name> (<var:player-userid>) used the command `<var:command>`:\n```<var:returnmessage>```"
+        message: "<var:player-name> (<var:player-userid>) usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
       server:
         # command
         # result
         # returnmessage
-        message: "Server used the command `<var:command>`:\n```<var:returnmessage>```"
+        message: "Servidor usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
     client:
       player:
@@ -578,13 +578,13 @@ messages:
         # result
         # returnmessage
         # player - Player
-        message: "<var:player-name> (<var:player-userid>) used the command `<var:command>`:\n```<var:returnmessage>```"
+        message: "<var:player-name> (<var:player-userid>) usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
       server:
         # command
         # result
         # returnmessage
-        message: "Server used the command `<var:command>`:\n```<var:returnmessage>```"
+        message: "Servidor usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
     console:
       player:
@@ -592,33 +592,33 @@ messages:
         # result
         # returnmessage
         # player - Player
-        message: "<var:player-name> (<var:player-userid>) used the command `<var:command>`:\n```<var:returnmessage>```"
+        message: "<var:player-name> (<var:player-userid>) usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
       server:
         # command
         # result
         # returnmessage
-        message: "Server used the command `<var:command>`:\n```<var:returnmessage>```"
+        message: "Servidor usou o comando `<var:command>`:\n```<var:returnmessage>```"
         regex: [ ]
 
   onreload:
     # weapon
     # maxclipsize
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) reloaded their <var:weapon>."
+    message: "<var:player-name> (<var:player-userid>) carregou <var:weapon>."
     regex: []
     cancel_regex: []
 
   ongrenadeexplosion:
     # player - Player
-    message: "<var:player-name> (<var:player-userid>)'s grenade exploded."
+    message: "A granada de <var:player-name> (<var:player-userid>) explodiu."
     regex: []
     cancel_regex: []
 
   ongrenadehitplayer:
     # player - Player
     # target - Player
-    message: "<var:player-name> (<var:player-userid>)'s grenade hit <var:target-name> (<var:target-userid>)"
+    message: "A granada de <var:player-name> (<var:player-userid>) acertou <var:target-name> (<var:target-userid>)"
     regex: []
     cancel_regex: []
 
@@ -631,10 +631,10 @@ messages:
     # starttime - float
     # timeleft - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) unlocked a generator in <var:room>."
+    message: "<var:player-name> (<var:player-userid>) destrancou um gerador em <var:room>."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   ongeneratorclose:
     # engaged - bool
@@ -645,10 +645,10 @@ messages:
     # starttime - float
     # timeleft - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) closed a generator in <var:room>."
+    message: "<var:player-name> (<var:player-userid>) fechou um gerador em <var:room>."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   ongeneratoropen:
     # engaged - bool
@@ -659,10 +659,10 @@ messages:
     # starttime - float
     # timeleft - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) opened a generator in <var:room>."
+    message: "<var:player-name> (<var:player-userid>) abriu um gerador em <var:room>."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   ongeneratoractivated:
     # engaged - bool
@@ -673,10 +673,10 @@ messages:
     # starttime - float
     # timeleft - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) activated a generator in <var:room>."
+    message: "<var:player-name> (<var:player-userid>) ativou um gerador em <var:room>."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   ongeneratordeactivated:
     # engaged - bool
@@ -687,38 +687,38 @@ messages:
     # starttime - float
     # timeleft - float
     # player - Player
-    message: "The generator in <var:room> was deactivated."
+    message: "O gerador em <var:room> foi desativado."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   on079lockdoor:
     # open - bool
     # door - string
     # apdrain - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) locked a door as SCP-079."
+    message: "<var:player-name> (<var:player-userid>) trancou uma porta como SCP-079."
     regex: []
     cancel_regex: []
 
   on079teslagate:
     # apdrain - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) activated a tesla gate."
+    message: "<var:player-name> (<var:player-userid>) ativou um portão de tesla."
     regex: []
     cancel_regex: []
 
   on079levelup:
     # level - int
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) leveled up as SCP-079."
+    message: "<var:player-name> (<var:player-userid>) upou como SCP-079."
     regex: []
     cancel_regex: []
 
   on079unlockdoor:
     # doorname - string
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) locked a <var:doorname> door."
+    message: "<var:player-name> (<var:player-userid>) trancou a porta do(a) <var:doorname>."
     regex: []
     cancel_regex: []
 
@@ -726,19 +726,19 @@ messages:
     # room - RoomType
     # apdrain - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) has locked down <var:room>."
+    message: "<var:player-name> (<var:player-userid>) botou em confinamento o(a) <var:room>."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   on079cancellockdown:
     # room - RoomType
     # apdrain - float
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) has cancelled lockdown in <var:room>."
+    message: "<var:player-name> (<var:player-userid>) cancelou o confinamento em <var:room>."
     regex: [
-      "Micro-HID":"the Micro-HID room",
-      "nuke":"the nuke silo" ]
+      "Micro-HID":"sala da Micro-HID",
+      "nuke":"silo da nuke" ]
 
   onban:
     player:
@@ -746,13 +746,13 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: "**Player <var:player-name> (<var:player-userid>) was banned by <var:issuer-name> (<var:issuer-userid>) for `<var:duration>`. Reason: <var:reason>**"
+      message: "**Jogador <var:player-name> (<var:player-userid>) foi banido por <var:issuer-name> (<var:issuer-userid>) por `<var:duration>`. Razão: <var:reason>**"
       regex: [ ]
     server:
       # duration - int
       # reason - string
       # player - Player
-      message: "**Player <var:player-name> (<var:player-userid>) was banned by the server for `<var:duration>`. Reason: <var:reason>**"
+      message: "**Jogador <var:player-name> (<var:player-userid>) foi banido do servidor por `<var:duration>`. Razão: <var:reason>**"
       regex: []
       cancel_regex: []
 
@@ -766,15 +766,15 @@ messages:
     # issuer-name
     ip:
       message: >+
-        **IP-ban issued**
+        **Banimento por IP emitido**
         ```
-        Player:    <var:player-name>\n
+        Jogador:    <var:player-name>\n
         IP:        <var:player-ip>\n
-        Issued:    <var:issuedtime>\n
-        Expires:   <var:expirytime>\n
-        Duration:  <var:duration>\n
-        Issuer:    <var:issuer-name>\n
-        Reason:    <var:reason>
+        Emitido:    <var:issuedtime>\n
+        Expira:   <var:expirytime>\n
+        Duração:  <var:duration>\n
+        Emissor:    <var:issuer-name>\n
+        Razão:    <var:reason>
         ```
       regex: []
       cancel_regex: []
@@ -787,15 +787,15 @@ messages:
     # issuer-name
     userid:
       message: >+
-        **UserID-ban issued**
+        **Banimento por UserID emitido**
         ```
-        Player:    <var:player-name>\n
+        Jogador:    <var:player-name>\n
         UserID:    <var:player-userid>\n
-        Issued:    <var:issuedtime>\n
-        Expires:   <var:expirytime>\n
-        Duration:  <var:duration>\n
-        Issuer:    <var:issuer-name>\n
-        Reason:    <var:reason>
+        Emitido:    <var:issuedtime>\n
+        Expira:   <var:expirytime>\n
+        Duração:  <var:duration>\n
+        Emissor:    <var:issuer-name>\n
+        Razão:    <var:reason>
         ```
       regex: []
       cancel_regex: []
@@ -810,15 +810,15 @@ messages:
     # issuer-name
     ip:
       message: >+
-        **IP-ban updated**
+        **Banimento por IP atualizado**
         ```
-        Player:    <var:player-name>\n
+        Jogador:    <var:player-name>\n
         IP:        <var:player-ip>\n
-        Issued:    <var:issuedtime>\n
-        Expires:   <var:expirytime>\n
-        Duration:  <var:duration>\n
-        Issuer:    <var:issuer-name>\n
-        Reason:    <var:reason>
+        Emitido:    <var:issuedtime>\n
+        Expira:   <var:expirytime>\n
+        Duração:  <var:duration>\n
+        Emissor:    <var:issuer-name>\n
+        Razão:    <var:reason>
         ```
       regex: []
       cancel_regex: []
@@ -831,15 +831,15 @@ messages:
     # issuer-name
     userid:
       message: >+
-        **UserID-ban updated**
+        **Banimento por UserID atualizado**
         ```
-        Player:    <var:player-name>\n
+        Jogador:    <var:player-name>\n
         UserID:    <var:player-userid>\n
-        Issued:    <var:issuedtime>\n
-        Expires:   <var:expirytime>\n
-        Duration:  <var:duration>\n
-        Issuer:    <var:issuer-name>\n
-        Reason:    <var:reason>
+        Emitido:    <var:issuedtime>\n
+        Expira:   <var:expirytime>\n
+        Duração:  <var:duration>\n
+        Emissor:    <var:issuer-name>\n
+        Razão:    <var:reason>
         ```
       regex: []
       cancel_regex: []
@@ -851,7 +851,7 @@ messages:
       # name - string
       # issuer - string
       # reason - string
-      message: "**IP-ban for <var:name> (<var:ip>) revoked. Originally banned by <var:issuer> for <var:duration>.**"
+      message: "**Banimento por IP para <var:name> (<var:ip>) revogado. Originalmente banido pelo(a) <var:issuer> por <var:duration>.**"
       regex: []
       cancel_regex: []
     userid:
@@ -860,7 +860,7 @@ messages:
       # name - string
       # issuer - string
       # reason - string
-      message: "**UserID-ban for <var:name> (<var:userid>) revoked. Originally banned by <var:issuer> for <var:duration>.**"
+      message: "**Banimento por UserID para <var:name> (<var:userid>) revogado. Originalmente banido pelo(a) <var:issuer> por <var:duration>.**"
       regex: []
       cancel_regex: []
 
@@ -869,12 +869,12 @@ messages:
       # reason - string
       # player - Player
       # issuer - Player
-      message: "**Player <var:player-name> (<var:player-userid>) was kicked by <var:issuer-name> (<var:issuer-userid>). Reason: <var:reason>**"
+      message: "**Jogador <var:player-name> (<var:player-userid>) foi expulso por <var:issuer-name> (<var:issuer-userid>). Razão: <var:reason>**"
       regex: [ ]
     server:
       # reason - string
       # player - Player
-      message: "**Player <var:player-name> (<var:player-userid>) was kicked by the server. Reason: <var:reason>**"
+      message: "**Jogador <var:player-name> (<var:player-userid>) foi expulso pelo servidor. Razão: <var:reason>**"
       regex: []
       cancel_regex: []
 
@@ -883,24 +883,24 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) was intercom-muted by <var:issuer-name> (<var:issuer-userid>).**"
+        message: "**<var:player-name> (<var:player-userid>) foi silenciado no interfone por <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
         cancel_regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) was muted by <var:issuer-name> (<var:issuer-userid>).**"
+        message: "**<var:player-name> (<var:player-userid>) foi silenciado por <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
         cancel_regex: []
     server:
       intercom:
         # player - Player
-        message: "**<var:player-name> (<var:player-userid>) was intercom-muted by the server.**"
+        message: "**<var:player-name> (<var:player-userid>) foi silenciado no interfone pelo servidor.**"
         regex: []
         cancel_regex: []
       standard:
         # player - Player
-        message: "**<var:player-name> (<var:player-userid>) was muted by the server.**"
+        message: "**<var:player-name> (<var:player-userid>) foi silenciado pelo servidor.**"
         regex: []
         cancel_regex: []
 
@@ -909,24 +909,24 @@ messages:
       intercom:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) was intercom-unmuted by <var:issuer-name> (<var:issuer-userid>).**"
+        message: "**<var:player-name> (<var:player-userid>) foi dessilenciado no interfone por <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
         cancel_regex: []
       standard:
         # player - Player
         # issuer - Player
-        message: "**<var:player-name> (<var:player-userid>) was unmuted by <var:issuer-name> (<var:issuer-userid>).**"
+        message: "**<var:player-name> (<var:player-userid>) foi dessilenciado por <var:issuer-name> (<var:issuer-userid>).**"
         regex: []
         cancel_regex: []
     server:
       intercom:
         # player - Player
-        message: "**<var:player-name> (<var:player-userid>) was intercom-unmuted by the server.**"
+        message: "**<var:player-name> (<var:player-userid>) foi dessilenciado no interfone pelo servidor.**"
         regex: []
         cancel_regex: []
       standard:
         # player - Player
-        message: "**<var:player-name> (<var:player-userid>) was unmuted by the server.**"
+        message: "**<var:player-name> (<var:player-userid>) foi dessilenciado pelo servidor.**"
         regex: []
         cancel_regex: []
 
@@ -934,18 +934,18 @@ messages:
     # players - List<Player>
     # spawnchaos - bool
     mtf:
-      message: "**Mobile Task Force Epsilon-11 designated Nine-Tailed Fox has entered the facility.**"
+      message: "**Força-Tarefa Móvel Epsilon-11, designada Nine-Tailed Fox, adentrou a instalação.**"
       regex: []
       cancel_regex: []
     ci:
-      message: "**Facility incursion detected, intruders identified as members of hostile GOI \"Chaos Insurgency\".**"
+      message: "**Invasão da instalação detectada, intrusos identificados como membros do Grupo de Interesse hostil \"Insurgência do Caos\".**"
       regex: []
       cancel_regex: []
 
   onplayerescape:
     # newrole - Role
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) has escaped and become a <var:newrole>"
+    message: "<var:player-name> (<var:player-userid>) fugiu e se tornou <var:newrole>"
     regex: []
     cancel_regex: []
 
@@ -953,7 +953,7 @@ messages:
     # player - Player
     # target - Player
     # reason - string
-    message: "**<var:player-name> (<var:player-userid>) reported <var:target-name> (<var:target-userid>) as a cheater:**\n```<var:reason>```"
+    message: "**<var:player-name> (<var:player-userid>) denunciou <var:target-name> (<var:target-userid>) como cheater:**\n```<var:reason>```"
     regex: []
     cancel_regex: []
 
@@ -961,12 +961,12 @@ messages:
     # player - Player
     # target - Player
     # reason - string
-    message: "**<var:player-name> (<var:player-userid>) reported <var:target-name> (<var:target-userid>) for breaking server rules:**\n```<var:reason>```"
+    message: "**<var:player-name> (<var:player-userid>) denunciou <var:target-name> (<var:target-userid>) por quebrar as regras do servidor:**\n```<var:reason>```"
     regex: []
     cancel_regex: []
 
   onmapgenerated:
-    message: "The Site was generated correctly!"
+    message: "O Sítio foi gerado corretamente!"
     regex: []
     cancel_regex: []
 
@@ -975,7 +975,7 @@ messages:
     # room - RoomType
     # canopen - bool
     # player - Player
-    message: "<var:player-name> (<var:player-userid>) interacted with <var:chamber> in <var:room>."
+    message: "<var:player-name> (<var:player-userid>) interagiu com <var:chamber> em <var:room>."
     regex: []
     cancel_regex: []
 
@@ -984,28 +984,28 @@ messages:
     # effect - string
     # duration - float
     # intensity - byte
-    message: "<var:player-name> (<var:player-userid>) received an effect: <var:effect>, for <var:duration> seconds at intensity <var:intensity>."
+    message: "<var:player-name> (<var:player-userid>) recebeu um efeito: <var:effect>, por <var:duration> segundos na intensidade <var:intensity>."
     regex: []
     cancel_regex: []
 
   oninteract330:
     # player - Player
     # uses - int
-    message: "<var:player-name> (<var:player-userid>) used SCP-330 (<var:uses> uses)."
+    message: "<var:player-name> (<var:player-userid>) utilizou SCP-330 (<var:uses> usos)."
     regex: []
     cancel_regex: []
 
-  #####################################################################################################################
-  #                                                                                                                   #
-  #                                                   DISCORD BOT                                                     #
-  #                                                                                                                   #
-  #   message: The message to be displayed. Variables are inserted in the format <var:name>, such as <var:ipaddress>. #
-  #   regex: A regular expression paired with a replacement string to find and replace parts of a message.            #
-  #                                                                                                                   #
-  #####################################################################################################################
+  ###############################################################################################################################
+  #                                                                                                                             #
+  #                                                   BOT DO DISCORD                                                            #
+  #                                                                                                                             #
+  #   message: A mensagem que será exibida. Variáveis são inseridas no formato <var:name>, como em <var:ipaddress>.             #
+  #   regex: Uma expressão regular combinada com uma string de substituição para encontrar e substituir partes de uma mensagem. #
+  #                                                                                                                             #
+  ###############################################################################################################################
 
   connectedtobot:
-    message: "**SCP:SL server connected.**"
+    message: "**Servidor do SCP:SL conectado.**"
     regex: []
     cancel_regex: []
 
@@ -1013,7 +1013,7 @@ messages:
     # userid - string
     # discord-displayname - string
     # discord-username - string
-    message: "Invalid SteamID '<var:userid>'."
+    message: "SteamID inválido '<var:userid>'."
     regex: []
     cancel_regex: []
 
@@ -1022,7 +1022,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Invalid SteamID or IP '<var:steamidorip>'."
+    message: "SteamID ou IP inválido '<var:steamidorip>'."
     regex: []
     cancel_regex: []
 
@@ -1031,7 +1031,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Invalid duration '<var:duration>'."
+    message: "Duração inválida '<var:duration>'."
     regex: []
     cancel_regex: []
 
@@ -1040,7 +1040,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Player with SteamID '<var:userid>' not found."
+    message: "Jogador com SteamID '<var:userid>' não encontrado."
     regex: []
     cancel_regex: []
 
@@ -1050,7 +1050,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "'<var:player-name>' (<var:player-userid>) was kicked from the server by <var:discord-username> for the reason '<var:reason>'."
+    message: "'<var:player-name>' (<var:player-userid>) foi expulso do servidor por <var:discord-username> pela razão '<var:reason>'."
     regex: []
     cancel_regex: []
 
@@ -1062,7 +1062,7 @@ messages:
       # discord-displayname - string
       # discord-username - string
       # discord-userid - int
-      message: "'<var:player-name>' (<var:player-userid>) was banned by <var:discord-username> for the reason '<var:reason>' (<var:duration>) (+IP-ban)."
+      message: "'<var:player-name>' (<var:player-userid>) foi banido por <var:discord-username> pela razão '<var:reason>' (<var:duration>) (+Banimento por IP)."
       regex: []
       cancel_regex: []
     offline:
@@ -1073,7 +1073,7 @@ messages:
       # discord-displayname - string
       # discord-username - string
       # discord-userid - int
-      message: "'<var:name>' (<var:userid>) was banned by <var:discord-username> for the reason '<var:reason>' (<var:duration>)."
+      message: "'<var:name>' (<var:userid>) foi banido por <var:discord-username> pela razão '<var:reason>' (<var:duration>)."
       regex: []
       cancel_regex: []
 
@@ -1082,7 +1082,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "All entries with SteamID/IP '<var:steamidorip>' have been cleared from the ban lists."
+    message: "Todas entradas com o SteamID/IP '<var:steamidorip>' foram retiradas da lista de banimentos."
     regex: []
     cancel_regex: []
 
@@ -1093,7 +1093,7 @@ messages:
     # duration - string
     # admintag - string
     # adminid - long
-    message: "<var:name> (<var:userid>) was muted by <var:discord-username> for the reason '<var:reason>' (Permanently)."
+    message: "<var:name> (<var:userid>) foi silenciado por <var:discord-username> pela razão '<var:reason>' (Permanentemente)."
     regex: []
     cancel_regex: []
 
@@ -1105,7 +1105,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "<var:name> (<var:userid>) was muted by <var:discord-username> for the reason '<var:reason>' (<var:duration>)."
+    message: "<var:name> (<var:userid>) foi silenciado por <var:discord-username> pela razão '<var:reason>' (<var:duration>)."
     regex: []
     cancel_regex: []
 
@@ -1117,7 +1117,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Error occurred trying to mute player with steamid '<var:userid>', check the console for more info."
+    message: "Erro ocorreu ao tentar silenciar o jogador com o steamid '<var:userid>', verifique o console para mais informações."
     regex: []
     cancel_regex: []
 
@@ -1129,7 +1129,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "<var:name> (<var:userid>) was unmuted by <var:discord-username>."
+    message: "<var:name> (<var:userid>) foi dessilenciado por <var:discord-username>."
     regex: []
     cancel_regex: []
 
@@ -1141,7 +1141,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "Error occurred trying to unmute player with steamid '<var:userid>', check the console for more info."
+    message: "Erro ocorreu ao tentar dessilenciar o jogador com o steamid '<var:userid>', verifique o console para mais informações."
     regex: []
     cancel_regex: []
 
@@ -1150,7 +1150,7 @@ messages:
     # discord-displayname - string
     # discord-username - string
     # discord-userid - int
-    message: "All players have been kicked from the server with the reason '<var:reason>'."
+    message: "Todos os jogadores foram expulsos do servidor com a razão '<var:reason>'."
     regex: []
     cancel_regex: []
 
@@ -1174,7 +1174,7 @@ messages:
         # discord-displayname - string
         # discord-username - string
         # discord-userid - int
-        message: "<var:players> / <var:maxplayers> players"
+        message: "<var:players> / <var:maxplayers> jogadores"
         regex: []
         cancel_regex: []
       row:
@@ -1184,7 +1184,7 @@ messages:
           regex: []
           cancel_regex: []
         empty:
-          message: "No players online."
+          message: "Nenhum jogador ativo."
           regex: []
           cancel_regex: []
 
