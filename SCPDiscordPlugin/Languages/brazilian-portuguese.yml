@@ -366,39 +366,39 @@ messages:
     default:
       # timeleft
       # player - Player
-      message: "**The alpha warhead detonation has been canceled by <var:player-name> (<var:player-userid>) with <var:timeleft> seconds left.**"
+      message: "**A detonação da ogiva alfa foi cancelada por <var:player-name> (<var:player-userid>) com <var:timeleft> segundos restando.**"
       regex: []
       cancel_regex: []
     noplayer:
       # timeleft
-      message: "**The alpha warhead detonation has been canceled remotely by order of the Ethics Committee with <var:timeleft> seconds left.**"
+      message: "**A detonação da ogiva alfa foi cancelada remotamente por ordem do Comitê de Ética com <var:timeleft> segundos restando.**"
       regex: []
       cancel_regex: []
 
   ondetonate:
-    message: "**Detonation of the alpha warhead has been detected. MTF operatives are inbound to clear out any remaining threats.**"
+    message: "**Detonação da ogiva alfa foi detectada. Agentes da FTM estão chegando para eliminar qualquer ameaça restante.**"
     regex: []
     cancel_regex: []
 
   ondecontaminate:
-    message: "**Light Containment Zone de-contamination has been initiated, all biological material will be destroyed.**"
+    message: "**A descontaminação da Zona de Contenção Leve iniciou, todo material biológico será destruído.**"
     regex: []
     cancel_regex: []
 
   onsummonvehicle:
     chaos:
-      message: "**Warning: Unauthorized vehicle has breached the site perimeter.**"
+      message: "**Alerta: Veículo não autorizado invadiu o perímetro do sítio.**"
       regex: []
       cancel_regex: []
     mtf:
-      message: "**MTF helicopter is in visual range of the site, preparing to land.**"
+      message: "**Helicóptero da FTM está no alcance visual do sítio, preparando para pousar.**"
       regex: []
       cancel_regex: []
 
   ongeneratorfinish:
     # room - string
     # player - Player
-    message: "Generator in <var:room> has been activated."
+    message: "Gerador em <var:room> foi ativado."
     regex: [ ]
 
   onplayerhurt:
@@ -407,14 +407,14 @@ messages:
     # attacker - Player
     # target - Player
     default:
-      message: "<var:target-name> (<var:target-userid>) was hurt by <var:attacker-name> (<var:attacker-userid>) using <var:damagetype> (<var:damage> hp)."
-      regex: ["using UNKNOWN":"using unknown means", "-1 damage":"immense damage"]
+      message: "<var:target-name> (<var:target-userid>) foi ferido por <var:attacker-name> (<var:attacker-userid>) usando <var:damagetype> (<var:damage> hp)."
+      regex: ["using UNKNOWN":"usando meios desconhecidos", "-1 damage":"dano imenso"]
     friendlyfire:
-      message: "**<var:target-team> <var:target-name> (<var:target-userid>) was attacked by teammate <var:attacker-team> <var:attacker-name> (<var:attacker-userid>) using <var:damagetype> (<var:damage> hp).**"
-      regex: ["using UNKNOWN":"using unknown means", "-1 damage":"immense damage"]
+      message: "**<var:target-team> <var:target-name> (<var:target-userid>) foi atacado pelo aliado <var:attacker-team> <var:attacker-name> (<var:attacker-userid>) usando <var:damagetype> (<var:damage> hp).**"
+      regex: ["using UNKNOWN":"usando meios desconhecidos", "-1 damage":"dano imenso"]
     noattacker:
-      message: "<var:target-name> (<var:target-userid>) took <var:damage> damage by <var:damagetype>."
-      regex: ["damage by UNKNOWN":"damage from unknown causes", "-1 damage":"immense damage"]
+      message: "<var:target-name> (<var:target-userid>) levou <var:damage> de dano por <var:damagetype>."
+      regex: ["damage by UNKNOWN":"dano por causa desconhecida", "-1 damage":"dano imenso"]
 
   onplayerdie:
     # damagetype - DamageType
