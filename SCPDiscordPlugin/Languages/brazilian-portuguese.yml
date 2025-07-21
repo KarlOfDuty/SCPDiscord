@@ -1198,7 +1198,7 @@ messages:
         # discord-displayname - string
         # discord-username - string
         # discord-userid - int
-        message: "<var:rankedplayers> / <var:players> ranked players"
+        message: "<var:rankedplayers> / <var:players> jogadores ranqueados"
         regex: []
         cancel_regex: []
       row:
@@ -1208,7 +1208,7 @@ messages:
           regex: []
           cancel_regex: []
         empty:
-          message: "No ranked players online."
+          message: "Sem jogadores ranqueados ativos."
           regex: []
           cancel_regex: []
 
@@ -1223,8 +1223,8 @@ messages:
           # discord-displayname - string
           # discord-username - string
           # discord-userid - int
-          message: "<var:syncedplayers> / <var:maxplayers> synced players"
-          regex: [ "1 synced players":"1 synced player" ]
+          message: "<var:syncedplayers> / <var:maxplayers> jogadores sincronizados"
+          regex: [ "1 jogador(es) sincronizado(s)":"1 jogador sincronizado" ]
           cancel_regex: []
         all:
           # players - int
@@ -1235,8 +1235,8 @@ messages:
           # discord-displayname - string
           # discord-username - string
           # discord-userid - int
-          message: "<var:syncedplayers> synced players"
-          regex: [ "1 synced players":"1 synced player" ]
+          message: "<var:syncedplayers> jogadores sincronizados"
+          regex: [ "1 jogador(es) sincronizado(s)":"1 jogador sincronizado" ]
           cancel_regex: []
       row:
         online-only:
@@ -1248,7 +1248,7 @@ messages:
             regex: []
             cancel_regex: []
           empty:
-            message: "No synced players online."
+            message: "Sem jogadores sincronizados ativos."
             regex: []
             cancel_regex: []
         all:
@@ -1261,7 +1261,7 @@ messages:
             regex: []
             cancel_regex: []
           empty:
-            message: "There are no synced players."
+            message: "Não há jogadores sincronizados."
             regex: []
             cancel_regex: []
 
@@ -1277,30 +1277,30 @@ messages:
       # discord-username - string
       # discord-userid - int
       message: >+
-        **Player Information - <var:discordmention>**
+        **Informações do Jogador - <var:discordmention>**
         ```
-        Online:          Yes\n
-        Name:            <var:player-name>\n
+        Ativo:          Sim\n
+        Nome:            <var:player-name>\n
         SteamID:         <var:player-userid>\n
         IP:              <var:player-ipaddress>\n
-        Playtime:        <var:player-playtimehours> hours\n
+        Tempo de Jogo:        <var:player-playtimehours> horas\n
         \n
-        Role:            <var:player-role>\n
+        Cargo:            <var:player-role>\n
         HP:              <var:player-health>\n
-        Overwatch:       replaceOnOff<var:player-overwatchon>\n
+        Supervisor:       replaceOnOff<var:player-overwatchon>\n
         Noclip:          replaceOnOff<var:player-noclipon>\n
         Godmode:         replaceOnOff<var:player-godmodeon>\n
         Bypass:          replaceOnOff<var:player-bypassenabled>\n
         \n
-        Muted:           <var:mutestatus> (Reason: <var:mutereason>)\n
-        Banned:          No\n
-        Discord Synced:  replaceYesNo<var:issynced>\n
-        RA Access:       replaceYesNo<var:player-hasremoteadminaccess>\n
-        Reserved Slot:   replaceYesNo<var:player-hasreservedslot>\n
+        Silenciado:           <var:mutestatus> (Razão: <var:mutereason>)\n
+        Banido:          Não\n
+        Sincronizado no Discord:  replaceYesNo<var:issynced>\n
+        Acesso ao RA:       replaceYesNo<var:player-hasremoteadminaccess>\n
+        Slot Reservado:   replaceYesNo<var:player-hasreservedslot>\n
         Do Not Track:    replaceOnOff<var:player-donottrack>\n
-        Northwood Staff: replaceYesNo<var:player-isnortwoodstaff>
+        Equipe da Northwood: replaceYesNo<var:player-isnortwoodstaff>
         ```
-      regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
+      regex: [ "replaceYesNoTrue":"Sim", "replaceYesNoFalse":"Não", "replaceOnOffTrue":"Ativo", "replaceOnOffFalse":"Inativo", "- <@0>": "", "\\(Razão: \\)":"" ]
       cancel_regex: []
     offline:
       # userid - int
@@ -1318,34 +1318,34 @@ messages:
       # discord-username - string
       # discord-userid - int
       message: >+
-        **Player Information - <var:discordmention>**
+        **Informações do Jogador - <var:discordmention>**
         ```
-        Online:         No\n
-        Name:           <var:name>\n
+        Ativo:         Não\n
+        Nome:           <var:name>\n
         SteamID:        <var:userid>\n
-        Playtime:       <var:playtimehours> hours\n
-        Muted:          <var:mutestatus> (Reason: <var:mutereason>)\n
-        Banned:         <var:banstatus> (Reason: <var:banreason>)\n
-        Reserved Slot:  replaceYesNo<var:hasreservedslot>\n
-        Discord Synced: replaceYesNo<var:issynced>
+        Tempo de Jogo:       <var:playtimehours> horas\n
+        Silenciado:          <var:mutestatus> (Razão: <var:mutereason>)\n
+        Banido:         <var:banstatus> (Razão: <var:banreason>)\n
+        Slot Reservado:  replaceYesNo<var:hasreservedslot>\n
+        Sincronizado no Discord: replaceYesNo<var:issynced>
         ```
-      regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
+      regex: [ "replaceYesNoTrue":"Sim", "replaceYesNoFalse":"Não", "replaceOnOffTrue":"Ativo", "replaceOnOffFalse":"Inativo", "- <@0>": "", "\\(Razão: \\)":"" ]
       cancel_regex: []
 
   botactivity:
     empty:
       # players - int
       # maxplayers - int
-      message: "<var:players> / <var:maxplayers> online"
+      message: "<var:players> / <var:maxplayers> ativos"
       regex: [ ]
     active:
       # players - int
       # maxplayers - int
-      message: "<var:players> / <var:maxplayers> online"
+      message: "<var:players> / <var:maxplayers> ativos"
       regex: [ ]
     full:
       # players - int
       # maxplayers - int
-      message: "<var:players> / <var:maxplayers> online"
+      message: "<var:players> / <var:maxplayers> ativos"
       regex: []
       cancel_regex: []
