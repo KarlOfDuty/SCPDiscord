@@ -332,8 +332,9 @@ namespace SCPDiscord
     {
       if (activityUpdateTimer.Elapsed < TimeSpan.FromSeconds(10) && activityUpdateTimer.IsRunning) return;
 
+      int realPlayers = Player.List.Where(x => x.IsPlayer && x.IsReady).Count();
       // Skip if the player count hasn't changed
-      if (previousActivityPlayerCount == Player.Count && activityUpdateTimer.Elapsed < TimeSpan.FromMinutes(1))
+      if (previousActivityPlayerCount == realPlayers && activityUpdateTimer.Elapsed < TimeSpan.FromMinutes(1))
       {
         return;
       }
@@ -347,26 +348,26 @@ namespace SCPDiscord
       }
       else
       {
-        previousActivityPlayerCount = Player.Count;
+        previousActivityPlayerCount = realPlayers;
       }
 
       // Update player count
       Dictionary<string, string> variables = new Dictionary<string, string>
       {
-        { "players",    Math.Max(0, Player.Count).ToString() },
+        { "players",    Math.Max(0, realPlayers).ToString() },
         { "maxplayers", Server.MaxPlayers.ToString()         }
       };
 
       BotActivity.Types.Status botStatus;
       BotActivity.Types.Activity botActivity;
       string activityText;
-      if (Player.Count <= 0)
+      if (realPlayers <= 0)
       {
         botStatus = Utilities.ParseBotStatus(Config.GetString("bot.status.empty"));
         botActivity = Utilities.ParseBotActivity(Config.GetString("bot.activity.empty"));
         activityText = Language.GetProcessedMessage("messages.botactivity.empty", variables);
       }
-      else if (Player.Count >= Server.MaxPlayers)
+      else if (realPlayers >= Server.MaxPlayers)
       {
         botStatus = Utilities.ParseBotStatus(Config.GetString("bot.status.full"));
         botActivity = Utilities.ParseBotActivity(Config.GetString("bot.activity.full"));
