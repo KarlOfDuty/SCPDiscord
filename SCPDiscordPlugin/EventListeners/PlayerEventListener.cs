@@ -97,7 +97,7 @@ namespace SCPDiscord.EventListeners
         //	break;
 
         case CustomReasonDamageHandler customReason:
-          return customReason._deathReason;
+          return customReason.RagdollInspectText;
 
         case UniversalDamageHandler universalDmg:
           return $"universal ({universalDmg.TranslationId})";
