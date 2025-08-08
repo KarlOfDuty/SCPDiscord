@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
 using LabApi.Features.Wrappers;
+using System.Linq;
 
 namespace SCPDiscord
 {
