@@ -96,11 +96,11 @@ namespace SCPDiscord.EventListeners
         //case AttackerDamageHandler attackerDamageHandler:
         //	break;
 
-        case CustomReasonDamageHandler _:
-          return "UNKNOWN";
+        case CustomReasonDamageHandler customReason:
+          return customReason._deathReason;
 
-        case UniversalDamageHandler _:
-          return "UNKNOWN";
+        case UniversalDamageHandler universalDmg:
+          return $"universal ({universalDmg.TranslationId})";
 
         case WarheadDamageHandler _:
           return "alpha warhead";
