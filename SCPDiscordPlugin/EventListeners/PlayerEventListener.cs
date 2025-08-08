@@ -100,7 +100,8 @@ namespace SCPDiscord.EventListeners
           return customReason.RagdollInspectText;
 
         case UniversalDamageHandler universalDmg:
-          return $"universal ({universalDmg.TranslationId})";
+          return DeathTranslations.TranslationsById.TryGetValue(universalDmg.TranslationId, out DeathTranslation transition) ?
+            transition.LogLabel : $"Unknown reason ({universalDmg.TranslationId})";
 
         case WarheadDamageHandler _:
           return "alpha warhead";
