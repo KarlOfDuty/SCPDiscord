@@ -113,7 +113,7 @@ namespace SCPDiscord
 
     public static void ReceiveQueryResponse(UserInfo userInfo)
     {
-      Task.Delay(1000);
+      Task.Delay(3000);
       try
       {
         // For online servers this should always be one player but for offline servers it may match several
