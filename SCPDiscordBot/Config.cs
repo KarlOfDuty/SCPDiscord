@@ -75,6 +75,7 @@ namespace SCPDiscord
       }
       Logger.SetLogLevel(logLevel);
       Logger.SetupLogfile();
+      PrintConfig();
       Loaded = true;
 
       // Throw exception if bot token is not set
