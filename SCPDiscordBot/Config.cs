@@ -75,8 +75,8 @@ namespace SCPDiscord
       }
       Logger.SetLogLevel(logLevel);
       Logger.SetupLogfile();
-      PrintConfig();
       Loaded = true;
+      PrintConfig();
 
       // Throw exception if bot token is not set
       if (Config.bot.token is "add-your-token-here" or "")
@@ -96,6 +96,7 @@ namespace SCPDiscord
       Logger.Debug("  presence-type:    " + Config.bot.presenceType);
       Logger.Debug("  presence-text:    " + Config.bot.presenceText);
       Logger.Debug("  disable-commands: " + Config.bot.disableCommands);
+      Logger.Debug("  log-file:         " + Config.bot.logFile);
       Logger.Debug("");
       Logger.Debug("permissions:");
       foreach (KeyValuePair<ulong, string[]> node in Config.permissions)
