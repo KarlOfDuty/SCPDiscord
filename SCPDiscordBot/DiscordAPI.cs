@@ -51,35 +51,38 @@ public class DiscordAPI
             Timeout = TimeSpan.FromMinutes(15)
         });
 
-        clientBuilder.UseCommands((_, extension) =>
+        if (!ConfigParser.Config.bot.disableCommands)
         {
-            extension.AddCommands(
-            [
-              typeof(BanCommand),
-              typeof(HelpCommand),
-              typeof(KickAllCommand),
-              typeof(KickCommand),
-              typeof(ListCommand),
-              typeof(ListRankedCommand),
-              typeof(ListSyncedCommand),
-              typeof(MuteCommand),
-              typeof(PlayerInfoCommand),
-              typeof(RACommand),
-              typeof(ServerCommand),
-              typeof(SyncIDCommand),
-              typeof(SyncIPCommand),
-              typeof(UnbanCommand),
-              typeof(UnmuteCommand),
-              typeof(UnsyncCommand),
-              typeof(UnsyncPlayerCommand)
-            ]);
-            extension.AddProcessor(new SlashCommandProcessor());
-            extension.CommandErrored += EventHandler.OnCommandError;
-        }, new CommandsConfiguration
-        {
-            RegisterDefaultCommandProcessors = false,
-            UseDefaultCommandErrorHandler = false
-        });
+          clientBuilder.UseCommands((_, extension) =>
+          {
+              extension.AddCommands(
+              [
+                typeof(BanCommand),
+                typeof(HelpCommand),
+                typeof(KickAllCommand),
+                typeof(KickCommand),
+                typeof(ListCommand),
+                typeof(ListRankedCommand),
+                typeof(ListSyncedCommand),
+                typeof(MuteCommand),
+                typeof(PlayerInfoCommand),
+                typeof(RACommand),
+                typeof(ServerCommand),
+                typeof(SyncIDCommand),
+                typeof(SyncIPCommand),
+                typeof(UnbanCommand),
+                typeof(UnmuteCommand),
+                typeof(UnsyncCommand),
+                typeof(UnsyncPlayerCommand)
+              ]);
+              extension.AddProcessor(new SlashCommandProcessor());
+              extension.CommandErrored += EventHandler.OnCommandError;
+          }, new CommandsConfiguration
+          {
+              RegisterDefaultCommandProcessors = false,
+              UseDefaultCommandErrorHandler = false
+          });
+        }
 
         clientBuilder.ConfigureExtraFeatures(clientConfig =>
         {
