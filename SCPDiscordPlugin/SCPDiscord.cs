@@ -47,7 +47,8 @@ namespace SCPDiscord
     public override System.Version Version { get; } = new(3, 3, 0, 0);
     public override System.Version RequiredApiVersion { get; } = new(LabApiProperties.CompiledVersion);
     public override LoadPriority Priority => LoadPriority.Lowest;
-
+    public string githubRepo = "KarlOfDuty/SCPDiscord";
+    
     //private Utilities.FileWatcher vanillaMutesWatcher;
     private Utilities.FileWatcher whitelistWatcher;
 
