@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using GameCore;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
@@ -36,8 +37,6 @@ namespace SCPDiscord
     internal static SCPDiscord plugin;
 
     internal bool roundStarted = false;
-
-    internal bool shutdown;
 
     private Utilities.FileWatcher reservedSlotsWatcher;
 
@@ -106,7 +105,7 @@ namespace SCPDiscord
       Logger.Info("Loading playtime system...");
       PlayTime.Reload();
 
-      new Thread(() => new StartNetworkSystem()).Start();
+      Task.Run(NetworkSystem.Restart);
     }
 
     private class SyncPlayerRole : CustomEventsHandler
@@ -186,8 +185,7 @@ namespace SCPDiscord
 
     public override void Disable()
     {
-      shutdown = true;
-      NetworkSystem.Disconnect();
+      NetworkSystem.Stop().GetAwaiter().GetResult();
       CustomHandlersManager.UnregisterEventsHandler(muteEventListener);
       CustomHandlersManager.UnregisterEventsHandler(timeTrackingListener);
       CustomHandlersManager.UnregisterEventsHandler(syncPlayerRole);
@@ -200,7 +198,7 @@ namespace SCPDiscord
 
     public static void SendStringByID(ulong channelID, string message)
     {
-      MessageWrapper wrapper = new MessageWrapper
+      MessageWrapper wrapper = new()
       {
         ChatMessage = new ChatMessage
         {
@@ -224,8 +222,7 @@ namespace SCPDiscord
         return;
       }
 
-      Thread messageThread = new Thread(() => new ProcessMessageAsync(channelIDs, messagePath, variables));
-      messageThread.Start();
+      Task.Run(() => NetworkSystem.ProcessMessageAsync(channelIDs, messagePath, variables));
     }
 
     public static void SendEmbedWithMessage(string messagePath, EmbedMessage embed, Dictionary<string, string> variables = null)
@@ -236,18 +233,17 @@ namespace SCPDiscord
         return;
       }
 
-      Thread messageThread = new Thread(() => new ProcessEmbedMessageAsync(embed, channelIDs, messagePath, variables));
-      messageThread.Start();
+      Task.Run(() => NetworkSystem.ProcessEmbedMessageAsync(embed, channelIDs, messagePath, variables));
     }
 
     public static void SendMessageByID(ulong channelID, string messagePath, Dictionary<string, string> variables = null)
     {
-      new Thread(() => new ProcessMessageByIDAsync(channelID, messagePath, variables)).Start();
+      Task.Run(() => NetworkSystem.ProcessMessageByIDAsync(channelID, messagePath, variables));
     }
 
     public static void SendEmbedWithMessageByID(EmbedMessage embed, string messagePath, Dictionary<string, string> variables = null)
     {
-      new Thread(() => new ProcessEmbedMessageByIDAsync(embed, messagePath, variables)).Start();
+      Task.Run(() => NetworkSystem.ProcessEmbedMessageByIDAsync(embed, messagePath, variables));
     }
   }
 }
