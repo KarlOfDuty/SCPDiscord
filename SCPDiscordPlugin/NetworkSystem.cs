@@ -76,7 +76,7 @@ public static class NetworkSystem
           Content = processedMessage
         }
       };
-      QueueMessage(wrapper);
+      await QueueMessageAsync(wrapper);
     }
   }
 
@@ -99,7 +99,7 @@ public static class NetworkSystem
       }
     };
 
-    QueueMessage(wrapper);
+    await QueueMessageAsync(wrapper);
   }
 
   public static async Task ProcessEmbedMessageAsync(EmbedMessage embed, List<ulong> channelIDs, string messagePath, Dictionary<string, string> variables)
@@ -121,7 +121,7 @@ public static class NetworkSystem
         ChannelID = channelID
       };
       MessageWrapper wrapper = new MessageWrapper { EmbedMessage = embedCopy };
-      NetworkSystem.QueueMessage(wrapper);
+      await QueueMessageAsync(wrapper);
     }
   }
 
@@ -137,7 +137,7 @@ public static class NetworkSystem
     }
 
     MessageWrapper wrapper = new MessageWrapper { EmbedMessage = embed };
-    NetworkSystem.QueueMessage(wrapper);
+    await QueueMessageAsync(wrapper);
   }
 
   public static async Task Run(CancellationToken ct)
@@ -157,7 +157,7 @@ public static class NetworkSystem
       {
         if (IsConnected())
         {
-          await Update();
+          Update();
         }
         else
         {
@@ -176,23 +176,21 @@ public static class NetworkSystem
     socket.Disconnect(false);
   }
 
-  private static async Task Update()
+  private static void Update()
   {
     RefreshBotStatus();
 
-    // Send all messages
-    for (int i = 0; i < messageQueue.Count; i++)
+    while (messageQueue.TryPeek(out MessageWrapper next))
     {
-      if (SendMessage(messageQueue[i]))
+      if (SendMessage(next))
       {
-        messageQueue.RemoveAt(i);
-        i--;
+        messageQueue.TryDequeue(out _);
       }
-    }
-
-    if (messageQueue.Count != 0)
-    {
-      Logger.Debug("Could not send all messages.");
+      else
+      {
+        Logger.Debug("Could not send all messages.");
+        return;
+      }
     }
   }
 
@@ -306,7 +304,7 @@ public static class NetworkSystem
     return false;
   }
 
-  public static async Task QueueMessage(MessageWrapper message)
+  public static async Task QueueMessageAsync(MessageWrapper message)
   {
     if (message == null)
     {
@@ -314,6 +312,11 @@ public static class NetworkSystem
       return;
     }
 
+    await Task.Run(() => QueueMessage(message));
+  }
+
+  private static void QueueMessage(MessageWrapper message)
+  {
     switch (message.MessageCase)
     {
       case MessageWrapper.MessageOneofCase.EmbedMessage:
@@ -343,7 +346,7 @@ public static class NetworkSystem
         break;
     }
 
-    messageQueue.Add(message);
+    messageQueue.Enqueue(message);
   }
 
   private static void RefreshBotStatus()
@@ -408,6 +411,6 @@ public static class NetworkSystem
       }
     };
 
-    QueueMessage(wrapper);
+    _ = QueueMessageAsync(wrapper);
   }
 }

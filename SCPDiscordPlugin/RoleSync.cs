@@ -88,7 +88,7 @@ namespace SCPDiscord
           }
         };
 
-        NetworkSystem.QueueMessage(message);
+        _ = NetworkSystem.QueueMessageAsync(message);
       }
       else
       {
@@ -107,7 +107,7 @@ namespace SCPDiscord
           }
         };
 
-        NetworkSystem.QueueMessage(message);
+        _ = NetworkSystem.QueueMessageAsync(message);
       }
     }
 

@@ -206,12 +206,12 @@ namespace SCPDiscord
           Content = message
         }
       };
-      NetworkSystem.QueueMessage(wrapper);
+      _ = NetworkSystem.QueueMessageAsync(wrapper);
     }
 
     public static void SendEmbedByID(EmbedMessage message)
     {
-      NetworkSystem.QueueMessage(new MessageWrapper { EmbedMessage = message });
+      _ = NetworkSystem.QueueMessageAsync(new MessageWrapper { EmbedMessage = message });
     }
 
     public static void SendMessage(string messagePath, Dictionary<string, string> variables = null)
@@ -222,7 +222,7 @@ namespace SCPDiscord
         return;
       }
 
-      Task.Run(() => NetworkSystem.ProcessMessageAsync(channelIDs, messagePath, variables));
+      _ = NetworkSystem.ProcessMessageAsync(channelIDs, messagePath, variables);
     }
 
     public static void SendEmbedWithMessage(string messagePath, EmbedMessage embed, Dictionary<string, string> variables = null)
@@ -233,17 +233,17 @@ namespace SCPDiscord
         return;
       }
 
-      Task.Run(() => NetworkSystem.ProcessEmbedMessageAsync(embed, channelIDs, messagePath, variables));
+      _ = NetworkSystem.ProcessEmbedMessageAsync(embed, channelIDs, messagePath, variables);
     }
 
     public static void SendMessageByID(ulong channelID, string messagePath, Dictionary<string, string> variables = null)
     {
-      Task.Run(() => NetworkSystem.ProcessMessageByIDAsync(channelID, messagePath, variables));
+      _ = NetworkSystem.ProcessMessageByIDAsync(channelID, messagePath, variables);
     }
 
     public static void SendEmbedWithMessageByID(EmbedMessage embed, string messagePath, Dictionary<string, string> variables = null)
     {
-      Task.Run(() => NetworkSystem.ProcessEmbedMessageByIDAsync(embed, messagePath, variables));
+      _ = NetworkSystem.ProcessEmbedMessageByIDAsync(embed, messagePath, variables);
     }
   }
 }

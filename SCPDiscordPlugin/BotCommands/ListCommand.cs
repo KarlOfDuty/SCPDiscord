@@ -76,7 +76,7 @@ namespace SCPDiscord.BotCommands
       };
       response.Pages.Add(embeds);
 
-      NetworkSystem.QueueMessage(new MessageWrapper { PaginatedMessage = response });
+      _ = NetworkSystem.QueueMessageAsync(new MessageWrapper { PaginatedMessage = response });
     }
   }
 }
