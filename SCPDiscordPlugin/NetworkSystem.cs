@@ -304,15 +304,25 @@ public static class NetworkSystem
     return false;
   }
 
-  public static async Task QueueMessageAsync(MessageWrapper message)
+  public static Task QueueMessageAsync(MessageWrapper message)
   {
     if (message == null)
     {
       Logger.Warn("Message was null: \n" + new StackTrace());
-      return;
+      return Task.CompletedTask;
     }
 
-    await Task.Run(() => QueueMessage(message));
+    return Task.Run(() =>
+    {
+      try
+      {
+        QueueMessage(message);
+      }
+      catch (Exception ex)
+      {
+        Logger.Error($"QueueMessage failed: {ex}");
+      }
+    });
   }
 
   private static void QueueMessage(MessageWrapper message)
@@ -353,7 +363,7 @@ public static class NetworkSystem
   {
     if (activityUpdateTimer.Elapsed < TimeSpan.FromSeconds(10) && activityUpdateTimer.IsRunning) return;
 
-    int realPlayers = Player.List.Where(x => x.IsPlayer && x.IsReady).Count();
+    int realPlayers = Player.List.Count(x => x.IsPlayer && x.IsReady);
     // Skip if the player count hasn't changed
     if (previousActivityPlayerCount == realPlayers && activityUpdateTimer.Elapsed < TimeSpan.FromMinutes(1))
     {

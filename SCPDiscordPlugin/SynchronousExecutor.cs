@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SCPDiscord.Interface;
 using UnityEngine;
 using System.Linq;
-using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
 
 namespace SCPDiscord
@@ -65,19 +64,12 @@ namespace SCPDiscord
 
       List<EmbedMessage> embeds = new List<EmbedMessage>();
 
-      string title;
-      switch (command.Command)
+      string title = command.Command switch
       {
-        case string client when client.StartsWith("."):
-          title = "Client commands:";
-          break;
-        case string ra when ra.StartsWith("/"):
-          title = "Remote admin commands:";
-          break;
-        default:
-          title = "Server commands:";
-          break;
-      }
+        { } client when client.StartsWith(".") => "Client commands:",
+        { } ra when ra.StartsWith("/")         => "Remote admin commands:",
+        _                                      => "Server commands:"
+      };
 
       foreach (string message in Utilities.ParseListIntoMessages(listItems))
       {
