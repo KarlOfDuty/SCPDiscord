@@ -73,7 +73,8 @@ public class DiscordAPI
                 typeof(UnbanCommand),
                 typeof(UnmuteCommand),
                 typeof(UnsyncCommand),
-                typeof(UnsyncPlayerCommand)
+                typeof(UnsyncPlayerCommand),
+                typeof(AdminChatCommand)
               ]);
               extension.AddProcessor(new SlashCommandProcessor());
               extension.CommandErrored += EventHandler.OnCommandError;

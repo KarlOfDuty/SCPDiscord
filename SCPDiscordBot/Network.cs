@@ -256,6 +256,7 @@ namespace SCPDiscord
         case MessageWrapper.MessageOneofCase.UnbanCommand:
         case MessageWrapper.MessageOneofCase.UnsyncRoleCommand:
         case MessageWrapper.MessageOneofCase.UserInfo:
+		case MessageWrapper.MessageOneofCase.AdminChatCommand:
           Logger.Warn("Received packet meant for plugin: " + JsonFormatter.Default.Format(wrapper));
           break;
         case MessageWrapper.MessageOneofCase.None:

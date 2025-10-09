@@ -49,6 +49,9 @@ global_regex: [
   "ChaosRepressor":"Репресор Хаосу",
   "ChaosMarauder":"Мародер Хаосу",
   #"Overwatch":"",
+  #"Flamingo":"",
+  "AlphaFlamingo": "Альфа фламінго",
+  "ZombieFlamingo": "зомбі фламінго",
 
   # Elevators
   "GateA":"ворота А",
@@ -1186,5 +1189,17 @@ messages:
     # duration - float
     # intensity - byte
     message: "<var:player-name> (<var:player-userid>) отримав ефект: <var:effect>, на <var:duration> секунд з інтенсивністю <var:intensity>."
+    regex: []
+    cancel_regex: []
+  
+  adminchatsent:
+    message: "Відправлено!"
+    regex: []
+    cancel_regex: []
+
+  onserversentadminchat:
+    # player - Player
+    # text - string
+    message: "<var:player-name> (<var:player-userid>) адмін-чат: <var:text>"
     regex: []
     cancel_regex: []

@@ -398,5 +398,17 @@ namespace SCPDiscord.EventListeners
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerreceiveeffect", variables);
     }
+    
+    public override void OnServerSentAdminChat(SentAdminChatEventArgs ev)
+    {
+      Dictionary<string, string> variables = new Dictionary<string, string>
+      {
+        { "player-name", ev.Sender.Nickname },
+        { "player-userid",   ev.Sender.OutputId },
+        { "text", ev.Message },
+      };
+
+      SCPDiscord.SendMessage("messages.onserversentadminchat", variables);
+    }
   }
 }

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package SCPDiscord.Interface;
+
+message AdminChatCommand
+{
+	uint64 channelID = 1;
+	uint64 discordUserID = 2;
+	string message = 3;
+	uint64 interactionID = 4;
+	string discordUsername = 5;
+}

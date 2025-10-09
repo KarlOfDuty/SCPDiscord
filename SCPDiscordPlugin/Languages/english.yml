@@ -1339,3 +1339,15 @@ messages:
       message: "<var:players> / <var:maxplayers> online"
       regex: []
       cancel_regex: []
+  
+  adminchatsent:
+    message: "Message sent!"
+    regex: []
+    cancel_regex: []
+
+  onserversentadminchat:
+    # player - Player
+    # text - string
+    message: "<var:player-name> (<var:player-userid>) send admin message: <var:text>"
+    regex: []
+    cancel_regex: []
