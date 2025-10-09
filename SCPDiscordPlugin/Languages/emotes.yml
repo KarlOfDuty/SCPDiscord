@@ -195,3 +195,4 @@ messages:
     empty: ""
     active: ""
     full: ""
+  onserversentadminchat: ":speech_balloon: "

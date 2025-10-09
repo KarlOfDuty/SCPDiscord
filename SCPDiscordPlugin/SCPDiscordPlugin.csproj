@@ -37,7 +37,7 @@
 
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-          <HintPath>../.scpsl_libs/Assembly-CSharp.dll</HintPath>
+          <HintPath>../.scpsl_libs/Assembly-CSharp-Publicized.dll</HintPath>
         </Reference>
         <Reference Include="CommandSystem.Core">
           <HintPath>../.scpsl_libs/CommandSystem.Core.dll</HintPath>
