@@ -165,6 +165,7 @@ namespace SCPDiscord
       "messages.onteamrespawn.mtf",
       "messages.onthrowprojectile",
       "messages.onwaitingforplayers",
+      "messages.onserversentadminchat",
     };
 
     // Same as above but these are only used in language files.

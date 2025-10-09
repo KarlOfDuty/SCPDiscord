@@ -98,6 +98,9 @@ namespace SCPDiscord
               case Interface.MessageWrapper.MessageOneofCase.EmbedMessage:
                 Logger.Error("Received packet meant for bot: " + Google.Protobuf.JsonFormatter.Default.Format(data));
                 break;
+              case Interface.MessageWrapper.MessageOneofCase.AdminChatCommand:
+                AdminChatCommand.Execute(data.AdminChatCommand);
+                break;
 
               case Interface.MessageWrapper.MessageOneofCase.None:
               default:

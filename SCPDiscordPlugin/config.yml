@@ -253,3 +253,4 @@ messages:
         mtf: [ "default" ]
         ci: [ "default" ]
     onplayerescape: [ "default" ]
+    onserversentadminchat: [ "staff" ]

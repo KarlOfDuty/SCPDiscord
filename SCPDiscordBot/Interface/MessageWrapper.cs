@@ -34,40 +34,43 @@ namespace SCPDiscord.Interface {
             "Z2luL0xpc3RDb21tYW5kLnByb3RvGh1Cb3RUb1BsdWdpbi9NdXRlQ29tbWFu",
             "ZC5wcm90bxojQm90VG9QbHVnaW4vTGlzdFJhbmtlZENvbW1hbmQucHJvdG8a",
             "I0JvdFRvUGx1Z2luL0xpc3RTeW5jZWRDb21tYW5kLnByb3RvGiNCb3RUb1Bs",
-            "dWdpbi9QbGF5ZXJJbmZvQ29tbWFuZC5wcm90bxodUGx1Z2luVG9Cb3QvQm90",
-            "QWN0aXZpdHkucHJvdG8aHVBsdWdpblRvQm90L0NoYXRNZXNzYWdlLnByb3Rv",
-            "GhtQbHVnaW5Ub0JvdC9Vc2VyUXVlcnkucHJvdG8aHlBsdWdpblRvQm90L0Vt",
-            "YmVkTWVzc2FnZS5wcm90bxoiUGx1Z2luVG9Cb3QvUGFnaW5hdGVkTWVzc2Fn",
-            "ZS5wcm90byL1CAoOTWVzc2FnZVdyYXBwZXISOAoLYm90QWN0aXZpdHkYASAB",
-            "KAsyIS5TQ1BEaXNjb3JkLkludGVyZmFjZS5Cb3RBY3Rpdml0eUgAEjgKC2No",
-            "YXRNZXNzYWdlGAMgASgLMiEuU0NQRGlzY29yZC5JbnRlcmZhY2UuQ2hhdE1l",
-            "c3NhZ2VIABI0Cgl1c2VyUXVlcnkYBCABKAsyHy5TQ1BEaXNjb3JkLkludGVy",
-            "ZmFjZS5Vc2VyUXVlcnlIABJACg9zeW5jUm9sZUNvbW1hbmQYBSABKAsyJS5T",
-            "Q1BEaXNjb3JkLkludGVyZmFjZS5TeW5jUm9sZUNvbW1hbmRIABJEChF1bnN5",
-            "bmNSb2xlQ29tbWFuZBgGIAEoCzInLlNDUERpc2NvcmQuSW50ZXJmYWNlLlVu",
-            "c3luY1JvbGVDb21tYW5kSAASPgoOY29uc29sZUNvbW1hbmQYByABKAsyJC5T",
-            "Q1BEaXNjb3JkLkludGVyZmFjZS5Db25zb2xlQ29tbWFuZEgAEjIKCHVzZXJJ",
-            "bmZvGAggASgLMh4uU0NQRGlzY29yZC5JbnRlcmZhY2UuVXNlckluZm9IABI2",
-            "CgpiYW5Db21tYW5kGAkgASgLMiAuU0NQRGlzY29yZC5JbnRlcmZhY2UuQmFu",
-            "Q29tbWFuZEgAEjoKDHVuYmFuQ29tbWFuZBgKIAEoCzIiLlNDUERpc2NvcmQu",
-            "SW50ZXJmYWNlLlVuYmFuQ29tbWFuZEgAEjgKC2tpY2tDb21tYW5kGAsgASgL",
-            "MiEuU0NQRGlzY29yZC5JbnRlcmZhY2UuS2lja0NvbW1hbmRIABI+Cg5raWNr",
-            "YWxsQ29tbWFuZBgMIAEoCzIkLlNDUERpc2NvcmQuSW50ZXJmYWNlLktpY2th",
-            "bGxDb21tYW5kSAASOAoLbGlzdENvbW1hbmQYDSABKAsyIS5TQ1BEaXNjb3Jk",
-            "LkludGVyZmFjZS5MaXN0Q29tbWFuZEgAEjoKDGVtYmVkTWVzc2FnZRgOIAEo",
-            "CzIiLlNDUERpc2NvcmQuSW50ZXJmYWNlLkVtYmVkTWVzc2FnZUgAEkIKEHBh",
-            "Z2luYXRlZE1lc3NhZ2UYDyABKAsyJi5TQ1BEaXNjb3JkLkludGVyZmFjZS5Q",
-            "YWdpbmF0ZWRNZXNzYWdlSAASOAoLbXV0ZUNvbW1hbmQYECABKAsyIS5TQ1BE",
-            "aXNjb3JkLkludGVyZmFjZS5NdXRlQ29tbWFuZEgAEkQKEWxpc3RSYW5rZWRD",
-            "b21tYW5kGBEgASgLMicuU0NQRGlzY29yZC5JbnRlcmZhY2UuTGlzdFJhbmtl",
-            "ZENvbW1hbmRIABJEChFsaXN0U3luY2VkQ29tbWFuZBgSIAEoCzInLlNDUERp",
-            "c2NvcmQuSW50ZXJmYWNlLkxpc3RTeW5jZWRDb21tYW5kSAASRAoRcGxheWVy",
-            "SW5mb0NvbW1hbmQYEyABKAsyJy5TQ1BEaXNjb3JkLkludGVyZmFjZS5QbGF5",
-            "ZXJJbmZvQ29tbWFuZEgAQgkKB21lc3NhZ2ViBnByb3RvMw=="));
+            "dWdpbi9QbGF5ZXJJbmZvQ29tbWFuZC5wcm90bxoiQm90VG9QbHVnaW4vQWRt",
+            "aW5DaGF0Q29tbWFuZC5wcm90bxodUGx1Z2luVG9Cb3QvQm90QWN0aXZpdHku",
+            "cHJvdG8aHVBsdWdpblRvQm90L0NoYXRNZXNzYWdlLnByb3RvGhtQbHVnaW5U",
+            "b0JvdC9Vc2VyUXVlcnkucHJvdG8aHlBsdWdpblRvQm90L0VtYmVkTWVzc2Fn",
+            "ZS5wcm90bxoiUGx1Z2luVG9Cb3QvUGFnaW5hdGVkTWVzc2FnZS5wcm90byK5",
+            "CQoOTWVzc2FnZVdyYXBwZXISOAoLYm90QWN0aXZpdHkYASABKAsyIS5TQ1BE",
+            "aXNjb3JkLkludGVyZmFjZS5Cb3RBY3Rpdml0eUgAEjgKC2NoYXRNZXNzYWdl",
+            "GAMgASgLMiEuU0NQRGlzY29yZC5JbnRlcmZhY2UuQ2hhdE1lc3NhZ2VIABI0",
+            "Cgl1c2VyUXVlcnkYBCABKAsyHy5TQ1BEaXNjb3JkLkludGVyZmFjZS5Vc2Vy",
+            "UXVlcnlIABJACg9zeW5jUm9sZUNvbW1hbmQYBSABKAsyJS5TQ1BEaXNjb3Jk",
+            "LkludGVyZmFjZS5TeW5jUm9sZUNvbW1hbmRIABJEChF1bnN5bmNSb2xlQ29t",
+            "bWFuZBgGIAEoCzInLlNDUERpc2NvcmQuSW50ZXJmYWNlLlVuc3luY1JvbGVD",
+            "b21tYW5kSAASPgoOY29uc29sZUNvbW1hbmQYByABKAsyJC5TQ1BEaXNjb3Jk",
+            "LkludGVyZmFjZS5Db25zb2xlQ29tbWFuZEgAEjIKCHVzZXJJbmZvGAggASgL",
+            "Mh4uU0NQRGlzY29yZC5JbnRlcmZhY2UuVXNlckluZm9IABI2CgpiYW5Db21t",
+            "YW5kGAkgASgLMiAuU0NQRGlzY29yZC5JbnRlcmZhY2UuQmFuQ29tbWFuZEgA",
+            "EjoKDHVuYmFuQ29tbWFuZBgKIAEoCzIiLlNDUERpc2NvcmQuSW50ZXJmYWNl",
+            "LlVuYmFuQ29tbWFuZEgAEjgKC2tpY2tDb21tYW5kGAsgASgLMiEuU0NQRGlz",
+            "Y29yZC5JbnRlcmZhY2UuS2lja0NvbW1hbmRIABI+Cg5raWNrYWxsQ29tbWFu",
+            "ZBgMIAEoCzIkLlNDUERpc2NvcmQuSW50ZXJmYWNlLktpY2thbGxDb21tYW5k",
+            "SAASOAoLbGlzdENvbW1hbmQYDSABKAsyIS5TQ1BEaXNjb3JkLkludGVyZmFj",
+            "ZS5MaXN0Q29tbWFuZEgAEjoKDGVtYmVkTWVzc2FnZRgOIAEoCzIiLlNDUERp",
+            "c2NvcmQuSW50ZXJmYWNlLkVtYmVkTWVzc2FnZUgAEkIKEHBhZ2luYXRlZE1l",
+            "c3NhZ2UYDyABKAsyJi5TQ1BEaXNjb3JkLkludGVyZmFjZS5QYWdpbmF0ZWRN",
+            "ZXNzYWdlSAASOAoLbXV0ZUNvbW1hbmQYECABKAsyIS5TQ1BEaXNjb3JkLklu",
+            "dGVyZmFjZS5NdXRlQ29tbWFuZEgAEkQKEWxpc3RSYW5rZWRDb21tYW5kGBEg",
+            "ASgLMicuU0NQRGlzY29yZC5JbnRlcmZhY2UuTGlzdFJhbmtlZENvbW1hbmRI",
+            "ABJEChFsaXN0U3luY2VkQ29tbWFuZBgSIAEoCzInLlNDUERpc2NvcmQuSW50",
+            "ZXJmYWNlLkxpc3RTeW5jZWRDb21tYW5kSAASRAoRcGxheWVySW5mb0NvbW1h",
+            "bmQYEyABKAsyJy5TQ1BEaXNjb3JkLkludGVyZmFjZS5QbGF5ZXJJbmZvQ29t",
+            "bWFuZEgAEkIKEGFkbWluQ2hhdENvbW1hbmQYFCABKAsyJi5TQ1BEaXNjb3Jk",
+            "LkludGVyZmFjZS5BZG1pbkNoYXRDb21tYW5kSABCCQoHbWVzc2FnZWIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::SCPDiscord.Interface.ConsoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UserInfoReflection.Descriptor, global::SCPDiscord.Interface.SyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UnsyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.BanCommandReflection.Descriptor, global::SCPDiscord.Interface.UnbanCommandReflection.Descriptor, global::SCPDiscord.Interface.KickCommandReflection.Descriptor, global::SCPDiscord.Interface.KickallCommandReflection.Descriptor, global::SCPDiscord.Interface.ListCommandReflection.Descriptor, global::SCPDiscord.Interface.MuteCommandReflection.Descriptor, global::SCPDiscord.Interface.ListRankedCommandReflection.Descriptor, global::SCPDiscord.Interface.ListSyncedCommandReflection.Descriptor, global::SCPDiscord.Interface.PlayerInfoCommandReflection.Descriptor, global::SCPDiscord.Interface.BotActivityReflection.Descriptor, global::SCPDiscord.Interface.ChatMessageReflection.Descriptor, global::SCPDiscord.Interface.UserQueryReflection.Descriptor, global::SCPDiscord.Interface.EmbedMessageReflection.Descriptor, global::SCPDiscord.Interface.PaginatedMessageReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::SCPDiscord.Interface.ConsoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UserInfoReflection.Descriptor, global::SCPDiscord.Interface.SyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.UnsyncRoleCommandReflection.Descriptor, global::SCPDiscord.Interface.BanCommandReflection.Descriptor, global::SCPDiscord.Interface.UnbanCommandReflection.Descriptor, global::SCPDiscord.Interface.KickCommandReflection.Descriptor, global::SCPDiscord.Interface.KickallCommandReflection.Descriptor, global::SCPDiscord.Interface.ListCommandReflection.Descriptor, global::SCPDiscord.Interface.MuteCommandReflection.Descriptor, global::SCPDiscord.Interface.ListRankedCommandReflection.Descriptor, global::SCPDiscord.Interface.ListSyncedCommandReflection.Descriptor, global::SCPDiscord.Interface.PlayerInfoCommandReflection.Descriptor, global::SCPDiscord.Interface.AdminChatCommandReflection.Descriptor, global::SCPDiscord.Interface.BotActivityReflection.Descriptor, global::SCPDiscord.Interface.ChatMessageReflection.Descriptor, global::SCPDiscord.Interface.UserQueryReflection.Descriptor, global::SCPDiscord.Interface.EmbedMessageReflection.Descriptor, global::SCPDiscord.Interface.PaginatedMessageReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::SCPDiscord.Interface.MessageWrapper), global::SCPDiscord.Interface.MessageWrapper.Parser, new[]{ "BotActivity", "ChatMessage", "UserQuery", "SyncRoleCommand", "UnsyncRoleCommand", "ConsoleCommand", "UserInfo", "BanCommand", "UnbanCommand", "KickCommand", "KickallCommand", "ListCommand", "EmbedMessage", "PaginatedMessage", "MuteCommand", "ListRankedCommand", "ListSyncedCommand", "PlayerInfoCommand" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SCPDiscord.Interface.MessageWrapper), global::SCPDiscord.Interface.MessageWrapper.Parser, new[]{ "BotActivity", "ChatMessage", "UserQuery", "SyncRoleCommand", "UnsyncRoleCommand", "ConsoleCommand", "UserInfo", "BanCommand", "UnbanCommand", "KickCommand", "KickallCommand", "ListCommand", "EmbedMessage", "PaginatedMessage", "MuteCommand", "ListRankedCommand", "ListSyncedCommand", "PlayerInfoCommand", "AdminChatCommand" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -163,6 +166,9 @@ namespace SCPDiscord.Interface {
           break;
         case MessageOneofCase.PlayerInfoCommand:
           PlayerInfoCommand = other.PlayerInfoCommand.Clone();
+          break;
+        case MessageOneofCase.AdminChatCommand:
+          AdminChatCommand = other.AdminChatCommand.Clone();
           break;
       }
 
@@ -394,6 +400,18 @@ namespace SCPDiscord.Interface {
       }
     }
 
+    /// <summary>Field number for the "adminChatCommand" field.</summary>
+    public const int AdminChatCommandFieldNumber = 20;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::SCPDiscord.Interface.AdminChatCommand AdminChatCommand {
+      get { return messageCase_ == MessageOneofCase.AdminChatCommand ? (global::SCPDiscord.Interface.AdminChatCommand) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.AdminChatCommand;
+      }
+    }
+
     private object message_;
     /// <summary>Enum of possible cases for the "message" oneof.</summary>
     public enum MessageOneofCase {
@@ -416,6 +434,7 @@ namespace SCPDiscord.Interface {
       ListRankedCommand = 17,
       ListSyncedCommand = 18,
       PlayerInfoCommand = 19,
+      AdminChatCommand = 20,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -464,6 +483,7 @@ namespace SCPDiscord.Interface {
       if (!object.Equals(ListRankedCommand, other.ListRankedCommand)) return false;
       if (!object.Equals(ListSyncedCommand, other.ListSyncedCommand)) return false;
       if (!object.Equals(PlayerInfoCommand, other.PlayerInfoCommand)) return false;
+      if (!object.Equals(AdminChatCommand, other.AdminChatCommand)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -490,6 +510,7 @@ namespace SCPDiscord.Interface {
       if (messageCase_ == MessageOneofCase.ListRankedCommand) hash ^= ListRankedCommand.GetHashCode();
       if (messageCase_ == MessageOneofCase.ListSyncedCommand) hash ^= ListSyncedCommand.GetHashCode();
       if (messageCase_ == MessageOneofCase.PlayerInfoCommand) hash ^= PlayerInfoCommand.GetHashCode();
+      if (messageCase_ == MessageOneofCase.AdminChatCommand) hash ^= AdminChatCommand.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -581,6 +602,10 @@ namespace SCPDiscord.Interface {
         output.WriteRawTag(154, 1);
         output.WriteMessage(PlayerInfoCommand);
       }
+      if (messageCase_ == MessageOneofCase.AdminChatCommand) {
+        output.WriteRawTag(162, 1);
+        output.WriteMessage(AdminChatCommand);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -663,6 +688,10 @@ namespace SCPDiscord.Interface {
         output.WriteRawTag(154, 1);
         output.WriteMessage(PlayerInfoCommand);
       }
+      if (messageCase_ == MessageOneofCase.AdminChatCommand) {
+        output.WriteRawTag(162, 1);
+        output.WriteMessage(AdminChatCommand);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -726,6 +755,9 @@ namespace SCPDiscord.Interface {
       }
       if (messageCase_ == MessageOneofCase.PlayerInfoCommand) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfoCommand);
+      }
+      if (messageCase_ == MessageOneofCase.AdminChatCommand) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(AdminChatCommand);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -847,6 +879,12 @@ namespace SCPDiscord.Interface {
             PlayerInfoCommand = new global::SCPDiscord.Interface.PlayerInfoCommand();
           }
           PlayerInfoCommand.MergeFrom(other.PlayerInfoCommand);
+          break;
+        case MessageOneofCase.AdminChatCommand:
+          if (AdminChatCommand == null) {
+            AdminChatCommand = new global::SCPDiscord.Interface.AdminChatCommand();
+          }
+          AdminChatCommand.MergeFrom(other.AdminChatCommand);
           break;
       }
 
@@ -1031,6 +1069,15 @@ namespace SCPDiscord.Interface {
             PlayerInfoCommand = subBuilder;
             break;
           }
+          case 162: {
+            global::SCPDiscord.Interface.AdminChatCommand subBuilder = new global::SCPDiscord.Interface.AdminChatCommand();
+            if (messageCase_ == MessageOneofCase.AdminChatCommand) {
+              subBuilder.MergeFrom(AdminChatCommand);
+            }
+            input.ReadMessage(subBuilder);
+            AdminChatCommand = subBuilder;
+            break;
+          }
         }
       }
     #endif
@@ -1210,6 +1257,15 @@ namespace SCPDiscord.Interface {
             }
             input.ReadMessage(subBuilder);
             PlayerInfoCommand = subBuilder;
+            break;
+          }
+          case 162: {
+            global::SCPDiscord.Interface.AdminChatCommand subBuilder = new global::SCPDiscord.Interface.AdminChatCommand();
+            if (messageCase_ == MessageOneofCase.AdminChatCommand) {
+              subBuilder.MergeFrom(AdminChatCommand);
+            }
+            input.ReadMessage(subBuilder);
+            AdminChatCommand = subBuilder;
             break;
           }
         }
