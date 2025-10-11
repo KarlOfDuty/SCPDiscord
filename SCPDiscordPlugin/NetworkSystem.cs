@@ -20,39 +20,49 @@ public static class NetworkSystem
   private static Stopwatch activityUpdateTimer = new Stopwatch();
   private static int previousActivityPlayerCount = -1;
 
-  private static Thread messageThread;
-
   private static CancellationTokenSource cts = null;
   private static Task networkTask;
+  private static readonly SemaphoreSlim restartGate = new(1, 1);
 
   public static async Task Restart()
   {
-    if (networkTask != null && !networkTask.IsCompleted)
-      await Stop();
+    await restartGate.WaitAsync().ConfigureAwait(false);
+    try
+    {
+      if (networkTask is { IsCompleted: false })
+      {
+        await Stop();
+      }
 
-    cts = new CancellationTokenSource();
-    networkTask = Task.Run(() => Run(cts.Token), cts.Token);
+      cts = new CancellationTokenSource();
+      networkTask = Task.Run(() => Run(cts.Token), cts.Token);
+    }
+    finally
+    {
+      restartGate.Release();
+    }
   }
 
   public static async Task Stop()
   {
-    if (cts == null) return;
-
-    cts.Cancel();
-
-    try
+    await BotListener.Stop();
+    if (cts is { IsCancellationRequested: false })
     {
-      if (networkTask != null)
+      cts.Cancel();
+      try
       {
-        await networkTask;
+        if (networkTask != null)
+        {
+          await networkTask;
+        }
       }
-    }
-    catch (OperationCanceledException) { /* ignored */ }
-    finally
-    {
-      cts.Dispose();
-      cts = null;
-      networkTask = null;
+      catch (OperationCanceledException) { /* ignored */ }
+      finally
+      {
+        cts.Dispose();
+        cts = null;
+        networkTask = null;
+      }
     }
   }
 
@@ -173,7 +183,7 @@ public static class NetworkSystem
       }
     }
 
-    socket.Disconnect(false);
+    try { socket?.Disconnect(false); } catch { }
   }
 
   private static void Update()
@@ -221,51 +231,47 @@ public static class NetworkSystem
     {
       if (socket != null && socket.IsBound)
       {
-        Logger.Warn("Aborting existing message thread...");
-        messageThread?.Abort();
+        await BotListener.Stop();
+        try { socket.Shutdown(SocketShutdown.Both); } catch { }
         socket.Close();
-        await Task.Delay(500);
+        await Task.Delay(500).ConfigureAwait(false);
       }
 
       socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
       socket.Connect(Config.GetString("bot.ip"), Config.GetInt("bot.port"));
-      messageThread = new Thread(() => new BotListener());
-      messageThread.Start();
-
       networkStream = new NetworkStream(socket);
+      await BotListener.Restart();
 
       Logger.Info("Connected to Discord bot.");
-
-      EmbedMessage embed = new EmbedMessage
+      EmbedMessage embed = new()
       {
         Colour = EmbedMessage.Types.DiscordColour.Green
       };
-
       SCPDiscord.SendEmbedWithMessage("messages.connectedtobot", embed);
     }
     catch (SocketException e)
     {
       Logger.Error("Error occurred while connecting to discord bot server: " + e.Message.Trim());
       Logger.Debug(e.ToString());
-      await Task.Delay(4000);
+      await Task.Delay(4000).ConfigureAwait(false);
     }
     catch (ObjectDisposedException e)
     {
       Logger.Error("TCP client was unexpectedly closed.");
       Logger.Debug(e.ToString());
-      await Task.Delay(4000);
+      await Task.Delay(4000).ConfigureAwait(false);
     }
     catch (ArgumentOutOfRangeException e)
     {
       Logger.Error("Invalid port.");
       Logger.Debug(e.ToString());
-      await Task.Delay(4000);
+      await Task.Delay(4000).ConfigureAwait(false);
     }
     catch (ArgumentNullException e)
     {
       Logger.Error("IP address is null.");
       Logger.Debug(e.ToString());
-      await Task.Delay(4000);
+      await Task.Delay(4000).ConfigureAwait(false);
     }
   }
 
@@ -295,7 +301,7 @@ public static class NetworkSystem
     {
       Logger.Error("Error sending packet '" + JsonFormatter.Default.Format(message) + "' to bot.");
       Logger.Error(e.ToString());
-      if (!(e is InvalidOperationException || e is ArgumentNullException || e is SocketException))
+      if (e is not (InvalidOperationException or ArgumentNullException or SocketException))
       {
         throw;
       }
@@ -411,7 +417,7 @@ public static class NetworkSystem
       activityText = Language.GetProcessedMessage("messages.botactivity.active", variables);
     }
 
-    MessageWrapper wrapper = new MessageWrapper
+    MessageWrapper wrapper = new()
     {
       BotActivity = new BotActivity
       {

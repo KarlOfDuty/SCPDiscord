@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <Version>3.3.0</Version>
 
+    <RootNamespace>SCPDiscord</RootNamespace>
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>default</LangVersion>

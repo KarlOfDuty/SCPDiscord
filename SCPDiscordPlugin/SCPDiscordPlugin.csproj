@@ -13,7 +13,7 @@
         <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Optimize>true</Optimize>
-        <PlatformTarget>x64</PlatformTarget>
+        <RootNamespace>SCPDiscord</RootNamespace>
 
         <Version>3.3.0</Version>
         <PackageVersion>3.3.0</PackageVersion>
