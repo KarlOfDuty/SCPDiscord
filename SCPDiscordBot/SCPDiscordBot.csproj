@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>3.3.0</Version>
+    <Version>3.3.1</Version>
 
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <TargetFramework>net9.0</TargetFramework>
@@ -14,7 +14,7 @@
     <GitVersion>false</GitVersion>
     <DebugType>embedded</DebugType>
 
-    <PackageVersion>3.3.0</PackageVersion>
+    <PackageVersion>3.3.1</PackageVersion>
     <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIconUrl>./icon.ico</PackageIconUrl>
@@ -33,9 +33,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02516" />
-    <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02516" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02516" />
+    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02554" />
+    <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02554" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02554" />
     <PackageReference Include="EmbeddedBuildTime" Version="1.0.3" />
     <PackageReference Include="GitInfo" Version="2.3.0" />
     <PackageReference Include="Google.Protobuf" Version="3.31.1" />
