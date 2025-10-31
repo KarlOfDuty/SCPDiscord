@@ -141,10 +141,10 @@ pipeline
               sh 'dotnet build --output ./bin'
               sh 'mkdir dependencies'
               sh 'mv bin/SCPDiscord.dll ./'
-              sh 'mv bin/System.Memory.dll dependencies'
-              sh 'mv bin/Google.Protobuf.dll dependencies'
-              sh 'mv bin/Newtonsoft.Json.dll dependencies'
-              sh 'zip -r dependencies.zip dependencies'
+              sh 'mv bin/System.Memory.dll ./'
+              sh 'mv bin/Google.Protobuf.dll ./'
+              sh 'mv bin/Newtonsoft.Json.dll ./'
+              sh 'zip -r dependencies.zip System.Memory.dll Google.Protobuf.dll Newtonsoft.Json.dll'
             }
             archiveArtifacts(artifacts: 'SCPDiscordPlugin/dependencies.zip', onlyIfSuccessful: true)
             archiveArtifacts(artifacts: 'SCPDiscordPlugin/SCPDiscord.dll', onlyIfSuccessful: true)

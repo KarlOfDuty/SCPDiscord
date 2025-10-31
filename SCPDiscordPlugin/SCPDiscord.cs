@@ -28,7 +28,7 @@ namespace SCPDiscord
 {
   public class SCPDiscord : Plugin
   {
-    public const string VERSION = "3.3.0";
+    public const string VERSION = "3.3.1";
 
     private readonly Stopwatch serverStartTime = new Stopwatch();
 
@@ -43,7 +43,7 @@ namespace SCPDiscord
     public override string Name => "SCPDiscord";
     public override string Description => "SCP:SL - Discord bridge.";
     public override string Author => "Karl Essinger";
-    public override System.Version Version { get; } = new(3, 3, 0, 0);
+    public override System.Version Version { get; } = new(3, 3, 1, 0);
     public override System.Version RequiredApiVersion { get; } = new(LabApiProperties.CompiledVersion);
     public override LoadPriority Priority => LoadPriority.Lowest;
 
