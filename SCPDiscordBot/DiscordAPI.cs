@@ -231,7 +231,7 @@ public class DiscordAPI
       {
         if (MessageScheduler.TryUncacheInteraction(interactionID, out SlashCommandContext interaction))
         {
-          await interaction.Interaction.SendPaginatedResponseAsync(false, interaction.User, message);
+          _ = interaction.Interaction.SendPaginatedResponseAsync(false, interaction.User, message);
         }
         else
         {
@@ -264,7 +264,7 @@ public class DiscordAPI
         DiscordChannel channel = await client.GetChannelAsync(channelID);
         DiscordUser user = await client.GetUserAsync(userID);
 
-        await channel.SendPaginatedMessageAsync(user, pages);
+        _ = channel.SendPaginatedMessageAsync(user, pages);
       }
       catch (UnauthorizedException)
       {
