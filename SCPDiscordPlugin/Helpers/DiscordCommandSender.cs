@@ -15,7 +15,7 @@ namespace SCPDiscordPlugin.Helpers
 
 		public override bool FullPermissions => false;
 
-		public DiscordCommandSender(ulong DiscordUserId, string DiscordNickname) : base()
+		public DiscordCommandSender(ulong DiscordUserId, string DiscordNickname)
 		{
 			DiscordUserID = DiscordUserId;
 			DiscordUsername = DiscordNickname;
@@ -28,10 +28,12 @@ namespace SCPDiscordPlugin.Helpers
 
 		public override void Print(string text)
 		{
+			// this mocked implementation, we don't need to log in server console	
 		}
 
 		public override void RaReply(string text, bool success, bool logToConsole, string overrideDisplay)
 		{
+			// this mocked implementation, it is not a real player, so nothing to do with RaReply
 		}
 	}
 }

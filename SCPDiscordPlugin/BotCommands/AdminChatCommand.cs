@@ -18,8 +18,11 @@ namespace SCPDiscord.BotCommands
 
 			foreach (var staff in ReferenceHub.AllHubs)
 			{
-				if (staff.isLocalPlayer || !PermissionsHandler.IsPermitted(staff.serverRoles.Permissions, PlayerPermissions.AdminChat))
-					continue;
+				if (staff.isLocalPlayer ||
+				    !PermissionsHandler.IsPermitted(staff.serverRoles.Permissions, PlayerPermissions.AdminChat))
+				{
+					continue;	
+				}
 				string message = $"<color=white>{command.DiscordUsername}: {command.Message}</color>";
 				Broadcast.Singleton.TargetAddElement(staff.connectionToClient, message, 5, Broadcast.BroadcastFlags.AdminChat);
 				/**
