@@ -21,7 +21,7 @@ namespace SCPDiscord.BotCommands
 				if (staff.isLocalPlayer ||
 				    !PermissionsHandler.IsPermitted(staff.serverRoles.Permissions, PlayerPermissions.AdminChat))
 				{
-					continue;	
+					continue;
 				}
 				string message = $"<color=white>{command.DiscordUsername}: {command.Message}</color>";
 				Broadcast.Singleton.TargetAddElement(staff.connectionToClient, message, 5, Broadcast.BroadcastFlags.AdminChat);
