@@ -28,7 +28,7 @@ namespace SCPDiscordPlugin.Helpers
 
 		public override void Print(string text)
 		{
-			// this mocked implementation, we don't need to log in server console	
+			// this is a mocked implementation, we don't need to log in server console	
 		}
 
 		public override void RaReply(string text, bool success, bool logToConsole, string overrideDisplay)
