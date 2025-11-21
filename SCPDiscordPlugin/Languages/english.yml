@@ -1348,6 +1348,6 @@ messages:
   onserversentadminchat:
     # player - Player
     # text - string
-    message: "<var:player-name> (<var:player-userid>) send admin message: <var:text>"
+    message: "<var:player-name> (<var:player-userid>) sent admin message: <var:text>"
     regex: []
     cancel_regex: []
