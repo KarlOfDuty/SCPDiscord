@@ -91,15 +91,16 @@ namespace SCPDiscord
                 PlayerInfoCommand.Execute(data.PlayerInfoCommand);
                 break;
 
+              case Interface.MessageWrapper.MessageOneofCase.AdminChatCommand:
+                AdminChatCommand.Execute(data.AdminChatCommand);
+                break;
+
               case Interface.MessageWrapper.MessageOneofCase.BotActivity:
               case Interface.MessageWrapper.MessageOneofCase.ChatMessage:
               case Interface.MessageWrapper.MessageOneofCase.UserQuery:
               case Interface.MessageWrapper.MessageOneofCase.PaginatedMessage:
               case Interface.MessageWrapper.MessageOneofCase.EmbedMessage:
                 Logger.Error("Received packet meant for bot: " + Google.Protobuf.JsonFormatter.Default.Format(data));
-                break;
-              case Interface.MessageWrapper.MessageOneofCase.AdminChatCommand:
-                AdminChatCommand.Execute(data.AdminChatCommand);
                 break;
 
               case Interface.MessageWrapper.MessageOneofCase.None:

@@ -145,6 +145,7 @@ messages:
   onplayerdryfireweapon: ":gun: "
   onplayerreceiveeffect: ":star2: "
   oninteract330: ":candy: "
+  onserversentadminchat: ":speech_balloon: "
 
   connectedtobot: ""
   invalidsteamid: ""
@@ -191,8 +192,8 @@ messages:
   playerinfo:
     online: ""
     offline: ""
+  adminchatsent: ""
   botactivity:
     empty: ""
     active: ""
     full: ""
-  onserversentadminchat: ":speech_balloon: "
