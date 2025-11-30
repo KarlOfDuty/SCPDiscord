@@ -23,7 +23,7 @@ namespace SCPDiscord.BotCommands
 				{
 					continue;
 				}
-				string message = $"<color=white>{command.DiscordUsername}: {command.Message}</color>";
+				string message = $"<color=white>{command.DiscordUsername}: {Misc.SanitizeRichText(command.Message.Replace("\n", string.Empty).Replace("\r", string.Empty), "＜", "＞")}</color>";
 				Broadcast.Singleton.TargetAddElement(staff.connectionToClient, message, 5, Broadcast.BroadcastFlags.AdminChat);
 				/**
 				* 0 - Host.NetworkId
