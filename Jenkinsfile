@@ -4,7 +4,7 @@ pipeline
 
   parameters
   {
-    choice(name: 'BUILD_TYPE', choices: ['dev', 'pre-release', 'release'], description: 'Choose build type')
+    choice(name: 'BUILD_TYPE', choices: ['dev', 'pre-release', 'release'], description: 'Choose build type (AUR release must be performed manually)')
     string(name: 'RELEASE_VERSION', defaultValue: '', description: 'Enter the git tag name to create for a (pre-)release')
   }
   stages
