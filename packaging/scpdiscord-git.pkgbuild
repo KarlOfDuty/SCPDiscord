@@ -8,10 +8,10 @@ url="https://github.com/KarlOfDuty/SCPDiscord"
 license=('GPL-3.0-or-later')
 options=('!debug' '!strip')
 depends=(
-  "dotnet-runtime-9.0"
+  "dotnet-runtime>=9"
 )
 makedepends=(
-  "dotnet-sdk-9.0"
+  "dotnet-sdk>=9"
 )
 #checkdepends=()
 #optdepends=()
