@@ -13,14 +13,17 @@ namespace SCPDiscord
 {
   public static class RoleSync
   {
-    public struct RoleCommands
+    public class RoleCommands
     {
-      public ulong roleID;
-      public string[] commands;
-      public RoleCommands[] subRoles;
+      [JsonProperty("ids")]
+      public ulong[] roleIDs = [];
+      [JsonProperty("commands")]
+      public string[] commands = [];
+      [JsonProperty("sub-roles")]
+      public Dictionary<string, RoleCommands> subRoles = new();
     }
 
-    internal static List<RoleCommands> config = [];
+    internal static Dictionary<string, RoleCommands> config = [];
 
     // Old rolesync config format for backward compatibility (pre 3.4.0)
     internal static bool compatibilityMode = false;
@@ -174,7 +177,7 @@ namespace SCPDiscord
 
       foreach (Player player in matchingPlayers)
       {
-        foreach (KeyValuePair<ulong, string[]> keyValuePair in roleSyncConfCompat)
+        foreach (KeyValuePair<ulong, string[]> keyValuePair in configCompat)
         {
           if (!userInfo.RoleIDs.Contains(keyValuePair.Key))
           {

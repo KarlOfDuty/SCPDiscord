@@ -93,43 +93,45 @@ settings:
 # discord-username
 # discord-userid
 # There are some more player variables you can use here, but they are mostly irrelevant, check the list in APIExtensions.cs on GitHub for the full list.
-rolesync:
-    - "add-role-id-here":
-        - "scpd grantvanillarank <var:player-userid> moderator"
-        - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
-        - "/pbc <var:player-id> 3 Moderator role synced from Discord."
 
-    - "add-another-role-id-here":
-        - "scpd grantvanillarank <var:player-userid> donator"
-        - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
-        - "/pbc <var:player-id> 3 Donator role synced from Discord."
+# OLD CONFIG FORMAT
+#rolesync:
+#    - "add-role-id-here":
+#        - "scpd grantvanillarank <var:player-userid> moderator"
+#        - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
+#        - "/pbc <var:player-id> 3 Moderator role synced from Discord."
+#
+#    - "add-another-role-id-here":
+#        - "scpd grantvanillarank <var:player-userid> donator"
+#        - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
+#        - "/pbc <var:player-id> 3 Donator role synced from Discord."
+#
+#    - "add-everyone-role-id-here":
+#        - "scpd removereservedslot <var:player-userid>"
 
-    - "add-everyone-role-id-here":
-        - "scpd removereservedslot <var:player-userid>"
-
+# NEW CONFIG FORMAT
 # TODO: It should still probably just trigger the first role in each list
-rolesync-v2:
-    - staff-role:
-        ids: [ "add-role-id-here" ]
+rolesync:
+    staff-role:
+        ids: [ 123 ]
         commands:
             - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
         sub-roles:
-            - admin-role:
-                  ids: [ "add-role-id-here" ]
-                  commands:
-                      - "scpd grantvanillarank <var:player-userid> admin"
-                      - "/pbc <var:player-id> 3 Admin role synced from Discord."
-                  sub-roles:
-            - moderator-role:
-                  ids: [ "add-role-id-here" ]
-                  commands:
-                      - "scpd grantvanillarank <var:player-userid> admin"
-                      - "/pbc <var:player-id> 3 Admin role synced from Discord."
-                  sub-roles:
-    - everyone-else:
-          ids: [ 0 ]
-          commands:
-              - "scpd removereservedslot <var:player-userid>"
+            admin-role:
+              ids: [ 12345 ]
+              commands:
+                  - "scpd grantvanillarank <var:player-userid> admin"
+                  - "/pbc <var:player-id> 3 Admin role synced from Discord."
+              sub-roles: []
+            moderator-role:
+              ids: [ 54321 ]
+              commands:
+                  - "scpd grantvanillarank <var:player-userid> admin"
+                  - "/pbc <var:player-id> 3 Admin role synced from Discord."
+    everyone-else:
+      ids: [ 0 ]
+      commands:
+          - "scpd removereservedslot <var:player-userid>"
 
 # Name your channels here, this name is used in the channels section below.
 # The left value is a name of your choice and the right is a channel id you want it to represent in the lists below.

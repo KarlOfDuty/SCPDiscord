@@ -351,22 +351,23 @@ namespace SCPDiscord
           Logger.Debug("Reading rolesync");
           JToken rolesyncToken = json.SelectToken("rolesync");
 
-          // Backwards compatibility for old rolesync config syntax
-          // TODO: The new one will also be an array now, so have to check that the elements are string arrays or something
-          if (rolesyncToken != null && rolesyncToken.Type == JTokenType.Array)
+          if (rolesyncToken == null)
           {
+            Logger.Error("Rolesync is enabled but no rolesync configuration could be found in the config.");
+            SetBool("settings.rolesync", false);
+          }
+          else if (rolesyncToken.Type == JTokenType.Array) // Backwards compatibility for old rolesync config syntax
+          {
+            Logger.Warn("Rolesync config is in an old format, consider updating it to use newer features.");
             RoleSync.compatibilityMode = true;
             RoleSync.configCompat = rolesyncToken.Value<JArray>().ToDictionary(
-                               k =>ulong.Parse(((JObject)k).Properties().First().Name),
+                               k => ulong.Parse(((JObject)k).Properties().First().Name),
                                v => v.Values().First().Value<JArray>().Values<string>().ToArray());
           }
           else
           {
-            // TODO: Maybe move this to the rolesync class?
-            // TODO: Recursively read the role command struct
-            // TODO: Maybe name the new one role commands and the old one rolesync?
-
-
+            RoleSync.compatibilityMode = false;
+            RoleSync.config = rolesyncToken.ToObject<Dictionary<string, RoleSync.RoleCommands>>();
           }
         }
         catch (Exception e)
@@ -387,6 +388,7 @@ namespace SCPDiscord
       Logger.SetupLogfile(GetString("settings.logfile"));
       ready = true;
     }
+
 
     public static bool GetBool(string node)
     {
@@ -546,25 +548,25 @@ namespace SCPDiscord
     {
       StringBuilder sb = new StringBuilder();
       sb.Append("||||||||||||| SCPDISCORD CONFIG VALIDATOR ||||||||||||||\n");
-      sb.Append("------------ Config strings ------------\n");
+      sb.Append("\n------------ Config strings ------------\n");
       foreach (KeyValuePair<string, string> node in configStrings)
       {
         sb.Append(node.Key + ": " + node.Value + "\n");
       }
 
-      sb.Append("------------ Config ints ------------\n");
+      sb.Append("\n------------ Config ints ------------\n");
       foreach (KeyValuePair<string, int> node in configInts)
       {
         sb.Append(node.Key + ": " + node.Value + "\n");
       }
 
-      sb.Append("------------ Config bools ------------\n");
+      sb.Append("\n------------ Config bools ------------\n");
       foreach (KeyValuePair<string, bool> node in configBools)
       {
         sb.Append(node.Key + ": " + node.Value + "\n");
       }
 
-      sb.Append("------------ Config dictionaries ------------\n");
+      sb.Append("\n------------ Config dictionaries ------------\n");
       foreach (KeyValuePair<string, Dictionary<string, ulong>> node in configDicts)
       {
         sb.Append(node.Key + ":\n");
@@ -576,12 +578,12 @@ namespace SCPDiscord
 
       if (TryGetDict("channels", out Dictionary<string, ulong> channelDict))
       {
-        sb.Append("------------ Config arrays ------------\n");
+        sb.Append("\n------------ Config arrays ------------\n");
         foreach (KeyValuePair<string, string[]> node in configArrays)
         {
           if (node.Value == null)
           {
-            sb.Append(node.Key + " NOT FOUND!\n");
+            sb.Append(node.Key + ": NOT FOUND!\n");
             continue;
           }
 
@@ -599,14 +601,22 @@ namespace SCPDiscord
         }
       }
 
-      sb.Append("------------ Rolesync system ------------\n");
-      foreach (KeyValuePair<ulong, string[]> node in roleDictionaryCompat)
+      sb.Append("\n------------ Rolesync system ------------");
+      if (RoleSync.compatibilityMode)
       {
-        sb.Append(node.Key + ":\n");
-        foreach (string command in node.Value)
+        sb.Append("\n");
+        foreach (KeyValuePair<ulong, string[]> node in RoleSync.configCompat)
         {
-          sb.Append("    " + command + "\n");
+          sb.Append(node.Key + ":\n");
+          foreach (string command in node.Value)
+          {
+            sb.Append("  - \"" + command + "\"\n");
+          }
         }
+      }
+      else
+      {
+        ValidateRoleCommands(RoleSync.config, sb, 0);
       }
 
       sb.Append("|||||||||||| END OF CONFIG VALIDATION ||||||||||||");
@@ -614,21 +624,47 @@ namespace SCPDiscord
       Logger.Info("You can turn the config validator off when you get the config set up correctly.");
     }
 
+    private static void ValidateRoleCommands(Dictionary<string, RoleSync.RoleCommands> commands, StringBuilder sb, int indent)
+    {
+      if (commands == null || commands.Count == 0)
+      {
+        sb.Append(" {}\n");
+        return;
+      }
+
+      string indentation = new(' ', indent);
+      string subKeyIndentation = new(' ', indent + 2);
+
+      sb.Append("\n");
+      foreach (KeyValuePair<string, RoleSync.RoleCommands> command in commands)
+      {
+        sb.Append($"{indentation}{command.Key}:\n");
+        sb.Append($"{subKeyIndentation}ids: [ {string.Join(", ", command.Value.roleIDs.Select(id => id.ToString()))} ]\n");
+        sb.Append($"{subKeyIndentation}commands:\n");
+        foreach (string cmd in command.Value.commands)
+        {
+          sb.Append($"{subKeyIndentation}  - \"{cmd}\"\n");
+        }
+        sb.Append($"{subKeyIndentation}sub-roles:");
+        ValidateRoleCommands(command.Value.subRoles, sb, indent + 4);
+      }
+    }
+
     public static List<ulong> GetChannelIDs(string path)
     {
       if (!TryGetArray(path, out string[] aliasArray))
       {
         Logger.Warn("Tried to get \"" + path + "\" from config but it could not be found or was invalid.");
-        return new List<ulong>();
+        return [];
       }
 
       if (!TryGetDict("channels", out Dictionary<string, ulong> dict))
       {
         Logger.Error("Tried to get channel aliases from config but they could not be found or were invalid.");
-        return new List<ulong>();
+        return [];
       }
 
-      List<ulong> channelIDs = new List<ulong>();
+      List<ulong> channelIDs = [];
       foreach (string alias in aliasArray)
       {
         if (dict.TryGetValue(alias, out ulong channelID))
