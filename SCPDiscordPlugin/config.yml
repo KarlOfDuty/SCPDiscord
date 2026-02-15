@@ -83,7 +83,7 @@ settings:
 
 # Sets commands to run whenever someone with a synced Discord rank joins the server,
 # only the highest command in the list that matches the player is executed.
-# Turn on debug above to see console feedback when the commands are used.
+# Turn on debug logs above to see console feedback when the commands are used.
 # Valid variables:
 # player-userid
 # player-id
@@ -106,6 +106,30 @@ rolesync:
 
     - "add-everyone-role-id-here":
         - "scpd removereservedslot <var:player-userid>"
+
+# TODO: It should still probably just trigger the first role in each list
+rolesync-v2:
+    - staff-role:
+        ids: [ "add-role-id-here" ]
+        commands:
+            - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
+        sub-roles:
+            - admin-role:
+                  ids: [ "add-role-id-here" ]
+                  commands:
+                      - "scpd grantvanillarank <var:player-userid> admin"
+                      - "/pbc <var:player-id> 3 Admin role synced from Discord."
+                  sub-roles:
+            - moderator-role:
+                  ids: [ "add-role-id-here" ]
+                  commands:
+                      - "scpd grantvanillarank <var:player-userid> admin"
+                      - "/pbc <var:player-id> 3 Admin role synced from Discord."
+                  sub-roles:
+    - everyone-else:
+          ids: [ 0 ]
+          commands:
+              - "scpd removereservedslot <var:player-userid>"
 
 # Name your channels here, this name is used in the channels section below.
 # The left value is a name of your choice and the right is a channel id you want it to represent in the lists below.

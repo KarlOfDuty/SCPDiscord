@@ -208,17 +208,15 @@ namespace SCPDiscord
     // configMessageArrays list to a dictionary of arrays and then add the other config arrays.
     private static readonly Dictionary<string, string[]> configArrays =
       // Convert the config message array to a dictionary of arrays
-      configMessageArrays.Zip(new string[configMessageArrays.Count][], (name, emptyArray) => (name: name, emptyArray: emptyArray))
+      configMessageArrays.Zip(new string[configMessageArrays.Count][], (name, emptyArray) => (name, emptyArray))
         .ToDictionary(ns => ns.name, ns => ns.emptyArray)
         // Add general config arrays
         .Concat(generalConfigArrays).ToDictionary(e => e.Key, e => e.Value);
 
-    private static readonly Dictionary<string, Dictionary<string, ulong>> configDicts = new Dictionary<string, Dictionary<string, ulong>>
+    private static readonly Dictionary<string, Dictionary<string, ulong>> configDicts = new()
     {
       { "channels", new Dictionary<string, ulong>() }
     };
-
-    internal static Dictionary<ulong, string[]> roleDictionary = new Dictionary<ulong, string[]>();
 
     internal static void Reload(SCPDiscord plugin)
     {
@@ -351,13 +349,30 @@ namespace SCPDiscord
         try
         {
           Logger.Debug("Reading rolesync");
-          roleDictionary = json.SelectToken("rolesync").Value<JArray>().ToDictionary(
-                             k =>ulong.Parse(((JObject)k).Properties().First().Name),
-                             v => v.Values().First().Value<JArray>().Values<string>().ToArray());
+          JToken rolesyncToken = json.SelectToken("rolesync");
+
+          // Backwards compatibility for old rolesync config syntax
+          // TODO: The new one will also be an array now, so have to check that the elements are string arrays or something
+          if (rolesyncToken != null && rolesyncToken.Type == JTokenType.Array)
+          {
+            RoleSync.compatibilityMode = true;
+            RoleSync.configCompat = rolesyncToken.Value<JArray>().ToDictionary(
+                               k =>ulong.Parse(((JObject)k).Properties().First().Name),
+                               v => v.Values().First().Value<JArray>().Values<string>().ToArray());
+          }
+          else
+          {
+            // TODO: Maybe move this to the rolesync class?
+            // TODO: Recursively read the role command struct
+            // TODO: Maybe name the new one role commands and the old one rolesync?
+
+
+          }
         }
-        catch (Exception)
+        catch (Exception e)
         {
           Logger.Error("The rolesync config list is invalid, rolesync disabled.");
+          Logger.Debug(e.ToString());
           SetBool("settings.rolesync", false);
         }
       }
@@ -585,7 +600,7 @@ namespace SCPDiscord
       }
 
       sb.Append("------------ Rolesync system ------------\n");
-      foreach (KeyValuePair<ulong, string[]> node in roleDictionary)
+      foreach (KeyValuePair<ulong, string[]> node in roleDictionaryCompat)
       {
         sb.Append(node.Key + ":\n");
         foreach (string command in node.Value)

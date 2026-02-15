@@ -13,7 +13,20 @@ namespace SCPDiscord
 {
   public static class RoleSync
   {
-    private static Dictionary<string, ulong> syncedPlayers = new Dictionary<string, ulong>();
+    public struct RoleCommands
+    {
+      public ulong roleID;
+      public string[] commands;
+      public RoleCommands[] subRoles;
+    }
+
+    internal static List<RoleCommands> config = [];
+
+    // Old rolesync config format for backward compatibility (pre 3.4.0)
+    internal static bool compatibilityMode = false;
+    internal static Dictionary<ulong, string[]> configCompat = new();
+
+    private static Dictionary<string, ulong> syncedPlayers = new();
 
     private static Utilities.FileWatcher fileWatcher;
 
@@ -111,168 +124,150 @@ namespace SCPDiscord
       }
     }
 
-    public static void ReceiveQueryResponse(UserInfo userInfo)
+    private static bool TryGetMatchingPlayers(string steamIDOrIP, out List<Player> matchingPlayers)
     {
-      Thread.Sleep(1000);
+      // For online servers this should always be one player, but for offline servers it may match several
+      matchingPlayers = new List<Player>();
       try
       {
-        // For online servers this should always be one player but for offline servers it may match several
-        List<Player> matchingPlayers = new List<Player>();
-        try
+        Logger.Debug("Looking for player with SteamID/IP: " + steamIDOrIP);
+        foreach (Player player in Player.ReadyList)
         {
-          Logger.Debug("Looking for player with SteamID/IP: " + userInfo.SteamIDOrIP);
-          foreach (Player pl in Player.ReadyList)
+          Logger.Debug("Player " + player.PlayerId + ": SteamID " + player.UserId + " IP " + player.IpAddress);
+          if (player.UserId == steamIDOrIP)
           {
-            Logger.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " IP " + pl.IpAddress);
-            if (pl.UserId == userInfo.SteamIDOrIP)
-            {
-              Logger.Debug("Matching SteamID found");
-              matchingPlayers.Add(pl);
-            }
-            else if (pl.IpAddress == userInfo.SteamIDOrIP)
-            {
-              Logger.Debug("Matching IP found");
-              matchingPlayers.Add(pl);
-            }
+            Logger.Debug("Matching SteamID found");
+            matchingPlayers.Add(player);
           }
-        }
-        catch (NullReferenceException e)
-        {
-          Logger.Error("Error getting player for RoleSync: " + e);
-          return;
-        }
-
-        if (matchingPlayers.Count == 0)
-        {
-          Logger.Error("Could not get player for rolesync, did they disconnect immediately?");
-          return;
-        }
-
-        foreach (Player player in matchingPlayers)
-        {
-          foreach (KeyValuePair<ulong, string[]> keyValuePair in Config.roleDictionary)
+          else if (player.IpAddress == steamIDOrIP)
           {
-            Logger.Debug("User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
-            if (userInfo.RoleIDs.Contains(keyValuePair.Key))
-            {
-              Dictionary<string, string> variables = new Dictionary<string, string>
-              {
-                { "discord-displayname", userInfo.DiscordDisplayName   },
-                { "discord-username",    userInfo.DiscordUsername      },
-                { "discord-userid",      userInfo.DiscordUserID.ToString() },
-                // Old names
-                { "discorddisplayname", userInfo.DiscordDisplayName   },
-                { "discordusername",    userInfo.DiscordUsername      },
-                { "discordid",      userInfo.DiscordUserID.ToString() }
-              };
-              variables.AddPlayerVariables(player, "player");
-
-              foreach (string unparsedCommand in keyValuePair.Value)
-              {
-                string command = unparsedCommand;
-                // Variable insertion
-                foreach (KeyValuePair<string, string> variable in variables)
-                {
-                  command = command.Replace("<var:" + variable.Key + ">", variable.Value);
-                }
-
-                Logger.Debug("Running rolesync command: " + command);
-                SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
-              }
-
-              Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
-              return;
-            }
+            Logger.Debug("Matching IP found");
+            matchingPlayers.Add(player);
           }
         }
       }
-      catch (InvalidOperationException)
+      catch (Exception e)
       {
-        Logger.Warn("Tried to run commands on a player who is not on the server anymore.");
+        Logger.Error("Error getting player for RoleSync: " + e);
+        return false;
+      }
+
+      if (matchingPlayers.Count == 0)
+      {
+        Logger.Error("Could not get player for rolesync, did they disconnect immediately?");
+        return false;
+      }
+
+      return true;
+    }
+
+    public static void ReceiveQueryResponse(UserInfo userInfo)
+    {
+      Thread.Sleep(1000);
+
+      if (!TryGetMatchingPlayers(userInfo.SteamIDOrIP, out List<Player> matchingPlayers))
+      {
+        return;
+      }
+
+      // TODO: Add new rolesync system here
+
+      foreach (Player player in matchingPlayers)
+      {
+        foreach (KeyValuePair<ulong, string[]> keyValuePair in roleSyncConfCompat)
+        {
+          if (!userInfo.RoleIDs.Contains(keyValuePair.Key))
+          {
+            Logger.Debug("User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
+            continue;
+          }
+
+          Logger.Debug("User has discord role " + keyValuePair.Key + ", scheduling configured commands...");
+
+          Dictionary<string, string> variables = new()
+          {
+            { "discord-displayname", userInfo.DiscordDisplayName   },
+            { "discord-username",    userInfo.DiscordUsername      },
+            { "discord-userid",      userInfo.DiscordUserID.ToString() },
+            // Old names for backwards compatibility (pre 3.2.1)
+            { "discorddisplayname", userInfo.DiscordDisplayName   },
+            { "discordusername",    userInfo.DiscordUsername      },
+            { "discordid",      userInfo.DiscordUserID.ToString() }
+          };
+          variables.AddPlayerVariables(player, "player");
+
+          foreach (string unparsedCommand in keyValuePair.Value)
+          {
+            string command = unparsedCommand;
+            foreach (KeyValuePair<string, string> variable in variables)
+            {
+              command = command.Replace("<var:" + variable.Key + ">", variable.Value);
+            }
+
+            Logger.Debug("Running rolesync command: " + command);
+            SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
+          }
+
+          Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
+          return;
+        }
       }
     }
 
     public static EmbedMessage AddPlayer(SyncRoleCommand command)
     {
+      EmbedMessage msg = new()
+      {
+        Colour = EmbedMessage.Types.DiscordColour.Red,
+        ChannelID = command.ChannelID,
+        Description = "",
+        InteractionID = command.InteractionID
+      };
+
       if (PlayerAuthenticationManager.OnlineMode)
       {
         if (syncedPlayers.ContainsKey(command.SteamIDOrIP + "@steam"))
         {
-          return new EmbedMessage
-          {
-            Colour = EmbedMessage.Types.DiscordColour.Red,
-            ChannelID = command.ChannelID,
-            Description = "SteamID is already linked to a Discord account. You will have to remove it first.",
-            InteractionID = command.InteractionID
-          };
+          msg.Description = "SteamID is already linked to a Discord account. You will have to remove it first.";
+          return msg;
         }
 
         if (syncedPlayers.ContainsValue(command.DiscordUserID))
         {
-          return new EmbedMessage
-          {
-            Colour = EmbedMessage.Types.DiscordColour.Red,
-            ChannelID = command.ChannelID,
-            Description = "Discord user ID is already linked to a Steam account. You will have to remove it first.",
-            InteractionID = command.InteractionID
-          };
+          msg.Description = "Discord user ID is already linked to a Steam account. You will have to remove it first.";
+          return msg;
         }
 
         if (!Utilities.TryGetSteamName(command.SteamIDOrIP, out string _))
         {
-          return new EmbedMessage
-          {
-            Colour = EmbedMessage.Types.DiscordColour.Red,
-            ChannelID = command.ChannelID,
-            Description = "Could not find a user in the Steam API using that ID.",
-            InteractionID = command.InteractionID
-          };
+          msg.Description = "Could not find a user in the Steam API using that ID.";
+          return msg;
         }
 
         syncedPlayers.Add(command.SteamIDOrIP + "@steam", command.DiscordUserID);
         SavePlayers();
-        return new EmbedMessage
-        {
-          Colour = EmbedMessage.Types.DiscordColour.Green,
-          ChannelID = command.ChannelID,
-          Description = "Successfully linked accounts.",
-          InteractionID = command.InteractionID
-        };
+        msg.Colour = EmbedMessage.Types.DiscordColour.Green;
+        msg.Description = "Successfully linked accounts.";
+        return msg;
       }
-      else
+
+      if (syncedPlayers.ContainsKey(command.SteamIDOrIP))
       {
-        if (syncedPlayers.ContainsKey(command.SteamIDOrIP))
-        {
-          return new EmbedMessage
-          {
-            Colour = EmbedMessage.Types.DiscordColour.Red,
-            ChannelID = command.DiscordUserID,
-            Description = "IP is already linked to a Discord account. You will have to remove it first.",
-            InteractionID = command.InteractionID
-          };
-        }
-
-        if (syncedPlayers.ContainsValue(command.DiscordUserID))
-        {
-          return new EmbedMessage
-          {
-            Colour = EmbedMessage.Types.DiscordColour.Red,
-            ChannelID = command.ChannelID,
-            Description = "Discord user ID is already linked to an IP. You will have to remove it first.",
-            InteractionID = command.InteractionID
-          };
-        }
-
-        syncedPlayers.Add(command.SteamIDOrIP, command.DiscordUserID);
-        SavePlayers();
-        return new EmbedMessage
-        {
-          Colour = EmbedMessage.Types.DiscordColour.Green,
-          ChannelID = command.ChannelID,
-          Description = "Successfully linked accounts.",
-          InteractionID = command.InteractionID
-        };
+        msg.Description = "IP is already linked to a Discord account. You will have to remove it first.";
+        return msg;
       }
+
+      if (syncedPlayers.ContainsValue(command.DiscordUserID))
+      {
+        msg.Description = "Discord user ID is already linked to an IP. You will have to remove it first.";
+        return msg;
+      }
+
+      syncedPlayers.Add(command.SteamIDOrIP, command.DiscordUserID);
+      SavePlayers();
+      msg.Colour = EmbedMessage.Types.DiscordColour.Green;
+      msg.Description = "Successfully linked IP.";
+      return msg;
     }
 
     public static EmbedMessage RemovePlayer(UnsyncRoleCommand command)

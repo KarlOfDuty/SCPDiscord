@@ -38,12 +38,12 @@ namespace SCPDiscord
           continue;
         }
 
-        Dictionary<string, string> variables = new Dictionary<string, string>
+        Dictionary<string, string> variables = new()
         {
           { "feedback", response }
         };
 
-        EmbedMessage embed = new EmbedMessage
+        EmbedMessage embed = new()
         {
           Colour = EmbedMessage.Types.DiscordColour.Orange,
           ChannelID = command.ChannelID,

@@ -22,7 +22,7 @@ namespace SCPDiscord
     private static JObject emoteOverrides;
 
     // All default languages included in the .dll
-    private static readonly Dictionary<string, string> defaultLanguages = new Dictionary<string, string>
+    private static readonly Dictionary<string, string> defaultLanguages = new()
     {
       { "brazilian-portuguese", Utilities.ReadManifestData("Languages.brazilian-portuguese.yml") },
       { "emote-overrides",      Utilities.ReadManifestData("Languages.emote-overrides.yml")      },
@@ -118,8 +118,7 @@ namespace SCPDiscord
         foreach (KeyValuePair<string, string> variable in variables)
         {
           // Wait until after the regex replacements to add the player names
-          if (variable.Key == "name"
-              || variable.Key == "attacker-name"
+          if (variable.Key is "name" or "attacker-name"
               || variable.Key == "player-name"
               || variable.Key == "disarmer-name"
               || variable.Key == "target-name"
