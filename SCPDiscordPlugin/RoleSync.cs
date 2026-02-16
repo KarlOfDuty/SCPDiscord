@@ -198,7 +198,7 @@ namespace SCPDiscord
       {
         if (!userInfo.RoleIDs.Contains(keyValuePair.Key))
         {
-          Logger.Debug("[RS] User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
+          Logger.Debug("[RS] User does not have discord role " + keyValuePair.Key);
           continue;
         }
 
@@ -217,6 +217,7 @@ namespace SCPDiscord
         }
 
         Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
+        return;
       }
     }
 
