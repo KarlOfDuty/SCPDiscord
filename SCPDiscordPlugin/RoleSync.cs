@@ -138,7 +138,7 @@ namespace SCPDiscord
         Logger.Debug("[RS] Looking for player with SteamID/IP: " + steamIDOrIP);
         foreach (Player player in Player.ReadyList)
         {
-          Logger.Debug("[RS] Trying player " + player.PlayerId + ": SteamID " + player.UserId + " IP " + player.IpAddress);
+          Logger.Debug($"[RS] Trying player \"{player.PlayerId}\": SteamID {player.UserId} IP {player.IpAddress}");
           if (player.UserId == steamIDOrIP)
           {
             Logger.Debug("[RS] Matching SteamID found");
@@ -202,7 +202,7 @@ namespace SCPDiscord
           continue;
         }
 
-        Logger.Debug("[RS] User has discord role " + keyValuePair.Key + ", scheduling configured commands...");
+        Logger.Debug($"[RS] User has discord role {keyValuePair.Key}, scheduling configured commands...");
 
         foreach (string unparsedCommand in keyValuePair.Value)
         {
@@ -216,7 +216,7 @@ namespace SCPDiscord
           SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
         }
 
-        Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
+        Logger.Info($"Synced \"{player.Nickname}\" ({userInfo.SteamIDOrIP}) with Discord role id {keyValuePair.Key}");
         return;
       }
     }
@@ -247,19 +247,21 @@ namespace SCPDiscord
         // Compatibility mode (pre 3.4.0)
         if (compatibilityMode)
         {
-          Logger.Info("Running rolesync in compatibility mode for " + player.Nickname + " (" + userInfo.SteamIDOrIP + ").");
+          Logger.Info($"Running rolesync in compatibility mode for \"{player.Nickname}\" ({userInfo.SteamIDOrIP}).");
           RunRoleCommandsCompat(userInfo, player, variables);
         }
         else
         {
-          foreach (RoleCommands roleCommands in config.Values)
+          Logger.Info($"Running rolesync for \"{player.Nickname}\" ({userInfo.SteamIDOrIP}).");
+          foreach (KeyValuePair<string, RoleCommands> role in config)
           {
-            if (roleCommands.roleIDs.Length == 0 || roleCommands.roleIDs.Any(id => userInfo.RoleIDs.Contains(id)))
+            if (role.Value.roleIDs.Length == 0 || role.Value.roleIDs.Any(id => userInfo.RoleIDs.Contains(id)))
             {
-              Logger.Info("Running rolesync for " + player.Nickname + " (" + userInfo.SteamIDOrIP + ").");
-              RunRoleCommands(roleCommands, userInfo, player, variables);
-              break;
+              Logger.Debug($"[RS] Player {player.DisplayName} has role \"{role.Key}\", entering it...");
+              RunRoleCommands(role.Value, userInfo, player, variables);
+              return;
             }
+            Logger.Debug($"[RS] Player {player.DisplayName} does not have role \"{role.Key}\".");
           }
         }
       }
