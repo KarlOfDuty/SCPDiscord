@@ -389,21 +389,11 @@ namespace SCPDiscord
       ready = true;
     }
 
+    public static bool GetBool(string node) => configBools[node];
 
-    public static bool GetBool(string node)
-    {
-      return configBools[node];
-    }
+    public static string GetString(string node) => configStrings[node];
 
-    public static string GetString(string node)
-    {
-      return configStrings[node];
-    }
-
-    public static int GetInt(string node)
-    {
-      return configInts[node];
-    }
+    public static int GetInt(string node) => configInts[node];
 
     public static bool TryGetArray(string node, out string[] stringArray)
     {
@@ -417,57 +407,27 @@ namespace SCPDiscord
       return dict != null;
     }
 
-    public static void SetBool(string key, bool value)
-    {
-      configBools[key] = value;
-    }
+    public static void SetBool(string key, bool value) => configBools[key] = value;
 
-    public static void SetString(string key, string value)
-    {
-      configStrings[key] = value;
-    }
+    public static void SetString(string key, string value) => configStrings[key] = value;
 
-    public static void SetInt(string key, int value)
-    {
-      configInts[key] = value;
-    }
+    public static void SetInt(string key, int value) => configInts[key] = value;
 
-    public static void SetArray(string key, string[] value)
-    {
-      configArrays[key] = value;
-    }
+    public static void SetArray(string key, string[] value) => configArrays[key] = value;
 
-    public static void SetDict(string key, Dictionary<string, ulong> value)
-    {
-      configDicts[key] = value;
-    }
+    public static void SetDict(string key, Dictionary<string, ulong> value) => configDicts[key] = value;
 
     // TODO: Update paths with local/global paths
 
-    public static string GetSCPSLConfigDir()
-    {
-      return PathManager.SecretLab + "/";
-    }
+    public static string GetSCPSLConfigDir() => PathManager.SecretLab + "/";
 
-    public static string GetUserIDBansFile()
-    {
-      return BanHandler.GetPath(BanHandler.BanType.UserId);
-    }
+    public static string GetUserIDBansFile() => BanHandler.GetPath(BanHandler.BanType.UserId);
 
-    public static string GetIPBansFile()
-    {
-      return BanHandler.GetPath(BanHandler.BanType.IP);
-    }
+    public static string GetIPBansFile() => BanHandler.GetPath(BanHandler.BanType.IP);
 
-    public static string GetConfigDir()
-    {
-      return $"{SCPDiscord.plugin.GetConfigDirectory(false)}/";
-    }
+    public static string GetConfigDir() => $"{SCPDiscord.plugin.GetConfigDirectory(false)}/";
 
-    public static string GetConfigPath()
-    {
-      return GetConfigDir() + "config.yml";
-    }
+    public static string GetConfigPath() => GetConfigDir() + "config.yml";
 
     public static string GetLanguageDir()
     {
@@ -493,10 +453,7 @@ namespace SCPDiscord
       }
     }
 
-    public static string GetRolesyncPath()
-    {
-      return GetRolesyncDir() + "rolesync.json";
-    }
+    public static string GetRoleSyncPath() => GetRolesyncDir() + "rolesync.json";
 
     public static string GetMutesDir()
     {
@@ -510,10 +467,7 @@ namespace SCPDiscord
       }
     }
 
-    public static string GetMutesPath()
-    {
-      return GetMutesDir() + "mutes.json";
-    }
+    public static string GetMutesPath() => GetMutesDir() + "mutes.json";
 
     public static string GetPlaytimeDir()
     {
@@ -527,26 +481,17 @@ namespace SCPDiscord
       }
     }
 
-    public static string GetPlaytimePath()
-    {
-      return GetPlaytimeDir() + "playtime.json";
-    }
+    public static string GetPlaytimePath() => GetPlaytimeDir() + "playtime.json";
 
-    public static string GetReservedSlotDir()
-    {
-      // From ConfigSharing.Reload
-      return ConfigSharing.Paths[3];
-    }
+    // From ConfigSharing.Reload
+    public static string GetReservedSlotDir() => ConfigSharing.Paths[3];
 
-    public static string GetReservedSlotPath()
-    {
-      // From ConfigSharing.Reload
-      return ConfigSharing.Paths[3] + "UserIDReservedSlots.txt";
-    }
+    // From ConfigSharing.Reload
+    public static string GetReservedSlotPath() => ConfigSharing.Paths[3] + "UserIDReservedSlots.txt";
 
     public static void ValidateConfig(SCPDiscord plugin)
     {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
       sb.Append("||||||||||||| SCPDISCORD CONFIG VALIDATOR ||||||||||||||\n");
       sb.Append("\n------------ Config strings ------------\n");
       foreach (KeyValuePair<string, string> node in configStrings)
