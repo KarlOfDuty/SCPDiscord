@@ -29,18 +29,18 @@ namespace SCPDiscord.Commands
       List<Player> matchingPlayers = new List<Player>();
       try
       {
-        Logger.Debug("Looking for player with SteamID/PlayerID: " + steamIDOrPlayerID);
+        Logger.Debug("[SN] Looking for player with SteamID/PlayerID: " + steamIDOrPlayerID);
         foreach (Player pl in Player.ReadyList)
         {
-          Logger.Debug("Player " + pl.PlayerId + ": SteamID " + pl.UserId + " PlayerID " + pl.PlayerId);
+          Logger.Debug("[SN] Player " + pl.PlayerId + ": SteamID " + pl.UserId + " PlayerID " + pl.PlayerId);
           if (pl.GetParsedUserID() == steamIDOrPlayerID)
           {
-            Logger.Debug("Matching SteamID found");
+            Logger.Debug("[SN] Matching SteamID found");
             matchingPlayers.Add(pl);
           }
           else if (pl.PlayerId.ToString() == steamIDOrPlayerID)
           {
-            Logger.Debug("Matching playerID found");
+            Logger.Debug("[SN] Matching playerID found");
             matchingPlayers.Add(pl);
           }
         }

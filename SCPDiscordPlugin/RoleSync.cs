@@ -17,8 +17,10 @@ namespace SCPDiscord
     {
       [JsonProperty("ids")]
       public ulong[] roleIDs = [];
+
       [JsonProperty("commands")]
       public string[] commands = [];
+
       [JsonProperty("sub-roles")]
       public Dictionary<string, RoleCommands> subRoles = new();
     }
@@ -42,41 +44,41 @@ namespace SCPDiscord
         Directory.CreateDirectory(Config.GetRolesyncDir());
       }
 
-      if (!File.Exists(Config.GetRolesyncPath()))
+      if (!File.Exists(Config.GetRoleSyncPath()))
       {
-        Logger.Info("Rolesync file \"" + Config.GetRolesyncPath() + "\" does not exist, creating...");
-        File.WriteAllText(Config.GetRolesyncPath(), "{}");
+        Logger.Info("Rolesync file \"" + Config.GetRoleSyncPath() + "\" does not exist, creating...");
+        File.WriteAllText(Config.GetRoleSyncPath(), "{}");
       }
 
       try
       {
-        syncedPlayers = JsonConvert.DeserializeObject<Dictionary<string, ulong>>(File.ReadAllText(Config.GetRolesyncPath()));
+        syncedPlayers = JsonConvert.DeserializeObject<Dictionary<string, ulong>>(File.ReadAllText(Config.GetRoleSyncPath()));
       }
       catch (Exception)
       {
         try
         {
-          Logger.Warn("Could not read rolesync file \"" + Config.GetRolesyncPath() + "\", attempting to convert file from old format...");
-          syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRolesyncPath())).ToDictionary(
+          Logger.Warn("Could not read rolesync file \"" + Config.GetRoleSyncPath() + "\", attempting to convert file from old format...");
+          syncedPlayers = JArray.Parse(File.ReadAllText(Config.GetRoleSyncPath())).ToDictionary(
             k => ((JObject)k).Properties().First().Name,
             v => v.Values().First().Value<ulong>());
-          File.WriteAllText(Config.GetRolesyncPath(), JsonConvert.SerializeObject(syncedPlayers, Formatting.Indented));
+          File.WriteAllText(Config.GetRoleSyncPath(), JsonConvert.SerializeObject(syncedPlayers, Formatting.Indented));
         }
         catch (Exception e)
         {
-          Logger.Error("Could not read rolesync file \"" + Config.GetRolesyncPath() + "\", check the file formatting and try again.");
-          Logger.Debug("Error: " + e);
+          Logger.Error("Could not read rolesync file \"" + Config.GetRoleSyncPath() + "\", check the file formatting and try again.");
+          Logger.Debug("[RS] Error: " + e);
           throw;
         }
       }
 
       fileWatcher = new Utilities.FileWatcher(Config.GetRolesyncDir(), "rolesync.json", Reload);
-      Logger.Debug("Reloaded \"" + Config.GetRolesyncPath() + "\".");
+      Logger.Debug("[RS] Reloaded \"" + Config.GetRoleSyncPath() + "\".");
     }
 
     private static void SavePlayers()
     {
-      File.WriteAllText(Config.GetRolesyncPath(), JsonConvert.SerializeObject(syncedPlayers, Formatting.Indented));
+      File.WriteAllText(Config.GetRoleSyncPath(), JsonConvert.SerializeObject(syncedPlayers, Formatting.Indented));
     }
 
     public static void SendRoleQuery(Player player)
@@ -91,11 +93,11 @@ namespace SCPDiscord
       {
         if (!syncedPlayers.TryGetValue(player.UserId, out ulong syncedPlayer))
         {
-          Logger.Debug("User ID '" + player.UserId + "' is not in rolesync list.");
+          Logger.Debug("[RS] User ID '" + player.UserId + "' is not in rolesync list.");
           return;
         }
 
-        MessageWrapper message = new MessageWrapper
+        MessageWrapper message = new()
         {
           UserQuery = new UserQuery
           {
@@ -110,11 +112,11 @@ namespace SCPDiscord
       {
         if (!syncedPlayers.TryGetValue(player.IpAddress, out ulong syncedPlayer))
         {
-          Logger.Debug("IP '" + player.IpAddress + "' is not in rolesync list.");
+          Logger.Debug("[RS] IP '" + player.IpAddress + "' is not in rolesync list.");
           return;
         }
 
-        MessageWrapper message = new MessageWrapper
+        MessageWrapper message = new()
         {
           UserQuery = new UserQuery
           {
@@ -133,18 +135,18 @@ namespace SCPDiscord
       matchingPlayers = new List<Player>();
       try
       {
-        Logger.Debug("Looking for player with SteamID/IP: " + steamIDOrIP);
+        Logger.Debug("[RS] Looking for player with SteamID/IP: " + steamIDOrIP);
         foreach (Player player in Player.ReadyList)
         {
-          Logger.Debug("Player " + player.PlayerId + ": SteamID " + player.UserId + " IP " + player.IpAddress);
+          Logger.Debug("[RS] Trying player " + player.PlayerId + ": SteamID " + player.UserId + " IP " + player.IpAddress);
           if (player.UserId == steamIDOrIP)
           {
-            Logger.Debug("Matching SteamID found");
+            Logger.Debug("[RS] Matching SteamID found");
             matchingPlayers.Add(player);
           }
           else if (player.IpAddress == steamIDOrIP)
           {
-            Logger.Debug("Matching IP found");
+            Logger.Debug("[RS] Matching IP found");
             matchingPlayers.Add(player);
           }
         }
@@ -164,6 +166,60 @@ namespace SCPDiscord
       return true;
     }
 
+    private static void RunRoleCommands(RoleCommands roleCommands, UserInfo userInfo, Player player, Dictionary<string, string> variables)
+    {
+      foreach (string unparsedCommand in roleCommands.commands)
+      {
+        string command = unparsedCommand;
+        foreach (KeyValuePair<string, string> variable in variables)
+        {
+          command = command.Replace("<var:" + variable.Key + ">", variable.Value);
+        }
+
+        Logger.Debug("[RS] Running rolesync command: " + command);
+        SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
+      }
+
+      foreach (KeyValuePair<string, RoleCommands> subRole in roleCommands.subRoles)
+      {
+        if (subRole.Value.roleIDs.Length == 0 || subRole.Value.roleIDs.Any(id => userInfo.RoleIDs.Contains(id)))
+        {
+          Logger.Debug($"[RS] Player {player.DisplayName} has sub-role \"{subRole.Key}\", entering it...");
+          RunRoleCommands(subRole.Value, userInfo, player, variables);
+          return;
+        }
+        Logger.Debug($"[RS] Player {player.DisplayName} does not have sub-role \"{subRole.Key}\".");
+      }
+    }
+
+    private static void RunRoleCommandsCompat(UserInfo userInfo, Player player, Dictionary<string, string> variables)
+    {
+      foreach (KeyValuePair<ulong, string[]> keyValuePair in configCompat)
+      {
+        if (!userInfo.RoleIDs.Contains(keyValuePair.Key))
+        {
+          Logger.Debug("[RS] User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
+          continue;
+        }
+
+        Logger.Debug("[RS] User has discord role " + keyValuePair.Key + ", scheduling configured commands...");
+
+        foreach (string unparsedCommand in keyValuePair.Value)
+        {
+          string command = unparsedCommand;
+          foreach (KeyValuePair<string, string> variable in variables)
+          {
+            command = command.Replace("<var:" + variable.Key + ">", variable.Value);
+          }
+
+          Logger.Debug("[RS] Running rolesync command: " + command);
+          SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
+        }
+
+        Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
+      }
+    }
+
     public static void ReceiveQueryResponse(UserInfo userInfo)
     {
       Thread.Sleep(1000);
@@ -173,46 +229,37 @@ namespace SCPDiscord
         return;
       }
 
-      // TODO: Add new rolesync system here
-
       foreach (Player player in matchingPlayers)
       {
-        foreach (KeyValuePair<ulong, string[]> keyValuePair in configCompat)
+        Dictionary<string, string> variables = new()
         {
-          if (!userInfo.RoleIDs.Contains(keyValuePair.Key))
-          {
-            Logger.Debug("User has discord role " + keyValuePair.Key + ": " + userInfo.RoleIDs.Contains(keyValuePair.Key));
-            continue;
-          }
+          { "discord-displayname", userInfo.DiscordDisplayName },
+          { "discord-username", userInfo.DiscordUsername },
+          { "discord-userid", userInfo.DiscordUserID.ToString() },
+          // Old names for backwards compatibility (pre 3.2.1)
+          { "discorddisplayname", userInfo.DiscordDisplayName },
+          { "discordusername", userInfo.DiscordUsername },
+          { "discordid", userInfo.DiscordUserID.ToString() }
+        };
+        variables.AddPlayerVariables(player, "player");
 
-          Logger.Debug("User has discord role " + keyValuePair.Key + ", scheduling configured commands...");
-
-          Dictionary<string, string> variables = new()
+        // Compatibility mode (pre 3.4.0)
+        if (compatibilityMode)
+        {
+          Logger.Info("Running rolesync in compatibility mode for " + player.Nickname + " (" + userInfo.SteamIDOrIP + ").");
+          RunRoleCommandsCompat(userInfo, player, variables);
+        }
+        else
+        {
+          foreach (RoleCommands roleCommands in config.Values)
           {
-            { "discord-displayname", userInfo.DiscordDisplayName   },
-            { "discord-username",    userInfo.DiscordUsername      },
-            { "discord-userid",      userInfo.DiscordUserID.ToString() },
-            // Old names for backwards compatibility (pre 3.2.1)
-            { "discorddisplayname", userInfo.DiscordDisplayName   },
-            { "discordusername",    userInfo.DiscordUsername      },
-            { "discordid",      userInfo.DiscordUserID.ToString() }
-          };
-          variables.AddPlayerVariables(player, "player");
-
-          foreach (string unparsedCommand in keyValuePair.Value)
-          {
-            string command = unparsedCommand;
-            foreach (KeyValuePair<string, string> variable in variables)
+            if (roleCommands.roleIDs.Length == 0 || roleCommands.roleIDs.Any(id => userInfo.RoleIDs.Contains(id)))
             {
-              command = command.Replace("<var:" + variable.Key + ">", variable.Value);
+              Logger.Info("Running rolesync for " + player.Nickname + " (" + userInfo.SteamIDOrIP + ").");
+              RunRoleCommands(roleCommands, userInfo, player, variables);
+              break;
             }
-
-            Logger.Debug("Running rolesync command: " + command);
-            SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
           }
-
-          Logger.Info("Synced " + player.Nickname + " (" + userInfo.SteamIDOrIP + ") with Discord role id " + keyValuePair.Key);
-          return;
         }
       }
     }

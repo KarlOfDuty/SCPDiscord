@@ -55,7 +55,7 @@ namespace SCPDiscord
 
       while (queuedRoleSyncCommands.TryDequeue(out string stringCommand))
       {
-        Logger.Debug("RoleSync command response: " + Server.RunCommand(stringCommand));
+        Logger.Debug("[SE] RoleSync command response: " + Server.RunCommand(stringCommand));
       }
     }
 
