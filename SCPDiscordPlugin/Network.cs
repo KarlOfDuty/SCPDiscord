@@ -3,6 +3,7 @@ using SCPDiscord.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using LabApi.Features.Wrappers;
@@ -10,6 +11,41 @@ using System.Linq;
 
 namespace SCPDiscord
 {
+  public class SocketWrapper : IDisposable
+  {
+    private Socket socket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+    public virtual bool Connected => socket.Connected;
+    public virtual bool IsBound => socket.IsBound;
+    public virtual int Available => socket.Available;
+
+    public virtual void Connect(string host, int port) => socket.Connect(host, port);
+    public virtual void Disconnect() => socket.Disconnect(false);
+    public virtual void Close() => socket.Close();
+
+    public virtual bool IsConnected()
+    {
+      if (socket == null)
+      {
+        return false;
+      }
+
+      try
+      {
+        return !((socket.Poll(1000, SelectMode.SelectRead) && (socket.Available == 0)) || !socket.Connected);
+      }
+      catch (ObjectDisposedException e)
+      {
+        Logger.Error("TCP client was unexpectedly closed.");
+        Logger.Debug(e.ToString());
+        return false;
+      }
+    }
+
+    public virtual Stream CreateNetworkStream() => new NetworkStream(socket);
+    public virtual void Dispose() => socket.Dispose();
+  }
+
   // Separate class to run the thread
   public class StartNetworkSystem
   {
@@ -117,8 +153,8 @@ namespace SCPDiscord
 
   public static class Network
   {
-    private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-    public static NetworkStream networkStream { get; private set; } = null;
+    public static SocketWrapper socketWrapper { get; set; } = new SocketWrapper();
+    public static Stream networkStream { get; set; } = null;
     private static readonly List<MessageWrapper> messageQueue = new List<MessageWrapper>();
     private static Stopwatch activityUpdateTimer = new Stopwatch();
     private static int previousActivityPlayerCount = -1;
@@ -136,9 +172,10 @@ namespace SCPDiscord
       {
         try
         {
-          if (IsConnected())
+          if (socketWrapper.IsConnected())
           {
-            Update();
+            RefreshBotStatus();
+            SendQueuedMessages();
           }
           else
           {
@@ -154,10 +191,8 @@ namespace SCPDiscord
       }
     }
 
-    private static void Update()
+    private static void SendQueuedMessages()
     {
-      RefreshBotStatus();
-
       // Send all messages
       for (int i = 0; i < messageQueue.Count; i++)
       {
@@ -174,45 +209,31 @@ namespace SCPDiscord
       }
     }
 
-    public static bool IsConnected()
-    {
-      if (socket == null)
-      {
-        return false;
-      }
-
-      try
-      {
-        return !((socket.Poll(1000, SelectMode.SelectRead) && (socket.Available == 0)) || !socket.Connected);
-      }
-      catch (ObjectDisposedException e)
-      {
-        Logger.Error("TCP client was unexpectedly closed.");
-        Logger.Debug(e.ToString());
-        return false;
-      }
-    }
-
     private static void Connect()
     {
       Logger.Debug("Connecting to " + Config.GetString("bot.ip") + ":" + Config.GetInt("bot.port") + "...");
 
       try
       {
-        if (socket != null && socket.IsBound)
+        if (socketWrapper != null && socketWrapper.IsBound)
         {
           Logger.Warn("Aborting existing message thread...");
           messageThread?.Abort();
-          socket.Close();
+          socketWrapper.Close();
           Thread.Sleep(500);
         }
 
-        socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        socket.Connect(Config.GetString("bot.ip"), Config.GetInt("bot.port"));
+        // If the socketWrapper has been replaced with a mock, don't set it.
+        if (socketWrapper == null || !socketWrapper.GetType().IsSubclassOf(typeof(SocketWrapper)))
+        {
+          socketWrapper = new SocketWrapper();
+        }
+
+        socketWrapper.Connect(Config.GetString("bot.ip"), Config.GetInt("bot.port"));
         messageThread = new Thread(() => new BotListener());
         messageThread.Start();
 
-        networkStream = new NetworkStream(socket);
+        networkStream = socketWrapper.CreateNetworkStream();
 
         Logger.Info("Connected to Discord bot.");
 
@@ -251,7 +272,7 @@ namespace SCPDiscord
 
     public static void Disconnect()
     {
-      socket.Disconnect(false);
+      socketWrapper.Disconnect();
     }
 
     private static bool SendMessage(MessageWrapper message)
@@ -263,7 +284,7 @@ namespace SCPDiscord
       }
 
       // Abort if client is dead
-      if (socket == null || networkStream == null || !socket.Connected)
+      if (socketWrapper == null || networkStream == null || !socketWrapper.Connected)
       {
         Logger.Debug("Error sending message '" + message.MessageCase + "' to bot: Not connected.");
         return false;
@@ -387,7 +408,7 @@ namespace SCPDiscord
         {
           StatusType = botStatus,
           ActivityType = botActivity,
-          ActivityText = activityText
+          ActivityText = activityText ?? "SCPDiscord"
         }
       };
 

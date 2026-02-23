@@ -23,6 +23,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>../.scpsl_libs/Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandSystem.Core">
+      <HintPath>../.scpsl_libs/CommandSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="LabApi">
+      <HintPath>../.scpsl_libs/LabApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Mirror">
+      <HintPath>../.scpsl_libs/Mirror.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>../.scpsl_libs/System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>../.scpsl_libs/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>../.scpsl_libs/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>../.scpsl_libs/YamlDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>  
+  
+  <ItemGroup>
     <ProjectReference Include="..\SCPDiscordPlugin\SCPDiscordPlugin.csproj" />
   </ItemGroup>
 

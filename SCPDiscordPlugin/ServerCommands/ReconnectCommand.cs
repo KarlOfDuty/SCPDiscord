@@ -15,7 +15,7 @@ namespace SCPDiscord.Commands
     {
       Logger.Debug(sender.LogName + " used the reconnect command.");
 
-      if (Network.IsConnected())
+      if (Network.socketWrapper.IsConnected())
       {
         Network.Disconnect();
         response = "Connection closed, reconnecting will begin shortly.";

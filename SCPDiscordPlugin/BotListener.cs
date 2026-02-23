@@ -14,7 +14,7 @@ namespace SCPDiscord
         try
         {
           //Listen for connections
-          if (Network.IsConnected())
+          if (Network.socketWrapper.IsConnected())
           {
             Interface.MessageWrapper data;
             try
