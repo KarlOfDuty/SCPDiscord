@@ -187,7 +187,7 @@ namespace SCPDiscord
     public override void Disable()
     {
       shutdown = true;
-      NetworkSystem.Disconnect();
+      Network.Disconnect();
       CustomHandlersManager.UnregisterEventsHandler(muteEventListener);
       CustomHandlersManager.UnregisterEventsHandler(timeTrackingListener);
       CustomHandlersManager.UnregisterEventsHandler(syncPlayerRole);
@@ -208,12 +208,12 @@ namespace SCPDiscord
           Content = message
         }
       };
-      NetworkSystem.QueueMessage(wrapper);
+      Network.QueueMessage(wrapper);
     }
 
     public static void SendEmbedByID(EmbedMessage message)
     {
-      NetworkSystem.QueueMessage(new MessageWrapper { EmbedMessage = message });
+      Network.QueueMessage(new MessageWrapper { EmbedMessage = message });
     }
 
     public static void SendMessage(string messagePath, Dictionary<string, string> variables = null)

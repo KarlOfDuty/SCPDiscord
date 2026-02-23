@@ -14,12 +14,12 @@ namespace SCPDiscord
         try
         {
           //Listen for connections
-          if (NetworkSystem.IsConnected())
+          if (Network.IsConnected())
           {
             Interface.MessageWrapper data;
             try
             {
-              data = Interface.MessageWrapper.Parser.ParseDelimitedFrom(NetworkSystem.networkStream);
+              data = Interface.MessageWrapper.Parser.ParseDelimitedFrom(Network.networkStream);
             }
             catch (Exception e)
             {

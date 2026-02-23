@@ -97,7 +97,7 @@ namespace SCPDiscord
       };
       responsePages.Pages.Add(embeds);
 
-      NetworkSystem.QueueMessage(new MessageWrapper { PaginatedMessage = responsePages });
+      Network.QueueMessage(new MessageWrapper { PaginatedMessage = responsePages });
     }
   }
 }

@@ -106,7 +106,7 @@ namespace SCPDiscord
           }
         };
 
-        NetworkSystem.QueueMessage(message);
+        Network.QueueMessage(message);
       }
       else
       {
@@ -125,7 +125,7 @@ namespace SCPDiscord
           }
         };
 
-        NetworkSystem.QueueMessage(message);
+        Network.QueueMessage(message);
       }
     }
 

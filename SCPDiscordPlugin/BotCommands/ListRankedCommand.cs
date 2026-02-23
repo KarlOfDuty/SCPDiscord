@@ -80,7 +80,7 @@ namespace SCPDiscord.BotCommands
       };
       response.Pages.Add(embeds);
 
-      NetworkSystem.QueueMessage(new MessageWrapper { PaginatedMessage = response });
+      Network.QueueMessage(new MessageWrapper { PaginatedMessage = response });
     }
   }
 }

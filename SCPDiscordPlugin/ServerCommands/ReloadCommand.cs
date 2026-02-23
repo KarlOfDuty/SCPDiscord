@@ -24,9 +24,9 @@ namespace SCPDiscord.Commands
 
       Language.Reload();
       RoleSync.Reload();
-      if (NetworkSystem.IsConnected())
+      if (Network.IsConnected())
       {
-        NetworkSystem.Disconnect();
+        Network.Disconnect();
       }
 
       response = "Reload complete.";

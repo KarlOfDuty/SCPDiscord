@@ -15,7 +15,7 @@ namespace SCPDiscord
   {
     public StartNetworkSystem()
     {
-      NetworkSystem.Run();
+      Network.Run();
     }
   }
 
@@ -41,7 +41,7 @@ namespace SCPDiscord
             Content = processedMessage
           }
         };
-        NetworkSystem.QueueMessage(wrapper);
+        Network.QueueMessage(wrapper);
       }
     }
   }
@@ -67,7 +67,7 @@ namespace SCPDiscord
         }
       };
 
-      NetworkSystem.QueueMessage(wrapper);
+      Network.QueueMessage(wrapper);
     }
   }
 
@@ -92,7 +92,7 @@ namespace SCPDiscord
           ChannelID = channelID
         };
         MessageWrapper wrapper = new MessageWrapper { EmbedMessage = embedCopy };
-        NetworkSystem.QueueMessage(wrapper);
+        Network.QueueMessage(wrapper);
       }
     }
   }
@@ -111,11 +111,11 @@ namespace SCPDiscord
       }
 
       MessageWrapper wrapper = new MessageWrapper { EmbedMessage = embed };
-      NetworkSystem.QueueMessage(wrapper);
+      Network.QueueMessage(wrapper);
     }
   }
 
-  public static class NetworkSystem
+  public static class Network
   {
     private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     public static NetworkStream networkStream { get; private set; } = null;
