@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="SCPDiscordBot/SCPDiscordBot.csproj" />
+  <Project Path="SCPDiscordBot.Tests/SCPDiscordBot.Tests.csproj" />
   <Project Path="SCPDiscordPlugin/SCPDiscordPlugin.csproj" />
+  <Project Path="SCPDiscordPlugin.Tests/SCPDiscordPlugin.Tests.csproj" />
 </Solution>
