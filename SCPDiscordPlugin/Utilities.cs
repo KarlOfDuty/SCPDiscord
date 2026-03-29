@@ -303,6 +303,42 @@ namespace SCPDiscord
       }
     }
 
+    public static bool TryGetOfflineRankByDiscordID(ulong discordID, out UserGroup rank)
+    {
+      if (RoleSync.IsPlayerSynced(discordID, out string syncedUserID))
+      {
+        Logger.Debug($"Rolesync for {syncedUserID} found.");
+        return TryGetOfflineRank(syncedUserID, out rank);
+      }
+
+      rank = null;
+      return false;
+    }
+
+    public static bool TryGetOfflineRank(string userID, out UserGroup rank)
+    {
+      rank = null;
+      try
+      {
+        if (!ServerStatic.PermissionsHandler.Members.TryGetValue(userID, out string group))
+        {
+          Logger.Debug($"Offline rank for {userID} not found.");
+          foreach (KeyValuePair<string, string> rankHaver in ServerStatic.PermissionsHandler.Members)
+          {
+            Logger.Debug($"{rankHaver.Key} = {rankHaver.Value}");
+          }
+          return false;
+        }
+        return ServerStatic.PermissionsHandler.Groups.TryGetValue(group, out rank);
+      }
+      catch (Exception e)
+      {
+        Logger.Error($"Failed to get offline rank for user {userID}");
+        Logger.Debug(e.ToString());
+        return false;
+      }
+    }
+
     public static string ReadManifestData(string embeddedFileName)
     {
       Assembly assembly = Assembly.GetExecutingAssembly();

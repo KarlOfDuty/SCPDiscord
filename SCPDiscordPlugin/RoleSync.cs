@@ -417,11 +417,13 @@ namespace SCPDiscord
       return "Discord user ID link has been removed.";
     }
 
+    // TODO: Should be a try get
     public static bool IsPlayerSynced(string userID, out ulong discordID)
     {
       return syncedPlayers.TryGetValue(userID.EndsWith("@steam") ? userID : userID + "@steam", out discordID);
     }
 
+    // TODO: Should be a try get
     public static bool IsPlayerSynced(ulong discordID, out string userID)
     {
       return syncedPlayers.TryGetFirstKey(discordID, out userID);

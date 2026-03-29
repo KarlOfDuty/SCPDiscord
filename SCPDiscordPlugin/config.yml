@@ -197,6 +197,7 @@ messages:
     onplayercheaterreport: [ "staff" ]
     onplayerreport: [ "staff" ]
     onplayerreceiveeffect: []
+    onserversentadminchat: [ "staff" ]
 
     # Environment events.
     onscp914activate: []
@@ -273,4 +274,3 @@ messages:
         mtf: [ "default" ]
         ci: [ "default" ]
     onplayerescape: [ "default" ]
-    onserversentadminchat: [ "staff" ]

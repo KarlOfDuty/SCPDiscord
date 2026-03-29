@@ -9,32 +9,39 @@ namespace SCPDiscord.BotCommands
   {
     public static void Execute(Interface.AdminChatCommand command)
     {
-      EmbedMessage embed = new EmbedMessage
+      EmbedMessage embed = new()
       {
         Colour = EmbedMessage.Types.DiscordColour.Green,
         ChannelID = command.ChannelID,
         InteractionID = command.InteractionID
       };
 
-      foreach (var staff in ReferenceHub.AllHubs)
+      // TODO: Have to include user roles in this so a role colour can be determined, should probably cache the colour though
+      string username = $"<color=white>{command.DiscordUsername}</color>";
+      if (Utilities.TryGetOfflineRankByDiscordID(command.DiscordUserID, out UserGroup rank))
       {
-        if (staff.isLocalPlayer ||
-            !PermissionsHandler.IsPermitted(staff.serverRoles.Permissions, PlayerPermissions.AdminChat))
+        username = $"<color={rank.BadgeColor}>{command.DiscordUsername}</color>";
+      }
+
+      string sanitizedMessage = Misc.SanitizeRichText(command.Message.Replace("\n", "").Replace("\r", ""));
+      string broadcastMessage = $"{username}: <color=white>{sanitizedMessage}</color>";
+
+      foreach (ReferenceHub player in ReferenceHub.AllHubs)
+      {
+        // Ignore the server and players without admin chat permissions
+        if (player.isLocalPlayer || !PermissionsHandler.IsPermitted(player.serverRoles.Permissions, PlayerPermissions.AdminChat))
         {
           continue;
         }
-        string message = $"<color=white>{command.DiscordUsername}: {Misc.SanitizeRichText(command.Message.Replace("\n", string.Empty).Replace("\r", string.Empty), "＜", "＞")}</color>";
-        Broadcast.Singleton.TargetAddElement(staff.connectionToClient, message, 5, Broadcast.BroadcastFlags.AdminChat);
-        /**
-        * 0 - Host.NetworkId
-        * ! - Separator
-        * @@ - Make message silent without red background
-        */
-        //Server.SendAdminChatMessage
-        staff.encryptedChannelManager.TrySendMessageToClient($"0![DISCORD] {message}", EncryptedChannelManager.EncryptedChannel.AdminChat);
+
+        // Send broadcast message to this player
+        Broadcast.Singleton.TargetAddElement(player.connectionToClient, broadcastMessage, 5, Broadcast.BroadcastFlags.AdminChat);
+
+        // Update this player's chat history in the admin panel.
+        // Chat history entries use the format <network id>!<message>.
+        player.encryptedChannelManager.TrySendMessageToClient($"0![<color=blue>DISCORD</color>] {broadcastMessage}", EncryptedChannelManager.EncryptedChannel.AdminChat);
       }
 
-      // Invoke event to trigger that admin chat message was sent
       ServerEvents.OnSentAdminChat(new SentAdminChatEventArgs(new DiscordCommandSender(command.DiscordUserID, command.DiscordUsername), command.Message));
 
       SCPDiscord.SendEmbedWithMessageByID(embed, "messages.adminchatsent");
