@@ -36,7 +36,7 @@ The plugin and bot should now be built in the `bin` directory in the root of the
 ## Generating the network interface
 
 > [!NOTE]
-> This section is only needed if you need to edit the network traffic between the plugin and bot.**
+> This section is only needed if you need to edit the network traffic between the plugin and bot.
 
 The bot and plugin communicate using protobuf messages. These messages are constructed from protobuf schemas located in the schema directory which are then generated into the bot and plugin's interface directories.
 
