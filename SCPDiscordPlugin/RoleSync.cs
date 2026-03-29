@@ -16,13 +16,26 @@ namespace SCPDiscord
     public class RoleCommands
     {
       [JsonProperty("ids")]
-      public ulong[] roleIDs = [];
+      public ulong[] discordIDs = [];
 
       [JsonProperty("commands")]
       public string[] commands = [];
 
+      [JsonProperty("remoteadmin-rank")]
+      public string remoteAdminRank = "";
+
+      [JsonProperty("reserved-slot")]
+      public bool reservedSlot = false;
+
       [JsonProperty("sub-roles")]
       public Dictionary<string, RoleCommands> subRoles = new();
+    }
+
+    public class RolesyncResult
+    {
+      public bool reservedSlot = false;
+      public string remoteAdminRank = "";
+      public List<string> commands = [];
     }
 
     internal static Dictionary<string, RoleCommands> config = [];
@@ -166,29 +179,37 @@ namespace SCPDiscord
       return true;
     }
 
-    private static void RunRoleCommands(RoleCommands roleCommands, UserInfo userInfo, Player player, Dictionary<string, string> variables)
+    private static void GetRolesyncActions(RoleCommands roleCommands, UserInfo userInfo, Player player, out RolesyncResult result)
     {
-      foreach (string unparsedCommand in roleCommands.commands)
-      {
-        string command = unparsedCommand;
-        foreach (KeyValuePair<string, string> variable in variables)
-        {
-          command = command.Replace("<var:" + variable.Key + ">", variable.Value);
-        }
-
-        Logger.Debug("[RS] Running rolesync command: " + command);
-        SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
-      }
-
+      result = new RolesyncResult();
       foreach (KeyValuePair<string, RoleCommands> subRole in roleCommands.subRoles)
       {
-        if (subRole.Value.roleIDs.Length == 0 || subRole.Value.roleIDs.Any(id => userInfo.RoleIDs.Contains(id)))
+        if (subRole.Value.discordIDs.Length == 0 || subRole.Value.discordIDs.Any(id => userInfo.RoleIDs.Contains(id)))
         {
           Logger.Debug($"[RS] Player {player.DisplayName} has sub-role \"{subRole.Key}\", entering it...");
-          RunRoleCommands(subRole.Value, userInfo, player, variables);
-          return;
+          GetRolesyncActions(subRole.Value, userInfo, player, out result);
+
+          // We should only run rolesync on the first sub-role as it is assumed to be the highest ranked role
+          break;
         }
         Logger.Debug($"[RS] Player {player.DisplayName} does not have sub-role \"{subRole.Key}\".");
+      }
+
+      // The player gets a reserved slot as long as any role in the chain allows it
+      if (roleCommands.reservedSlot)
+      {
+        result.reservedSlot = true;
+      }
+
+      // Only set the role if a point further down the tree hasn't already done so
+      if (!string.IsNullOrWhiteSpace(roleCommands.remoteAdminRank) && string.IsNullOrWhiteSpace(result.remoteAdminRank))
+      {
+        result.remoteAdminRank = roleCommands.remoteAdminRank;
+      }
+
+      if (roleCommands.commands != null)
+      {
+        result.commands.AddRange(roleCommands.commands);
       }
     }
 
@@ -221,6 +242,55 @@ namespace SCPDiscord
       }
     }
 
+    public static void ExecuteRoleSync(Player player, UserInfo userInfo, Dictionary<string, string> variables)
+    {
+      Logger.Info($"Running rolesync for \"{player.Nickname}\" ({userInfo.SteamIDOrIP}).");
+      RolesyncResult result = new();
+      foreach (KeyValuePair<string, RoleCommands> role in config)
+      {
+        if (role.Value.discordIDs.Length == 0
+            || role.Value.discordIDs.Any(id => userInfo.RoleIDs.Contains(id))
+            || role.Value.discordIDs.Any(id => userInfo.DiscordUserID == id))
+        {
+          Logger.Debug($"[RS] Player {player.DisplayName} has role \"{role.Key}\", entering it...");
+          GetRolesyncActions(role.Value, userInfo, player, out result);
+          break;
+        }
+        Logger.Debug($"[RS] Player {player.DisplayName} does not have role \"{role.Key}\".");
+      }
+
+      Logger.Debug("[RS] Done collecting rolesync actions, executing them now.");
+
+      if (result.reservedSlot)
+      {
+        Logger.Debug("[RS] Player has reserved slot, granting it...");
+        Utilities.GrantReservedSlot(player.UserId, userInfo.DiscordUsername);
+      }
+      else
+      {
+        Logger.Debug("[RS] Player does not have reserved slot, revoking it...");
+        Utilities.RevokeReservedSlot(player.UserId);
+      }
+
+      if (!string.IsNullOrWhiteSpace(result.remoteAdminRank))
+      {
+        Logger.Debug($"[RS] Player has remote admin rank '{result.remoteAdminRank}', setting it...");
+        player.SetRank(null, null, result.remoteAdminRank);
+      }
+
+      foreach (string unparsedCommand in result.commands)
+      {
+        string command = unparsedCommand;
+        foreach (KeyValuePair<string, string> variable in variables)
+        {
+          command = command.Replace("<var:" + variable.Key + ">", variable.Value);
+        }
+
+        Logger.Debug("[RS] Running rolesync command: " + command);
+        SCPDiscord.plugin.sync.ScheduleRoleSyncCommand(command);
+      }
+    }
+
     public static void ReceiveQueryResponse(UserInfo userInfo)
     {
       Thread.Sleep(1000);
@@ -236,11 +306,7 @@ namespace SCPDiscord
         {
           { "discord-displayname", userInfo.DiscordDisplayName },
           { "discord-username", userInfo.DiscordUsername },
-          { "discord-userid", userInfo.DiscordUserID.ToString() },
-          // Old names for backwards compatibility (pre 3.2.1)
-          { "discorddisplayname", userInfo.DiscordDisplayName },
-          { "discordusername", userInfo.DiscordUsername },
-          { "discordid", userInfo.DiscordUserID.ToString() }
+          { "discord-userid", userInfo.DiscordUserID.ToString() }
         };
         variables.AddPlayerVariables(player, "player");
 
@@ -252,17 +318,7 @@ namespace SCPDiscord
         }
         else
         {
-          Logger.Info($"Running rolesync for \"{player.Nickname}\" ({userInfo.SteamIDOrIP}).");
-          foreach (KeyValuePair<string, RoleCommands> role in config)
-          {
-            if (role.Value.roleIDs.Length == 0 || role.Value.roleIDs.Any(id => userInfo.RoleIDs.Contains(id)))
-            {
-              Logger.Debug($"[RS] Player {player.DisplayName} has role \"{role.Key}\", entering it...");
-              RunRoleCommands(role.Value, userInfo, player, variables);
-              return;
-            }
-            Logger.Debug($"[RS] Player {player.DisplayName} does not have role \"{role.Key}\".");
-          }
+          ExecuteRoleSync(player, userInfo, variables);
         }
       }
     }

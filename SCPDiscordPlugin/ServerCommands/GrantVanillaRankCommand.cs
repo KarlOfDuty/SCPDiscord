@@ -4,6 +4,7 @@ using System.Linq;
 using CommandSystem;
 using LabApi.Features.Wrappers;
 
+// TODO: Remove this command when removing the old rolesync compatibility
 namespace SCPDiscord.Commands
 {
   public class GrantVanillaRankCommand : SCPDiscordCommand
@@ -16,7 +17,7 @@ namespace SCPDiscord.Commands
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-      Logger.Debug(sender.LogName + " used the grantvanillarank command.");
+      Logger.Warn(sender.LogName + " used the grantvanillarank command. Note: this command will be removed in the future!");
 
       if (arguments.Count < 2)
       {

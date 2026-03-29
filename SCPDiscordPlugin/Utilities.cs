@@ -262,6 +262,47 @@ namespace SCPDiscord
       return false;
     }
 
+    public static void GrantReservedSlot(string userID, string discordUser)
+    {
+      string[] reservedSlotsFileRows = File.ReadAllLines(Config.GetReservedSlotPath());
+      if (reservedSlotsFileRows.Any(row => row.Trim().StartsWith(userID)))
+      {
+        // Player already has a reserved slot
+        return;
+      }
+
+      File.AppendAllLines(Config.GetReservedSlotPath(), [$"# SCPDiscord: {discordUser}", userID]);
+      ReservedSlot.Reload();
+    }
+
+    // TODO: Should probably save the rolesync file contents and check if the file has changed since last read so we dont read the entire file way more than needed.
+    public static void RevokeReservedSlot(string userID)
+    {
+      bool found = false;
+      List<string> reservedSlotsFileRows = File.ReadAllLines(Config.GetReservedSlotPath()).ToList();
+      for (int i = 0; i < reservedSlotsFileRows.Count; ++i)
+      {
+        if (reservedSlotsFileRows[i].Trim().StartsWith(userID))
+        {
+          found = true;
+          reservedSlotsFileRows.RemoveAt(i);
+          --i;
+
+          // Remove SCPDiscord comment if there is one
+          if (i >= 0 && reservedSlotsFileRows[i].Trim().StartsWith("# SCPDiscord"))
+          {
+            reservedSlotsFileRows.RemoveAt(i);
+            --i;
+          }
+        }
+      }
+
+      if (found)
+      {
+        File.WriteAllLines(Config.GetReservedSlotPath(), reservedSlotsFileRows);
+      }
+    }
+
     public static string ReadManifestData(string embeddedFileName)
     {
       Assembly assembly = Assembly.GetExecutingAssembly();

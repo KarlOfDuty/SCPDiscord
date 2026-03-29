@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using CommandSystem;
 
+// TODO: Remove this command when removing the old rolesync compatibility
 namespace SCPDiscord.Commands
 {
   public class RemoveReservedSlotCommand : SCPDiscordCommand
@@ -16,7 +17,7 @@ namespace SCPDiscord.Commands
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-      Logger.Debug(sender.LogName + " used the removereservedslot command.");
+      Logger.Warn(sender.LogName + " used the removereservedslot command. Note: this command will be removed in the future!");
 
       if (arguments.Count < 1 || arguments.At(0).Length < 10)
       {

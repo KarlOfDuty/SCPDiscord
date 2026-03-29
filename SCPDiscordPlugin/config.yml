@@ -81,9 +81,11 @@ settings:
         reservedslots: false
         whitelist: false
 
-# Sets commands to run whenever someone with a synced Discord rank joins the server,
-# only the highest command in the list that matches the player is executed.
-# Turn on debug logs above to see console feedback when the commands are used.
+# Sets commands to run whenever someone with a synced Discord rank joins the server.
+#
+# Only the first sub-role that matches a player will be used, although it can have
+# its own sub-roles where the first matching one will also be used and so on.
+#
 # Valid variables:
 # player-userid
 # player-id
@@ -93,45 +95,37 @@ settings:
 # discord-username
 # discord-userid
 # There are some more player variables you can use here, but they are mostly irrelevant, check the list in APIExtensions.cs on GitHub for the full list.
-
-# OLD CONFIG FORMAT
-#rolesync:
-#    - "add-role-id-here":
-#        - "scpd grantvanillarank <var:player-userid> moderator"
-#        - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
-#        - "/pbc <var:player-id> 3 Moderator role synced from Discord."
+# Turn on debug logs above to see console feedback when the commands are used.
 #
-#    - "add-another-role-id-here":
-#        - "scpd grantvanillarank <var:player-userid> donator"
-#        - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
-#        - "/pbc <var:player-id> 3 Donator role synced from Discord."
+# Each role can have these properties:
+#example-role:
+#    ids: [ 123456789012345678 ]
+#    commands:
+#        - "example command 1"
+#        - "example command 2"
+#    reserved-slot: true
+#    remoteadmin-rank: "example"
+#    sub-roles:
+#        # More roles can be added here, these will only be used if the player has the role above.
 #
-#    - "add-everyone-role-id-here":
-#        - "scpd removereservedslot <var:player-userid>"
+# More info is available in the guide on github.
 
-# NEW CONFIG FORMAT
-# TODO: It should still probably just trigger the first role in each list
 rolesync:
     staff-role:
         ids: [ 123 ]
-        commands:
-            - "scpd grantreservedslot <var:player-userid> @<var:discordusername> (<var:discordid>)"
+        reserved-slot: true
+        remoteadmin-rank: "staff"
         sub-roles:
             admin-role:
               ids: [ 12345 ]
+              remoteadmin-rank: "admin"
               commands:
-                  - "scpd grantvanillarank <var:player-userid> admin"
                   - "/pbc <var:player-id> 3 Admin role synced from Discord."
-              sub-roles: []
             moderator-role:
               ids: [ 54321 ]
+              remoteadmin-rank: "moderator"
               commands:
-                  - "scpd grantvanillarank <var:player-userid> admin"
                   - "/pbc <var:player-id> 3 Admin role synced from Discord."
-    everyone-else:
-      ids: [ 0 ]
-      commands:
-          - "scpd removereservedslot <var:player-userid>"
 
 # Name your channels here, this name is used in the channels section below.
 # The left value is a name of your choice and the right is a channel id you want it to represent in the lists below.

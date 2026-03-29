@@ -584,7 +584,7 @@ namespace SCPDiscord
       foreach (KeyValuePair<string, RoleSync.RoleCommands> command in commands)
       {
         sb.Append($"{indentation}{command.Key}:\n");
-        sb.Append($"{subKeyIndentation}ids: [ {string.Join(", ", command.Value.roleIDs.Select(id => id.ToString()))} ]\n");
+        sb.Append($"{subKeyIndentation}ids: [ {string.Join(", ", command.Value.discordIDs.Select(id => id.ToString()))} ]\n");
         sb.Append($"{subKeyIndentation}commands:\n");
         foreach (string cmd in command.Value.commands)
         {
