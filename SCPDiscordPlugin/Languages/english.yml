@@ -987,8 +987,8 @@ messages:
 
   onserversentadminchat:
     # player - Player
-    # text - string
-    message: "Admin chat: <var:player-name> (<var:player-userid>): <var:text>"
+    # message - string
+    message: "Admin chat: <var:player-name> (<var:player-userid>): <var:message>"
     regex: [ ]
     cancel_regex: [ ]
 
@@ -1328,6 +1328,12 @@ messages:
         ```
       regex: [ "replaceYesNoTrue":"Yes", "replaceYesNoFalse":"No", "replaceOnOffTrue":"On", "replaceOnOffFalse":"Off", "- <@0>": "", "\\(Reason: \\)":"" ]
       cancel_regex: []
+
+  adminchat:
+    # player - Player
+    # message - string
+    message: "<var:player-name>: <var:message>"
+    regex: []
 
   botactivity:
     empty:

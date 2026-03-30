@@ -120,6 +120,12 @@ public static class EventHandler
       return;
     }
 
+    string message = ev.Message.Content.TrimStart('@');
+    if (string.IsNullOrWhiteSpace(message))
+    {
+      return;
+    }
+
     string discordUsername = ev.Author.Username;
     try
     {
@@ -131,19 +137,19 @@ public static class EventHandler
     }
     catch (Exception) { /* Can't get member, just use the username instead */ }
 
-    Interface.MessageWrapper message = new()
+    Interface.MessageWrapper msg = new()
     {
       AdminChatDiscordMessage = new Interface.AdminChatDiscordMessage
       {
         ChannelID = ev.Channel.Id,
-        Message = ev.Message.Content,
+        Message = message,
         DiscordUsername = discordUsername,
         DiscordUserID = ev.Author.Id,
         BroadcastMessage = ConfigParser.Config.bot.adminChat.broadcastMessages
       }
     };
 
-    await NetworkSystem.SendMessage(message);
+    await NetworkSystem.SendMessage(msg);
   }
 }
 

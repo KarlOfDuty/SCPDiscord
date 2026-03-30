@@ -8,8 +8,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Net.Http;
+using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Events.Handlers;
 using LabApi.Features.Wrappers;
 using Newtonsoft.Json.Linq;
+using SCPDiscordPlugin.Utilities;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
@@ -17,6 +20,8 @@ namespace SCPDiscord
 {
   public static class Utilities
   {
+    public const ulong ADMIN_CHAT_CHANNEL_ID_DUMMY = 1337;
+
     private static readonly HttpClient client = new();
 
     public class FileWatcher : IDisposable
@@ -52,6 +57,49 @@ namespace SCPDiscord
         Dispose(true);
         GC.SuppressFinalize(this);
       }
+    }
+
+    public static void ReceiveAdminChatMessage(Interface.AdminChatDiscordMessage command)
+    {
+      // I don't know if the silent prefix is actually needed, but may as well.
+      string prefix = "";
+      if (!command.BroadcastMessage)
+      {
+        prefix = "@@";
+      }
+
+      string sanitizedMessage = Misc.SanitizeRichText(command.Message.Replace("\n", "").Replace("\r", ""));
+      string broadcastMessage = $"<color=grey>{command.DiscordUsername}:</color> <color=white>{sanitizedMessage}</color>";
+
+      // Run event to check if anyone wants to stop us
+      SendingAdminChatEventArgs ev = new(new DiscordCommandSender(command.DiscordUserID, command.DiscordUsername), prefix + broadcastMessage);
+      ServerEvents.OnSendingAdminChat(ev);
+      if (!ev.IsAllowed)
+      {
+        return;
+      }
+
+      foreach (ReferenceHub player in ReferenceHub.AllHubs)
+      {
+        // Ignore the server and players without admin chat permissions
+        if (player.isLocalPlayer || !PermissionsHandler.IsPermitted(player.serverRoles.Permissions, PlayerPermissions.AdminChat))
+        {
+          continue;
+        }
+
+        // Send broadcast message to this player
+        if (command.BroadcastMessage)
+        {
+          Broadcast.Singleton.TargetAddElement(player.connectionToClient, broadcastMessage, 5, Broadcast.BroadcastFlags.AdminChat);
+        }
+
+        // Update this player's chat history in the admin panel.
+        // Chat history entries use the format <network id>!<message>.
+        player.encryptedChannelManager.TrySendMessageToClient($"0!{prefix}[<color=blue>DISCORD</color>] {broadcastMessage}", EncryptedChannelManager.EncryptedChannel.AdminChat);
+      }
+
+      // Run event to inform other plugins we have sent the message and trigger our own event handler
+      ServerEvents.OnSentAdminChat(new SentAdminChatEventArgs(new DiscordCommandSender(command.DiscordUserID, command.DiscordUsername), prefix + broadcastMessage));
     }
 
     public static string SecondsToCompoundTime(long seconds)

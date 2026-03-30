@@ -8,6 +8,7 @@ using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp3114;
 using PlayerRoles.PlayableScps.Scp939;
 using PlayerStatsSystem;
+using RemoteAdmin;
 
 namespace SCPDiscord.EventListeners
 {
@@ -398,17 +399,33 @@ namespace SCPDiscord.EventListeners
       variables.AddPlayerVariables(ev.Player, "player");
       SCPDiscord.SendMessage("messages.onplayerreceiveeffect", variables);
     }
-    
+
     public override void OnServerSentAdminChat(SentAdminChatEventArgs ev)
     {
-      Dictionary<string, string> variables = new Dictionary<string, string>
+      string message = ev.Message.TrimStart('@');
+      if (string.IsNullOrWhiteSpace(message))
+      {
+        return;
+      }
+
+      Dictionary<string, string> eventVars = new()
       {
         { "player-name", ev.Sender.Nickname },
-        { "player-userid",   ev.Sender.OutputId },
-        { "text", ev.Message },
+        { "player-userid", ev.Sender.OutputId },
+        { "message", message },
       };
+      SCPDiscord.SendMessage("messages.onserversentadminchat", eventVars);
 
-      SCPDiscord.SendMessage("messages.onserversentadminchat", variables);
+      // If the sender is a player on the server, also send the message to the Discord admin chat channel
+      if (ev.Sender is PlayerCommandSender playerSender && Player.Get(playerSender.ReferenceHub) != null)
+      {
+        Dictionary<string, string> chatVars = new()
+        {
+          { "message", message }
+        };
+        chatVars.AddPlayerVariables(Player.Get(playerSender.ReferenceHub), "player");
+        SCPDiscord.SendMessageByID(Utilities.ADMIN_CHAT_CHANNEL_ID_DUMMY, "messages.adminchat", chatVars);
+      }
     }
   }
 }

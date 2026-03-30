@@ -12,8 +12,7 @@ namespace SCPDiscord;
 
 public static class Extensions
 {
-  private static readonly DateTimeOffset UnixEpoch =
-    new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+  private static readonly DateTimeOffset UnixEpoch = new(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
   public static long ToUnixTimeMicroseconds(this DateTimeOffset timestamp)
   {
@@ -25,9 +24,11 @@ public static class Extensions
 
 public static class Utilities
 {
+  public const ulong ADMIN_CHAT_CHANNEL_ID_DUMMY = 1337;
+
   public static DiscordEmbed GetDiscordEmbed(EmbedMessage embedMessage)
   {
-    DiscordEmbedBuilder embed = new DiscordEmbedBuilder
+    DiscordEmbedBuilder embed = new()
     {
       Color = GetDiscordColour(embedMessage.Colour),
       Description = embedMessage.Description

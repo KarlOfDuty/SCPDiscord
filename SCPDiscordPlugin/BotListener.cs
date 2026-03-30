@@ -92,7 +92,7 @@ namespace SCPDiscord
                 break;
 
               case Interface.MessageWrapper.MessageOneofCase.AdminChatDiscordMessage:
-                AdminChat.ReceiveDiscordMessage(data.AdminChatDiscordMessage);
+                Utilities.ReceiveAdminChatMessage(data.AdminChatDiscordMessage);
                 break;
 
               case Interface.MessageWrapper.MessageOneofCase.BotActivity:

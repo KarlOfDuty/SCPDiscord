@@ -1124,6 +1124,13 @@ messages:
       regex: []
     empty:
       message: "Немає гравців онлайн."
+
+  adminchat:
+    # player - Player
+    # message - string
+    message: "<var:player-name>: <var:message>"
+    regex: []
+
   botactivity:
    empty:
      # players - int
@@ -1191,15 +1198,10 @@ messages:
     message: "<var:player-name> (<var:player-userid>) отримав ефект: <var:effect>, на <var:duration> секунд з інтенсивністю <var:intensity>."
     regex: []
     cancel_regex: []
-  
-  adminchatsent:
-    message: "Відправлено!"
-    regex: []
-    cancel_regex: []
 
   onserversentadminchat:
     # player - Player
-    # text - string
-    message: "<var:player-name> (<var:player-userid>) адмін-чат: <var:text>"
+    # message - string
+    message: "<var:player-name> (<var:player-userid>) адмін-чат: <var:message>"
     regex: []
     cancel_regex: []
