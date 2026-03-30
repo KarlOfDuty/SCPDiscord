@@ -98,7 +98,7 @@ namespace SCPDiscord
       Language.Reload();
 
       Logger.Info("Loading rolesync system...");
-      RoleSync.Reload();
+      RoleSync.ReloadSyncedPlayers();
 
       Logger.Info("Loading mute system...");
       MuteSystem.Reload();

@@ -23,7 +23,7 @@ namespace SCPDiscord.Commands
       }
 
       Language.Reload();
-      RoleSync.Reload();
+      RoleSync.ReloadSyncedPlayers();
       if (Network.socketWrapper.IsConnected())
       {
         Network.Disconnect();

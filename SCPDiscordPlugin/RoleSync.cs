@@ -48,9 +48,14 @@ namespace SCPDiscord
 
     private static Utilities.FileWatcher fileWatcher;
 
-    public static void Reload()
+    public static void ReloadSyncedPlayers()
     {
       fileWatcher?.Dispose();
+
+      if (!Config.GetBool("settings.rolesync"))
+      {
+        return;
+      }
 
       if (!Directory.Exists(Config.GetRolesyncDir()))
       {
@@ -85,7 +90,7 @@ namespace SCPDiscord
         }
       }
 
-      fileWatcher = new Utilities.FileWatcher(Config.GetRolesyncDir(), "rolesync.json", Reload);
+      fileWatcher = new Utilities.FileWatcher(Config.GetRolesyncDir(), "rolesync.json", ReloadSyncedPlayers);
       Logger.Debug("[RS] Reloaded \"" + Config.GetRoleSyncPath() + "\".");
     }
 
