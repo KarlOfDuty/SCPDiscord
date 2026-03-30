@@ -192,7 +192,6 @@ messages:
   playerinfo:
     online: ""
     offline: ""
-  adminchatsent: ""
   botactivity:
     empty: ""
     active: ""

@@ -91,8 +91,8 @@ namespace SCPDiscord
                 PlayerInfoCommand.Execute(data.PlayerInfoCommand);
                 break;
 
-              case Interface.MessageWrapper.MessageOneofCase.AdminChatCommand:
-                AdminChatCommand.Execute(data.AdminChatCommand);
+              case Interface.MessageWrapper.MessageOneofCase.AdminChatDiscordMessage:
+                AdminChat.ReceiveDiscordMessage(data.AdminChatDiscordMessage);
                 break;
 
               case Interface.MessageWrapper.MessageOneofCase.BotActivity:

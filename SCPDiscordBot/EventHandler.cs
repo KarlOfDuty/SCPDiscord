@@ -97,6 +97,54 @@ public static class EventHandler
       }
     }
   }
+
+  public static async Task OnMessageCreated(DiscordClient client, MessageCreatedEventArgs ev)
+  {
+    if (ev.Channel.Id != ConfigParser.Config.bot.adminChat.channelId)
+    {
+      return;
+    }
+
+    if (ev.Author.IsCurrent)
+    {
+      return;
+    }
+
+    if (ev.Author.IsBot && ConfigParser.Config.bot.adminChat.ignoreBots)
+    {
+      return;
+    }
+
+    if (string.IsNullOrWhiteSpace(ev.Message.Content))
+    {
+      return;
+    }
+
+    string discordUsername = ev.Author.Username;
+    try
+    {
+      if (ConfigParser.Config.bot.adminChat.useNicknames)
+      {
+        DiscordMember member = await ev.Guild.GetMemberAsync(ev.Author.Id);
+        discordUsername = member.DisplayName;
+      }
+    }
+    catch (Exception) { /* Can't get member, just use the username instead */ }
+
+    Interface.MessageWrapper message = new()
+    {
+      AdminChatDiscordMessage = new Interface.AdminChatDiscordMessage
+      {
+        ChannelID = ev.Channel.Id,
+        Message = ev.Message.Content,
+        DiscordUsername = discordUsername,
+        DiscordUserID = ev.Author.Id,
+        BroadcastMessage = ConfigParser.Config.bot.adminChat.broadcastMessages
+      }
+    };
+
+    await NetworkSystem.SendMessage(message);
+  }
 }
 
 internal class ErrorHandler : IClientErrorHandler

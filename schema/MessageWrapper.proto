@@ -13,7 +13,7 @@ import "BotToPlugin/MuteCommand.proto";
 import "BotToPlugin/ListRankedCommand.proto";
 import "BotToPlugin/ListSyncedCommand.proto";
 import "BotToPlugin/PlayerInfoCommand.proto";
-import "BotToPlugin/AdminChatCommand.proto";
+import "BotToPlugin/AdminChatDiscordMessage.proto";
 
 import "PluginToBot/BotActivity.proto";
 import "PluginToBot/ChatMessage.proto";
@@ -45,6 +45,6 @@ message MessageWrapper
 		ListRankedCommand listRankedCommand = 17;
 		ListSyncedCommand listSyncedCommand = 18;
 		PlayerInfoCommand playerInfoCommand = 19;
-		AdminChatCommand adminChatCommand = 20;
+		AdminChatDiscordMessage adminChatDiscordMessage = 20;
 	}
 }

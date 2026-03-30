@@ -8,6 +8,20 @@ bot:
     # Your Discord server's ID.
     server-id: 000000000000000000
 
+    admin-chat:
+        # The in-game admin chat is mirrored to this Discord channel.
+        channel-id: 000000000000000000
+
+        # Whether to ignore other bots writing in this channel.
+        # You may want to turn this off if you have multiple SCPDiscord bots using the same channel so different servers can see each others messages.
+        ignore-bots: true
+
+        # Whether to show Discord messages at the top of the screen for all players with admin chat permissions.
+        broadcast-messages: true
+
+        # Whether to show Discord nicknames instead of usernames.
+        use-nicknames: false
+
     # Decides what messages are shown in console.
     # Possible values are: Critical, Error, Warning, Information, Debug.
     log-level: "Information"
@@ -23,11 +37,11 @@ bot:
     # Sets the activity text shown in the bot's status.
     presence-text: "Server offline"
 
-    # Disable and delete all existing commands for this bot.
+    # Disable and delete all existing Discord commands for this bot.
     disable-commands: false
 
     # Log all console output to a file, can be overridden using command line arguments. Set to "" to disable.
-    # When running the bot as a service this will be set to "/var/log/scpdiscord/scpdiscord*.log" by the service.
+    # When running the bot as a service, this will be set to "/var/log/scpdiscord/scpdiscord*.log" by the service.
     # The log file will still log all log levels regardless of the console log level setting.
     log-file: ""
 
@@ -64,5 +78,6 @@ plugin:
     # are correct so any outside connections (except the plugin's) are blocked on the below port.
     address: "127.0.0.1"
 
-    # Port to listen on, this has to be the same as the "bot port" in the plugin config and all bots you run have to have different ports or they will clash.
+    # Port to listen on, this must be the same as the "bot port" in the plugin config.
+    # All bots/servers you run must use different ports, or they will clash.
     port: 8888

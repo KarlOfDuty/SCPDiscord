@@ -210,9 +210,10 @@ namespace SCPDiscord
             }
             else
             {
-              await DiscordAPI.SendInteractionResponse(wrapper.EmbedMessage.InteractionID,
-                                                       wrapper.EmbedMessage.ChannelID,
-                                                       Utilities.GetDiscordEmbed(wrapper.EmbedMessage));
+              await DiscordAPI.SendInteractionResponse(
+                wrapper.EmbedMessage.InteractionID,
+                wrapper.EmbedMessage.ChannelID,
+                Utilities.GetDiscordEmbed(wrapper.EmbedMessage));
             }
           }
           catch (Exception e)
@@ -226,16 +227,18 @@ namespace SCPDiscord
           {
             if (wrapper.PaginatedMessage.InteractionID == 0)
             {
-              await DiscordAPI.SendPaginatedMessage(wrapper.PaginatedMessage.ChannelID,
-                                                    wrapper.PaginatedMessage.UserID,
-                                                    Utilities.GetPaginatedMessage(wrapper.PaginatedMessage));
+              await DiscordAPI.SendPaginatedMessage(
+                wrapper.PaginatedMessage.ChannelID,
+                wrapper.PaginatedMessage.UserID,
+                Utilities.GetPaginatedMessage(wrapper.PaginatedMessage));
             }
             else
             {
-              await DiscordAPI.SendPaginatedResponse(wrapper.PaginatedMessage.InteractionID,
-                                                     wrapper.PaginatedMessage.ChannelID,
-                                                     wrapper.PaginatedMessage.UserID,
-                                                     Utilities.GetPaginatedMessage(wrapper.PaginatedMessage));
+              await DiscordAPI.SendPaginatedResponse(
+                wrapper.PaginatedMessage.InteractionID,
+                wrapper.PaginatedMessage.ChannelID,
+                wrapper.PaginatedMessage.UserID,
+                Utilities.GetPaginatedMessage(wrapper.PaginatedMessage));
             }
           }
           catch (Exception e)
@@ -244,6 +247,7 @@ namespace SCPDiscord
           }
 
           break;
+        case MessageWrapper.MessageOneofCase.AdminChatDiscordMessage:
         case MessageWrapper.MessageOneofCase.BanCommand:
         case MessageWrapper.MessageOneofCase.ConsoleCommand:
         case MessageWrapper.MessageOneofCase.KickCommand:
@@ -251,12 +255,12 @@ namespace SCPDiscord
         case MessageWrapper.MessageOneofCase.ListCommand:
         case MessageWrapper.MessageOneofCase.ListRankedCommand:
         case MessageWrapper.MessageOneofCase.ListSyncedCommand:
+        case MessageWrapper.MessageOneofCase.MuteCommand:
         case MessageWrapper.MessageOneofCase.PlayerInfoCommand:
         case MessageWrapper.MessageOneofCase.SyncRoleCommand:
         case MessageWrapper.MessageOneofCase.UnbanCommand:
         case MessageWrapper.MessageOneofCase.UnsyncRoleCommand:
         case MessageWrapper.MessageOneofCase.UserInfo:
-		case MessageWrapper.MessageOneofCase.AdminChatCommand:
           Logger.Warn("Received packet meant for plugin: " + JsonFormatter.Default.Format(wrapper));
           break;
         case MessageWrapper.MessageOneofCase.None:
@@ -266,11 +270,24 @@ namespace SCPDiscord
       }
     }
 
+    public static async Task SendMessage(MessageWrapper message)
+    {
+      try
+      {
+        Logger.Debug("Sending packet '" + JsonFormatter.Default.Format(message) + "' to plugin.");
+        message.WriteDelimitedTo(networkStream);
+      }
+      catch (Exception)
+      {
+        Logger.Warn("Error communicating with server. Is it running?");
+      }
+    }
+
     public static async Task SendMessage(MessageWrapper message, SlashCommandContext command)
     {
       try
       {
-        Logger.Debug("Sent packet '" + JsonFormatter.Default.Format(message) + "' to plugin.");
+        Logger.Debug("Sending packet '" + JsonFormatter.Default.Format(message) + "' to plugin.");
         message.WriteDelimitedTo(networkStream);
       }
       catch (Exception)

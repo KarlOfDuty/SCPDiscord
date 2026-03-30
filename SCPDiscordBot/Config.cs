@@ -14,14 +14,22 @@ namespace SCPDiscord
   {
     public class Bot
     {
+      public class AdminChat
+      {
+        public ulong channelId { get; private set; } = 0;
+        public bool ignoreBots { get; private set; } = false;
+        public bool broadcastMessages { get; private set; } = false;
+        public bool useNicknames { get; private set; } = false;
+      }
+
       public string token { get; private set; } = "";
       public ulong serverId { get; private set; } = 0;
+      public AdminChat adminChat { get; private set; }
       public string logLevel { get; private set; } = "Debug";
       public string statusType { get; private set; } = "DoNotDisturb";
       public string presenceType { get; private set; } = "Watching";
       public string presenceText { get; private set; } = "for server startup...";
       public bool disableCommands { get; private set; } = false;
-
       public string logFile { get; private set; } = "";
     }
 
@@ -90,13 +98,17 @@ namespace SCPDiscord
     {
       Logger.Debug("######### Config #########");
       Logger.Debug("bot:");
-      Logger.Debug("  token:            HIDDEN");
-      Logger.Debug("  server-id:        " + Config.bot.serverId);
-      Logger.Debug("  log-level:        " + Config.bot.logLevel);
-      Logger.Debug("  presence-type:    " + Config.bot.presenceType);
-      Logger.Debug("  presence-text:    " + Config.bot.presenceText);
-      Logger.Debug("  disable-commands: " + Config.bot.disableCommands);
-      Logger.Debug("  log-file:         " + Config.bot.logFile);
+      Logger.Debug("  token:                HIDDEN");
+      Logger.Debug("  server-id:            " + Config.bot.serverId);
+      Logger.Debug("  admin-chat:");
+      Logger.Debug("    channel-id:         " + Config.bot.adminChat.channelId);
+      Logger.Debug("    ignore-bots:        " + Config.bot.adminChat.ignoreBots);
+      Logger.Debug("    broadcast-messages: " + Config.bot.adminChat.broadcastMessages);
+      Logger.Debug("  log-level:            " + Config.bot.logLevel);
+      Logger.Debug("  presence-type:        " + Config.bot.presenceType);
+      Logger.Debug("  presence-text:        " + Config.bot.presenceText);
+      Logger.Debug("  disable-commands:     " + Config.bot.disableCommands);
+      Logger.Debug("  log-file:             " + Config.bot.logFile);
       Logger.Debug("");
       Logger.Debug("permissions:");
       foreach (KeyValuePair<ulong, string[]> node in Config.permissions)

@@ -42,6 +42,7 @@ public class DiscordAPI
         {
             builder.HandleGuildDownloadCompleted(EventHandler.OnReady);
             builder.HandleGuildAvailable(EventHandler.OnGuildAvailable);
+            builder.HandleMessageCreated(EventHandler.OnMessageCreated);
         });
 
         clientBuilder.UseInteractivity(new InteractivityConfiguration
@@ -73,8 +74,7 @@ public class DiscordAPI
                 typeof(UnbanCommand),
                 typeof(UnmuteCommand),
                 typeof(UnsyncCommand),
-                typeof(UnsyncPlayerCommand),
-                typeof(AdminChatCommand)
+                typeof(UnsyncPlayerCommand)
               ]);
               extension.AddProcessor(new SlashCommandProcessor());
               extension.CommandErrored += EventHandler.OnCommandError;

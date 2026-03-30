@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package SCPDiscord.Interface;
 
-message AdminChatCommand
+message AdminChatDiscordMessage
 {
 	uint64 channelID = 1;
 	uint64 discordUserID = 2;
 	string message = 3;
-	uint64 interactionID = 4;
-	string discordUsername = 5;
+	string discordUsername = 4;
+	bool broadcastMessage = 5;
 }
