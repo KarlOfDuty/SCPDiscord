@@ -112,20 +112,20 @@ settings:
 
 rolesync:
     staff-role:
-        ids: [ 123 ]
+        ids: [ 11111111111111111 ]
         reserved-slot: true
         remoteadmin-rank: "staff"
         sub-roles:
             admin-role:
-              ids: [ 12345 ]
-              remoteadmin-rank: "admin"
-              commands:
-                  - "/pbc <var:player-id> 3 Admin role synced from Discord."
+                ids: [ 22222222222222222 ]
+                remoteadmin-rank: "admin"
+                commands:
+                    - "/pbc <var:player-id> 3 Admin role synced from Discord."
             moderator-role:
-              ids: [ 54321 ]
-              remoteadmin-rank: "moderator"
-              commands:
-                  - "/pbc <var:player-id> 3 Admin role synced from Discord."
+                ids: [ 33333333333333333 ]
+                remoteadmin-rank: "moderator"
+                commands:
+                    - "/pbc <var:player-id> 3 Admin role synced from Discord."
 
 # Name your channels here, this name is used in the channels section below.
 # The left value is a name of your choice and the right is a channel id you want it to represent in the lists below.

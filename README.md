@@ -12,9 +12,11 @@ You can download the latest release [here](https://github.com/KarlOfDuty/SCPDisc
 
 - [Installation and configuration](docs/Installation.md)
 
-- [Editing messages and languages](docs/Languages.md)
+- [Command usage](docs/Usage.md)
 
-- [Usage](docs/Usage.md)
+- [RoleSync setup](docs/RoleSync.md)
+
+- [Editing messages and languages](docs/Languages.md)
 
 - [Building SCPDiscord](docs/Building.md)
 
