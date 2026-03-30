@@ -100,6 +100,11 @@ public static class EventHandler
 
   public static async Task OnMessageCreated(DiscordClient client, MessageCreatedEventArgs ev)
   {
+    if (ConfigParser.Config.bot.adminChat.channelId == 0)
+    {
+      return;
+    }
+
     if (ev.Channel.Id != ConfigParser.Config.bot.adminChat.channelId)
     {
       return;

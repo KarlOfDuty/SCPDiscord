@@ -181,9 +181,16 @@ namespace SCPDiscord
           {
             foreach (string content in SplitString(wrapper.ChatMessage.Content, 1999))
             {
-              if (wrapper.ChatMessage.ChannelID == Utilities.ADMIN_CHAT_CHANNEL_ID_DUMMY && ConfigParser.Config.bot.adminChat.channelId != 0)
+              if (wrapper.ChatMessage.ChannelID == Utilities.ADMIN_CHAT_CHANNEL_ID_DUMMY)
               {
-                MessageScheduler.QueueMessage(ConfigParser.Config.bot.adminChat.channelId, content);
+                if (ConfigParser.Config.bot.adminChat.channelId != 0)
+                {
+                  MessageScheduler.QueueMessage(ConfigParser.Config.bot.adminChat.channelId, content);
+                }
+              }
+              else
+              {
+                MessageScheduler.QueueMessage(wrapper.ChatMessage.ChannelID, content);
               }
             }
           }

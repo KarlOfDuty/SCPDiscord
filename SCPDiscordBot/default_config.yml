@@ -9,7 +9,7 @@ bot:
     server-id: 000000000000000000
 
     admin-chat:
-        # The in-game admin chat is mirrored to this Discord channel.
+        # The in-game admin chat is mirrored to this Discord channel. Set it to 0 to disable the admin chat integration.
         channel-id: 000000000000000000
 
         # Whether to ignore other bots writing in this channel.
