@@ -82,7 +82,12 @@ namespace SCPDiscord
         return;
       }
 
-      variables.AddIfNotExist(prefix + "-ipaddress",            player?.IpAddress);
+      try
+      {
+        variables.AddIfNotExist(prefix + "-ipaddress", player?.IpAddress);
+      }
+      catch (Exception) { variables.AddIfNotExist(prefix + "-ipaddress", "unknown"); }
+
       variables.AddIfNotExist(prefix + "-name",                 player?.Nickname);
       variables.AddIfNotExist(prefix + "-id",                   player?.PlayerId.ToString());
       variables.AddIfNotExist(prefix + "-userid",               player?.GetParsedUserID());
