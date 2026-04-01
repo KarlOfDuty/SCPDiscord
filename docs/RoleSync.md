@@ -131,7 +131,7 @@ You can add them to a command with the syntax `<var:variable>`. For example: `/p
 |-----------------------|----------------------|--------------------------------------------------------------------------------|
 | `player-userid`       | `76561198022373616`  | The player's Steam ID.                                                         |
 | `player-id`           | `14`                 | The player's current player ID.<br><br>This is different every time they join. |
-| `player-name`         | `Karl of Duty `      | The player's Steam display name.                                               |
+| `player-name`         | `Karl of Duty`       | The player's Steam display name.                                               |
 | `player-ipaddress`    | `192.168.2.150`      | The player's IP-address (mainly for non-steam servers).                        |
 | `discord-displayname` | `Karl of Duty`       | The player's nickname in the Discord server specified in the bot config.       |
 | `discord-username`    | `karlofduty`         | The player's Discord username.                                                 |
