@@ -19,7 +19,7 @@
 	dh $@
 
 override_dh_auto_build:
-	dotnet publish SCPDiscordBot/SCPDiscordBot.csproj -r linux-x64 -c Release --self-contained false --restore --output linux-x64/
+	dotnet publish SCPDiscordBot/SCPDiscordBot.csproj -r linux-x64 -c Release --restore --output linux-x64/
 	dh_auto_build
 
 override_dh_install:

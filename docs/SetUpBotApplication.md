@@ -143,19 +143,14 @@ You may see a warning about verifying workloads during installation, this can be
 <summary><b>Manual Download (Windows / Other Linux)</b></summary>
 <br/>
 
-You can download the bot manually by downloading the binary directly from the github release or jenkins build:
+You can download the bot manually by downloading the binary directly from the GitHub release or Jenkins build:
 
-**1.** (Optional) Install .NET 9 if it isn't already installed on your system.
+Download the bot for your operating system, either a [release version](https://github.com/KarlOfDuty/SCPDiscord/releases) or a [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/SCPDiscord/activity).
 
-**2.** Download the bot for your operating system, either a [release version](https://github.com/KarlOfDuty/SCPDiscord/releases) or a [dev build](https://jenkins.karlofduty.com/blue/organizations/jenkins/SCPDiscord/activity).
-While the Windows versions are fully supported they are not as well tested as the Linux ones.
+The plain Linux binary is called `scpdiscord` and the Windows binary is called `scpdiscord.exe`.
 
-| Application         | Description                                                         |
-|---------------------|---------------------------------------------------------------------|
-| `scpdiscord`        | Standard Linux version.                                             |
-| `scpdiscord-sc`     | Larger Linux version which does not require .NET to be installed.   |
-| `scpdiscord.exe`    | Standard Windows version.                                           |
-| `scpdiscord-sc.exe` | Larger Windows version which does not require .NET to be installed. |
+Note that while the Windows version is fully supported, it is not as well-tested as the Linux ones.
+
 
 </details>
 

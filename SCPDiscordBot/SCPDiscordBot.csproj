@@ -3,32 +3,33 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <Version>3.4.0</Version>
-
+    <AssemblyName>scpdiscord</AssemblyName>
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <TargetFramework>net9.0</TargetFramework>
-    <LangVersion>default</LangVersion>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>partial</TrimMode>
+    <DebugType>embedded</DebugType>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <GitVersion>false</GitVersion>
-    <DebugType>embedded</DebugType>
 
-    <PackageVersion>3.4.0</PackageVersion>
-    <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageIconUrl>./icon.ico</PackageIconUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/KarlOfDuty/SCPDiscord/main/LICENSE</PackageLicenseUrl>
-
-    <AssemblyName>scpdiscord</AssemblyName>
-    <Product>SCPDiscord</Product>
-    <AssemblyTitle>SCPDiscord</AssemblyTitle>
-    <Company>https://github.com/KarlOfDuty/SCPDiscord</Company>
-    <Copyright>© 2018-2025 Karl Essinger and contributors - licenced under GPLv3"</Copyright>
+    <Authors>KarlofDuty</Authors>
+    <Description>A very customisable Discord bot + SCP:SL plugin combo.</Description>
+    <NeutralLanguage>en</NeutralLanguage>
     <RepositoryType>Git</RepositoryType>
     <RepositoryUrl>https://github.com/KarlOfDuty/SCPDiscord</RepositoryUrl>
-    <NeutralLanguage>en</NeutralLanguage>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+
+    <PackageIconUrl>./icon.ico</PackageIconUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
+    <PackageVersion>3.4.0</PackageVersion>
+    <LangVersion>default</LangVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <GitVersion>false</GitVersion>
   </PropertyGroup>
 
   <ItemGroup>

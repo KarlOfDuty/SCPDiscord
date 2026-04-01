@@ -19,7 +19,6 @@ Packager:   KarlofDuty
 Source:     rpm-source.tar.gz
 
 BuildRequires: systemd-rpm-macros
-Requires: dotnet-runtime-9.0
 %{?systemd_requires}
 
 %description
@@ -30,7 +29,7 @@ which lets you monitor and manage your SCP:SL servers from Discord.
 %setup -T -c
 
 %build
-dotnet publish %{repo_root}/SCPDiscordBot/SCPDiscordBot.csproj -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output %{_builddir}/out
+dotnet publish %{repo_root}/SCPDiscordBot/SCPDiscordBot.csproj -r linux-x64 -c Release --output %{_builddir}/out
 
 %install
 if [[ -d %{_rpmdir}/%{_arch} ]]; then

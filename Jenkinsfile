@@ -96,16 +96,12 @@ pipeline
           {
             dir(path: 'SCPDiscordBot')
             {
-              sh 'dotnet publish -r linux-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output linux-x64/'
-              sh 'mv linux-x64/scpdiscord linux-x64/scpdiscord-sc'
-              sh 'dotnet publish -r linux-x64 -c Release --self-contained false --no-restore --output linux-x64/'
+              sh 'dotnet publish -r linux-x64 -c Release --no-restore --output linux-x64/'
             }
             archiveArtifacts(artifacts: 'SCPDiscordBot/linux-x64/scpdiscord', caseSensitive: true)
-            archiveArtifacts(artifacts: 'SCPDiscordBot/linux-x64/scpdiscord-sc', caseSensitive: true)
             script
             {
               env.BASIC_LINUX_PATH = 'SCPDiscordBot/linux-x64/scpdiscord'
-              env.BASIC_LINUX_SC_PATH = 'SCPDiscordBot/linux-x64/scpdiscord-sc'
             }
           }
         }
@@ -115,16 +111,12 @@ pipeline
           {
             dir(path: 'SCPDiscordBot')
             {
-              sh 'dotnet publish -r win-x64 -c Release -p:PublishTrimmed=true --self-contained true --no-restore --output windows-x64/'
-              sh 'mv windows-x64/scpdiscord.exe windows-x64/scpdiscord-sc.exe'
-              sh 'dotnet publish -r win-x64 -c Release --self-contained false --no-restore --output windows-x64/'
+              sh 'dotnet publish -r win-x64 -c Release --no-restore --output windows-x64/'
             }
             archiveArtifacts(artifacts: 'SCPDiscordBot/windows-x64/scpdiscord.exe', caseSensitive: true)
-            archiveArtifacts(artifacts: 'SCPDiscordBot/windows-x64/scpdiscord-sc.exe', caseSensitive: true)
             script
             {
               env.BASIC_WINDOWS_PATH = 'SCPDiscordBot/windows-x64/scpdiscord.exe'
-              env.BASIC_WINDOWS_SC_PATH = 'SCPDiscordBot/windows-x64/scpdiscord-sc.exe'
             }
           }
         }
@@ -365,9 +357,7 @@ pipeline
         {
           def artifacts = [
             env.BASIC_LINUX_PATH,
-            env.BASIC_LINUX_SC_PATH,
             env.BASIC_WINDOWS_PATH,
-            env.BASIC_WINDOWS_SC_PATH,
             env.PLUGIN_PATH,
             env.DEPENDENCIES_PATH,
             env.RHEL_RPM_PATH,

@@ -20,15 +20,8 @@ dotnet build --output ../bin/plugin
 
 Enter the SCPDiscord bot directory and use the following commands:
 ```bash
-# Normal build
-dotnet build --output ../bin/linux-bot --configuration Release --runtime linux-x64
-dotnet build --output ../bin/win-bot --configuration Release --runtime win-x64
-
-# Build release versions
-dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained false --output ../bin/win-bot-release
-dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained true -p:PublishTrimmed=true --output ../bin/win-bot-release-sc
-dotnet publish -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained false --output ../bin/linux-bot-release
-dotnet publish -p:PublishSingleFile=true -r linux-x64 -c Release --self-contained true -p:PublishTrimmed=true --output ../bin/linux-bot-release-sc
+dotnet publish -r win-x64 -c Release --output ../bin/win-bot
+dotnet publish -r linux-x64 -c Release --output ../bin/linux-bot
 ```
 
 The plugin and bot should now be built in the `bin` directory in the root of the repo.
