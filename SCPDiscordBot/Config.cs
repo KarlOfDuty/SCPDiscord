@@ -99,19 +99,19 @@ namespace SCPDiscord
       Logger.Debug("######### Config #########");
       Logger.Debug("bot:");
       Logger.Debug("  token:                HIDDEN");
-      Logger.Debug("  server-id:            " + Config.bot.serverId);
+      Logger.Debug("  server-id:            " + Config.bot?.serverId);
       Logger.Debug("  admin-chat:");
-      Logger.Debug("    channel-id:         " + Config.bot.adminChat.channelId);
-      Logger.Debug("    ignore-bots:        " + Config.bot.adminChat.ignoreBots);
-      Logger.Debug("    broadcast-messages: " + Config.bot.adminChat.broadcastMessages);
-      Logger.Debug("  log-level:            " + Config.bot.logLevel);
-      Logger.Debug("  presence-type:        " + Config.bot.presenceType);
-      Logger.Debug("  presence-text:        " + Config.bot.presenceText);
-      Logger.Debug("  disable-commands:     " + Config.bot.disableCommands);
-      Logger.Debug("  log-file:             " + Config.bot.logFile);
+      Logger.Debug("    channel-id:         " + Config.bot?.adminChat?.channelId);
+      Logger.Debug("    ignore-bots:        " + Config.bot?.adminChat?.ignoreBots);
+      Logger.Debug("    broadcast-messages: " + Config.bot?.adminChat?.broadcastMessages);
+      Logger.Debug("  log-level:            " + Config.bot?.logLevel);
+      Logger.Debug("  presence-type:        " + Config.bot?.presenceType);
+      Logger.Debug("  presence-text:        " + Config.bot?.presenceText);
+      Logger.Debug("  disable-commands:     " + Config.bot?.disableCommands);
+      Logger.Debug("  log-file:             " + Config.bot?.logFile);
       Logger.Debug("");
       Logger.Debug("permissions:");
-      foreach (KeyValuePair<ulong, string[]> node in Config.permissions)
+      foreach (KeyValuePair<ulong, string[]> node in Config.permissions ?? [])
       {
         Logger.Debug("  " + node.Key + ":");
         foreach (string command in node.Value)
@@ -122,8 +122,8 @@ namespace SCPDiscord
 
       Logger.Debug("");
       Logger.Debug("plugin:");
-      Logger.Debug("  address: " + Config.plugin.address);
-      Logger.Debug("  port:    " + Config.plugin.port);
+      Logger.Debug("  address: " + Config.plugin?.address);
+      Logger.Debug("  port:    " + Config.plugin?.port);
     }
 
     public static bool HasPermission(DiscordMember member, string command)
