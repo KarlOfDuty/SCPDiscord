@@ -81,7 +81,7 @@ settings:
         reservedslots: false
         whitelist: false
 
-# Sets commands to run whenever someone with a synced Discord rank joins the server.
+# Sets commands to run whenever someone with a synced Discord role joins the server.
 #
 # Only the first sub-role that matches a player will be used, although it can have
 # its own sub-roles where the first matching one will also be used and so on.
@@ -97,18 +97,7 @@ settings:
 # There are some more player variables you can use here, but they are mostly irrelevant, check the list in APIExtensions.cs on GitHub for the full list.
 # Turn on debug logs above to see console feedback when the commands are used.
 #
-# Each role can have these properties:
-#example-role:
-#    ids: [ 123456789012345678 ]
-#    commands:
-#        - "example command 1"
-#        - "example command 2"
-#    reserved-slot: true
-#    remoteadmin-rank: "example"
-#    sub-roles:
-#        # More roles can be added here, these will only be used if the player has the role above.
-#
-# More info is available in the guide on github.
+# More info is available in the RoleSync guide on GitHub here: https://github.com/KarlOfDuty/SCPDiscord/blob/main/docs/RoleSync.md.
 
 rolesync:
     staff-role:

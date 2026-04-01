@@ -120,3 +120,19 @@ They do not have to have all of the parameters but must have at least one.
 | `remoteadmin-rank` | Set this to the name of a rank in your `config_remoteadmin.txt` and the plugin will give the player this rank when they join.                       |
 | `commands`         | A list of commands to run when a player joins. Variables in the commands are supported to for instance include the player's user ID in the command. |
 | `sub-roles`        | Roles that will only be checked if the user has the parent role.                                                                                    |
+
+### Available command variables
+
+These variables are available in the RoleSync command configuration.
+
+You can add them to a command with the syntax `<var:variable>`. For example: `/pbc <var:player-id> 3 Hello!` sends a hello message to the joining player.
+
+| Variable              | Sample               | Description                                                                    |
+|-----------------------|----------------------|--------------------------------------------------------------------------------|
+| `player-userid`       | `76561198022373616`  | The player's Steam ID.                                                         |
+| `player-id`           | `14`                 | The player's current player ID.<br><br>This is different every time they join. |
+| `player-name`         | `Karl of Duty `      | The player's Steam display name.                                               |
+| `player-ipaddress`    | `192.168.2.150`      | The player's IP-address (mainly for non-steam servers).                        |
+| `discord-displayname` | `Karl of Duty`       | The player's nickname in the Discord server specified in the bot config.       |
+| `discord-username`    | `karlofduty`         | The player's Discord username.                                                 |
+| `discord-userid`      | `170904988724232192` | The player's Discord user ID.                                                  |
