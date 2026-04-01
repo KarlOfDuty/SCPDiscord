@@ -136,3 +136,89 @@ You can add them to a command with the syntax `<var:variable>`. For example: `/p
 | `discord-displayname` | `Karl of Duty`       | The player's nickname in the Discord server specified in the bot config.       |
 | `discord-username`    | `karlofduty`         | The player's Discord username.                                                 |
 | `discord-userid`      | `170904988724232192` | The player's Discord user ID.                                                  |
+
+## Example for migrating from the old system
+
+Here is my old rolesync configuration:
+
+```yaml
+rolesync:
+    - "430474354875432960":
+          - "scpd gvr <var:player-userid> admin"
+          - "scpd grantreservedslot <var:player-userid> <var:discordusername> (<var:discordid>)"
+          - "/pbc <var:player-id> 3 Admin role synced from Discord."
+    - "439020448710262784":
+          - "scpd gvr <var:player-userid> moderator"
+          - "scpd grantreservedslot <var:player-userid> <var:discordusername> (<var:discordid>)"
+          - "/pbc <var:player-id> 3 Moderator role synced from Discord."
+    - "738833338072301599":
+          - "scpd gvr <var:player-userid> sponsor69"
+          - "scpd grantreservedslot <var:player-userid> <var:discordusername> (<var:discordid>)"
+          - "/pbc <var:player-id> 3 Tier 69 Sponsor role synced from Discord."
+    - "588486773538160650":
+          - "scpd gvr <var:player-userid> sponsor3"
+          - "scpd grantreservedslot <var:player-userid> <var:discordusername> (<var:discordid>)"
+          - "/pbc <var:player-id> 3 Tier 3 Sponsor role synced from Discord."
+    - "444899558653427723":
+          - "scpd gvr <var:player-userid> sponsor2"
+          - "scpd grantreservedslot <var:player-userid> <var:discordusername> (<var:discordid>)"
+          - "/pbc <var:player-id> 3 Tier 2 Sponsor role synced from Discord."
+    - "444899493620744212":
+          - "scpd gvr <var:player-userid> sponsor1"
+          - "/pbc <var:player-id> 3 Tier 1 Sponsor role synced from Discord."
+          - "scpd removereservedslot <var:player-userid>"
+    - "1312835320223371314":
+          - "scpd gvr <var:player-userid> jinglejam"
+          - "/pbc <var:player-id> 3 Jingle Jam Donator role synced from Discord."
+          - "scpd removereservedslot <var:player-userid>"
+    - "449617629351772170":
+          - "scpd removereservedslot <var:player-userid>"
+```
+
+And here is what it looks like in the new system:
+
+```yaml
+rolesync:
+    admin:
+        ids: [ 430474354875432960 ]
+        reserved-slot: true
+        remoteadmin-rank: "admin"
+        commands:
+            - "/pbc <var:player-id> 3 Admin role synced from Discord."
+    moderator:
+        ids: [ 439020448710262784 ]
+        reserved-slot: true
+        remoteadmin-rank: "moderator"
+        commands:
+            - "/pbc <var:player-id> 3 Moderator role synced from Discord."
+    sponsor69:
+        ids: [ 738833338072301599 ]
+        reserved-slot: true
+        remoteadmin-rank: "sponsor69"
+        commands:
+            - "/pbc <var:player-id> 3 Tier 69 Sponso role synced from Discord."
+    sponsor3:
+        ids: [ 588486773538160650 ]
+        reserved-slot: true
+        remoteadmin-rank: "sponsor3"
+        commands:
+            - "/pbc <var:player-id> 3 Tier 3 Sponsor role synced from Discord."
+    sponsor2:
+        ids: [ 444899558653427723 ]
+        reserved-slot: true
+        remoteadmin-rank: "sponsor2"
+        commands:
+            - "/pbc <var:player-id> 3 Tier 2 Sponsor role synced from Discord."
+    sponsor1:
+        ids: [ 444899493620744212 ]
+        reserved-slot: true
+        remoteadmin-rank: "sponsor1"
+        commands:
+            - "/pbc <var:player-id> 3 Tier 1 Sponsor role synced from Discord."
+    jinglejam:
+        ids: [ 1312835320223371314 ]
+        reserved-slot: true
+        remoteadmin-rank: "jinglejam"
+        commands:
+            - "/pbc <var:player-id> 3 Jingle Jam Donator role synced from Discord."
+```
