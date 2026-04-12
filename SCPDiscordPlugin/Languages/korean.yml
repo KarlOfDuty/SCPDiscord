@@ -1,0 +1,1146 @@
+#####################################################################################################################
+#
+#                                                     이벤트
+#
+#   message: 표시될 메시지. 변수는 <var:이름> 형식으로 삽입됩니다. 예: <var:ipaddress>
+#   regex: 메시지의 일부를 찾아 교체하기 위한 정규식과 대체 문자열 쌍
+#
+#####################################################################################################################
+
+#####################################################################################################################
+#
+#                                                  플레이어 정보
+#
+#  아래 많은 이벤트에 "Player" 타입의 변수가 있습니다. 이는 다양한 플레이어 정보를 담은
+#  변수들을 제공한다는 의미입니다. 최신 변수 목록은 Git 저장소의 APIExtensions.cs 파일에서 확인하세요.
+#
+#  사용 예시:
+#  이벤트에 Player 타입의 "attacker" 변수가 있다면 <var:attacker-name>으로 닉네임을 가져올 수 있습니다.
+#  모든 플레이어 하위 변수에 동일하게 적용됩니다 (disarmer 변수 제외).
+#  disarmer 변수도 Player 타입이므로, "attacker"가 수갑이 채워졌다면
+#  <var:attacker-disarmer-name>으로 수갑을 채운 플레이어의 이름을 가져올 수 있습니다.
+#
+#  플레이어 하위 변수 목록:
+#  -ipaddress      (IP 주소)
+#  -name           (닉네임)
+#  -id             (플레이어 ID)
+#  -userid         (유저 ID)
+#  -role           (역할)
+#  -team           (팀)
+#  -donottrack     (추적 거부 여부)
+#  -health         (체력)
+#  -isdisarmed     (수갑 여부)
+#  -isalive        (생존 여부)
+#  -ismuted        (음소거 여부)
+#  -hasreservedslot (예약 슬롯 보유 여부)
+#  -isglobalmod    (글로벌 모더레이터 여부)
+#  -isintercommuted (인터컴 음소거 여부)
+#  -hasfullinventory (인벤토리 가득 참 여부)
+#  -hasnoitems     (아이템 없음 여부)
+#  -isnortwoodstaff (Northwood 직원 여부)
+#  -overwatchon    (오버워치 활성화 여부)
+#  -noclipon       (노클립 활성화 여부)
+#  -godmodeon      (갓모드 활성화 여부)
+#  -isoutofammo    (탄약 없음 여부)
+#  -hasremoteadminaccess (원격 관리자 권한 여부)
+#  -bypassenabled  (바이패스 활성화 여부)
+#  -isscp          (SCP 여부)
+#  -ismtf          (MTF 여부)
+#  -ischaos        (혼돈의 반란 여부)
+#  -ishuman        (인간 여부)
+#  -rank           (랭크)
+#  -playtimehours  (플레이 시간 (시간 단위))
+#
+######################################################################################################################
+
+# 변수 삽입 후, 메시지별 regex 치환 및 플레이어 이름 추가 전에 모든 메시지에 실행됩니다.
+global_regex: [
+
+  # 포맷 오류 수정
+  "::ffff:":"",
+  " \\(\\)":"",
+  "''":"",
+  "<color=.{1,10}>":"",
+  "</color>":"",
+  "SCP_":"SCP-",
+
+  # 팀
+  "FoundationForces":"MTF",
+  "ChaosInsurgency":"혼돈의 반란",
+  "ClassD":"D계급",
+  "OtherAlive":"기타 팀",
+
+  # 역할
+  "Scp173":"SCP-173",
+  "Scp106":"SCP-106",
+  "NtfSpecialist":"MTF 상등병",
+  "Scp049":"SCP-049",
+  "Scp079":"SCP-079",
+  "ChaosConscript":"혼돈의 반란 징집병",
+  "Scp096":"SCP-096",
+  "SCP-0492":"SCP-049-2",
+  "NtfSergeant":"MTF 하사",
+  "NtfCaptain":"MTF 대위",
+  "NtfPrivate":"MTF 이등병",
+  "FacilityGuard":"시설 경비",
+  "Scp939":"SCP-939",
+  "ChaosRifleman":"혼돈의 반란 소총수",
+  "ChaosRepressor":"혼돈의 반란 압제자",
+  "ChaosMarauder":"혼돈의 반란 약탈자",
+  "Scp3114":"SCP-3114",
+  "AlphaFlamingo":"알파 플라밍고",
+  "ZombieFlamingo":"좀비 플라밍고",
+
+  # 엘리베이터
+  "GateA":"게이트 A",
+  "GateB":"게이트 B",
+  "LczA01":"저위험군 A1",
+  "LczA02":"저위험군 A2",
+  "LczB01":"저위험군 B1",
+  "LczB02":"저위험군 B2",
+  "Nuke":"알파 핵탄두",
+
+  # 방 이름
+  "Unnamed":"이름 없는 방",
+  "LczClassDSpawn":"D계급 수용소",
+  "LczComputerRoom":"경계구역 컴퓨터실",
+  "LczCheckpointA":"체크포인트 A",
+  "LczCheckpointB":"체크포인트 B",
+  "LczToilets":"저위험군 화장실",
+  "LczArmory":"저위험군 무기고",
+  "Lcz173":"SCP-173 격리실",
+  "LczGlassroom":"SCP-372 격리실",
+  "Lcz330":"SCP-330 격리실",
+  "Lcz914":"SCP-914 격리실",
+  "LczGreenhouse":"저위험군 온실",
+  "LczAirlock":"저위험군 에어락",
+  "HczCheckpointToEntranceZone":"출입구역 체크포인트",
+  "HczCheckpointA":"저위험군 체크포인트 A",
+  "HczCheckpointB":"저위험군 체크포인트 B",
+  "HczWarhead":"핵탄두 격납고",
+  "Hcz049":"SCP-049 격리실",
+  "Hcz079":"SCP-079 격리실",
+  "Hcz096":"SCP-096 격리실",
+  "Hcz106":"SCP-106 격리실",
+  "Hcz939":"SCP-939 격리실",
+  "HczMicroHID":"마이크로 H.I.D 무기고",
+  "HczArmory":"고위험군 무기고",
+  "HczServers":"고위험군 서버실",
+  "HczTesla":"고위험군 테슬라 게이트 통로",
+  "EzCollapsedTunnel":"붕괴된 사무구역 터널",
+  "EzGateA":"게이트 A",
+  "EzGateB":"게이트 B",
+  "EzRedroom":"잠긴 게이트실",
+  "EzEvacShelter":"대피 쉼터",
+  "EzIntercom":"인터컴",
+  "EzOfficeStoried":"사무실",
+  "EzOfficeLarge":"사무실",
+  "EzOfficeSmall":"사무실",
+  "Outside":"지상",
+  "Pocket":"주머니 차원",
+  "HczTestroom":"고위험군 실험실",
+
+  # 아이템
+  "KeycardJanitor":"잡역부 키카드",
+  "KeycardScientist":"과학자 키카드",
+  "KeycardResearchCoordinator":"연구 감독관 키카드",
+  "KeycardZoneManager":"구역 관리자 키카드",
+  "KeycardGuard":"경비 키카드",
+  "KeycardMTFPrivate":"MTF 이등병 키카드",
+  "KeycardContainmentEngineer":"격리 정비사 키카드",
+  "KeycardMTFOperative":"MTF 대원 키카드",
+  "KeycardMTFCaptain":"MTF 대위 키카드",
+  "KeycardFacilityManager":"시설 관리자 키카드",
+  "KeycardChaosInsurgency":"혼돈의 반란 접속 장치",
+  "KeycardO5":"O5 키카드",
+  "Radio":"무전기",
+  "GunCOM15":"COM-15",
+  "Medkit":"구급 상자",
+  "Flashlight":"손전등",
+  "MicroHID":"마이크로 H.I.D",
+  "SCP500":"SCP-500",
+  "SCP207":"SCP-207",
+  "Ammo12gauge":"12 게이지 탄약",
+  "GunE11SR":"엡실론-11 SR",
+  "GunCrossvec":"크로스벡",
+  "Ammo556x45":"5.56mm 탄약",
+  "GunFSP9":"FSP-9",
+  "GunLogicer":"로지서",
+  "GrenadeHE":"수류탄",
+  "GrenadeFlash":"섬광탄",
+  "Ammo44cal":"44구경 탄약",
+  "Ammo762x39":"7.62mm 탄약",
+  "Ammo9x19":"9mm 탄약",
+  "GunCOM18":"COM-18",
+  "SCP018":"SCP-018",
+  "SCP268":"SCP-268",
+  "Adrenaline":"아드레날린",
+  "Painkillers":"진통제",
+  "Coin":"동전",
+  "ArmorLight":"경량 방탄복",
+  "ArmorCombat":"전투 방탄복",
+  "ArmorHeavy":"고강도 방탄복",
+  "GunRevolver":"리볼버",
+  "GunAK":"AK",
+  "GunShotgun":"샷건",
+  "SCP330":"SCP-330",
+  "SCP2176":"SCP-2176",
+  "SCP244a":"SCP-244-A",
+  "SCP244b":"SCP-244-B",
+  "SCP1853":"SCP-1853",
+  "ParticleDisruptor":"입자 분열기",
+  "GunCom45":"COM-45",
+  "SCP1576":"SCP-1576",
+  "Jailbird":"제일버드",
+  "AntiSCP207":"SCP-207?",
+  "GunFRMG0":"FR-MG-0",
+  "GunA7":"A7",
+  "Lantern":"랜턴",
+  "Snowball":"눈덩이",
+  "Coal":"석탄",
+  "SpecialCoal":"석탄?",
+  "Tape":"테이프",
+
+  # SCP-914 설정
+  "Rough":"거칠게",
+  "Coarse":"굵게",
+  "OneToOne":"1:1",
+  "VeryFine":"매우 정밀하게",
+  "Fine":"정밀하게",
+
+  # 키카드 권한
+  "ExitGates":"출구 게이트",
+  "AlphaWarhead":"알파 핵탄두",
+  "ContainmentLevelOne":"격리 레벨 1",
+  "ContainmentLevelTwo":"격리 레벨 2",
+  "ContainmentLevelThree":"격리 레벨 3",
+  "ArmoryLevelOne":"무기고 레벨 1",
+  "ArmoryLevelTwo":"무기고 레벨 2",
+  "ArmoryLevelThree":"무기고 레벨 3",
+  "ScpOverride":"SCP 재정의",
+
+  # 문 관련
+  "PortallessBreakableDoor":"문",
+  "BreakableDoor":"문",
+  "\\(Clone\\)":""
+]
+
+# 플레이어 닉네임에 실행됨 (디스코드 멘션 방지, 마크다운 이스케이프)
+user_regex: ["<@":"\\<@", "<@!":"\\<@!", "`":"\\`", "\\*":"\\*", "_":"\\_", "~":"\\~", "\\|":"\\|"]
+
+# 모든 처리가 완료된 후 최종 메시지에 실행됨 (외부 링크 제거)
+final_regex: ["discord\\.gg":"","discord\\.com":"","http://":"","https://":""]
+
+messages:
+  onroundstart:
+    message: "**라운드가 시작되었습니다.**"
+    regex: []
+    cancel_regex: []
+
+  onconnect:
+    # ipaddress - 문자열
+    # userid - 문자열
+    # jointype - CentralAuthPreauthFlags
+    # region - 문자열
+    message: "플레이어 (<var:userid>) 접속 시도 중..."
+    regex: []
+    cancel_regex: []
+
+  onplayerleave:
+    # ipaddress - 문자열
+    # playerid - 정수
+    # steamid - 문자열
+    # name - 문자열
+    message: "**<var:player-name> (<var:player-userid>) 님이 게임에서 나갔습니다.**"
+    regex: []
+    cancel_regex: []
+
+  onroundend:
+    # duration - 정수 (라운드 시간)
+    # leadingteam - 문자열 (승리 팀)
+    # dclassalive - 정수 (생존 D계급)
+    # dclassdead - 정수 (사망 D계급)
+    # dclassescaped - 정수 (탈출 D계급)
+    # dclassstart - 정수 (시작 D계급 수)
+    # mtfalive - 정수 (생존 MTF)
+    # mtfdead - 정수 (사망 MTF)
+    # mtfstart - 정수 (시작 MTF 수)
+    # scientistsalive - 정수 (생존 과학자)
+    # scientistsdead - 정수 (사망 과학자)
+    # scientistsescaped - 정수 (탈출 과학자)
+    # scientistsstart - 정수 (시작 과학자 수)
+    # scpalive - 정수 (생존 SCP)
+    # scpdead - 정수 (격리된 SCP)
+    # scpkills - 정수 (SCP 처치 수)
+    # scpstart - 정수 (시작 SCP 수)
+    # warheaddetonated - 불리언 (핵탄두 폭발 여부)
+    # warheadkills - 정수 (핵탄두 사망자 수)
+    # zombiesalive - 정수 (생존 좀비)
+    # zombieschanged - 정수 (좀비로 변환된 수)
+    message: >+
+      **라운드가 <var:duration>분 후 종료되었습니다. 승리: <var:leadingteam>.**
+      ```
+      탈출한 D계급:       <var:dclassescaped>/<var:dclassstart>\n
+      구조된 과학자:      <var:scientistsescaped>/<var:scientistsstart>\n
+      격리된 SCP:         <var:scpdead>/<var:scpstart>\n
+      SCP에게 사망:       <var:scpkills>\n
+      핵탄두switchswas<var:warheaddetonated> 폭발했습니다.
+      ```
+    regex: ["switchswasTrue":"가","switchswasFalse":"가 폭발하지 않았습니다.\n핵탄두는"]
+
+  onwaitingforplayers:
+    message: "**서버가 준비되어 플레이어를 기다리고 있습니다.**"
+    regex: []
+    cancel_regex: []
+
+  onroundrestart:
+    message: "**라운드가 재시작됩니다...**"
+    regex: []
+    cancel_regex: []
+
+  onsetservername:
+    # servername - 문자열
+    message: "**서버 이름: <var:servername>.**"
+    regex: []
+    cancel_regex: []
+
+  onscp914activate:
+    # knobsetting - KnobSetting
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 SCP-914를 <var:knobsetting> 설정으로 작동시켰습니다."
+    regex: []
+    cancel_regex: []
+
+  onstartcountdown:
+    player:
+      # isAutomatic - 불리언
+      # timeleft - 실수 (남은 시간)
+      # player - Player
+      initiated:
+        message: "**<var:player-name> (<var:player-userid>) 님이 알파 핵탄두를 활성화했습니다. 폭발까지 <var:timeleft>초 남았습니다. 모든 인원은 즉시 대피하십시오.**"
+        regex: [ ]
+      resumed:
+        message: "**<var:player-name> (<var:player-userid>) 님이 알파 핵탄두를 재개했습니다. 폭발까지 <var:timeleft>초 남았습니다.**"
+        regex: [ ]
+    server:
+      # isAutomatic - 불리언
+      # timeleft - 실수 (남은 시간)
+      initiated:
+        message: "**O5 위원회의 명령으로 알파 핵탄두가 원격 활성화되었습니다. 모든 인원은 즉시 대피하십시오.**"
+        regex: []
+        cancel_regex: []
+      resumed:
+        message: "**O5 위원회의 명령으로 알파 핵탄두 카운트다운이 원격 재개되었습니다. 폭발까지 <var:timeleft>초 남았습니다.**"
+        regex: []
+        cancel_regex: []
+
+  onstopcountdown:
+    default:
+      # timeleft - 남은 시간
+      # player - Player
+      message: "**<var:player-name> (<var:player-userid>) 님이 <var:timeleft>초를 남기고 알파 핵탄두 폭발을 취소했습니다.**"
+      regex: []
+      cancel_regex: []
+    noplayer:
+      # timeleft - 남은 시간
+      message: "**윤리위원회의 명령으로 <var:timeleft>초를 남기고 알파 핵탄두 폭발이 원격 취소되었습니다.**"
+      regex: []
+      cancel_regex: []
+
+  ondetonate:
+    message: "**알파 핵탄두 폭발이 감지되었습니다. MTF 대원들이 잔여 위협을 제거하기 위해 시설에 진입 중입니다.**"
+    regex: []
+    cancel_regex: []
+
+  ondecontaminate:
+    message: "**저위험군 오염 제거가 시작되었습니다. 모든 생물학적 물질이 소멸됩니다.**"
+    regex: []
+    cancel_regex: []
+
+  onsummonvehicle:
+    chaos:
+      message: "**경고: 허가되지 않은 차량이 시설 경계를 침범했습니다.**"
+      regex: []
+      cancel_regex: []
+    mtf:
+      message: "**MTF 헬기가 시설 시야 범위에 진입했습니다. 착륙 준비 중입니다.**"
+      regex: []
+      cancel_regex: []
+
+  ongeneratorfinish:
+    # room - 문자열
+    # player - Player
+    message: "<var:room>의 발전기가 활성화되었습니다."
+    regex: [ ]
+
+  onplayerhurt:
+    # damage - 실수 (피해량)
+    # damagetype - DamageType (피해 유형)
+    # attacker - Player
+    # target - Player
+    default:
+      message: "<var:target-name> (<var:target-userid>) 님이 <var:attacker-name> (<var:attacker-userid>) 님에게 <var:damagetype>으로 피해를 받았습니다 (<var:damage> HP)."
+      regex: ["으로 UNKNOWN":"으로 알 수 없는 방법", "-1 damage":"막대한 피해"]
+    friendlyfire:
+      message: "**<var:target-team> <var:target-name> (<var:target-userid>) 님이 팀원 <var:attacker-team> <var:attacker-name> (<var:attacker-userid>) 님에게 <var:damagetype>으로 공격받았습니다 (<var:damage> HP).**"
+      regex: ["으로 UNKNOWN":"으로 알 수 없는 방법", "-1 damage":"막대한 피해"]
+    noattacker:
+      message: "<var:target-name> (<var:target-userid>) 님이 <var:damagetype>으로 <var:damage> 피해를 받았습니다."
+      regex: ["damage by UNKNOWN":"알 수 없는 원인으로 피해", "-1 damage":"막대한 피해"]
+
+  onplayerdie:
+    # damagetype - DamageType
+    # attacker - Player
+    # target - Player
+    default:
+      message: "<var:target-name> (<var:target-userid>) 님이 <var:attacker-name> (<var:attacker-userid>) 님에게 <var:damagetype>으로 사망했습니다."
+      regex: ["으로 UNKNOWN":"으로 알 수 없는 방법"]
+    friendlyfire:
+      message: "**<var:target-team> <var:target-name> (<var:target-userid>) 님이 팀원 <var:attacker-team> <var:attacker-name> (<var:attacker-userid>) 님에게 <var:damagetype>으로 팀킬당했습니다.**"
+      regex: ["으로 UNKNOWN":"으로 알 수 없는 방법"]
+    nokiller:
+      message: "<var:target-name> (<var:target-userid>) 님이 <var:damagetype>으로 사망했습니다."
+      regex: ["으로 UNKNOWN":"알 수 없는 방법으로 사망"]
+
+  onplayerpickupitem:
+    # item - Item
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:item>을(를) 주웠습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerpickupammo:
+    # ammo - Item
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:ammo>을(를) 주웠습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerpickuparmor:
+    # item - Item
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:armor>을(를) 주웠습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerpickupscp330:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 SCP-330을 주웠습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerdropitem:
+    # item - Item
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:item>을(를) 버렸습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerdropammo:
+    # ammo - Item
+    # amount - 정수
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:ammo> <var:amount>개를 버렸습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerjoin:
+    # player - Player
+    message: "**<var:player-name> (<var:player-userid>) 님이 게임에 입장했습니다.**"
+    regex: []
+    cancel_regex: []
+
+  onnicknameset:
+    # nickname - 문자열
+    # player - Player
+    message: "플레이어 '<var:player-name> (<var:player-userid>)' 님이 닉네임을 <var:nickname>으로 변경했습니다."
+    regex: []
+    cancel_regex: []
+
+  onspawn:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:player-role>(으)로 스폰되었습니다."
+    regex: []
+    cancel_regex: []
+
+  onpocketdimensionexit:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 SCP-106의 주머니 차원에서 탈출했습니다."
+    regex: []
+    cancel_regex: []
+
+  onpocketdimensionenter:
+    # attacker - Player
+    # target - Player
+    message: "<var:target-name> (<var:target-userid>) 님이 <var:attacker-name> (<var:attacker-userid>) 님(SCP-106)에 의해 주머니 차원으로 끌려갔습니다."
+    regex: []
+    cancel_regex: []
+
+  onthrowprojectile:
+    # type - GrenadeType
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:type>을(를) 투척했습니다."
+    regex: []
+    cancel_regex: []
+
+  onitemuse:
+    # item - 문자열
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:item>을(를) 사용했습니다."
+    regex: []
+    cancel_regex: []
+
+  onelevatoruse:
+    # elevatorname - ElevatorType
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:elevatorname> 엘리베이터를 호출했습니다."
+    regex: []
+    cancel_regex: []
+
+  onhandcuff:
+    # target - Player
+    # disarmer - Player
+    default:
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) 님이 <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>) 님에게 수갑이 채워졌습니다."
+      regex: []
+      cancel_regex: []
+    nootherplayer:
+      # target - Player
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) 님에게 수갑이 채워졌습니다."
+      regex: []
+      cancel_regex: []
+
+  onhandcuffremoved:
+    # target - Player
+    # disarmer - Player
+    default:
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) 님이 <var:disarmer-role> <var:disarmer-name> (<var:disarmer-userid>) 님에 의해 수갑이 해제되었습니다."
+      regex: []
+      cancel_regex: []
+    nootherplayer:
+      message: "<var:target-role> <var:target-name> (<var:target-userid>) 님의 수갑이 해제되었습니다."
+      regex: []
+      cancel_regex: []
+
+  onrecallzombie:
+    # target - Player
+    # player - Player
+    message: "<var:target-name> (<var:target-userid>) 님이 <var:player-name> (<var:player-userid>) 님(SCP-049)에 의해 SCP-049-2로 스폰되었습니다."
+    regex: []
+    cancel_regex: []
+
+  onexecutedcommand:
+    remoteadmin:
+      player:
+        # command - 명령어
+        # result - 결과
+        # returnmessage - 반환 메시지
+        # player - Player
+        message: "<var:player-name> (<var:player-userid>) 님이 명령어 `<var:command>`를 사용했습니다:\n```<var:returnmessage>```"
+        regex: [ ]
+      server:
+        # command - 명령어
+        # result - 결과
+        # returnmessage - 반환 메시지
+        message: "서버가 명령어 `<var:command>`를 사용했습니다:\n```<var:returnmessage>```"
+        regex: [ ]
+    client:
+      player:
+        message: "<var:player-name> (<var:player-userid>) 님이 명령어 `<var:command>`를 사용했습니다:\n```<var:returnmessage>```"
+        regex: [ ]
+      server:
+        message: "서버가 명령어 `<var:command>`를 사용했습니다:\n```<var:returnmessage>```"
+        regex: [ ]
+    console:
+      player:
+        message: "<var:player-name> (<var:player-userid>) 님이 명령어 `<var:command>`를 사용했습니다:\n```<var:returnmessage>```"
+        regex: [ ]
+      server:
+        message: "서버가 명령어 `<var:command>`를 사용했습니다:\n```<var:returnmessage>```"
+        regex: [ ]
+
+  onreload:
+    # weapon - 무기
+    # maxclipsize - 최대 탄창 크기
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:weapon>을(를) 재장전했습니다."
+    regex: []
+    cancel_regex: []
+
+  ongrenadeexplosion:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님의 수류탄이 폭발했습니다."
+    regex: []
+    cancel_regex: []
+
+  ongrenadehitplayer:
+    # player - Player
+    # target - Player
+    message: "<var:player-name> (<var:player-userid>) 님의 수류탄이 <var:target-name> (<var:target-userid>) 님에게 맞았습니다."
+    regex: []
+    cancel_regex: []
+
+  ongeneratorunlock:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>의 발전기 잠금을 해제했습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  ongeneratorclose:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>의 발전기를 닫았습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  ongeneratoropen:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>의 발전기를 열었습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  ongeneratoractivated:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>의 발전기를 활성화했습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  ongeneratordeactivated:
+    # player - Player
+    message: "<var:room>의 발전기가 비활성화되었습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  on079lockdoor:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 SCP-079로 문을 잠갔습니다."
+    regex: []
+    cancel_regex: []
+
+  on079teslagate:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 테슬라 게이트를 작동시켰습니다."
+    regex: []
+    cancel_regex: []
+
+  on079levelup:
+    # level - 정수
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 SCP-079로 레벨업했습니다."
+    regex: []
+    cancel_regex: []
+
+  on079unlockdoor:
+    # doorname - 문자열
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:doorname> 문을 잠갔습니다."
+    regex: []
+    cancel_regex: []
+
+  on079lockdown:
+    # room - RoomType
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>을(를) 봉쇄했습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  on079cancellockdown:
+    # room - RoomType
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>의 봉쇄를 해제했습니다."
+    regex: [
+      "Micro-HID":"마이크로 H.I.D 방",
+      "nuke":"핵탄두 격납고" ]
+
+  onban:
+    player:
+      # duration - 정수 (기간)
+      # reason - 문자열 (사유)
+      # player - Player
+      # issuer - Player
+      message: "**플레이어 <var:player-name> (<var:player-userid>) 님이 <var:issuer-name> (<var:issuer-userid>) 님에 의해 `<var:duration>` 동안 밴되었습니다. 사유: <var:reason>**"
+      regex: [ ]
+    server:
+      # duration - 정수 (기간)
+      # reason - 문자열 (사유)
+      # player - Player
+      message: "**플레이어 <var:player-name> (<var:player-userid>) 님이 서버에 의해 `<var:duration>` 동안 밴되었습니다. 사유: <var:reason>**"
+      regex: []
+      cancel_regex: []
+
+  onbanissued:
+    # duration - 기간
+    # expirytime - 만료 시간
+    # issuedtime - 발급 시간
+    # reason - 사유
+    ip:
+      message: >+
+        **IP 밴 발급됨**
+        ```
+        플레이어:  <var:player-name>\n
+        IP:        <var:player-ip>\n
+        발급 시간: <var:issuedtime>\n
+        만료 시간: <var:expirytime>\n
+        기간:      <var:duration>\n
+        발급자:    <var:issuer-name>\n
+        사유:      <var:reason>
+        ```
+      regex: []
+      cancel_regex: []
+    userid:
+      message: >+
+        **UserID 밴 발급됨**
+        ```
+        플레이어:  <var:player-name>\n
+        UserID:    <var:player-userid>\n
+        발급 시간: <var:issuedtime>\n
+        만료 시간: <var:expirytime>\n
+        기간:      <var:duration>\n
+        발급자:    <var:issuer-name>\n
+        사유:      <var:reason>
+        ```
+      regex: []
+      cancel_regex: []
+
+  onbanupdated:
+    ip:
+      message: >+
+        **IP 밴 수정됨**
+        ```
+        플레이어:  <var:player-name>\n
+        IP:        <var:player-ip>\n
+        발급 시간: <var:issuedtime>\n
+        만료 시간: <var:expirytime>\n
+        기간:      <var:duration>\n
+        발급자:    <var:issuer-name>\n
+        사유:      <var:reason>
+        ```
+      regex: []
+      cancel_regex: []
+    userid:
+      message: >+
+        **UserID 밴 수정됨**
+        ```
+        플레이어:  <var:player-name>\n
+        UserID:    <var:player-userid>\n
+        발급 시간: <var:issuedtime>\n
+        만료 시간: <var:expirytime>\n
+        기간:      <var:duration>\n
+        발급자:    <var:issuer-name>\n
+        사유:      <var:reason>
+        ```
+      regex: []
+      cancel_regex: []
+
+  onbanrevoked:
+    ip:
+      message: "**<var:name> (<var:ip>)의 IP 밴이 취소되었습니다. 원래 <var:issuer>에 의해 <var:duration> 동안 밴되었습니다.**"
+      regex: []
+      cancel_regex: []
+    userid:
+      message: "**<var:name> (<var:userid>)의 UserID 밴이 취소되었습니다. 원래 <var:issuer>에 의해 <var:duration> 동안 밴되었습니다.**"
+      regex: []
+      cancel_regex: []
+
+  onkick:
+    player:
+      # reason - 문자열
+      # player - Player
+      # issuer - Player
+      message: "**플레이어 <var:player-name> (<var:player-userid>) 님이 <var:issuer-name> (<var:issuer-userid>) 님에 의해 킥되었습니다. 사유: <var:reason>**"
+      regex: [ ]
+    server:
+      # reason - 문자열
+      # player - Player
+      message: "**플레이어 <var:player-name> (<var:player-userid>) 님이 서버에 의해 킥되었습니다. 사유: <var:reason>**"
+      regex: []
+      cancel_regex: []
+
+  onplayermuted:
+    player:
+      intercom:
+        # player - Player
+        # issuer - Player
+        message: "**<var:player-name> (<var:player-userid>) 님이 <var:issuer-name> (<var:issuer-userid>) 님에 의해 인터컴 음소거되었습니다.**"
+        regex: []
+        cancel_regex: []
+      standard:
+        # player - Player
+        # issuer - Player
+        message: "**<var:player-name> (<var:player-userid>) 님이 <var:issuer-name> (<var:issuer-userid>) 님에 의해 음소거되었습니다.**"
+        regex: []
+        cancel_regex: []
+    server:
+      intercom:
+        # player - Player
+        message: "**<var:player-name> (<var:player-userid>) 님이 서버에 의해 인터컴 음소거되었습니다.**"
+        regex: []
+        cancel_regex: []
+      standard:
+        # player - Player
+        message: "**<var:player-name> (<var:player-userid>) 님이 서버에 의해 음소거되었습니다.**"
+        regex: []
+        cancel_regex: []
+
+  onplayerunmuted:
+    player:
+      intercom:
+        # player - Player
+        # issuer - Player
+        message: "**<var:player-name> (<var:player-userid>) 님의 인터컴 음소거가 <var:issuer-name> (<var:issuer-userid>) 님에 의해 해제되었습니다.**"
+        regex: []
+        cancel_regex: []
+      standard:
+        # player - Player
+        # issuer - Player
+        message: "**<var:player-name> (<var:player-userid>) 님의 음소거가 <var:issuer-name> (<var:issuer-userid>) 님에 의해 해제되었습니다.**"
+        regex: []
+        cancel_regex: []
+    server:
+      intercom:
+        # player - Player
+        message: "**<var:player-name> (<var:player-userid>) 님의 인터컴 음소거가 서버에 의해 해제되었습니다.**"
+        regex: []
+        cancel_regex: []
+      standard:
+        # player - Player
+        message: "**<var:player-name> (<var:player-userid>) 님의 음소거가 서버에 의해 해제되었습니다.**"
+        regex: []
+        cancel_regex: []
+
+  onteamrespawn:
+    # players - List<Player>
+    # spawnchaos - 불리언
+    mtf:
+      message: "**기동특무부대NTF(이)가 시설에 진입했습니다.**"
+      regex: []
+      cancel_regex: []
+    ci:
+      message: "**시설 침입이 감지되었습니다. 침입자는 적대 세력 '혼돈의 반란'으로 확인되었습니다.**"
+      regex: []
+      cancel_regex: []
+
+  onplayerescape:
+    # newrole - Role
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 탈출하여 <var:newrole>(으)로 변경되었습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayercheaterreport:
+    # player - Player
+    # target - Player
+    # reason - 문자열
+    message: "**<var:player-name> (<var:player-userid>) 님이 <var:target-name> (<var:target-userid>) 님을 치트 사용자로 신고했습니다:**\n```<var:reason>```"
+    regex: []
+    cancel_regex: []
+
+  onplayerreport:
+    # player - Player
+    # target - Player
+    # reason - 문자열
+    message: "**<var:player-name> (<var:player-userid>) 님이 <var:target-name> (<var:target-userid>) 님을 서버 규칙 위반으로 신고했습니다:**\n```<var:reason>```"
+    regex: []
+    cancel_regex: []
+
+  onmapgenerated:
+    message: "시설이 정상적으로 생성되었습니다!"
+    regex: []
+    cancel_regex: []
+
+  onplayerinteractlocker:
+    # player - Player
+    message: "<var:player-name> (<var:player-userid>) 님이 <var:room>의 <var:chamber>와(과) 상호작용했습니다."
+    regex: []
+    cancel_regex: []
+
+  onplayerreceiveeffect:
+    # player - Player
+    # effect - 문자열
+    # duration - 실수
+    # intensity - 바이트
+    message: "<var:player-name> (<var:player-userid>) 님이 효과를 받았습니다: <var:effect>, <var:duration>초 동안 강도 <var:intensity>."
+    regex: []
+    cancel_regex: []
+
+  oninteract330:
+    # player - Player
+    # uses - 정수
+    message: "<var:player-name> (<var:player-userid>) 님이 SCP-330을 사용했습니다 (사용 횟수: <var:uses>)."
+    regex: []
+    cancel_regex: []
+
+  onserversentadminchat:
+    # player - Player
+    # message - 문자열
+    message: "관리자 채팅: <var:player-name> (<var:player-userid>): <var:message>"
+    regex: [ ]
+    cancel_regex: [ ]
+
+  #####################################################################################################################
+  #                                                                                                                   #
+  #                                               디스코드 봇 관련                                                    #
+  #                                                                                                                   #
+  #   message: 표시될 메시지. 변수는 <var:이름> 형식으로 삽입됩니다. 예: <var:ipaddress>                             #
+  #   regex: 메시지의 일부를 찾아 교체하기 위한 정규식과 대체 문자열 쌍                                              #
+  #                                                                                                                   #
+  #####################################################################################################################
+
+  connectedtobot:
+    message: "**SCP:SL 서버가 연결되었습니다.**"
+    regex: []
+    cancel_regex: []
+
+  invalidsteamid:
+    # userid - 문자열
+    message: "유효하지 않은 Steam ID '<var:userid>'."
+    regex: []
+    cancel_regex: []
+
+  invalidsteamidorip:
+    # steamidorip - 문자열
+    message: "유효하지 않은 Steam ID 또는 IP '<var:steamidorip>'."
+    regex: []
+    cancel_regex: []
+
+  invalidduration:
+    # duration - 문자열
+    message: "유효하지 않은 기간 '<var:duration>'."
+    regex: []
+    cancel_regex: []
+
+  playernotfound:
+    # userid - 문자열
+    message: "Steam ID '<var:userid>'에 해당하는 플레이어를 찾을 수 없습니다."
+    regex: []
+    cancel_regex: []
+
+  playerkicked:
+    # player - Player
+    # reason - 문자열
+    message: "'<var:player-name>' (<var:player-userid>) 님이 <var:discord-username>에 의해 서버에서 킥되었습니다. 사유: '<var:reason>'"
+    regex: []
+    cancel_regex: []
+
+  playerbanned:
+    online:
+      # player - Player
+      # reason - 문자열
+      # duration - 문자열
+      message: "'<var:player-name>' (<var:player-userid>) 님이 <var:discord-username>에 의해 밴되었습니다. 사유: '<var:reason>' (<var:duration>) (+IP 밴)"
+      regex: []
+      cancel_regex: []
+    offline:
+      # name - 문자열
+      # userid - 문자열
+      # reason - 문자열
+      # duration - 문자열
+      message: "'<var:name>' (<var:userid>) 님이 <var:discord-username>에 의해 밴되었습니다. 사유: '<var:reason>' (<var:duration>)"
+      regex: []
+      cancel_regex: []
+
+  playerunbanned:
+    # steamidorip - 문자열
+    message: "Steam ID/IP '<var:steamidorip>'에 해당하는 모든 밴 기록이 삭제되었습니다."
+    regex: []
+    cancel_regex: []
+
+  playermuted:
+    # name - 문자열
+    # userid - 문자열
+    # reason - 문자열
+    message: "<var:name> (<var:userid>) 님이 <var:discord-username>에 의해 음소거되었습니다. 사유: '<var:reason>' (영구)"
+    regex: []
+    cancel_regex: []
+
+  playertempmuted:
+    # name - 문자열
+    # userid - 문자열
+    # reason - 문자열
+    # duration - 문자열
+    message: "<var:name> (<var:userid>) 님이 <var:discord-username>에 의해 음소거되었습니다. 사유: '<var:reason>' (<var:duration>)"
+    regex: []
+    cancel_regex: []
+
+  mutefailed:
+    # userid - 문자열
+    message: "Steam ID '<var:userid>'의 플레이어를 음소거하는 중 오류가 발생했습니다. 콘솔을 확인하세요."
+    regex: []
+    cancel_regex: []
+
+  playerunmuted:
+    # name - 문자열
+    # userid - 문자열
+    message: "<var:name> (<var:userid>) 님의 음소거가 <var:discord-username>에 의해 해제되었습니다."
+    regex: []
+    cancel_regex: []
+
+  unmutefailed:
+    # userid - 문자열
+    message: "Steam ID '<var:userid>'의 플레이어 음소거를 해제하는 중 오류가 발생했습니다. 콘솔을 확인하세요."
+    regex: []
+    cancel_regex: []
+
+  kickall:
+    # reason - 문자열
+    message: "모든 플레이어가 '<var:reason>' 사유로 서버에서 킥되었습니다."
+    regex: []
+    cancel_regex: []
+
+  # 커스텀 명령어를 제외한 콘솔 명령어 피드백 (global_regex 미적용, final_regex만 적용)
+  consolecommandfeedback:
+    message: "<var:feedback>"
+    regex: []
+    cancel_regex: []
+
+  list:
+    default:
+      title:
+        # players - 정수
+        # maxplayers - 정수
+        # page - 정수
+        # pages - 정수
+        message: "<var:players> / <var:maxplayers> 명"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-role>** | `<var:player-userid>`"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "온라인 플레이어가 없습니다."
+          regex: []
+          cancel_regex: []
+
+    ranked:
+      title:
+        # players - 정수
+        # rankedplayers - 정수
+        # maxplayers - 정수
+        message: "<var:rankedplayers> / <var:players> 명 (랭크 보유)"
+        regex: []
+        cancel_regex: []
+      row:
+        default:
+          # player - Player
+          message: "**<var:player-name>** | **<var:player-rank>** | `<var:player-userid>`"
+          regex: []
+          cancel_regex: []
+        empty:
+          message: "온라인 랭크 플레이어가 없습니다."
+          regex: []
+          cancel_regex: []
+
+    synced:
+      title:
+        online-only:
+          message: "<var:syncedplayers> / <var:maxplayers> 명 (디스코드 연동)"
+          regex: [ ]
+          cancel_regex: []
+        all:
+          message: "<var:syncedplayers> 명 (디스코드 연동)"
+          regex: [ ]
+          cancel_regex: []
+      row:
+        online-only:
+          default:
+            # player - Player
+            # discordid - 정수
+            # discordmention - 문자열
+            message: "**<var:player-name>** | <var:discordmention> | `<var:player-userid>`"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "온라인 연동 플레이어가 없습니다."
+            regex: []
+            cancel_regex: []
+        all:
+          default:
+            # userid - 문자열
+            # name - 문자열
+            # discordid - 정수
+            # discordmention - 문자열
+            message: "**<var:name>** | <var:discordmention> | `<var:userid>`"
+            regex: []
+            cancel_regex: []
+          empty:
+            message: "연동된 플레이어가 없습니다."
+            regex: []
+            cancel_regex: []
+
+  playerinfo:
+    online:
+      # player - Player
+      # discordid - 정수
+      # discordmention - 문자열
+      # issynced - 불리언
+      # mutestatus - 문자열
+      # mutereason - 문자열
+      message: >+
+        **플레이어 정보 - <var:discordmention>**
+        ```
+        온라인:          예\n
+        닉네임:          <var:player-name>\n
+        Steam ID:        <var:player-userid>\n
+        IP:              <var:player-ipaddress>\n
+        플레이 시간:     <var:player-playtimehours>시간\n
+        \n
+        역할:            <var:player-role>\n
+        체력:            <var:player-health>\n
+        오버워치:        replaceOnOff<var:player-overwatchon>\n
+        노클립:          replaceOnOff<var:player-noclipon>\n
+        갓모드:          replaceOnOff<var:player-godmodeon>\n
+        바이패스:        replaceOnOff<var:player-bypassenabled>\n
+        \n
+        음소거:          <var:mutestatus> (사유: <var:mutereason>)\n
+        밴:              아니오\n
+        디스코드 연동:   replaceYesNo<var:issynced>\n
+        원격 관리자:     replaceYesNo<var:player-hasremoteadminaccess>\n
+        예약 슬롯:       replaceYesNo<var:player-hasreservedslot>\n
+        추적 거부:       replaceOnOff<var:player-donottrack>\n
+        Northwood 직원:  replaceYesNo<var:player-isnortwoodstaff>
+        ```
+      regex: [ "replaceYesNoTrue":"예", "replaceYesNoFalse":"아니오", "replaceOnOffTrue":"활성화", "replaceOnOffFalse":"비활성화", "- <@0>": "", "\\(사유: \\)":"" ]
+      cancel_regex: []
+    offline:
+      message: >+
+        **플레이어 정보 - <var:discordmention>**
+        ```
+        온라인:         아니오\n
+        닉네임:         <var:name>\n
+        Steam ID:       <var:userid>\n
+        플레이 시간:    <var:playtimehours>시간\n
+        음소거:         <var:mutestatus> (사유: <var:mutereason>)\n
+        밴:             <var:banstatus> (사유: <var:banreason>)\n
+        예약 슬롯:      replaceYesNo<var:hasreservedslot>\n
+        디스코드 연동:  replaceYesNo<var:issynced>
+        ```
+      regex: [ "replaceYesNoTrue":"예", "replaceYesNoFalse":"아니오", "replaceOnOffTrue":"활성화", "replaceOnOffFalse":"비활성화", "- <@0>": "", "\\(사유: \\)":"" ]
+      cancel_regex: []
+
+  adminchat:
+    # player - Player
+    # message - 문자열
+    message: "<var:player-name>: <var:message>"
+    regex: []
+
+  botactivity:
+    empty:
+      # players - 정수
+      # maxplayers - 정수
+      message: "<var:players> / <var:maxplayers> 명 온라인"
+      regex: [ ]
+    active:
+      message: "<var:players> / <var:maxplayers> 명 온라인"
+      regex: [ ]
+    full:
+      message: "<var:players> / <var:maxplayers> 명 온라인"
+      regex: []
+      cancel_regex: []

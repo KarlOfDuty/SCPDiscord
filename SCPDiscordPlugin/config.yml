@@ -27,16 +27,17 @@ settings:
     # The language is the same as the name of the language file you want to use.
 
     # Included languages:
+    # brazilian-portuguese
     # english (default)
-    # ukrainian
+    # german
+    # italian
+    # korean
     # russian
     # simplified-chinese
-    # italian
-    # brazilian-portuguese
-    # german
+    # ukrainian
 
-    # If you want to override specific messages you can copy them to overrides.yml
-    # and they will automatically replace the corresponding messages from the language selected below.
+    # If you want to override specific messages, you can copy them to overrides.yml
+    # and they will automatically replace the corresponding messages from the language file selected below.
     language: "english"
 
     # Add an emote as a prefix to messages.

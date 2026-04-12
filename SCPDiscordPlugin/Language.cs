@@ -30,6 +30,7 @@ namespace SCPDiscord
       { "english",              Utilities.ReadManifestData("Languages.english.yml")              },
       { "german",               Utilities.ReadManifestData("Languages.german.yml")               },
       { "italian",              Utilities.ReadManifestData("Languages.italian.yml")              },
+      { "korean",               Utilities.ReadManifestData("Languages.korean.yml")               },
       { "overrides",            Utilities.ReadManifestData("Languages.overrides.yml")            },
       { "russian",              Utilities.ReadManifestData("Languages.russian.yml")              },
       { "simplified-chinese",   Utilities.ReadManifestData("Languages.simplified-chinese.yml")   },

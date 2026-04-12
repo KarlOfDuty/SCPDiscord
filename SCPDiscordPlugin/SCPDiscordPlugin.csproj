@@ -75,6 +75,7 @@
         <EmbeddedResource Include="Languages/english.yml" />
         <EmbeddedResource Include="Languages/german.yml" />
         <EmbeddedResource Include="Languages/italian.yml" />
+        <EmbeddedResource Include="Languages/korean.yml" />
         <EmbeddedResource Include="Languages/overrides.yml" />
         <EmbeddedResource Include="Languages/russian.yml" />
         <EmbeddedResource Include="Languages/simplified-chinese.yml" />
