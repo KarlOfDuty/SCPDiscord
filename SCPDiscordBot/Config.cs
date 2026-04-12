@@ -24,7 +24,7 @@ namespace SCPDiscord
 
       public string token { get; private set; } = "";
       public ulong serverId { get; private set; } = 0;
-      public AdminChat adminChat { get; private set; }
+      public AdminChat adminChat { get; private set; } = new();
       public string logLevel { get; private set; } = "Debug";
       public string statusType { get; private set; } = "DoNotDisturb";
       public string presenceType { get; private set; } = "Watching";
@@ -33,7 +33,7 @@ namespace SCPDiscord
       public string logFile { get; private set; } = "";
     }
 
-    public Bot bot { get; private set; }
+    public Bot bot { get; private set; } = new();
 
     public Dictionary<ulong, string[]> permissions { get; private set; } = new();
 
@@ -43,7 +43,7 @@ namespace SCPDiscord
       public int port { get; private set; } = 8888;
     }
 
-    public Plugin plugin { get; private set; }
+    public Plugin plugin { get; private set; } = new();
   }
 
   public static class ConfigParser
