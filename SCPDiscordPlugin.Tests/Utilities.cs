@@ -53,13 +53,13 @@ public static class Utilities
 
   public static void ConnectNetwork()
   {
-    MethodInfo? connectMethod = typeof(Network).GetMethod("Connect", BindingFlags.Static | BindingFlags.NonPublic);
+    MethodInfo connectMethod = typeof(Network).GetMethod("Connect", BindingFlags.Static | BindingFlags.NonPublic);
     connectMethod?.Invoke(null, null);
   }
 
   public static void SendQueuedMessages()
   {
-    MethodInfo? sendMethod = typeof(Network).GetMethod("SendQueuedMessages", BindingFlags.Static | BindingFlags.NonPublic);
+    MethodInfo sendMethod = typeof(Network).GetMethod("SendQueuedMessages", BindingFlags.Static | BindingFlags.NonPublic);
     sendMethod?.Invoke(null, null);
   }
 

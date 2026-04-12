@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>3.4.0</Version>
+    <Version>3.4.1</Version>
     <AssemblyName>scpdiscord</AssemblyName>
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <TargetFramework>net9.0</TargetFramework>
@@ -26,7 +26,7 @@
     <PackageIconUrl>./icon.ico</PackageIconUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/KarlOfDuty/SCPDiscord</PackageProjectUrl>
-    <PackageVersion>3.4.0</PackageVersion>
+    <PackageVersion>$(Version)</PackageVersion>
     <LangVersion>default</LangVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <GitVersion>false</GitVersion>

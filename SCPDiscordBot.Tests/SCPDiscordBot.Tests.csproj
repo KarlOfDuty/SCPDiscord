@@ -3,15 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
-    <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02556" />
-    <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02556" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02556" />
     <PackageReference Include="FluentAssertions" Version="8.8.0" />
     <PackageReference Include="Google.Protobuf" Version="3.33.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />

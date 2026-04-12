@@ -4,7 +4,7 @@
     <TargetFramework>net48</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -47,8 +47,8 @@
     <Reference Include="YamlDotNet">
       <HintPath>../.scpsl_libs/YamlDotNet.dll</HintPath>
     </Reference>
-  </ItemGroup>  
-  
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\SCPDiscordPlugin\SCPDiscordPlugin.csproj" />
   </ItemGroup>
