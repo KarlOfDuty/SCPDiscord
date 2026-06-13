@@ -31,7 +31,8 @@ public class DiscordAPI
 
       instance = new DiscordAPI();
 
-      DiscordClientBuilder clientBuilder = DiscordClientBuilder.CreateDefault(ConfigParser.Config.bot.token, DiscordIntents.All).SetReconnectOnFatalGatewayErrors();
+      DiscordClientBuilder clientBuilder = DiscordClientBuilder.CreateDefault(ConfigParser.Config.bot.token, DiscordIntents.AllUnprivileged | DiscordIntents.GuildMembers | DiscordIntents.MessageContents)
+                                                               .SetReconnectOnFatalGatewayErrors();
 
         clientBuilder.ConfigureServices(configure =>
         {
