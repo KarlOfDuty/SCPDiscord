@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>3.4.1</Version>
+    <Version>3.4.2</Version>
     <AssemblyName>scpdiscord</AssemblyName>
     <StartupObject>SCPDiscord.SCPDiscordBot</StartupObject>
     <TargetFramework>net9.0</TargetFramework>

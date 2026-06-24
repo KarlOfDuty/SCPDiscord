@@ -15,7 +15,7 @@
         <Optimize>true</Optimize>
         <PlatformTarget>x64</PlatformTarget>
 
-        <Version>3.4.1</Version>
+        <Version>3.4.2</Version>
         <PackageVersion>$(Version)</PackageVersion>
         <ApplicationIcon>icon.ico</ApplicationIcon>
         <LangVersion>default</LangVersion>
