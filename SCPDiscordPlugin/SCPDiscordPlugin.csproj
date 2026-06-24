@@ -39,6 +39,9 @@
         <Reference Include="Assembly-CSharp">
           <HintPath>../.scpsl_libs/Assembly-CSharp.dll</HintPath>
         </Reference>
+        <Reference Include="Assembly-CSharp-firstpass.dll">
+            <HintPath>../.scpsl_libs/Assembly-CSharp-firstpass.dll</HintPath>
+        </Reference>
         <Reference Include="CommandSystem.Core">
           <HintPath>../.scpsl_libs/CommandSystem.Core.dll</HintPath>
         </Reference>

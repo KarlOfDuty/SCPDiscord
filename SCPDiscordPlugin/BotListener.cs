@@ -2,6 +2,7 @@ using SCPDiscord.BotCommands;
 using System;
 using System.IO;
 using System.Threading;
+using MEC;
 
 namespace SCPDiscord
 {
@@ -92,7 +93,7 @@ namespace SCPDiscord
                 break;
 
               case Interface.MessageWrapper.MessageOneofCase.AdminChatDiscordMessage:
-                Utilities.ReceiveAdminChatMessage(data.AdminChatDiscordMessage);
+                Timing.CallDelayed(0, () => Utilities.ReceiveAdminChatMessage(data.AdminChatDiscordMessage));
                 break;
 
               case Interface.MessageWrapper.MessageOneofCase.BotActivity:

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SCPDiscord.Interface;
 using UnityEngine;
 using System.Linq;
-using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
 
 namespace SCPDiscord
